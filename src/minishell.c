@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/08 10:41:51 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/08 14:12:08 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int main(int ac, char *av[])
 {
 	char	*line;
+	t_token	*tokens;
 
 	(void)ac;
 	(void)av;
@@ -25,6 +26,14 @@ int main(int ac, char *av[])
 			break ;
 		if (line[0])
 			add_history(line);
+		tokens = tokenize(line);
+		t_token	*current = tokens;
+		while (current)
+		{
+			printf("Token: '%s', Type: %d\n", current->value, current->type);
+			current = current->next;
+		}
+		free_tokens(tokens);
 		free(line);
 	}
 	return (0);

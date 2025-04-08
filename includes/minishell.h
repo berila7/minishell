@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/08 13:00:45 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/08 14:11:58 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,8 @@ struct s_token
 	t_token_type	type;
 	t_token			*next;
 };
+
+t_token	*tokenize(char *line);
+void	free_tokens(t_token *tokens);
 
 #endif
