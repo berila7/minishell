@@ -12,23 +12,25 @@ A simple Unix shell implementation made as a 42 project.
 
 ## 👥 Authors
 
-<div align="center" style="display: flex; justify-content: center; gap: 40px; align-items: center;">
-  <div style="text-align: center;">
-    <a href="https://github.com/nachat-ayoub" style="text-decoration: none; color: inherit;">
-      <img src="https://github.com/nachat-ayoub.png" width="80" height="80" alt="nachat-ayoub" style="border-radius: 50%"/>
-    </a>
-    <br/>
-    <sub><b><a href="https://profile.intra.42.fr/users/anachat" target="_blank">anachat</a></b></sub>
-  </div>
 
-  <div style="text-align: center;">
-    <a href="https://github.com/berila7" style="text-decoration: none; color: inherit;">
-      <img src="https://github.com/berila7.png" width="80" height="80" alt="berila7" style="border-radius: 50%"/>
-    </a>
-    <br/>
-    <sub><b><a href="https://profile.intra.42.fr/users/mberila" target="_blank">mberila</a></b></sub>
-  </div>
-</div>
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="https://github.com/nachat-ayoub" style="text-decoration: none; color: inherit;">
+        <img src="https://avatars.githubusercontent.com/nachat-ayoub" width="80" height="80" alt="nachat-ayoub" style="border-radius: 50%;"/>
+      </a>
+      <br/>
+      <sub><b><a href="https://profile.intra.42.fr/users/anachat" target="_blank">anachat</a></b></sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/berila7" style="text-decoration: none; color: inherit;">
+        <img src="https://avatars.githubusercontent.com/berila7" width="80" height="80" alt="berila7" style="border-radius: 50%;"/>
+      </a>
+      <br/>
+      <sub><b><a href="https://profile.intra.42.fr/users/mberila" target="_blank">mberila</a></b></sub>
+    </td>
+  </tr>
+</table>
 
 ## ⚙️ How to use
 
