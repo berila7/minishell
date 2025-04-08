@@ -19,7 +19,7 @@ $(PRINTF_DIR):
 	@make -C $(PRINTF_DIR)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) -lreadline $(LIBFT) $(PRINTF) -o $(NAME)
 
 src/%.o: src/%.c $(LIBFT) $(PRINTF) includes/minishell.h
 	$(CC) $(FLAGS) -c $< -o $@ 
