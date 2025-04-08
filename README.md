@@ -12,25 +12,25 @@ A simple Unix shell implementation made as a 42 project.
 
 ## 👥 Authors
 
-
 <table align="center">
   <tr>
     <td align="center">
       <a href="https://github.com/nachat-ayoub" style="text-decoration: none; color: inherit;">
-        <img src="https://avatars.githubusercontent.com/nachat-ayoub" width="80" height="80" alt="nachat-ayoub" style="border-radius: 50%;"/>
+        <img src="https://images.weserv.nl/?url=avatars.githubusercontent.com/nachat-ayoub?v=4&h=300&w=300&fit=cover&mask=circle&maxage=7d" width="80" height="80" alt="nachat-ayoub"/>
       </a>
       <br/>
       <sub><b><a href="https://profile.intra.42.fr/users/anachat" target="_blank">anachat</a></b></sub>
     </td>
     <td align="center">
       <a href="https://github.com/berila7" style="text-decoration: none; color: inherit;">
-        <img src="https://avatars.githubusercontent.com/berila7" width="80" height="80" alt="berila7" style="border-radius: 50%;"/>
+        <img src="https://images.weserv.nl/?url=avatars.githubusercontent.com/berila7?v=4&h=300&w=300&fit=cover&mask=circle&maxage=7d" width="80" height="80" alt="berila7"/>
       </a>
       <br/>
       <sub><b><a href="https://profile.intra.42.fr/users/mberila" target="_blank">mberila</a></b></sub>
     </td>
   </tr>
 </table>
+
 
 ## ⚙️ How to use
 
