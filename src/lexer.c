@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/08 14:41:42 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/08 14:57:51 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*new_token(char *value, t_token_type type)
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->value = value;
+	token->value = ft_strdup(value);
 	if (!token->value)
 	{
 		free(token);
@@ -40,7 +40,7 @@ void	add_token(t_token **tokens, t_token *new_token)
 		return ;
 	}
 	current = *tokens;
-	while (current)
+	while (current->next)
 		current = current->next;
 	current->next = new_token;
 }
@@ -102,7 +102,7 @@ t_token	*tokenize(char *line)
 		{
 			if (line[i + 1] == '<')
 			{
-				add_token(&token, new_token("<<", TOKEN_REDIR_APPEND));
+				add_token(&token, new_token("<<", TOKEN_HEREDOC));
 				i += 2;
 			}
 			else
@@ -115,7 +115,7 @@ t_token	*tokenize(char *line)
 		{
 			if (line[i + 1] == '>')
 			{
-				add_token(&token, new_token(">>", TOKEN_HEREDOC));
+				add_token(&token, new_token(">>", TOKEN_REDIR_APPEND));
 				i += 2;
 			}
 			else
