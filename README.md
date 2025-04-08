@@ -12,19 +12,23 @@ A simple Unix shell implementation made as a 42 project.
 
 ## 👥 Authors
 
-<p align="center">
-  <a href="https://github.com/nachat-ayoub">
-    <img src="https://github.com/nachat-ayoub.png" width="80" height="80" alt="nachat-ayoub"/>
+<div align="center" style="display: flex; justify-content: center; gap: 40px; align-items: center;">
+  <div style="text-align: center;">
+    <a href="https://github.com/nachat-ayoub" style="text-decoration: none; color: inherit;">
+      <img src="https://github.com/nachat-ayoub.png" width="80" height="80" alt="nachat-ayoub" style="border-radius: 50%"/>
+    </a>
     <br/>
-    <sub><b>anachat</b></sub>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/berila7">
-    <img src="https://github.com/berila7.png" width="80" height="80" alt="berila7"/>
+    <sub><b><a href="https://profile.intra.42.fr/users/anachat" target="_blank">anachat</a></b></sub>
+  </div>
+
+  <div style="text-align: center;">
+    <a href="https://github.com/berila7" style="text-decoration: none; color: inherit;">
+      <img src="https://github.com/berila7.png" width="80" height="80" alt="berila7" style="border-radius: 50%"/>
+    </a>
     <br/>
-    <sub><b>mberila</b></sub>
-  </a>
-</p>
+    <sub><b><a href="https://profile.intra.42.fr/users/mberila" target="_blank">mberila</a></b></sub>
+  </div>
+</div>
 
 ## ⚙️ How to use
 
