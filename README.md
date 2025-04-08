@@ -2,7 +2,7 @@
 
 A simple Unix shell implementation made as a 42 project.
 
-## Features
+## ✨ Features
 
 - Execution of commands with arguments
 - Pipes and redirections
@@ -10,13 +10,23 @@ A simple Unix shell implementation made as a 42 project.
 - Signal handling
 - Environment variable management
 
-## Authors
+## 👥 Authors
 
-| [<img src="https://github.com/nachat-ayoub.png" width="50"/>](https://github.com/nachat-ayoub) | [<img src="https://github.com/berila7.png" width="50"/>](https://github.com/berila7) |
-|:--:|:--:|
-| **anachat** | **mberila** |
+<p align="center">
+  <a href="https://github.com/nachat-ayoub">
+    <img src="https://github.com/nachat-ayoub.png" width="80" height="80" alt="nachat-ayoub"/>
+    <br/>
+    <sub><b>anachat</b></sub>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/berila7">
+    <img src="https://github.com/berila7.png" width="80" height="80" alt="berila7"/>
+    <br/>
+    <sub><b>mberila</b></sub>
+  </a>
+</p>
 
-## How to use
+## ⚙️ How to use
 
 ```bash
 make
