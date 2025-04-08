@@ -21,12 +21,11 @@ int main(int ac, char *av[])
 	while (1)
 	{
 		line = readline("minishell> ");
-		if (!line)
+		if (!line || !ft_strncmp(line, "exit", 5))
 			break ;
 		if (line[0])
 			add_history(line);
 		free(line);
 	}
-	printf("exit\n");
 	return (0);
 }
