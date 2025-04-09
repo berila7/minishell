@@ -42,7 +42,7 @@ make
 Compatible with bash behavior and subject to 42 school constraints.
 
 if the the character is '<' the next argument is the input file
-<h2>example:</h2>
+<h2>example: 'cat < input.txt'</h2>
 
 ```c
 t_command cmd3 = {
