@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/09 10:56:31 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:37:50 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ int main(int ac, char *av[])
 	char	*line;
 	t_token	*tokens;
 
-	print_header();
 	(void)ac;
 	(void)av;
 	while (1)
 	{
+		print_header();
 		line = readline("minishell> ");
 		if (!line || !ft_strncmp(line, "exit", 5))
 			break ;
