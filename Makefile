@@ -7,7 +7,7 @@ FLAGS		=		-Wall -Wextra -Werror
 LIBFT		=		$(LIBFT_DIR)/libft.a
 PRINTF		=		$(PRINTF_DIR)/libftprintf.a
 
-SRCS		=		src/minishell.c src/lexer.c
+SRCS		=		src/minishell.c src/parsing/lexer.c
 OBJS		=		$(SRCS:.c = .o)
 
 all: $(LIBFT_DIR) $(PRINTF_DIR) $(NAME)
