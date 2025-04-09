@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/09 10:51:58 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/09 11:04:27 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 #define WHITE       "\033[37m"
 
 typedef struct s_token t_token;
+typedef struct s_command t_command;
 
 typedef enum e_token_type
 {
@@ -49,6 +50,16 @@ typedef enum e_token_type
     TOKEN_REDIR_APPEND,	//	>>
     TOKEN_HEREDOC		//	<<
 }	t_token_type;
+
+struct s_command
+{
+    char        *args;
+    char        *input_file;
+    char        *output_file;
+    int         apped_mode;
+    char        *heredoc_delim;
+    t_command   *next;
+};
 
 struct s_token
 {

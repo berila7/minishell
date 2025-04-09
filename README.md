@@ -41,7 +41,30 @@ make
 
 Compatible with bash behavior and subject to 42 school constraints.
 
-if the the character is '<' the next argument is the input file
+## commands struct
+
+```c
+typedef struct s_command t_command;
+struct s_command
+{
+    char        *args;
+    char        *input_file;
+    char        *output_file;
+    int         apped_mode;
+    char        *heredoc_delim;
+    t_command   *next;
+};
+```
+
+### Understanding the Command Structure
+
+- `args`: An array of strings representing the command and its arguments (e.g.,`["ls", "-la", NULL]`)
+- `input_file`: The file to redirect input from (`<`)
+- `output_file`: The file to redirect output to (`>` or `>>`)
+- `append_mode`: Flag indicating if output should be appended (1) or overwritten (0)
+- `heredoc_delim`: The delimiter string for heredoc (`<<`)
+- `next`: Pointer to the next command in a pipeline
+
 <h2>Example 1: Command with Input Redirection</h2>
 
 ```bash
@@ -59,7 +82,7 @@ t_command cmd3 = {
 };
 
 ```
-<h2>Example 2: </h2>
+<h2>Example 2: Complex Pipeline with Redirections</h2>
 
 ```bash
 grep "error" < logs.txt | sort | uniq > unique_errors.txt
