@@ -6,17 +6,20 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/09 17:56:32 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/09 18:06:44 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_command	*new_command(viod)
+t_command	*new_command()
 {
 	t_command	*cmd;
 
-	
+	cmd	= malloc(sizeof(t_command));
+	if (!cmd)
+		return (NULL);
+	ft_memset(cmd, 0, sizeof(t_command));
 	
 	
 }
