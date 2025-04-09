@@ -42,7 +42,11 @@ make
 Compatible with bash behavior and subject to 42 school constraints.
 
 if the the character is '<' the next argument is the input file
-<h2>example: 'cat < input.txt'</h2>
+<h2>Example 1: Command with Input Redirection</h2>
+
+```bash
+cat < input.txt
+```
 
 ```c
 t_command cmd3 = {
@@ -52,5 +56,40 @@ t_command cmd3 = {
     .append_mode = 0,
     .heredoc_delim = NULL,
     .next = NULL
+};
+
+```
+<h2>Example 2: </h2>
+
+```bash
+grep "error" < logs.txt | sort | uniq > unique_errors.txt
+```
+
+```c
+t_command cmd8_3 = {
+    .args = {"uniq", NULL},
+    .input_file = NULL,
+    .output_file = "unique_errors.txt",
+    .append_mode = 0,
+    .heredoc_delim = NULL,
+    .next = NULL
+};
+
+t_command cmd8_2 = {
+    .args = {"sort", NULL},
+    .input_file = NULL,
+    .output_file = NULL,
+    .append_mode = 0,
+    .heredoc_delim = NULL,
+    .next = &cmd8_3
+};
+
+t_command cmd8_1 = {
+    .args = {"grep", "error", NULL},
+    .input_file = "logs.txt",
+    .output_file = NULL,
+    .append_mode = 0,
+    .heredoc_delim = NULL,
+    .next = &cmd8_2
 };
 ```
