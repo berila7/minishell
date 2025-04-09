@@ -40,3 +40,17 @@ make
 ```
 
 Compatible with bash behavior and subject to 42 school constraints.
+
+if the the character is '<' the next argument is the input file
+<h2>example: 'cat < input.txt'</h2>
+
+```c
+t_command cmd3 = {
+    .args = {"cat", NULL},
+    .input_file = "input.txt",
+    .output_file = NULL,
+    .append_mode = 0,
+    .heredoc_delim = NULL,
+    .next = NULL
+};
+```
