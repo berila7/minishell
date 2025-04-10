@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 15:34:33 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 17:48:09 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main(int ac, char *av[])
 			}
 			printf("\ninput file: '%s'\n", current_cmd->input_file);
 			printf("output file: '%s'\n", current_cmd->output_file);
-			printf("apped mode: '%d'\n", current_cmd->apped_mode);
+			printf("apped mode: '%d'\n", current_cmd->append_mode);
 			printf("heredoc delim: '%s'\n", current_cmd->heredoc_delim);
 			printf("-------\n");
 			current_cmd = current_cmd->next;

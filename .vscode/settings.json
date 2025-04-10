@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "__locale": "c",
-        "stat.h": "c",
-        "termios.h": "c"
-    }
-}

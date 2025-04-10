@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 15:33:01 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 17:47:32 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ struct s_command
     char        **args;
     char        *input_file;
     char        *output_file;
-    int         apped_mode;
+    int         append_mode;
     char        *heredoc_delim;
     t_command   *next;
 };

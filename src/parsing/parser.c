@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 15:20:55 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 17:48:09 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ t_command	*parse_tokens(t_token *tokens)
 			if (token && token->type == TOKEN_WORD)
 			{
 				current_cmd->output_file = ft_strdup(token->value);
-				current_cmd->apped_mode = 0;
+				current_cmd->append_mode = 0;
 				token = token->next;
 			}
 			else
@@ -180,7 +180,7 @@ t_command	*parse_tokens(t_token *tokens)
 			if (token && token->type == TOKEN_WORD)
 			{
 				current_cmd->output_file = ft_strdup(token->value);
-				current_cmd->apped_mode = 1;
+				current_cmd->append_mode = 1;
 				token = token->next;
 			}
 			else
