@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/09 11:04:27 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 10:28:07 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef enum e_token_type
 
 struct s_command
 {
-    char        *args;
+    char        **args;
     char        *input_file;
     char        *output_file;
     int         apped_mode;
