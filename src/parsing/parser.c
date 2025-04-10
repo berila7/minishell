@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 10:21:29 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 11:37:51 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,23 @@ void	add_command(t_command **cmds, t_command *new_cmd)
 	current->next = new_cmd;
 }
 
-t_command	*parse_tokens(t_token *tokes)
+t_command	*parse_tokens(t_token *tokens)
 {
+	t_token		*token;
+	t_command	*current_cmd;
+	t_command	*cmd_list;
+
+	if (!tokens)
+		return (NULL);
+	current_cmd = new_command();
+	cmd_list = NULL;
+	if (!current_cmd)
+		return (NULL);
+	token = tokens;
+	while (token)
+	{
+		/* code */
+	}
 	
 }
 

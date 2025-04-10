@@ -80,9 +80,32 @@ t_command cmd3 = {
     .heredoc_delim = NULL,
     .next = NULL
 };
-
 ```
-<h2>Example 2: Complex Pipeline with Redirections</h2>
+
+<h2>Example 2: Simple Command</h2>
+
+```bash
+ls -la
+```
+
+```c
+t_command cmd1 = {
+    .args = {"ls", "-la", NULL},
+    .input_file = NULL,
+    .output_file = NULL,
+    .append_mode = 0,
+    .heredoc_delim = NULL,
+    .next = NULL
+};
+```
+
+<h3>Explanation:</h3>
+
+<h2>Example 3: Complex Pipeline with Redirections</h2>
+
+- `args`: An array containing the command (`"ls"`) and its argument (`"-la"`), terminated by `NULL`
+- All redirection fields are `NULL` because there are no redirections
+- `next` is `NULL` because this is a standalone command (no pipe "`|`")
 
 ```bash
 grep "error" < logs.txt | sort | uniq > unique_errors.txt
