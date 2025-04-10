@@ -99,13 +99,14 @@ t_command cmd1 = {
 };
 ```
 
-<h3>Explanation:</h3>
-
-<h2>Example 3: Complex Pipeline with Redirections</h2>
+<h4>Explanation:</h4>
 
 - `args`: An array containing the command (`"ls"`) and its argument (`"-la"`), terminated by `NULL`
 - All redirection fields are `NULL` because there are no redirections
 - `next` is `NULL` because this is a standalone command (no pipe "`|`")
+
+<h2>Example 3: Complex Pipeline with Redirections</h2>
+
 
 ```bash
 grep "error" < logs.txt | sort | uniq > unique_errors.txt
