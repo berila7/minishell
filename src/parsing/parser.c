@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 11:37:51 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 11:53:53 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,16 @@ t_command	*parse_tokens(t_token *tokens)
 	token = tokens;
 	while (token)
 	{
-		/* code */
+		if (token->type == TOKEN_WORD)
+		{
+			add_argument(&current_cmd, token->value);
+			token = token->next;
+		}
+		else if (token->type == TOKEN_PIPE)
+		{
+			
+		}
+		
 	}
 	
 }
