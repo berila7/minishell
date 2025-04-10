@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/09 11:37:50 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 11:59:41 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int main(int ac, char *av[])
 
 	(void)ac;
 	(void)av;
+	print_header();
 	while (1)
 	{
-		print_header();
 		line = readline("minishell> ");
 		if (!line || !ft_strncmp(line, "exit", 5))
 			break ;

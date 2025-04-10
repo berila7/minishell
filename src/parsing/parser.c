@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 10:21:29 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:14:20 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,39 @@ void	add_command(t_command **cmds, t_command *new_cmd)
 	current->next = new_cmd;
 }
 
-t_command	*parse_tokens(t_token *tokes)
+t_command	*parse_tokens(t_token *tokens)
 {
+	t_token		*token;
+	t_command	*current_cmd;
+	t_command	*cmd_list;
+
+	if (!tokens)
+		return (NULL);
+	current_cmd = new_command();
+	cmd_list = NULL;
+	if (!current_cmd)
+		return (NULL);
+	token = tokens;
+	while (token)
+	{
+		if (token->type == TOKEN_WORD)
+		{
+			add_argument(current_cmd, token->value);
+			token = token->next;
+		}
+		else if (token->type == TOKEN_PIPE)
+		{
+			add_command(&cmd_list, current_cmd);
+			current_cmd = new_command();
+			if (!current_cmd)
+			{
+				free_commands(cmd_list);
+				return (NULL);
+			}
+			token = token->next;
+		}
+		
+	}
 	
 }
 
