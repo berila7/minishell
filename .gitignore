@@ -2,5 +2,5 @@
 *.a
 minishell
 out.c
-*.txt
 .vscode
+*.txt
