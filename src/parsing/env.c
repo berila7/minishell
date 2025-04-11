@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 17:18:31 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 17:23:35 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,24 @@ void	*set_env_value(t_env **env, char *key, char *value)
 	*env = new_var;
 }
 
+void	free_env(t_env *env)
+{
+	t_env	*current;
+	t_env	*next;
+
+	current = env;
+	while (current)
+	{
+		next = current->next;
+		free(current->key);
+		free(current->value);
+		free(current);
+		current = next;
+	}
+}
+
 // char	*expand_env_vars(t_env *env, char *str, int exit_status)
 // {
 	
 // }
+
