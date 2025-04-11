@@ -6,11 +6,11 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:21:16 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/11 16:18:46 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:34:10 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	handle_spaces_and_sign(const char *str, int *i, int *sign)
 {

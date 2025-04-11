@@ -6,11 +6,11 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/11 16:23:56 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:43:02 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	is_long(const char *str)
 {
@@ -34,7 +34,7 @@ int	is_long(const char *str)
 	while (str[i] && ft_isdigit(str[i]))
 	{
 		if (nb > 922337203685477580 || ((nb == 922337203685477580)
-			&& (s == 1 && str[i] > '7' || s == -1 && str[i] > '8')))
+			&& ((s == 1 && str[i] > '7') || (s == -1 && str[i] > '8'))))
 			return (0);
 		nb = nb * 10 + (str[i++] - '0');
 	}

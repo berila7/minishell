@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/11 16:41:44 by mberila          ###   ########.fr       */
+=======
+/*   Updated: 2025/04/11 16:33:51 by anachat          ###   ########.fr       */
+>>>>>>> 59e8fd438bd48c1a2609a19c6bd2b2ea8ad067cf
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_env	*init_env(char	**envp)
 {

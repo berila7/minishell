@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/11 15:41:27 by mberila          ###   ########.fr       */
+=======
+/*   Updated: 2025/04/11 16:33:11 by anachat          ###   ########.fr       */
+>>>>>>> 59e8fd438bd48c1a2609a19c6bd2b2ea8ad067cf
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	f(void)
 {
