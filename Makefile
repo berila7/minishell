@@ -14,7 +14,7 @@ HELPERS_DIR		=	$(SRC_DIR)/helpers
 SRCS			=	$(SRC_DIR)/minishell.c \
 					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c \
-					$(HELPERS_DIR)/atol.c
+					$(HELPERS_DIR)/atol.c $(HELPERS_DIR)/ft_strcmp.c
 OBJS			=	$(SRCS:.c = .o)
 
 all: $(LIBFT_DIR) $(NAME)
