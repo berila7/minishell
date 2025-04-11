@@ -1,13 +1,21 @@
-NAME		=		minishell
+NAME			=	minishell
 
-CC			=		cc
-LIBFT_DIR	=		lib/libft
-FLAGS		=		-Wall -Wextra -Werror -Iincludes
-LIBFT		=		$(LIBFT_DIR)/libft.a
+CC				=	cc
+FLAGS			=	-Wall -Wextra -Werror -Iincludes
 
-SRCS		=		src/minishell.c src/parsing/lexer.c src/parsing/parser.c src/parsing/env.c \
-					src/builtins/env.c
-OBJS		=		$(SRCS:.c = .o)
+LIBFT_DIR		=	lib/libft
+LIBFT			=	$(LIBFT_DIR)/libft.a
+
+SRC_DIR     	=	src
+PARSING_DIR		=	$(SRC_DIR)/parsing
+BUILTINS_DIR	=	$(SRC_DIR)/builtins
+HELPERS_DIR		=	$(SRC_DIR)/helpers
+
+SRCS			=	$(SRC_DIR)/minishell.c \
+					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
+					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c \
+					$(HELPERS_DIR)/atol.c
+OBJS			=	$(SRCS:.c = .o)
 
 all: $(LIBFT_DIR) $(NAME)
 
