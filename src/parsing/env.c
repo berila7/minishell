@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 16:58:07 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 17:18:31 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,31 @@ char	*get_env_value(t_env *env, char *key)
 		current = current->next;
 	}
 	return (NULL);
+}
+
+void	*set_env_value(t_env **env, char *key, char *value)
+{
+	t_env	*current;
+	t_env	*new_var;
+
+	current = *env;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			free(current->value);
+			current->value = ft_strdup(value);
+			return ;
+		}
+		current = current->next;
+	}
+	new_var = malloc(sizeof(t_env));
+	if (!new_var)
+		return ;
+	new_var->key = ft_strdup(key);
+	new_var->value = ft_strdup(value);
+	new_var->next = *env;
+	*env = new_var;
 }
 
 // char	*expand_env_vars(t_env *env, char *str, int exit_status)
