@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:38:57 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 16:39:35 by mberila          ###   ########.fr       */
+/*   Created: 2025/04/11 16:43:00 by mberila           #+#    #+#             */
+/*   Updated: 2025/04/11 16:49:15 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-`
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	while ((s1[i] && s2[i]) && (s1[i] == s2[i]))
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+int main ()
+{
+	char *first = "mohammed";
+	char *second = "mohammed";
+	int	size = ft_strcmp(first, second);
+	printf("%d", size);
+}

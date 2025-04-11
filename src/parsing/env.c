@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 15:30:08 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:41:44 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,19 @@ t_env	*init_env(char	**envp)
 	return (env_list);
 }
 
-// char	*get_env_value(t_env *env, char *key)
-// {
+char	*get_env_value(t_env *env, char *key)
+{
+	t_env	*current;
 
-// }
+	current = env;
+	while (current)
+	{
+		if(ft_strncmp(current->key, key, ft_strlen(key)) == 0)
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
+}
 
 // char	*expand_env_vars(t_env *env, char *str, int exit_status)
 // {
