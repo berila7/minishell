@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 17:47:32 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 10:22:45 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,26 @@
 
 typedef struct s_token t_token;
 typedef struct s_command t_command;
+typedef struct s_env t_env;
 
 typedef enum e_token_type
 {
 	TOKEN_WORD,			//	(commands, arguments, filenames)
-    TOKEN_PIPE,			//	|
-    TOKEN_REDIR_IN,		//	<
-    TOKEN_REDIR_OUT,	//	>
-    TOKEN_REDIR_APPEND,	//	>>
-    TOKEN_HEREDOC		//	<<
+	TOKEN_PIPE,			//	|
+	TOKEN_REDIR_IN,		//	<
+	TOKEN_REDIR_OUT,	//	>
+	TOKEN_REDIR_APPEND,	//	>>
+	TOKEN_HEREDOC		//	<<
 }	t_token_type;
 
 struct s_command
 {
-    char        **args;
-    char        *input_file;
-    char        *output_file;
-    int         append_mode;
-    char        *heredoc_delim;
-    t_command   *next;
+	char        **args;
+	char        *input_file;
+	char        *output_file;
+	int         append_mode;
+	char        *heredoc_delim;
+	t_command   *next;
 };
 
 struct s_token
@@ -66,6 +67,13 @@ struct s_token
 	char			*value;
 	t_token_type	type;
 	t_token			*next;
+};
+
+struct s_env
+{
+	char		*key;
+	char		*value;
+	t_env		*next;
 };
 
 t_token	*tokenize(char *line);
