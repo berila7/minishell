@@ -5,7 +5,8 @@ LIBFT_DIR	=		lib/libft
 FLAGS		=		-Wall -Wextra -Werror
 LIBFT		=		$(LIBFT_DIR)/libft.a
 
-SRCS		=		src/minishell.c src/parsing/lexer.c src/parsing/parser.c
+SRCS		=		src/minishell.c src/parsing/lexer.c src/parsing/parser.c src/parsing/env.c \
+					src/builtins/builtin_env.c
 OBJS		=		$(SRCS:.c = .o)
 
 all: $(LIBFT_DIR) $(NAME)

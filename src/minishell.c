@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 10:42:32 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 15:38:26 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,18 @@ static void	print_header()
 	printf("\n╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n\n" RESET);
 }
 
-int main(int ac, char *av[])
+int main(int ac, char *av[], char **envp)
 {
 	char		*line;
 	t_token		*tokens;
 	t_command	*cmd;
+	t_env		*env;
 
 	(void)ac;
 	(void)av;
 	atexit(f);
+	env = init_env(envp);
+	ft_env(env);
 	print_header();
 	while (1)
 	{
