@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/11 15:41:27 by mberila          ###   ########.fr       */
-=======
-/*   Updated: 2025/04/11 16:33:11 by anachat          ###   ########.fr       */
->>>>>>> 59e8fd438bd48c1a2609a19c6bd2b2ea8ad067cf
+/*   Updated: 2025/04/11 17:01:39 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +32,13 @@ int main(int ac, char *av[], char **env)
 	char		*line;
 	t_token		*tokens;
 	t_command	*cmd;
-	t_env		*env;
+	t_env		*envp;
 
 	(void)ac;
 	(void)av;
 	atexit(f);
-	env = init_env(env);
-	ft_env(env);
+	envp = init_env(env);
+	ft_env(envp);
 	print_header();
 	while (1)
 	{

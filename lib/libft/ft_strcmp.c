@@ -6,11 +6,11 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:43:00 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 16:52:09 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 17:02:47 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
