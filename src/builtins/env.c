@@ -6,11 +6,11 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:01:21 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 16:24:22 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:33:29 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	ft_env(t_env *env)
 {

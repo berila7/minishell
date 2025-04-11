@@ -2,11 +2,11 @@ NAME		=		minishell
 
 CC			=		cc
 LIBFT_DIR	=		lib/libft
-FLAGS		=		-Wall -Wextra -Werror
+FLAGS		=		-Wall -Wextra -Werror -Iincludes
 LIBFT		=		$(LIBFT_DIR)/libft.a
 
 SRCS		=		src/minishell.c src/parsing/lexer.c src/parsing/parser.c src/parsing/env.c \
-					src/builtins/builtin_env.c
+					src/builtins/env.c
 OBJS		=		$(SRCS:.c = .o)
 
 all: $(LIBFT_DIR) $(NAME)
