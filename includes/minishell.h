@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 10:28:07 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:17:38 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <limits.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -68,7 +69,9 @@ struct s_token
 	t_token			*next;
 };
 
-t_token	*tokenize(char *line);
+t_token *tokenize(char *line);
 void	free_tokens(t_token *tokens);
+long    ft_atol(const char *str);
+int     count_args(char **args);
 
 #endif
