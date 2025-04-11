@@ -6,11 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/11 16:17:38 by anachat          ###   ########.fr       */
-=======
-/*   Updated: 2025/04/11 15:28:06 by mberila          ###   ########.fr       */
->>>>>>> 653f42d1a43289914018cafbdf67710c3804392b
+/*   Updated: 2025/04/11 16:28:23 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +69,6 @@ struct s_token
 	t_token			*next;
 };
 
-<<<<<<< HEAD
-t_token *tokenize(char *line);
-void	free_tokens(t_token *tokens);
-long    ft_atol(const char *str);
-int     count_args(char **args);
-=======
 struct s_env
 {
 	char		*key;
@@ -92,7 +82,12 @@ t_command	*parse_tokens(t_token *tokens);
 void		free_commands(t_command *commands);
 void		free_command(t_command *cmd);
 t_env		*init_env(char	**envp);
+long	    ft_atol(const char *str);
+int     	count_args(char **args);
+
+// builtins:
+void		ft_echo(char **args);
+int			ft_exit(char **args);
 int			ft_env(t_env *env);
->>>>>>> 653f42d1a43289914018cafbdf67710c3804392b
 
 #endif
