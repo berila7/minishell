@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:01:21 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 13:14:55 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:24:22 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_env(t_env *env)
 	current = env;
 	while (current)
 	{
-		printf("%s=%s\n",current->key, current->value);
+		printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
 	return (0);
