@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/11 16:21:44 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/11 16:23:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	is_long(const char *str)
 			return (0);
 		nb = nb * 10 + (str[i++] - '0');
 	}
-	return 1;
+	return (1);
 }
 
 int	ft_exit(char **args)

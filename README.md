@@ -50,7 +50,7 @@ struct s_command
     char        *args;
     char        *input_file;
     char        *output_file;
-    int         apped_mode;
+    int         append_mode;
     char        *heredoc_delim;
     t_command   *next;
 };

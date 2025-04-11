@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 12:14:20 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/10 17:48:09 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,46 @@ void	add_argument(t_command *cmd, char *arg)
 	cmd->args = new_args;
 }
 
+
+void	free_command(t_command *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd)
+		return ;
+	if (cmd->args)
+	{
+		while (cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
+		free(cmd->args);
+	}
+	if (cmd->input_file)
+		free(cmd->input_file);
+	if (cmd->output_file)
+		free(cmd->output_file);
+	if (cmd->heredoc_delim)
+		free(cmd->heredoc_delim);
+	free(cmd);
+}
+
+void	free_commands(t_command *commands)
+{
+	t_command	*current;
+	t_command	*next;
+
+	current = commands;
+	while (current)
+	{
+		next = current->next;
+		free_command(current);
+		current = next;
+	}
+}
+
 void	add_command(t_command **cmds, t_command *new_cmd)
 {
 	t_command	*current;
@@ -103,46 +143,69 @@ t_command	*parse_tokens(t_token *tokens)
 			}
 			token = token->next;
 		}
-		
-	}
-	
-}
-
-void	free_command(t_command *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (!cmd)
-		return (NULL);
-	if (cmd->args)
-	{
-		while (cmd->args[i])
+		else if (token->type == TOKEN_REDIR_IN)
 		{
-			free(cmd->args[i]);
-			i++;
+			token = token->next;
+			if (token && token->type == TOKEN_WORD)
+			{
+				current_cmd->input_file = ft_strdup(token->value);
+				token = token->next;
+			}
+			else
+			{
+				free_commands(cmd_list);
+				free_command(current_cmd);
+				return (NULL);
+			}
 		}
-		free(cmd->args);
+		else if (token->type == TOKEN_REDIR_OUT)
+		{
+			token = token->next;
+			if (token && token->type == TOKEN_WORD)
+			{
+				current_cmd->output_file = ft_strdup(token->value);
+				current_cmd->append_mode = 0;
+				token = token->next;
+			}
+			else
+			{
+				free_commands(cmd_list);
+				free_command(current_cmd);
+				return (NULL);
+			}
+		}
+		else if (token->type == TOKEN_REDIR_APPEND)
+		{
+			token = token->next;
+			if (token && token->type == TOKEN_WORD)
+			{
+				current_cmd->output_file = ft_strdup(token->value);
+				current_cmd->append_mode = 1;
+				token = token->next;
+			}
+			else
+			{
+				free_commands(cmd_list);
+				free_command(current_cmd);
+				return (NULL);
+			}
+		}
+		else if (token->type == TOKEN_HEREDOC)
+		{
+			token = token->next;
+			if (token && token->type == TOKEN_WORD)
+			{
+				current_cmd->heredoc_delim = ft_strdup(token->value);
+				token = token->next;
+			}
+			else
+			{
+				free_commands(cmd_list);
+				free_command(current_cmd);
+				return (NULL);
+			}
+		}
 	}
-	if (cmd->input_file)
-		free(cmd->input_file);
-	if (cmd->output_file)
-		free(cmd->output_file);
-	if (cmd->heredoc_delim)
-		free(cmd->heredoc_delim);
-	free(cmd);
-}
-
-void	free_commands(t_command *commands)
-{
-	t_command	*current;
-	t_command	*next;
-
-	current = commands;
-	while (current)
-	{
-		next = current->next;
-		free_command(current);
-		current = next;
-	}
+	add_command(&cmd_list, current_cmd);
+	return (cmd_list);
 }
