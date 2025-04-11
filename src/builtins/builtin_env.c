@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 10:56:24 by mberila           #+#    #+#             */
-/*   Updated: 2024/11/23 10:30:56 by mberila          ###   ########.fr       */
+/*   Created: 2025/04/11 10:01:21 by mberila           #+#    #+#             */
+/*   Updated: 2025/04/11 13:14:55 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../includes/minishell.h"
 
-int	ft_putstr(char *str)
+int	ft_env(t_env *env)
 {
-	size_t	len;
+	t_env	*current;
 
-	len = 0;
-	if (!str)
-		return ((write(1, "(null)", 6)));
-	while (str[len])
+	current = env;
+	while (current)
 	{
-		write(1, &str[len++], 1);
+		printf("%s=%s\n",current->key, current->value);
+		current = current->next;
 	}
-	return (len);
+	return (0);
 }

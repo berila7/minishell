@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/10 17:48:09 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 10:42:32 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int main(int ac, char *av[])
 			int i = 0;
 			while (current_cmd->args[i])
 			{
-				printf("args: '%s'", current_cmd->args[i]);
+				printf("(args[%d]-> '%s' )-->", i, current_cmd->args[i]);
 				i++;
 			}
 			printf("\ninput file: '%s'\n", current_cmd->input_file);

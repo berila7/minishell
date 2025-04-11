@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 10:22:45 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/11 13:19:01 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
-# include "../lib/ft_printf/ft_printf.h"
 
 #define RESET       "\033[0m"
 #define BLACK       "\033[30m"
