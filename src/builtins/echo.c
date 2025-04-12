@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/11 16:33:24 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/12 16:04:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_echo(char **args)
 	if (count_args(args) > 1)
 	{
 		i = 0;
-		while (args[++i] && ft_strncmp("-n", args[i], 3) == 0)
+		while (args[++i] && ft_strcmp("-n", args[i]) == 0)
 			new_line = 0;
 		while (args[i])
 		{

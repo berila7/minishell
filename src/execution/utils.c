@@ -1,19 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/12 16:08:05 by anachat          ###   ########.fr       */
+/*   Created: 2025/04/12 15:03:22 by anachat           #+#    #+#             */
+/*   Updated: 2025/04/12 17:19:54 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec(t_data *data)
+int	cmd_exists(char *path)
 {
-	set_cmds_path(data->cmds, );
-	return (data->exit_status);
+	if (access(path, F_OK | X_OK) == 0)
+		return (1);
+	return (0);
+}
+
+char	*join_path(char *path, char *cmd)
+{
+	char	*cmd_path;
+	char	*tmp;
+
+	tmp = ft_strjoin(path, "/");
+	if (!tmp)
+		return (NULL);
+	cmd_path = ft_strjoin(tmp, cmd);
+	free(tmp);
+	if (!cmd_path)
+		return (NULL);
+	return (cmd_path);
+}
+
+void	free_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }

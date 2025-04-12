@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 15:58:53 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 17:57:54 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,23 @@ long	    ft_atol(const char *str);
 int     	count_args(char **args);
 int			exec(t_data *data);
 char		*expand_variables(char *str, t_env *env, int exit_status);
+void		set_cmd_path(t_command *cmds, t_env *env);
 
 // builtins:
 void		ft_echo(char **args);
 int			ft_exit(char **args);
 int			ft_env(t_env *env);
 
+// exec utils:
+void		free_arr(char **arr);
+int			cmd_exists(char *path);
+char		*find_cmd(char **paths, char *cmd);
+char		*join_path(char *path, char *cmd);
+
 // Debug functions:
-void print_tokens(t_token *tokens);
-void print_cmds(t_command *cmds);
+void		print_tokens(t_token *tokens);
+void		print_cmds(t_command *cmds);
+
+
 
 #endif

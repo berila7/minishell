@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 16:39:41 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 17:59:25 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_sta
 	int		start;
 	int		in_quote;
 	char 	*word;
-	char	*expanded_word;
-
+	// char	*expanded_word;
+	(void)env;
+	(void)exit_status;
 	start = *i;
 	in_quote = 0;
 	while (line[*i])
@@ -77,10 +78,10 @@ void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_sta
 	if (*i > start)
 	{
 		word = ft_substr(line, start, *i - start);
-		expanded_word = expand_variables(word, env, exit_status);
+		// expanded_word = expand_variables(word, env, exit_status);
+		// free(word);
+		add_token(tokens, new_token(word, TOKEN_WORD));
 		free(word);
-		add_token(tokens, new_token(expanded_word, TOKEN_WORD));
-		free(expanded_word);
 	}
 }
 
