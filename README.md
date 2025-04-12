@@ -46,6 +46,19 @@ Compatible with bash behavior and subject to 42 school constraints.
 ### Tokens struct
 
 ```c
+typedef enum e_token_type
+{
+	TOKEN_WORD,			//	(commands, arguments, filenames)
+	TOKEN_PIPE,			//	|
+	TOKEN_REDIR_IN,		//	<
+	TOKEN_REDIR_OUT,	//	>
+	TOKEN_REDIR_APPEND,	//	>>
+	TOKEN_HEREDOC		//	<<
+}	t_token_type;
+```
+### Token types struct
+
+```c
 struct s_token
 {
 	char			*value;
@@ -53,6 +66,22 @@ struct s_token
 	t_token			*next;
 };
 ```
+
+- Let's take this example:
+
+```bash
+cat < Makefile
+```
+
+First, we process the input line, identifying specific tokens. These tokens can be special characters like `<`, `|`, `>`, `>>`, `<<`, or strings such as '`cat`'.
+
+Then, for each token identified, we create a data structure that contains the token's value (e.g., (`cat`) or (`>`)) and its type (e.g., '`TOKEN_WORD`' or '`TOKEN_REDIR_IN`').
+
+Finally, we add each of these structures to a linked list. In this list, each element (or 'node') points to the next node, creating a sequence that represents the parsed input. For example:
+
+`cat` --> `>` --> `Makefile`"
+
+<img src="https://imgur.com/a/lz7WAZb">
 
 ### Commands struct
 

@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 13:20:53 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 16:39:41 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,7 @@ t_token	*tokenize(char *line, t_env *env, int exit_status)
 			}
 		}
 		else
-		{
 			extract_word(&token, line, &i, env, exit_status);
-		}
-		
 	}
 	return (token);
 }

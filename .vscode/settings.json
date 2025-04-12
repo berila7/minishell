@@ -6,6 +6,7 @@
         "stat.h": "c",
         "termios.h": "c",
         "minishell.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "iterator": "c"
     }
 }
