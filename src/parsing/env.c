@@ -6,11 +6,16 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 17:23:35 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 13:50:32 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_valid_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
+}
 
 t_env	*init_env(char	**envp)
 {
@@ -55,7 +60,7 @@ char	*get_env_value(t_env *env, char *key)
 	return (NULL);
 }
 
-void	*set_env_value(t_env **env, char *key, char *value)
+void	set_env_value(t_env **env, char *key, char *value)
 {
 	t_env	*current;
 	t_env	*new_var;
@@ -96,8 +101,30 @@ void	free_env(t_env *env)
 	}
 }
 
-// char	*expand_env_vars(t_env *env, char *str, int exit_status)
-// {
-	
-// }
+void	unset_env_value(t_env **env, char *key)
+{
+	t_env	*current;
+	t_env	*prev;
+
+	current = *env;
+	prev = NULL;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			if (prev)
+				prev->next = current->next;
+			else
+				*env = current->next;
+			free(current->key);
+			free(current->value);
+			free(current);
+			return ;
+		}
+		prev = current;
+		current = current->next;
+	}
+}
+
+
 

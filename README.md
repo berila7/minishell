@@ -41,7 +41,20 @@ make
 
 Compatible with bash behavior and subject to 42 school constraints.
 
-## commands struct
+## 🔐 Tokenize
+
+### Tokens struct
+
+```c
+struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	t_token			*next;
+};
+```
+
+### Commands struct
 
 ```c
 typedef struct s_command t_command;

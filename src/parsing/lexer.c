@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 16:33:51 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/12 13:20:53 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ void	add_token(t_token **tokens, t_token *new_token)
 	current->next = new_token;
 }
 
-void	extract_word(t_token **tokens, char *line, int *i)
+void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_status)
 {
-	int	start;
-	int	in_quote;
-	char *word;
+	int		start;
+	int		in_quote;
+	char 	*word;
+	char	*expanded_word;
 
 	start = *i;
 	in_quote = 0;
@@ -76,12 +77,14 @@ void	extract_word(t_token **tokens, char *line, int *i)
 	if (*i > start)
 	{
 		word = ft_substr(line, start, *i - start);
-		add_token(tokens, new_token(word, TOKEN_WORD));
+		expanded_word = expand_variables(word, env, exit_status);
 		free(word);
+		add_token(tokens, new_token(expanded_word, TOKEN_WORD));
+		free(expanded_word);
 	}
 }
 
-t_token	*tokenize(char *line)
+t_token	*tokenize(char *line, t_env *env, int exit_status)
 {
 	t_token	*token = NULL;
 	int		i;
@@ -126,7 +129,7 @@ t_token	*tokenize(char *line)
 		}
 		else
 		{
-			extract_word(&token, line, &i);
+			extract_word(&token, line, &i, env, exit_status);
 		}
 		
 	}
