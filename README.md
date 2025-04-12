@@ -82,7 +82,7 @@ Finally, we add each of these structures to a linked list. In this list, each el
 
 `cat` --> `>` --> `Makefile`"
 
-<img src="https://imgur.com/a/lz7WAZb">
+<img src="https://i.imgur.com/sJDpko1.png">
 
 ### Commands struct
 
