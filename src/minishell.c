@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 14:09:57 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:14:30 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int main(int ac, char *av[], char **env)
 			add_history(line);
 		tokens = tokenize(line);
 		cmd = parse_tokens(tokens);
-		t_token	*curr_tokens = tokens;
-		t_command *curr_cmd = cmd;
 		
-		print_tokens(curr_tokens);
-		print_cmds(curr_cmd);
-		
+		// ! ======[ DEBUG: ]======
+		print_tokens(tokens);
+		print_cmds(cmd);
+		// ! ======================
+ 
 		free_tokens(tokens);
 		free_commands(cmd);
 		free(line);
