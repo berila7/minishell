@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 14:57:00 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 17:09:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ int main(int ac, char *av[], char **envp)
 		print_tokens(tokens);
 		print_cmds(cmd);
 		// ! ======================
+		
+		set_cmd_path(cmd, env);
+		print_cmds(cmd);
  
 		free_tokens(tokens);
 		free_commands(cmd);
