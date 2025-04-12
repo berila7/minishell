@@ -11,7 +11,7 @@ PARSING_DIR		=	$(SRC_DIR)/parsing
 BUILTINS_DIR	=	$(SRC_DIR)/builtins
 HELPERS_DIR		=	$(SRC_DIR)/helpers
 
-SRCS			=	$(SRC_DIR)/minishell.c \
+SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c \
 					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c \
 					$(HELPERS_DIR)/atol.c

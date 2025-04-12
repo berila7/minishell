@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 17:23:35 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:01:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_env_value(t_env *env, char *key)
 	return (NULL);
 }
 
-void	*set_env_value(t_env **env, char *key, char *value)
+void	set_env_value(t_env **env, char *key, char *value)
 {
 	t_env	*current;
 	t_env	*new_var;
