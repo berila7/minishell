@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 16:02:51 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 18:01:45 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main(int ac, char *av[], char **envp)
 		return (printf("Failed to allocat"), 0);
 	data->env = init_env(envp);
 	data->exit_status = 1;
-	ft_env(envp);
+	ft_env(data->env);
 	print_header();
 	while (1)
 	{
