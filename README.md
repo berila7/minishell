@@ -46,6 +46,17 @@ Compatible with bash behavior and subject to 42 school constraints.
 ### Tokens struct
 
 ```c
+struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	t_token			*next;
+};
+```
+
+### Token types struct
+
+```c
 typedef enum e_token_type
 {
 	TOKEN_WORD,			//	(commands, arguments, filenames)
@@ -55,16 +66,6 @@ typedef enum e_token_type
 	TOKEN_REDIR_APPEND,	//	>>
 	TOKEN_HEREDOC		//	<<
 }	t_token_type;
-```
-### Token types struct
-
-```c
-struct s_token
-{
-	char			*value;
-	t_token_type	type;
-	t_token			*next;
-};
 ```
 
 - Let's take this example:
