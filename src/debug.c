@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/12 14:04:10 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:45:48 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,26 @@ void print_tokens(t_token *tokens)
 {
 	t_token *current = tokens;
 
-	printf(PURPLE "\n========== TOKENS ==========\n" RESET);
+	printf(ORANGE "\n========== TOKENS ==========\n" RESET);
 	while (current)
 	{
 		printf(GREEN "Token: " YELLOW "'%s'" RESET ", ", current->value);
 		printf(CYAN "Type: %d\n" RESET, current->type);
 		current = current->next;
 	}
-	printf(PURPLE "============================\n\n" RESET);
+	printf(ORANGE "============================\n\n" RESET);
 }
-
 
 void print_cmds(t_command *cmds)
 {
 	t_command *current_cmd = cmds;
+	int j = 0;
 
 	printf(PURPLE "\n========== COMMANDS ==========\n" RESET);
 	while (current_cmd)
 	{
-		printf(BLUE "Command:\n" RESET);
+		j++;
+		printf(BLUE "Command: [%d]\n" RESET, j);
 
 		for (int i = 0; current_cmd->args && current_cmd->args[i]; i++)
 		{

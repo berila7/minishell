@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 14:08:17 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:16:18 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 #define BLUE        "\033[38;2;70;130;255m"
 #define PURPLE 		"\033[38;2;193;77;255m"
 #define CYAN        "\033[36m"
+#define ORANGE      "\033[38;2;255;165;0m"
 #define WHITE       "\033[37m"
 
 typedef struct s_token t_token;
