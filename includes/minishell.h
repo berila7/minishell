@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 14:49:05 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:56:27 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@
 #define RED         "\033[31m"
 #define GREEN       "\033[32m"
 #define YELLOW      "\033[33m"
-#define BLUE        "\033[34m"
+#define BLUE        "\033[38;2;70;130;255m"
 #define PURPLE 		"\033[38;2;193;77;255m"
 #define CYAN        "\033[36m"
+#define ORANGE      "\033[38;2;255;165;0m"
 #define WHITE       "\033[37m"
 
 typedef struct s_token t_token;
@@ -83,8 +84,8 @@ struct s_data
 {
 	t_command	*cmds;
 	t_env		*env;
-	int			exit;
-	// pipe // int[2]
+	int			exit_status;
+	int			pipe_fd[2];
 };
 
 t_token		*tokenize(char *line, t_env *env, int exit_status);
@@ -101,5 +102,9 @@ char		*expand_variables(char *str, t_env *env, int exit_status);
 void		ft_echo(char **args);
 int			ft_exit(char **args);
 int			ft_env(t_env *env);
+
+// Debug functions:
+void print_tokens(t_token *tokens);
+void print_cmds(t_command *cmds);
 
 #endif
