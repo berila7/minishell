@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 14:56:27 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 15:00:24 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ struct s_data
 
 t_token		*tokenize(char *line, t_env *env, int exit_status);
 void		free_tokens(t_token *tokens);
-t_data		*parse_tokens(t_token *tokens);
+t_command	*parse_tokens(t_token *tokens);
 void		free_commands(t_command *commands);
 void		free_command(t_command *cmd);
 t_env		*init_env(char	**envp);
