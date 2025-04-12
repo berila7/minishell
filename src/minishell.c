@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 17:09:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/12 18:00:29 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,35 +31,43 @@ int main(int ac, char *av[], char **envp)
 {
 	char		*line;
 	t_token		*tokens;
-	t_command	*cmd;
-	t_env		*env;
+	// t_command	*cmd;
+	// t_env		*env;
+	t_data		*data = NULL;
 
 	(void)ac;
 	(void)av;
 	// atexit(f);
-	env = init_env(envp);
-	// ft_env(envp);
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (printf("Failed to allocat"), 0);
+	data->env = init_env(envp);
+	data->exit_status = 1;
+	ft_env(data->env);
 	print_header();
 	while (1)
 	{
 		line = readline(BLUE"minishell ➤ "RESET);
 		if (!line || !ft_strncmp(line, "exit", 5))
+		{
+			printf("exit\n");
 			break ;
+		}
 		if (line[0])
 			add_history(line);
-		tokens = tokenize(line, env, 1);
-		cmd = parse_tokens(tokens);
-		
+		tokens = tokenize(line, data->env, data->exit_status);
+		data->cmds = parse_tokens(tokens);
+		// exec(data);
 		// ! ======[ DEBUG: ]======
 		print_tokens(tokens);
-		print_cmds(cmd);
+		print_cmds(data->cmds);
 		// ! ======================
 		
-		set_cmd_path(cmd, env);
-		print_cmds(cmd);
+		set_cmd_path(data->cmds, data->env);
+		print_cmds(data->cmds);
  
 		free_tokens(tokens);
-		free_commands(cmd);
+		free_commands(data->cmds);
 		free(line);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 17:19:13 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/12 17:57:54 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ struct s_data
 	t_command	*cmds;
 	t_env		*env;
 	int			exit_status;
-	int			pipe_fd[2];
+	// int			pipe_fd[2];
 };
 
 t_token		*tokenize(char *line, t_env *env, int exit_status);
@@ -96,6 +96,7 @@ void		free_command(t_command *cmd);
 t_env		*init_env(char	**envp);
 long	    ft_atol(const char *str);
 int     	count_args(char **args);
+int			exec(t_data *data);
 char		*expand_variables(char *str, t_env *env, int exit_status);
 void		set_cmd_path(t_command *cmds, t_env *env);
 

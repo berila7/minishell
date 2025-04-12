@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 17:05:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/12 17:59:25 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,7 @@ t_token	*tokenize(char *line, t_env *env, int exit_status)
 			}
 		}
 		else
-		{
 			extract_word(&token, line, &i, env, exit_status);
-		}
-		
 	}
 	return (token);
 }
