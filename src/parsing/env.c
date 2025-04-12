@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 13:50:32 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:53:30 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,5 @@ void	unset_env_value(t_env **env, char *key)
 		current = current->next;
 	}
 }
-
 
 

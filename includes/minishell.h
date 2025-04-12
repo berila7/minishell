@@ -6,13 +6,14 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 12:08:58 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:49:05 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <fcntl.h>
 # include <limits.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -41,6 +42,7 @@
 typedef struct s_token t_token;
 typedef struct s_command t_command;
 typedef struct s_env t_env;
+typedef struct s_data t_data;
 
 typedef enum e_token_type
 {
@@ -55,6 +57,7 @@ typedef enum e_token_type
 struct s_command
 {
 	char        **args;
+	char        *path;
 	char        *input_file;
 	char        *output_file;
 	int         append_mode;
@@ -76,11 +79,17 @@ struct s_env
 	t_env		*next;
 };
 
-
+struct s_data
+{
+	t_command	*cmds;
+	t_env		*env;
+	int			exit;
+	// pipe // int[2]
+};
 
 t_token		*tokenize(char *line, t_env *env, int exit_status);
 void		free_tokens(t_token *tokens);
-t_command	*parse_tokens(t_token *tokens);
+t_data		*parse_tokens(t_token *tokens);
 void		free_commands(t_command *commands);
 void		free_command(t_command *cmd);
 t_env		*init_env(char	**envp);
