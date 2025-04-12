@@ -1,0 +1,2 @@
+*.c merge=keep-header
+*.h merge=keep-header
