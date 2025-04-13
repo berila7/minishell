@@ -14,6 +14,7 @@ EXEC_DIR	=	$(SRC_DIR)/execution
 
 SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c \
 					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
+					$(PARSING_DIR)/utils.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c \
 					$(BUILTINS_DIR)/builtins_utils.c \
 					$(EXEC_DIR)/exec.c $(EXEC_DIR)/set_cmd_path.c $(EXEC_DIR)/utils.c \

@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 17:27:06 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 20:51:46 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	int		in_single_quote;
 	int		in_double_quote;
 	int		start;
-	char	c[2];
 
 	result = ft_strdup("");
 	if (!result)
@@ -146,18 +145,18 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	(void)env;
 	while (str[i])
 	{
-		if (str[i] == '\'' && !in_single_quote)
+		if (str[i] == '\'' && !in_double_quote)
 		{
 			in_single_quote = !in_single_quote;
-			temp = ft_strjoin(result, str[i]);
+			temp = ft_strjoin_char(result, str[i]);
 			free(result);
 			result = temp;
 			i++;
 		}
-		else if (str[i] == '\"')
+		else if (str[i] == '\"' && !in_double_quote)
 		{
 			in_double_quote = !in_double_quote;
-			temp = ft_strjoin(result, str[i]);
+			temp = ft_strjoin_char(result, str[i]);
 			free(result);
 			result = temp;
 			i++;
@@ -192,9 +191,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 		}
 		else
 		{
-			c[0] = str[i];
-			c[1] = '\0';
-			temp = ft_strjoin(result, c);
+			temp = ft_strjoin_char(result, str[i]);
 			free(result);
 			result = temp;
 			i++;
