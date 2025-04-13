@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 21:21:26 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:23:51 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_env_value(t_env *env, char *key)
 			return (current->value);
 		current = current->next;
 	}
-	return (NULL);
+	return ("\n");
 }
 
 void	set_env_value(t_env **env, char *key, char *value)
