@@ -60,7 +60,7 @@ t_env	*init_env(char	**envp)
 // 	return (NULL);
 // }
 
-void	set_env(t_env **env, char *key, char *value)
+void	set_env_value(t_env **env, char *key, char *value)
 {
 	t_env	*current;
 	t_env	*new_var;
@@ -101,7 +101,7 @@ void	free_env(t_env *env)
 	}
 }
 
-void	unset_env(t_env **env, char *key)
+void	unset_env_value(t_env **env, char *key)
 {
 	t_env	*current;
 	t_env	*prev;
@@ -110,7 +110,7 @@ void	unset_env(t_env **env, char *key)
 	prev = NULL;
 	while (current)
 	{
-		if (equal(current->key, key))
+		if (ft_strcmp(current->key, key) == 0)
 		{
 			if (prev)
 				prev->next = current->next;
@@ -134,8 +134,9 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	char	*temp;
 	char	*var_name;
 	char	*var_value;
+	int		in_single_quote;
+	int		in_double_quote;
 	int		start;
-	char	c[2];
 
 	result = ft_strdup("");
 	if (!result)
@@ -144,7 +145,23 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	(void)env;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1])
+		if (str[i] == '\'' && !in_double_quote)
+		{
+			in_single_quote = !in_single_quote;
+			temp = ft_strjoin_char(result, str[i]);
+			free(result);
+			result = temp;
+			i++;
+		}
+		else if (str[i] == '\"' && !in_double_quote)
+		{
+			in_double_quote = !in_double_quote;
+			temp = ft_strjoin_char(result, str[i]);
+			free(result);
+			result = temp;
+			i++;
+		}
+		if (str[i] == '$' && str[i + 1] && !in_single_quote)
 		{
 			i++;
 			if (str[i] == '?')
@@ -174,9 +191,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 		}
 		else
 		{
-			c[0] = str[i];
-			c[1] = '\0';
-			temp = ft_strjoin(result, c);
+			temp = ft_strjoin_char(result, str[i]);
 			free(result);
 			result = temp;
 			i++;
