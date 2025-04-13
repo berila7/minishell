@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 17:58:23 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 11:56:42 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,3 +125,64 @@ void	unset_env_value(t_env **env, char *key)
 		current = current->next;
 	}
 }
+
+char	*expand_variables(char *str, t_env *env, int exit_status)
+{
+	int		i;
+	char	*result;
+	char	*status_str;
+	char	*temp;
+	char	*var_name;
+	char	*var_value;
+	int		start;
+	char	c[2];
+
+	result = ft_strdup("");
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && str[i + 1])
+		{
+			i++;
+			if (str[i] == '?')
+			{
+				status_str = ft_itoa(exit_status);
+				temp = ft_strjoin(result, status_str);
+				free(result);
+				free(status_str);
+				result = temp;
+				i++;
+			}
+			start = i;
+			while (str[i] && is_valid_var_char(str[i]))
+				i++;
+			if (i > start)
+			{
+				var_name = ft_substr(str, start, i - start);
+				var_value = get_env_value(env, var_name);
+				if (var_value)
+				{
+					temp = ft_strjoin(result, var_value);
+					free(result);
+					result = temp;
+				}
+				free(var_name);
+			}
+		}
+		else
+		{
+			c[0] = str[i];
+			c[1] = '\0';
+			temp = ft_strjoin(result, c);
+			free(result);
+			result = temp;
+			i++;
+		}
+	}
+	
+	return (result);
+}
+
+int main()
