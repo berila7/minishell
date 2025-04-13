@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 13:57:43 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 17:09:01 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ t_env	*init_env(char	**envp)
 	return (env_list);
 }
 
-char	*get_env_value(t_env *env, char *key)
-{
-	t_env	*current;
+// char	*get_env_value(t_env *env, char *key)
+// {
+// 	t_env	*current;
 
-	current = env;
-	while (current)
-	{
-		if(ft_strcmp(current->key, key) == 0)
-			return (current->value);
-		current = current->next;
-	}
-	return (NULL);
-}
+// 	current = env;
+// 	while (current)
+// 	{
+// 		if(ft_strcmp(current->key, key) == 0)
+// 			return (current->value);
+// 		current = current->next;
+// 	}
+// 	return (NULL);
+// }
 
 void	set_env_value(t_env **env, char *key, char *value)
 {
@@ -141,7 +141,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	if (!result)
 		return (NULL);
 	i = 0;
-	ft_env(env);
+	(void)env;
 	while (str[i])
 	{
 		if (str[i] == '$' && str[i + 1])
@@ -162,7 +162,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			if (i > start)
 			{
 				var_name = ft_substr(str, start, i - start);
-				var_value = get_env_value(env, var_name);
+				var_value = getenv(var_name);
 				if (var_value)
 				{
 					temp = ft_strjoin(result, var_value);
