@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 20:47:21 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:13:37 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int			exec(t_data *data);
 char		*expand_variables(char *str, t_env *env, int exit_status);
 void		set_cmd_path(t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
+void		unset_env(t_env **env, char *key);
 
 // builtins:
 int			is_builtin(t_cmd *cmd);
@@ -109,6 +110,7 @@ int			exec_builtin(t_cmd *cmd, t_data *data);
 void		ft_echo(char **args);
 int			ft_exit(char **args);
 int			ft_env(t_env *env);
+void		ft_unset(char **args, t_env *env);
 void		ft_pwd();
 
 // exec utils:

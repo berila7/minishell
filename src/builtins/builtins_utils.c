@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 20:47:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:10:19 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ int	exec_builtin(t_cmd *cmd, t_data *data)
 	// {
 	// 	// ft_export(cmd->args);
 	// }
-	// else if (equal(name, "unset"))
-	// {
-	// 	// ft_unset(cmd->args);
-	// }
+	else if (equal(name, "unset"))
+		ft_unset(cmd->args, data->env);
 	else if (equal(name, "env"))
 		ft_env(data->env);
 	else if (equal(name, "exit"))

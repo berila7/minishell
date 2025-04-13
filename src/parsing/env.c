@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 17:09:01 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:08:34 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_env	*init_env(char	**envp)
 // 	return (NULL);
 // }
 
-void	set_env_value(t_env **env, char *key, char *value)
+void	set_env(t_env **env, char *key, char *value)
 {
 	t_env	*current;
 	t_env	*new_var;
@@ -101,7 +101,7 @@ void	free_env(t_env *env)
 	}
 }
 
-void	unset_env_value(t_env **env, char *key)
+void	unset_env(t_env **env, char *key)
 {
 	t_env	*current;
 	t_env	*prev;
@@ -110,7 +110,7 @@ void	unset_env_value(t_env **env, char *key)
 	prev = NULL;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (equal(current->key, key))
 		{
 			if (prev)
 				prev->next = current->next;
