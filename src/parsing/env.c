@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 21:23:51 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:27:21 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,33 +134,36 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	char	*temp;
 	char	*var_name;
 	char	*var_value;
-	// int		in_single_quote;
-	// int		in_double_quote;
+	int		in_single_quote;
+	int		in_double_quote;
 	int		start;
 
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
+	in_single_quote = 0;
+	in_double_quote = 0;
 	i = 0;
 	while (str[i])
 	{
-		// if (str[i] == '\'' && !in_double_quote)
-		// {
-		// 	in_single_quote = !in_single_quote;
-		// 	temp = ft_strjoin_char(result, str[i]);
-		// 	free(result);
-		// 	result = temp;
-		// 	i++;
-		// }
-		// else if (str[i] == '\"' && !in_single_quote)
-		// {
-		// 	in_double_quote = !in_double_quote;
-		// 	temp = ft_strjoin_char(result, str[i]);
-		// 	free(result);
-		// 	result = temp;
-		// 	i++;
-		// }
-		if (str[i] == '$' && str[i + 1])
+		if (str[i] == '\'' && !in_double_quote)
+		{
+			in_single_quote = !in_single_quote;
+			temp = ft_strjoin_char(result, str[i]);
+			free(result);
+			result = temp;
+			i++;
+		}
+		else if (str[i] == '\"' && !in_single_quote)
+		{
+			in_double_quote = !in_double_quote;
+			temp = ft_strjoin_char(result, str[i]);
+			free(result);
+			result = temp;
+			i++;
+		}
+		printf("%d", in_single_quote);
+		if (str[i] == '$' && str[i + 1] && !in_single_quote)
 		{
 			i++;
 			if (str[i] == '?')
