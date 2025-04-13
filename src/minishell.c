@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 12:16:55 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 13:59:25 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ static void	print_header()
 
 int main(int ac, char *av[], char **envp)
 {
-	char		*line;
 	t_token		*tokens;
-	// t_cmd	*cmd;
-	// t_env		*env;
-	t_data		*data = NULL;
+	t_data		*data;
+	char		*line;
 
+	data = NULL;
 	(void)ac;
 	(void)av;
 	atexit(f);
@@ -43,12 +42,12 @@ int main(int ac, char *av[], char **envp)
 		return (printf("Failed to allocat"), 0);
 	data->env = init_env(envp);
 	data->exit_status = 1;
-	// ft_env(data->env);
+	ft_env(data->env);
 	print_header();
 	while (1)
 	{
 		line = readline(BLUE"minishell ➤ "RESET);
-		if (!line || !ft_strncmp(line, "exit", 5))
+		if (!line || !ft_strcmp(line, "exit"))
 		{
 			printf("exit\n");
 			break ;
@@ -66,10 +65,10 @@ int main(int ac, char *av[], char **envp)
 		// ! ======================
  
 		free_tokens(tokens);
-		free_env(data->env);
 		free_commands(data->cmds);
-		free(data);
 		free(line);
 	}
+	free_env(data->env);
+	free(data);
 	return (0);
 }

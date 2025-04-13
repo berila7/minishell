@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 12:10:22 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 13:57:43 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	if (!result)
 		return (NULL);
 	i = 0;
+	ft_env(env);
 	while (str[i])
 	{
 		if (str[i] == '$' && str[i + 1])
