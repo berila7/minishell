@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 21:08:34 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:27:02 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_env_value(t_env *env, char *key)
 			return (current->value);
 		current = current->next;
 	}
-	return (NULL);
+	return ("\n");
 }
 
 void	set_env_value(t_env **env, char *key, char *value)
@@ -101,7 +101,7 @@ void	free_env(t_env *env)
 	}
 }
 
-void	unset_env_value(t_env **env, char *key)
+void	unset_env(t_env **env, char *key)
 {
 	t_env	*current;
 	t_env	*prev;

@@ -8,6 +8,7 @@
         "minishell.h": "c",
         "libft.h": "c",
         "iterator": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "limits.h": "c"
     }
 }
