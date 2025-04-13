@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 17:57:54 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:03:00 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 #define WHITE       "\033[37m"
 
 typedef struct s_token t_token;
-typedef struct s_command t_command;
+typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
 typedef struct s_data t_data;
 
@@ -55,7 +55,7 @@ typedef enum e_token_type
 	TOKEN_HEREDOC		//	<<
 }	t_token_type;
 
-struct s_command
+struct s_cmd
 {
 	char        **args;
 	char        *path;
@@ -63,7 +63,7 @@ struct s_command
 	char        *output_file;
 	int         append_mode;
 	char        *heredoc_delim;
-	t_command   *next;
+	t_cmd   *next;
 };
 
 struct s_token
@@ -82,7 +82,7 @@ struct s_env
 
 struct s_data
 {
-	t_command	*cmds;
+	t_cmd	*cmds;
 	t_env		*env;
 	int			exit_status;
 	// int			pipe_fd[2];
@@ -90,15 +90,15 @@ struct s_data
 
 t_token		*tokenize(char *line, t_env *env, int exit_status);
 void		free_tokens(t_token *tokens);
-t_command	*parse_tokens(t_token *tokens);
-void		free_commands(t_command *commands);
-void		free_command(t_command *cmd);
+t_cmd	*parse_tokens(t_token *tokens);
+void		free_commands(t_cmd *commands);
+void		free_command(t_cmd *cmd);
 t_env		*init_env(char	**envp);
 long	    ft_atol(const char *str);
 int     	count_args(char **args);
 int			exec(t_data *data);
 char		*expand_variables(char *str, t_env *env, int exit_status);
-void		set_cmd_path(t_command *cmds, t_env *env);
+void		set_cmd_path(t_cmd *cmds, t_env *env);
 
 // builtins:
 void		ft_echo(char **args);
@@ -113,7 +113,7 @@ char		*join_path(char *path, char *cmd);
 
 // Debug functions:
 void		print_tokens(t_token *tokens);
-void		print_cmds(t_command *cmds);
+void		print_cmds(t_cmd *cmds);
 
 
 

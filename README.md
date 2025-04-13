@@ -87,15 +87,15 @@ Finally, we add each of these structures to a linked list. In this list, each el
 ### Commands struct
 
 ```c
-typedef struct s_command t_command;
-struct s_command
+typedef struct s_cmd t_cmd;
+struct s_cmd
 {
     char        *args;
     char        *input_file;
     char        *output_file;
     int         append_mode;
     char        *heredoc_delim;
-    t_command   *next;
+    t_cmd   *next;
 };
 ```
 
@@ -115,7 +115,7 @@ cat < input.txt
 ```
 
 ```c
-t_command cmd3 = {
+t_cmd cmd3 = {
     .args = {"cat", NULL},
     .input_file = "input.txt",
     .output_file = NULL,
@@ -132,7 +132,7 @@ ls -la
 ```
 
 ```c
-t_command cmd1 = {
+t_cmd cmd1 = {
     .args = {"ls", "-la", NULL},
     .input_file = NULL,
     .output_file = NULL,
@@ -156,7 +156,7 @@ grep "error" < logs.txt | sort | uniq > unique_errors.txt
 ```
 
 ```c
-t_command cmd8_3 = {
+t_cmd cmd8_3 = {
     .args = {"uniq", NULL},
     .input_file = NULL,
     .output_file = "unique_errors.txt",
@@ -165,7 +165,7 @@ t_command cmd8_3 = {
     .next = NULL
 };
 
-t_command cmd8_2 = {
+t_cmd cmd8_2 = {
     .args = {"sort", NULL},
     .input_file = NULL,
     .output_file = NULL,
@@ -174,7 +174,7 @@ t_command cmd8_2 = {
     .next = &cmd8_3
 };
 
-t_command cmd8_1 = {
+t_cmd cmd8_1 = {
     .args = {"grep", "error", NULL},
     .input_file = "logs.txt",
     .output_file = NULL,

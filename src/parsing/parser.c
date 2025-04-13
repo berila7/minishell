@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 14:53:11 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_command	*new_command()
+t_cmd	*new_command()
 {
-	t_command	*cmd;
+	t_cmd	*cmd;
 
-	cmd	= malloc(sizeof(t_command));
+	cmd	= malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	ft_memset(cmd, 0, sizeof(t_command));
+	ft_memset(cmd, 0, sizeof(t_cmd));
 	cmd->args = malloc(sizeof(char *) * 2);
 	if (!cmd->args)
 	{
@@ -30,7 +30,7 @@ t_command	*new_command()
 	return cmd;
 }
 
-void	add_argument(t_command *cmd, char *arg)
+void	add_argument(t_cmd *cmd, char *arg)
 {
 	char	**new_args;
 	int		i;
@@ -59,7 +59,7 @@ void	add_argument(t_command *cmd, char *arg)
 }
 
 
-void	free_command(t_command *cmd)
+void	free_command(t_cmd *cmd)
 {
 	int	i;
 
@@ -84,10 +84,10 @@ void	free_command(t_command *cmd)
 	free(cmd);
 }
 
-void	free_commands(t_command *commands)
+void	free_commands(t_cmd *commands)
 {
-	t_command	*current;
-	t_command	*next;
+	t_cmd	*current;
+	t_cmd	*next;
 
 	current = commands;
 	while (current)
@@ -98,9 +98,9 @@ void	free_commands(t_command *commands)
 	}
 }
 
-void	add_command(t_command **cmds, t_command *new_cmd)
+void	add_command(t_cmd **cmds, t_cmd *new_cmd)
 {
-	t_command	*current;
+	t_cmd	*current;
 	if (!*cmds)
 	{
 		*cmds = new_cmd;
@@ -112,11 +112,11 @@ void	add_command(t_command **cmds, t_command *new_cmd)
 	current->next = new_cmd;
 }
 
-t_command	*parse_tokens(t_token *tokens)
+t_cmd	*parse_tokens(t_token *tokens)
 {
 	t_token		*token;
-	t_command	*current_cmd;
-	t_command	*cmd_list;
+	t_cmd	*current_cmd;
+	t_cmd	*cmd_list;
 
 	if (!tokens)
 		return (NULL);

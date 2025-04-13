@@ -6,13 +6,13 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 13:28:37 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 11:57:40 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void exec_cmd(t_command *cmd, char **envp)
+void exec_cmd(t_cmd *cmd, char **envp)
 {
     pid_t pid;
     int status;

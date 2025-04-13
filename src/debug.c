@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/12 17:06:48 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void print_tokens(t_token *tokens)
 	printf(ORANGE "============================\n\n" RESET);
 }
 
-void print_cmds(t_command *cmds)
+void print_cmds(t_cmd *cmds)
 {
-	t_command *current_cmd = cmds;
+	t_cmd *current_cmd = cmds;
 	int j = 0;
 
 	printf(PURPLE "\n========== COMMANDS ==========\n" RESET);

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/12 17:19:48 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ char	*get_cmd_path(char *cmd, t_env *env)
 	return (cmd_path);
 }
 
-void	set_cmd_path(t_command *cmds, t_env *env)
+void	set_cmd_path(t_cmd *cmds, t_env *env)
 {
-	t_command	*cmd;
+	t_cmd	*cmd;
 
 	cmd = cmds;
 	while (cmd)

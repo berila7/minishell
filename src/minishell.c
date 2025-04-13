@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 11:59:40 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int main(int ac, char *av[], char **envp)
 {
 	char		*line;
 	t_token		*tokens;
-	// t_command	*cmd;
+	// t_cmd	*cmd;
 	// t_env		*env;
 	t_data		*data = NULL;
 
