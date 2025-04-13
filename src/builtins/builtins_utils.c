@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 16:57:16 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 20:47:32 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,23 @@ int	exec_builtin(t_cmd *cmd, t_data *data)
 	name = cmd->args[0];
 	if (equal(name, "echo"))
 		ft_echo(cmd->args);
-	if (equal(name, "cd"))
-		// ft_cd(cmd->args);
-	if (equal(name, "pwd"))
-		// ft_pwd(cmd->args);
-	if (equal(name, "export"))
-		// ft_export(cmd->args);
-	if (equal(name, "unset"))
-		// ft_unset(cmd->args);
-	if (equal(name, "env"))
+	// else if (equal(name, "cd"))
+	// {
+	// 	// ft_cd(cmd->args);
+	// }
+	else if (equal(name, "pwd"))
+		ft_pwd();
+	// else if (equal(name, "export"))
+	// {
+	// 	// ft_export(cmd->args);
+	// }
+	// else if (equal(name, "unset"))
+	// {
+	// 	// ft_unset(cmd->args);
+	// }
+	else if (equal(name, "env"))
 		ft_env(data->env);
-	if (equal(name, "exit"))
+	else if (equal(name, "exit"))
 		ft_exit(cmd->args);
 	return (0);
 }

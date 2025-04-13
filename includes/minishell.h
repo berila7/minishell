@@ -6,7 +6,11 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/13 20:45:11 by mberila          ###   ########.fr       */
+=======
+/*   Updated: 2025/04/13 20:47:21 by anachat          ###   ########.fr       */
+>>>>>>> 3ef50dfed341f2effb0672e165f7045d1f0a9b30
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +114,7 @@ int			exec_builtin(t_cmd *cmd, t_data *data);
 void		ft_echo(char **args);
 int			ft_exit(char **args);
 int			ft_env(t_env *env);
+void		ft_pwd();
 
 // exec utils:
 int			exec(t_data *data);
