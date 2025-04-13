@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 17:09:01 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 17:27:06 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	char	*temp;
 	char	*var_name;
 	char	*var_value;
+	int		in_single_quote;
+	int		in_double_quote;
 	int		start;
 	char	c[2];
 
@@ -144,7 +146,23 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	(void)env;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1])
+		if (str[i] == '\'' && !in_single_quote)
+		{
+			in_single_quote = !in_single_quote;
+			temp = ft_strjoin(result, str[i]);
+			free(result);
+			result = temp;
+			i++;
+		}
+		else if (str[i] == '\"')
+		{
+			in_double_quote = !in_double_quote;
+			temp = ft_strjoin(result, str[i]);
+			free(result);
+			result = temp;
+			i++;
+		}
+		if (str[i] == '$' && str[i + 1] && !in_single_quote)
 		{
 			i++;
 			if (str[i] == '?')
