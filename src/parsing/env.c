@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 20:51:46 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:21:26 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ t_env	*init_env(char	**envp)
 	return (env_list);
 }
 
-// char	*get_env_value(t_env *env, char *key)
-// {
-// 	t_env	*current;
+char	*get_env_value(t_env *env, char *key)
+{
+	t_env	*current;
 
-// 	current = env;
-// 	while (current)
-// 	{
-// 		if(ft_strcmp(current->key, key) == 0)
-// 			return (current->value);
-// 		current = current->next;
-// 	}
-// 	return (NULL);
-// }
+	current = env;
+	while (current)
+	{
+		if(ft_strcmp(current->key, key) == 0)
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
+}
 
 void	set_env_value(t_env **env, char *key, char *value)
 {
@@ -134,34 +134,33 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	char	*temp;
 	char	*var_name;
 	char	*var_value;
-	int		in_single_quote;
-	int		in_double_quote;
+	// int		in_single_quote;
+	// int		in_double_quote;
 	int		start;
 
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
 	i = 0;
-	(void)env;
 	while (str[i])
 	{
-		if (str[i] == '\'' && !in_double_quote)
-		{
-			in_single_quote = !in_single_quote;
-			temp = ft_strjoin_char(result, str[i]);
-			free(result);
-			result = temp;
-			i++;
-		}
-		else if (str[i] == '\"' && !in_double_quote)
-		{
-			in_double_quote = !in_double_quote;
-			temp = ft_strjoin_char(result, str[i]);
-			free(result);
-			result = temp;
-			i++;
-		}
-		if (str[i] == '$' && str[i + 1] && !in_single_quote)
+		// if (str[i] == '\'' && !in_double_quote)
+		// {
+		// 	in_single_quote = !in_single_quote;
+		// 	temp = ft_strjoin_char(result, str[i]);
+		// 	free(result);
+		// 	result = temp;
+		// 	i++;
+		// }
+		// else if (str[i] == '\"' && !in_single_quote)
+		// {
+		// 	in_double_quote = !in_double_quote;
+		// 	temp = ft_strjoin_char(result, str[i]);
+		// 	free(result);
+		// 	result = temp;
+		// 	i++;
+		// }
+		if (str[i] == '$' && str[i + 1])
 		{
 			i++;
 			if (str[i] == '?')
@@ -179,7 +178,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			if (i > start)
 			{
 				var_name = ft_substr(str, start, i - start);
-				var_value = getenv(var_name);
+				var_value = get_env_value(env, var_name);
 				if (var_value)
 				{
 					temp = ft_strjoin(result, var_value);
