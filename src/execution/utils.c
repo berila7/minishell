@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:03:22 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/12 17:19:54 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 16:29:05 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,19 @@ void	free_arr(char **arr)
 		i++;
 	}
 	free(arr);
+}
+
+int	count_cmd(t_cmd *cmds)
+{
+	t_cmd	*cmd;
+	int		i;
+
+	i = 0;
+	cmd = cmds;
+	while (cmd)
+	{
+		i++;
+		cmd = cmd->next;
+	}
+	return (i);
 }
