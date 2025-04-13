@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 21:29:50 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:37:14 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			result = temp;
 			i++;
 		}
-		printf("%d", in_single_quote);
 		if (str[i] == '$' && str[i + 1] && !in_single_quote)
 		{
 			i++;
