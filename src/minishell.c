@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/12 18:16:49 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 10:49:09 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main(int ac, char *av[], char **envp)
 		return (printf("Failed to allocat"), 0);
 	data->env = init_env(envp);
 	data->exit_status = 1;
-	ft_env(data->env);
+	// ft_env(data->env);
 	print_header();
 	while (1)
 	{
@@ -57,14 +57,13 @@ int main(int ac, char *av[], char **envp)
 			add_history(line);
 		tokens = tokenize(line, data->env, data->exit_status);
 		data->cmds = parse_tokens(tokens);
+		set_cmd_path(data->cmds, data->env);
+
 		// exec(data);
 		// ! ======[ DEBUG: ]======
 		print_tokens(tokens);
 		print_cmds(data->cmds);
 		// ! ======================
-		
-		set_cmd_path(data->cmds, data->env);
-		print_cmds(data->cmds);
  
 		free_tokens(tokens);
 		free_commands(data->cmds);

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 13:28:37 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/12 13:31:00 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 11:57:40 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void execute_cmd(t_command *cmd, char **envp)
+void exec_cmd(t_command *cmd, char **envp)
 {
     pid_t pid;
     int status;
