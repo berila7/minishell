@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:12:54 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ static void	print_header()
 
 int main(int ac, char *av[], char **envp)
 {
-	char		*line;
 	t_token		*tokens;
-	// t_cmd	*cmd;
-	// t_env		*env;
-	t_data		*data = NULL;
+	t_data		*data;
+	char		*line;
 
 	(void)ac;
 	(void)av;
+	data = NULL;
 	// atexit(f);
 	data = malloc(sizeof(t_data));
 	if (!data)
-		return (printf("Failed to allocat"), 0);
+		return (printf("Allocation error"), 1);
+	data->envp = envp;
 	data->env = init_env(envp);
 	data->exit_status = 1;
 	// ft_env(data->env);
