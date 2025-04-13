@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:16:07 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	free_command(t_cmd *cmd)
 		free(cmd->output_file);
 	if (cmd->heredoc_delim)
 		free(cmd->heredoc_delim);
+	if (cmd->path)
+		free(cmd->path);
 	free(cmd);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:16:55 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(int ac, char *av[], char **envp)
 
 	(void)ac;
 	(void)av;
-	// atexit(f);
+	atexit(f);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (printf("Failed to allocat"), 0);
@@ -66,7 +66,9 @@ int main(int ac, char *av[], char **envp)
 		// ! ======================
  
 		free_tokens(tokens);
+		free_env(data->env);
 		free_commands(data->cmds);
+		free(data);
 		free(line);
 	}
 	return (0);

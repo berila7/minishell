@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 12:02:01 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 12:10:22 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,3 +184,20 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	
 	return (result);
 }
+
+// void	f(void)
+// {
+// 	system("leaks minishell");
+// }
+
+// int main(int ac, char *av[], char **envp)
+// {
+// 	t_data *data;
+// 	atexit(f);
+// 	data = malloc(sizeof(t_data));
+// 	if (!data)
+// 		return (printf("error"), 1);
+// 	data->env = init_env(envp);
+// 	char *str = expand_variables("echo $USER", data->env, 1);
+// 	printf("%s", str);
+// }
