@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 11:51:14 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 13:47:55 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_sta
 	int		in_quote;
 	char 	*word;
 	char	*expanded_word;
-	(void)env;
-	(void)exit_status;
 	start = *i;
 	in_quote = 0;
 	while (line[*i])
