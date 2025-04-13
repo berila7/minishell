@@ -10,12 +10,13 @@ SRC_DIR     	=	src
 PARSING_DIR		=	$(SRC_DIR)/parsing
 BUILTINS_DIR	=	$(SRC_DIR)/builtins
 HELPERS_DIR		=	$(SRC_DIR)/helpers
-EXECUTION_DIR	=	$(SRC_DIR)/execution
+EXEC_DIR	=	$(SRC_DIR)/execution
 
 SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c \
 					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c \
-					$(EXECUTION_DIR)/set_cmd_path.c $(EXECUTION_DIR)/utils.c \
+					$(BUILTINS_DIR)/builtins_utils.c \
+					$(EXEC_DIR)/exec.c $(EXEC_DIR)/set_cmd_path.c $(EXEC_DIR)/utils.c \
 					$(HELPERS_DIR)/atol.c
 OBJS			=	$(SRCS:.c = .o)
 
@@ -24,10 +25,10 @@ all: $(LIBFT_DIR) $(NAME)
 $(LIBFT_DIR):
 	@make -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) includes/minishell.h
 	$(CC) $(FLAGS) $(OBJS) -lreadline $(LIBFT) -o $(NAME)
 
-src/%.o: src/%.c $(LIBFT) includes/minishell.h
+src/%.o: src/%.c $(LIBFT)
 	$(CC) $(FLAGS) -c $< -o $@ 
 
 clean:

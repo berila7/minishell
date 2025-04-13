@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 17:09:45 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/13 17:17:54 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,23 @@ int     	count_args(char **args);
 int			exec(t_data *data);
 char		*expand_variables(char *str, t_env *env, int exit_status);
 void		set_cmd_path(t_cmd *cmds, t_env *env);
+int			equal(char *s1, char *s2);
 
 // builtins:
+int			is_builtin(t_cmd *cmd);
+int			exec_builtin(t_cmd *cmd, t_data *data);
+
 void		ft_echo(char **args);
 int			ft_exit(char **args);
 int			ft_env(t_env *env);
 
 // exec utils:
+int			exec(t_data *data);
 void		free_arr(char **arr);
 int			cmd_exists(char *path);
 char		*find_cmd(char **paths, char *cmd);
 char		*join_path(char *path, char *cmd);
+int			count_cmd(t_cmd *cmd);
 
 // Debug functions:
 void		print_tokens(t_token *tokens);

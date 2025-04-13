@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 17:11:49 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void print_tokens(t_token *tokens)
 		printf(CYAN "Type: %d\n" RESET, current->type);
 		current = current->next;
 	}
-	printf(ORANGE "============================\n\n" RESET);
+	printf(ORANGE "============================\n" RESET);
+	printf("\n" RESET);
 }
 
 void print_cmds(t_cmd *cmds)
@@ -51,5 +52,6 @@ void print_cmds(t_cmd *cmds)
 		printf(PURPLE "----------------------------\n" RESET);
 		current_cmd = current_cmd->next;
 	}
-	printf(PURPLE "=============================\n\n" RESET);
+	printf(PURPLE "=============================\n" RESET);
+	printf("\n" RESET);
 }

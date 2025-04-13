@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/12 16:04:17 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 16:36:30 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,3 @@ void	ft_echo(char **args)
 	if (new_line)
 		ft_putchar_fd('\n', 1);
 }
-
-
-// int main(int argc, char const *argv[])
-// {
-// 	// simulate passing an array of strings like {"echo", "Hello", "World"}
-// 	char *args[] = {"echo", "Hello", "-n", "World", NULL};  // NULL-terminated array
-// 	echo(args);
-// 	return 0;
-// }

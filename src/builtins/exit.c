@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/11 16:43:02 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/13 17:24:38 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,30 @@ int	is_long(const char *str)
 
 int	ft_exit(char **args)
 {
-	long nb;
+	int		status;
+	long	nb;
 
+	status = 0;
 	printf("exit\n");
 	if (args[1] && !is_long(args[1]))
 	{
 		printf("exit: %s: numeric argument required\n", args[1]);
-		return (255);
+		status = 255;
 	}
 	else if (args[1])
 	{
 		nb = ft_atol(args[1]);
 		if (nb < 0)
-			return (256 + nb);
-		return (nb % 256);
+			status = 256 + nb;
+		else
+			status = (nb % 256);
 	}
-	else if (args[2])
-		return (printf("exit: too many arguments\n"), 1);
+	else if (args[0] && args[1] && args[2])
+	{
+		printf("exit: too many arguments\n");
+		status = 1;	
+	}
+	exit(status);
 	return (0);
 }
 
