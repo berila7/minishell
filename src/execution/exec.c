@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 16:55:31 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 11:53:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ int	exec(t_data *data)
 	// int		fd[7];
 	// int		i;
 
-	if (count_cmd(data->cmds) == 1 && is_builtin(data->cmds))
-		return (exec_builtin(data->cmds, data), 0);
+	(void)data;
+	// if (count_cmd(data->cmds) == 1 && is_builtin(data->cmds))
+	// 	return (exec_builtin(data->cmds, data), 0);
+	
+
+	
 	// fd[3] = dup(0);
 	// fd[4] = dup(1);
 	// while (i < ac - 2)
