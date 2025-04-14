@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 11:00:09 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 11:51:57 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ int main(int ac, char *av[], char **envp)
 	while (1)
 	{
 		line = readline(BLUE"minishell ➤ "RESET);
+		if (!line)
+		{
+			free_env(data->env);
+			free(data);
+			return (printf("exit\n"), 0);
+		}
 		if (line[0])
 			add_history(line);
 		tokens = tokenize(line, data->env, data->exit_status);
