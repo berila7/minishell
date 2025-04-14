@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 15:35:38 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/14 16:03:12 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int main(int ac, char *av[], char **envp)
 		// ! ======================
 		
 		exec(data);
- 
 
 		free_tokens(tokens);
 		free_commands(data->cmds);
