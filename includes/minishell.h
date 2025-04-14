@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/13 21:30:37 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 10:23:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int			ft_exit(char **args);
 int			ft_env(t_env *env);
 void		ft_unset(char **args, t_env *env);
 void		ft_pwd();
+void		ft_cd(char **args);
 
 // exec utils:
 int			exec(t_data *data);
