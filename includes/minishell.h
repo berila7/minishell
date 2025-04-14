@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 10:23:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 10:42:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void		set_cmd_path(t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
 void		unset_env(t_env **env, char *key);
 char		*ft_strjoin_char(char *str, char c);
+char		*remove_quotes(char *str);
 
 
 // builtins:
