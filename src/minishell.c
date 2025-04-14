@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 14:44:23 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:47:19 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int main(int ac, char *av[], char **envp)
 		// ! ======================
 		
 		exec(data);
- 
 
 		free_tokens(tokens);
 		free_commands(data->cmds);
