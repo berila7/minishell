@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 10:42:56 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 11:18:20 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int			equal(char *s1, char *s2);
 void		unset_env(t_env **env, char *key);
 char		*ft_strjoin_char(char *str, char c);
 char		*remove_quotes(char *str);
-
+char		*get_env(t_env *env, char *key);
+void		set_env(t_env **env, char *key, char *value);
 
 // builtins:
 int			is_builtin(t_cmd *cmd);
@@ -115,7 +116,7 @@ int			ft_exit(char **args);
 int			ft_env(t_env *env);
 void		ft_unset(char **args, t_env *env);
 void		ft_pwd();
-void		ft_cd(char **args);
+void		ft_cd(char **args, t_data *data);
 
 // exec utils:
 int			exec(t_data *data);

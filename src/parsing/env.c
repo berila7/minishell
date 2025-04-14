@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 09:53:51 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/14 11:16:33 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_env	*init_env(char	**envp)
 	return (env_list);
 }
 
-char	*get_env_value(t_env *env, char *key)
+char	*get_env(t_env *env, char *key)
 {
 	t_env	*current;
 
@@ -60,7 +60,7 @@ char	*get_env_value(t_env *env, char *key)
 	return ("\n");
 }
 
-void	set_env_value(t_env **env, char *key, char *value)
+void	set_env(t_env **env, char *key, char *value)
 {
 	t_env	*current;
 	t_env	*new_var;
@@ -180,7 +180,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			if (i > start)
 			{
 				var_name = ft_substr(str, start, i - start);
-				var_value = get_env_value(env, var_name);
+				var_value = get_env(env, var_name);
 				if (var_value)
 				{
 					temp = ft_strjoin(result, var_value);
