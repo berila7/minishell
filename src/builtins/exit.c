@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 17:24:38 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 11:38:32 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	is_long(const char *str)
 	return (1);
 }
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, t_data *data)
 {
 	int		status;
 	long	nb;
@@ -66,6 +66,7 @@ int	ft_exit(char **args)
 		printf("exit: too many arguments\n");
 		status = 1;	
 	}
+	free_data(data);
 	exit(status);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/14 11:18:31 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 11:39:00 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	exec_builtin(t_cmd *cmd, t_data *data)
 	else if (equal(name, "env"))
 		ft_env(data->env);
 	else if (equal(name, "exit"))
-		ft_exit(cmd->args);
+		ft_exit(cmd->args, data);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 09:53:05 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/14 11:50:07 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,16 @@ char	*remove_quotes(char *str)
 	}
 	result[j] = '\0';
 	return (result);
+}
+
+void	free_data(t_data *data)
+{
+	if (data)
+	{
+		// if (data->cmds)
+		// 	free_commands(data->cmds);
+		// if (data->env)
+		// 	free_env(data->env);
+		// free(data);
+	}
 }
