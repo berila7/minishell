@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 14:44:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 18:03:36 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,33 @@ void	free_data(t_data *data)
 			free_env(data->env);
 		free(data);
 	}
+}
+int	validate_token(t_token *token)
+{
+	t_token	*current;
+	int		prev_pip;
+
+	current = token;
+	prev_pip = 1;
+	while (current)
+	{
+		if (current->type == TOKEN_PIPE)
+		{
+			if (prev_pip)
+			{
+				printf(RED"minishell: syntax error near unexpected token '|'\n"RESET);
+				return (0);
+			}
+			prev_pip = 1;
+		}
+		else
+			prev_pip = 0;
+		current = current->next;
+	}
+	if (prev_pip)
+	{
+		printf(RED"minishell: syntax error: unexpected end of file\n"RESET);
+		return (0);
+	}
+	return (1);
 }
