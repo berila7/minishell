@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 15:29:13 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/14 15:34:10 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_sta
 		else
 			quote_state = "double";
 		printf(RED"minishell: syntax error: unclosed %s quote\n"RESET, 
-            	quote_state);
+				quote_state);
 		free_tokens(*tokens);
-        *tokens = NULL;
-        return ;
+		*tokens = NULL;
+		return ;
 	}
 	if (*i > start)
 	{
