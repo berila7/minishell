@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 11:16:33 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:16:06 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_env(t_env *env, char *key)
 			return (current->value);
 		current = current->next;
 	}
-	return ("\n");
+	return (NULL);
 }
 
 void	set_env(t_env **env, char *key, char *value)
@@ -137,6 +137,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	int		in_single_quote;
 	int		in_double_quote;
 	int		start;
+	char	*quoted_result;
 
 	result = ft_strdup("");
 	if (!result)
@@ -190,16 +191,20 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 				free(var_name);
 			}
 		}
-		else
+		else if (str[i])
 		{
 			temp = ft_strjoin_char(result, str[i]);
 			free(result);
 			result = temp;
 			i++;
-		}
+		} 
+		else
+			break ;
 	}
-	
-	return (remove_quotes(result));
+	quoted_result = result;
+    result = remove_quotes(quoted_result);
+    free(quoted_result);
+    return (result);
 }
 
 // void	f(void)

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 11:55:07 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:44:32 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*remove_quotes(char *str)
 	i = 0;
 	j = 0;
 	len = 0;
+	in_single_quote = 0;
+	in_double_quote = 0;
 	while (str[i])
 	{
 		if(str[i] == '\'' && !in_double_quote)

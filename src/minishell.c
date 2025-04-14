@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 11:58:31 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:44:23 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ int main(int ac, char *av[], char **envp)
 	{
 		line = readline(BLUE"minishell ➤ "RESET);
 		if (!line)
-		{
-			free(data);
-			return (printf("exit\n"), 0);
-		}
+			break ;
 		if (line[0])
 			add_history(line);
 		tokens = tokenize(line, data->env, data->exit_status);
@@ -63,12 +60,15 @@ int main(int ac, char *av[], char **envp)
 		print_cmds(data->cmds);
 		// ! ======================
 		
-		// exec(data);
+		exec(data);
  
+
 		free_tokens(tokens);
 		free_commands(data->cmds);
+		data->cmds = NULL;
 		free(line);
 	}
+	clear_history();
 	free_env(data->env);
 	free(data);
 	return (0);
