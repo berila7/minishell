@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 11:53:04 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/14 12:13:07 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*remove_quotes(char *str)
 	i = 0;
 	j = 0;
 	len = 0;
+	in_single_quote = 0;
+	in_double_quote = 0;
 	while (str[i])
 	{
 		if(str[i] == '\'' && !in_double_quote)
