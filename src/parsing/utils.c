@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 11:50:07 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/14 11:53:04 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ void	free_data(t_data *data)
 {
 	if (data)
 	{
-		// if (data->cmds)
-		// 	free_commands(data->cmds);
-		// if (data->env)
-		// 	free_env(data->env);
-		// free(data);
+		if (data->cmds)
+			free_commands(data->cmds);
+		if (data->env)
+			free_env(data->env);
+		free(data);
 	}
 }
