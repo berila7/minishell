@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 17:56:42 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/14 21:05:14 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int			ft_env(t_env *env);
 void		ft_unset(char **args, t_env *env);
 void		ft_pwd();
 void		ft_cd(char **args, t_data *data);
+void		ft_export(char **args, t_data *data);
 
 // exec utils:
 int			exec(t_data *data);

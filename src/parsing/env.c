@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 10:04:19 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 10:07:52 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	set_env(t_env **env, char *key, char *value)
 	current = *env;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (equal(current->key, key))
 		{
 			free(current->value);
 			current->value = ft_strdup(value);
@@ -80,7 +80,10 @@ void	set_env(t_env **env, char *key, char *value)
 	if (!new_var)
 		return ;
 	new_var->key = ft_strdup(key);
-	new_var->value = ft_strdup(value);
+	if (!value)
+		new_var->value = ft_strdup("");
+	else
+		new_var->value = ft_strdup(value);
 	new_var->next = *env;
 	*env = new_var;
 }
