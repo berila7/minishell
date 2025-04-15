@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 11:05:31 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 12:19:59 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int			cmd_exists(char *path);
 char		*find_cmd(char **paths, char *cmd);
 char		*join_path(char *path, char *cmd);
 int			count_cmd(t_cmd *cmd);
+int			ft_dup2(int oldfd, int newfd);
 
 // Debug functions:
 void		print_tokens(t_token *tokens);

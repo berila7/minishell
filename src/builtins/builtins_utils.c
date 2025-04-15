@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/14 18:50:57 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 12:22:39 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ int	exec_builtin(t_cmd *cmd, t_data *data)
 {
 	char	*name;
 
+	if (cmd->input_file)
+	{
+		int fd = open(cmd->input_file, O_RDONLY);
+		if (fd < 0)
+			return (perror("failed to open infile"), 1);
+		ft_dup2(fd, 0);
+	}
+	int oldout = dup(1);
+	if (cmd->output_file)
+	{
+		int fd = open(cmd->output_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (fd < 0)
+			return (perror("failed to open outfile"), 1);
+		
+		ft_dup2(fd, 1);
+	}
 	name = cmd->args[0];
 	if (equal(name, "echo"))
 		ft_echo(cmd->args);
@@ -52,5 +68,6 @@ int	exec_builtin(t_cmd *cmd, t_data *data)
 		ft_env(data->env);
 	else if (equal(name, "exit"))
 		ft_exit(cmd->args, data);
+	ft_dup2(oldout, 1);
 	return (0);
 }
