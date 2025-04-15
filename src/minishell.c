@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 11:47:52 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 12:15:58 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	f(void)
 {
-	system("leaks minishell");
+	// system("leaks minishell");
+	system("lsof | grep '^minishell'");
 }
 
 static void	print_header()
