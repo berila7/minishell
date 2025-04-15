@@ -6,11 +6,38 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/14 14:47:27 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:23:16 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// function t_env * ---> char **
+
+int	exec_one_cmd(t_data *data)
+{
+	pid_t	id;
+	t_cmd	*cmd;
+
+	cmd = data->cmds;
+	if (!cmd->path)
+		return (printf("%s: command not found\n", cmd->args[0]), 1);
+	id = fork();
+	if (id < 0)
+		return (perror("fork failed"), 1);
+	if (id == 0)
+	{
+		if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
+		{
+			perror("execve failed");
+			exit(1);
+		}
+		return (0);
+	}
+	wait(NULL);
+	return (0);
+}
+
 
 int	exec(t_data *data)
 {
@@ -20,8 +47,12 @@ int	exec(t_data *data)
 	// int		fd[7];
 	// int		i;
 
-	if (count_cmd(data->cmds) == 1 && is_builtin(data->cmds))
-		return (exec_builtin(data->cmds, data), 0);
+	if (count_cmd(data->cmds) == 1)
+	{
+		if (is_builtin(data->cmds))
+			return (exec_builtin(data->cmds, data), 0);
+		return (exec_one_cmd(data));
+	}
 	
 
 	
