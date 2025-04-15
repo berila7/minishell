@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 11:19:27 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:47:52 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int main(int ac, char *av[], char **envp)
 		{
 			free_tokens(tokens);
 			free(line);
-			continue;
+			continue ;
 		}
 		set_cmd_path(data->cmds, data->env);
 
