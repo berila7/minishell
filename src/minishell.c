@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 12:15:58 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 16:44:11 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,15 @@ int main(int ac, char *av[], char **envp)
 	if (!data)
 		return (printf("Failed to allocat"), 0);
 	data->env = init_env(envp);
-	data->exit_status = 1;
+	data->exit_status = 0;
 	// ft_env(data->env);
 	print_header();
 	while (1)
 	{
+		if (data->exit_status == 0)
+			printf(GREEN "✔ " RESET);
+		else
+			printf(RED "✘ " RESET);
 		line = readline(BLUE"minishell ➤ "RESET);
 		if (!line)
 			break ;

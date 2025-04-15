@@ -6,11 +6,20 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:03:22 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 16:29:05 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 16:30:09 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_dup2(int oldfd, int newfd)
+{
+	int	res;
+
+	res = dup2(oldfd, newfd);
+	close(oldfd);
+	return (res);
+}
 
 int	cmd_exists(char *path)
 {

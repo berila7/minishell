@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 15:29:48 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 16:40:06 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ char		*get_env(t_env *env, char *key);
 void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
-char		**env_to_array(t_env *env);
-int			handle_redirections(t_cmd *cmd);
 
 // builtins:
 int			is_builtin(t_cmd *cmd);
@@ -131,6 +129,13 @@ char		*find_cmd(char **paths, char *cmd);
 char		*join_path(char *path, char *cmd);
 int			count_cmd(t_cmd *cmd);
 int			ft_dup2(int oldfd, int newfd);
+char		**env_to_array(t_env *env);
+int			handle_redirections(t_cmd *cmd);
+int			ft_wait(pid_t last_pid, int default_st);
+
+int			exec_single_cmd(t_data *data);
+int			exec_multiple_cmd(t_data *data);
+
 
 // Debug functions:
 void		print_tokens(t_token *tokens);

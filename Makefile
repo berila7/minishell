@@ -19,6 +19,7 @@ SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c \
 					$(BUILTINS_DIR)/builtins_utils.c $(BUILTINS_DIR)/pwd.c $(BUILTINS_DIR)/unset.c \
 					$(BUILTINS_DIR)/cd.c $(BUILTINS_DIR)/export.c \
 					$(EXEC_DIR)/exec.c $(EXEC_DIR)/set_cmd_path.c $(EXEC_DIR)/utils.c \
+					$(EXEC_DIR)/exec_multiple.c $(EXEC_DIR)/exec_single.c \
 					$(HELPERS_DIR)/atol.c
 OBJS			=	$(SRCS:.c = .o)
 
