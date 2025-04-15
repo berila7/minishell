@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 12:19:59 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 15:29:48 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
 char		**env_to_array(t_env *env);
+int			handle_redirections(t_cmd *cmd);
 
 // builtins:
 int			is_builtin(t_cmd *cmd);

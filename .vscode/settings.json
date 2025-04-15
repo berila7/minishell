@@ -9,6 +9,7 @@
         "libft.h": "c",
         "iterator": "c",
         "typeinfo": "c",
-        "limits.h": "c"
+        "limits.h": "c",
+        "__config": "c"
     }
 }

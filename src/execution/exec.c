@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 12:09:54 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 15:30:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,8 @@ int	exec_one_cmd(t_data *data)
 		return (perror("fork failed"), 1);
 	if (id == 0)
 	{
-		if (cmd->input_file)
-		{
-			int fd = open(cmd->input_file, O_RDONLY);
-			if (fd < 0)
-				return (perror("failed to open infile"), 1);
-			ft_dup2(fd, 0);
-		}
-		if (cmd->output_file)
-		{
-			int fd = open(cmd->output_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			if (fd < 0)
-				return (perror("failed to open outfile"), 1);
-			ft_dup2(fd, 1);
-		}
+		if (handle_redirections(cmd))
+			return (1);
 		if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{
 			perror("execve failed");
