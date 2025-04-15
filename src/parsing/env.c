@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 10:12:43 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:19:03 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,38 @@
 int	is_valid_var_char(char c)
 {
 	return (ft_isalnum(c) || c == '_');
+}
+
+char	**env_to_array(t_env *env)
+{
+	t_env	*current;
+	char	**env_array;
+	int		count;
+	int		i;
+	char	*temp;
+
+	current = env;
+	count = 0;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	env_array = malloc(sizeof(char *) * (count + 1));
+	if (!env_array)
+		return (NULL);
+	current = env;
+	i = 0;
+	while (current)
+	{
+		temp = ft_strjoin(current->key, "=");
+		env_array[i] = ft_strjoin(temp, current->value);
+		free(temp);
+		i++;
+		current = current->next;
+	}
+	env_array[i] = NULL;
+	return (env_array);
 }
 
 t_env	*init_env(char	**envp)
@@ -227,6 +259,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 
 // int main(int ac, char *av[], char **envp)
 // {
+// char		**env_array;
 // 	t_data *data;
 // 	atexit(f);
 // 	data = malloc(sizeof(t_data));
@@ -235,4 +268,15 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 // 	data->env = init_env(envp);
 // 	char *str = expand_variables("echo $USER", data->env, 1);
 // 	printf("%s", str);
+// env_array = env_to_array(data->env);
+// int	i = 0;
+// while (env_array[i])
+// {
+// 	printf("%s\n", env_array[i]);
+// 	i++;
+// }
+// free_arr(env_array);
+// free_env(data->env);
+// free(data);
+// return (0);
 // }

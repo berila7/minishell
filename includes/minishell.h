@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 21:05:14 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 11:05:31 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char		*get_env(t_env *env, char *key);
 void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
+char		**env_to_array(t_env *env);
 
 // builtins:
 int			is_builtin(t_cmd *cmd);
