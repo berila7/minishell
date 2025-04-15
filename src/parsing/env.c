@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 10:07:52 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 10:12:43 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	is_valid_var_char(char c)
 t_env	*init_env(char	**envp)
 {
 	t_env	*env_list;
+	t_env	*last;
 	t_env	*new_node;
 	char 	*equals;
 	int		key_len;
@@ -38,8 +39,17 @@ t_env	*init_env(char	**envp)
 			key_len = equals - envp[i];
 			new_node->key = ft_substr(envp[i], 0, key_len);
 			new_node->value = ft_strdup(equals + 1);
-			new_node->next = env_list;
-			env_list = new_node;
+			new_node->next = NULL;
+			if (!env_list)
+			{
+				env_list = new_node;
+				last = new_node;
+			}
+			else
+			{
+				last->next = new_node;
+				last = new_node;
+			}
 		}
 		i++;
 	}
