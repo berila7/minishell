@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 10:35:01 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 10:35:41 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_export(char **args, t_data *data)
 	int		i;
 
 	if (count_args(args) == 1)
-		print_env(new);
+		print_env(data->env);
 	else if (count_args(args) > 1)
 	{
 		i = 1;
