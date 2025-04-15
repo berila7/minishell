@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 16:39:30 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 17:10:03 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int	exec(t_data *data)
 	if (count_cmd(data->cmds) == 1)
 	{
 		if (is_builtin(data->cmds))
-			return (exec_builtin(data->cmds, data), 0);
-		return (exec_single_cmd(data));
+			data->exit_status = exec_builtin(data->cmds, data);
+		else
+			data->exit_status = exec_single_cmd(data);
 	}
 	return (0);
 }

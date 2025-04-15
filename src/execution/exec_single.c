@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 16:41:37 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/15 17:09:30 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,5 @@ int	exec_single_cmd(t_data *data)
 		}
 		return (0);
 	}
-	data->exit_status = ft_wait(id, 0);
-	return (data->exit_status);
+	return (ft_wait(id, 0));
 }
