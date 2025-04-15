@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 18:09:29 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 09:53:27 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			}
 			else
 			{
+				printf(RED"minishell: syntax error near unexpected token '<<'\n"RESET);
 				free_commands(cmd_list);
 				free_command(current_cmd);
 				return (NULL);

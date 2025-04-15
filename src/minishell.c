@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 18:02:25 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 09:57:25 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ int main(int ac, char *av[], char **envp)
 			continue ;
 		}
 		data->cmds = parse_tokens(tokens);
+		if (!data->cmds)
+		{
+			free_tokens(tokens);
+			free(line);
+			continue;
+		}
 		set_cmd_path(data->cmds, data->env);
 
 		// ! ======[ DEBUG: ]======
