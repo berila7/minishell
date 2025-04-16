@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 15:27:08 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/16 14:01:46 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ int handle_redirections(t_cmd *cmd)
 		fd = open(cmd->input_file, O_RDONLY);
 		if (fd < 0)
 			return (perror("failed to open infile"), 1);
-		ft_dup2(fd, 0);
+		ft_dup2(fd, STDIN_FILENO);
 	}
 	if (cmd->output_file)
 	{
 		fd = open_outfile(cmd->output_file, cmd->append_mode);
 		if (fd < 0)
 			return (perror("failed to open outfile"), 1);
-		ft_dup2(fd, 1);
+		ft_dup2(fd, STDOUT_FILENO);
 	}
 	return (0);
 }

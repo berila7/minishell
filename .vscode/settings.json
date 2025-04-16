@@ -10,6 +10,7 @@
         "iterator": "c",
         "typeinfo": "c",
         "limits.h": "c",
-        "__config": "c"
+        "__config": "c",
+        "text_encoding": "c"
     }
 }
