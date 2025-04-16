@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/16 11:25:12 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/16 16:27:09 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	char	*var_value;
 	int		in_single_quote;
 	int		in_double_quote;
+	int		escaped;
 	int		start;
 	char	*final_result;
 	char	*unescaped_result;
@@ -190,10 +191,20 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 		return (NULL);
 	in_single_quote = 0;
 	in_double_quote = 0;
+	escaped = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' && !in_double_quote)
+		if (str[i] == '\\' && !escaped && !(in_single_quote))
+		{
+			escaped = 1;
+			temp = ft_strjoin_char(result, str[i]);
+			free(result);
+			result = temp;
+			i++;
+			continue ;
+		} 
+		if (str[i] == '\'' && !escaped && !in_double_quote)
 		{
 			in_single_quote = !in_single_quote;
 			temp = ft_strjoin_char(result, str[i]);
@@ -201,7 +212,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			result = temp;
 			i++;
 		}
-		else if (str[i] == '\"' && !in_single_quote)
+		else if (str[i] == '\"' && !escaped && !in_single_quote)
 		{
 			in_double_quote = !in_double_quote;
 			temp = ft_strjoin_char(result, str[i]);
@@ -209,7 +220,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			result = temp;
 			i++;
 		}
-		else if (str[i] == '$' && str[i + 1] && !in_single_quote)
+		else if (str[i] == '$' && str[i + 1] && !in_single_quote && !escaped)
 		{
 			i++;
 			if (str[i] == '?')
@@ -220,6 +231,17 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 				free(status_str);
 				result = temp;
 				i++;
+			}
+			else if (ft_isdigit(str[i]))
+			{
+				char digit = str[i];
+				i++;
+				if (digit == '0')
+				{
+					temp = ft_strjoin(result, "minishell");
+					free(result);
+					result = temp;
+				}
 			}
 			else
 			{
@@ -252,6 +274,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			free(result);
 			result = temp;
 			i++;
+			escaped = 0;
 		}
 	}
 	unescaped_result = remove_escape_chars(result);

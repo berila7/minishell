@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/16 10:24:42 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/16 17:19:42 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,43 @@ void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_sta
 			(*i)++;
 			continue ;
 		}
-		if (line[*i] == '\'' && !escaped && !in_quote)
-			in_quote = 1;
-		if (line[*i] == '\'' && !escaped && in_quote == 1)
-			in_quote = 0;
-		else if (line[*i] == '\"' && !escaped && !in_quote)
-			in_quote = 2;
-		else if (line[*i] == '\"' && !escaped && in_quote == 2)
-			in_quote = 0;
-		if (!escaped && !in_quote && (line[*i] == ' ' || line[*i] == '\t' || line[*i] == '|' || line[*i] == '<' || line[*i] == '>'))
-			break ;
-		escaped = 0;
+		if (!escaped)
+		{
+			if (line[*i] == '\'' && !in_quote)
+			{
+				in_quote = 1;
+				(*i)++;
+				continue ;
+			}
+			else if (line[*i] == '\'' && in_quote == 1)
+			{
+				in_quote = 0;
+				(*i)++;
+				continue ;
+			}
+			if (line[*i] == '\"' && !in_quote)
+			{
+				in_quote = 2;
+				(*i)++;
+				continue ;
+			}
+			else if (line[*i] == '\"' && in_quote == 2)
+			{
+				in_quote = 0;
+				(*i)++;
+				continue ;
+			}
+			if (!in_quote && (line[*i] == ' ' || line[*i] == '\t' || line[*i] == '|' || line[*i] == '<' || line[*i] == '>'))
+				break ;
+		}
+		else
+		{
+			(*i)++;
+			escaped = 0;
+			continue ;
+		}
 		(*i)++;
+		escaped = 0;
 	}
 	if (in_quote != 0)
 	{
