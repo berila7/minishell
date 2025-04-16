@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 16:44:11 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/16 10:28:10 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	f(void)
-{
-	// system("leaks minishell");
-	system("lsof | grep '^minishell'");
-}
+// void	f(void)
+// {
+// 	// system("leaks minishell");
+// 	system("lsof | grep '^minishell'");
+// }
 
 static void	print_header()
 {
@@ -37,7 +37,7 @@ int main(int ac, char *av[], char **envp)
 	data = NULL;
 	(void)ac;
 	(void)av;
-	atexit(f);
+	// atexit(f);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (printf("Failed to allocat"), 0);
