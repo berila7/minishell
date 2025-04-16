@@ -23,7 +23,6 @@ SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c \
 					$(HELPERS_DIR)/atol.c
 OBJS			=	$(SRCS:.c = .o)
 
-
 all: $(LIBFT_DIR) $(NAME)
 
 $(LIBFT_DIR):
