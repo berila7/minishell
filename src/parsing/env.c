@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/16 12:57:38 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/16 16:27:09 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,17 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 				free(status_str);
 				result = temp;
 				i++;
+			}
+			else if (ft_isdigit(str[i]))
+			{
+				char digit = str[i];
+				i++;
+				if (digit == '0')
+				{
+					temp = ft_strjoin(result, "minishell");
+					free(result);
+					result = temp;
+				}
 			}
 			else
 			{

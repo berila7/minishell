@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/16 14:22:53 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/16 16:27:31 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,41 +35,50 @@ char	*remove_quotes(char *str)
 {
 	int		i;
 	int		j;
-	int		len;
+	// int		len;
 	int 	in_single_quote;
 	int		in_double_quote;
 	char	*result;
 
 	i = 0;
 	j = 0;
-	len = 0;
+	// len = 0;
 	in_single_quote = 0;
 	in_double_quote = 0;
-	while (str[i])
-	{
-		if(str[i] == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (str[i] == '\"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else
-			len++;
-		i++;
-	}
-	result = malloc(len + 1);
+	// while (str[i])
+	// {
+	// 	if(str[i] == '\'' && !in_double_quote)
+	// 	{
+	// 		if (i > 0 && str[i - 1] == '\\')
+	// 			result[j++] = str[i];
+	// 		in_single_quote = !in_single_quote;
+	// 	}
+	// 	else if (str[i] == '\"' && !in_single_quote)
+	// 		in_double_quote = !in_double_quote;
+	// 	else
+	// 		len++;
+	// 	i++;
+	// }
+	result = malloc(ft_strlen(str) + 1);
 	if (!result)
 		return (NULL);
 	i = 0;
 	while (str[i])
 	{
 		if(str[i] == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (str[i] == '\"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-		else
 		{
-			result[j] = str[i];
-			j++;
+			if (i > 0 && str[i - 1] == '\\')
+				result[j++] = str[i];
+			in_single_quote = !in_single_quote;
 		}
+		else if (str[i] == '\"' && !in_single_quote)
+		{
+			if (i > 0 && str[i - 1] == '\\')
+				result[j++] = str[i];
+			in_double_quote = !in_double_quote;
+		}
+		else
+			result[j++] = str[i];
 		i++;
 	}
 	result[j] = '\0';
