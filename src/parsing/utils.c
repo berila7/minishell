@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/16 13:40:25 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/16 14:22:53 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,15 @@ char	*remove_escape_chars(char *str)
 	int		in_single_quote;
 	int		in_double_quote;
 	char	*result;
+	int		len;
 
 	i = 0;
 	j = 0;
 	in_single_quote = 0;
 	in_double_quote = 0;
 	escaped = 0;
-	result = malloc(ft_strlen(str) + 1);
+	len = ft_strlen(str);
+	result = malloc(len + 1);
 	if (!result)
 		return (NULL);
 	while (str[i])
