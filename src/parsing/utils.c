@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/14 18:03:36 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 21:33:23 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,7 @@ int	validate_token(t_token *token)
 		if (current->type == TOKEN_PIPE)
 		{
 			if (prev_pip)
-			{
-				printf(RED"minishell: syntax error near unexpected token '|'\n"RESET);
-				return (0);
-			}
+				return (printf(RED"minishell: syntax error near unexpected token '|'\n"RESET), 0);
 			prev_pip = 1;
 		}
 		else
@@ -110,9 +107,6 @@ int	validate_token(t_token *token)
 		current = current->next;
 	}
 	if (prev_pip)
-	{
-		printf(RED"minishell: syntax error: unexpected end of file\n"RESET);
-		return (0);
-	}
+		return (printf(RED"minishell: syntax error: unexpected end of file\n"RESET), 0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 11:19:03 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/15 21:24:19 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,17 @@ char	**env_to_array(t_env *env)
 {
 	t_env	*current;
 	char	**env_array;
-	int		count;
 	int		i;
 	char	*temp;
 
 	current = env;
-	count = 0;
+	i = 0;
 	while (current)
 	{
-		count++;
+		i++;
 		current = current->next;
 	}
-	env_array = malloc(sizeof(char *) * (count + 1));
+	env_array = malloc(sizeof(char *) * (i + 1));
 	if (!env_array)
 		return (NULL);
 	current = env;
