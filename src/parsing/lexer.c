@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/16 17:19:42 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/17 12:07:23 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,58 +50,29 @@ void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_sta
 	int		start;
 	int		in_quote;
 	char 	*word;
-	int		escaped;
 	char	*expanded_word;
 	char	*quote_state;
-
-	escaped = 0;
 	start = *i;
 	in_quote = 0;
 	while (line[*i])
 	{
-		if (line[*i] == '\\' && !escaped && !(in_quote == 1))
+		if (line[*i] == '\'')
 		{
-			escaped = 1;
-			(*i)++;
-			continue ;
-		}
-		if (!escaped)
-		{
-			if (line[*i] == '\'' && !in_quote)
-			{
+			if (in_quote == 0)
 				in_quote = 1;
-				(*i)++;
-				continue ;
-			}
-			else if (line[*i] == '\'' && in_quote == 1)
-			{
-				in_quote = 0;
-				(*i)++;
-				continue ;
-			}
-			if (line[*i] == '\"' && !in_quote)
-			{
-				in_quote = 2;
-				(*i)++;
-				continue ;
-			}
-			else if (line[*i] == '\"' && in_quote == 2)
-			{
-				in_quote = 0;
-				(*i)++;
-				continue ;
-			}
-			if (!in_quote && (line[*i] == ' ' || line[*i] == '\t' || line[*i] == '|' || line[*i] == '<' || line[*i] == '>'))
-				break ;
+			else if (in_quote == 1)
+				in_quote = 0; 
 		}
-		else
+		else if (line[*i] == '\"')
 		{
-			(*i)++;
-			escaped = 0;
-			continue ;
+			if (in_quote == 0)
+				in_quote = 2;
+			else if (in_quote == 2)
+				in_quote = 0;
 		}
+		if (!in_quote && (line[*i] == ' ' || line[*i] == '\t' || line[*i] == '|' || line[*i] == '<' || line[*i] == '>'))
+			break ;
 		(*i)++;
-		escaped = 0;
 	}
 	if (in_quote != 0)
 	{

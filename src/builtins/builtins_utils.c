@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/17 12:11:35 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/17 12:20:28 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,13 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 	char	*name;
 	int		fd[2];
 
-	fd[0] = dup(STDIN_FILENO);
-	fd[1] = dup(STDOUT_FILENO);
-	if (flag && handle_redirections(cmd))
-		return (1);
+	if (flag)
+	{
+		fd[0] = dup(STDIN_FILENO);
+		fd[1] = dup(STDOUT_FILENO);
+		if (handle_redirections(cmd))
+			return (1);
+	}
 	name = cmd->args[0];
 	if (equal(name, "echo"))
 		ft_echo(cmd->args);
@@ -89,7 +92,10 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 		ft_env(data->env);
 	else if (equal(name, "exit"))
 		ft_exit(cmd->args, data);
-	ft_dup2(fd[0], STDIN_FILENO);
-	ft_dup2(fd[1], STDOUT_FILENO);
+	if (flag)
+	{
+		ft_dup2(fd[0], STDIN_FILENO);
+		ft_dup2(fd[1], STDOUT_FILENO);
+	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/17 11:52:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/17 12:06:42 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,30 +180,18 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 	char	*var_value;
 	int		in_single_quote;
 	int		in_double_quote;
-	int		escaped;
 	int		start;
-	char	*final_result;
-	char	*unescaped_result;
+	char	*quoted_result;
 
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
 	in_single_quote = 0;
 	in_double_quote = 0;
-	escaped = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\\' && !escaped && !(in_single_quote))
-		{
-			escaped = 1;
-			temp = ft_strjoin_char(result, str[i]);
-			free(result);
-			result = temp;
-			i++;
-			continue ;
-		} 
-		if (str[i] == '\'' && !escaped && !in_double_quote)
+		if (str[i] == '\'' && !in_double_quote)
 		{
 			in_single_quote = !in_single_quote;
 			temp = ft_strjoin_char(result, str[i]);
@@ -211,7 +199,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			result = temp;
 			i++;
 		}
-		else if (str[i] == '\"' && !escaped && !in_single_quote)
+		else if (str[i] == '\"' && !in_single_quote)
 		{
 			in_double_quote = !in_double_quote;
 			temp = ft_strjoin_char(result, str[i]);
@@ -219,7 +207,7 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 			result = temp;
 			i++;
 		}
-		else if (str[i] == '$' && str[i + 1] && !in_single_quote && !escaped)
+		if (str[i] == '$' && str[i + 1] && !in_single_quote)
 		{
 			i++;
 			if (str[i] == '?')
@@ -231,56 +219,36 @@ char	*expand_variables(char *str, t_env *env, int exit_status)
 				result = temp;
 				i++;
 			}
-			else if (ft_isdigit(str[i]))
-			{
-				char digit = str[i];
+			start = i;
+			while (str[i] && is_valid_var_char(str[i]))
 				i++;
-				if (digit == '0')
-				{
-					temp = ft_strjoin(result, "minishell");
-					free(result);
-					result = temp;
-				}
-			}
-			else
+			if (i > start)
 			{
-				start = i;
-				while (str[i] && is_valid_var_char(str[i]))
-					i++;
-				if (i > start)
+				var_name = ft_substr(str, start, i - start);
+				var_value = get_env(env, var_name);
+				if (var_value)
 				{
-					var_name = ft_substr(str, start, i - start);
-					var_value = get_env(env, var_name);
-					if (var_value)
-					{
-						temp = ft_strjoin(result, var_value);
-						free(result);
-						result = temp;
-					}
-					free(var_name);
-				}
-				else
-				{
-					temp = ft_strjoin_char(result, '$');
+					temp = ft_strjoin(result, var_value);
 					free(result);
 					result = temp;
 				}
+				free(var_name);
 			}
 		}
-		else
+		else if (str[i])
 		{
 			temp = ft_strjoin_char(result, str[i]);
 			free(result);
 			result = temp;
 			i++;
-			escaped = 0;
-		}
+		} 
+		else
+			break ;
 	}
-	unescaped_result = remove_escape_chars(result);
-	free(result);
-    final_result = remove_quotes(unescaped_result);
-    free(unescaped_result);
-    return (final_result);
+	quoted_result = result;
+    result = remove_quotes(quoted_result);
+    free(quoted_result);
+    return (result);
 }
 
 // void	f(void)

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/17 12:12:41 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/17 13:04:47 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_echo(char **args)
 	int	i;
 	int	new_line;
 
-	printf("ft_echo exec\n");
 	new_line = 1;
 	if (count_args(args) > 1)
 	{

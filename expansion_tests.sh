@@ -42,7 +42,7 @@ echo ''✅
 echo "\""✅
 echo "'"✅
 echo '"'✅
-echo '\''✅
+echo '\'''✅
 
 echo "\"$USER\" is using '$SHELL'"✅
 echo "Path is $PATH"✅
