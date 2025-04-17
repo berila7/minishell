@@ -25,6 +25,7 @@ OBJS			=	$(SRCS:.c = .o)
 
 all: $(LIBFT_DIR) $(NAME)
 
+
 $(LIBFT_DIR):
 	@make -C $(LIBFT_DIR)
 

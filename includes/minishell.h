@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/15 16:40:06 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/16 18:02:48 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ struct s_env
 
 struct s_data
 {
-	t_cmd	*cmds;
+	t_cmd		*cmds;
 	t_env		*env;
 	int			exit_status;
-	// int			pipe_fd[2];
+	int			prev_pipe[2];
+	int			curr_pipe[2];
 };
 
 t_token		*tokenize(char *line, t_env *env, int exit_status);
@@ -108,6 +109,7 @@ char		*get_env(t_env *env, char *key);
 void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
+char		*remove_escape_chars(char *str);
 
 // builtins:
 int			is_builtin(t_cmd *cmd);

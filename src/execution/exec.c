@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 17:10:03 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/16 14:20:42 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int	exec(t_data *data)
 			data->exit_status = exec_builtin(data->cmds, data);
 		else
 			data->exit_status = exec_single_cmd(data);
+	}
+	else
+	{
+		exec_multiple_cmd(data);
 	}
 	return (0);
 }
