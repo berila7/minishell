@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/17 10:32:38 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/17 12:11:35 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ int handle_redirections(t_cmd *cmd)
 	return (0);
 }
 
-int	exec_builtin(t_cmd *cmd, t_data *data)
+int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 {
 	char	*name;
 	int		fd[2];
 
 	fd[0] = dup(STDIN_FILENO);
 	fd[1] = dup(STDOUT_FILENO);
-	if (handle_redirections(cmd))
+	if (flag && handle_redirections(cmd))
 		return (1);
 	name = cmd->args[0];
 	if (equal(name, "echo"))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:12:54 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/16 18:02:48 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/17 12:12:05 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char		*remove_escape_chars(char *str);
 
 // builtins:
 int			is_builtin(t_cmd *cmd);
-int			exec_builtin(t_cmd *cmd, t_data *data);
+int			exec_builtin(t_cmd *cmd, t_data *data, int flag);
 
 void		ft_echo(char **args);
 int			ft_exit(char **args, t_data *data);

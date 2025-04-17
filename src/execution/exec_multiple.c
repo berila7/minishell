@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/17 11:50:58 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/17 12:13:14 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,11 @@ int child1(t_cmd *cmd, int i, t_data *data, int *pid)
 		// 	close(data->curr_pipe[1]);
 		// }
 		
-		if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
+		if (is_builtin(cmd))
+		{
+			exec_builtin(cmd, data, 0);
+		}
+		else if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{
 			perror("execve failed");
 			exit(1);
