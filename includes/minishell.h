@@ -41,10 +41,21 @@
 #define ORANGE      "\033[38;2;255;165;0m"
 #define WHITE       "\033[37m"
 
+#define REDIR_IN 1
+#define REDIR_OUT 2  
+#define REDIR_APPEND 3
+#define REDIR_HEREDOC 4
+
 typedef struct s_token t_token;
 typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
 typedef struct s_data t_data;
+typedef struct s_redir t_redir;
+
+struct s_redir {
+    int type;
+    char *file;
+};
 
 typedef enum e_token_type
 {
@@ -56,15 +67,12 @@ typedef enum e_token_type
 	TOKEN_HEREDOC		//	<<
 }	t_token_type;
 
-struct s_cmd
-{
-	char        **args;
-	char        *path;
-	char        *input_file;
-	char        *output_file;
-	int         append_mode;
-	char        *heredoc_delim;
-	t_cmd   *next;
+struct s_cmd {
+    char **args;
+    char *path;
+    t_redir *redirections;
+    int redir_count;
+    t_cmd *next;
 };
 
 struct s_token

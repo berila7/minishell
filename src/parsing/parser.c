@@ -12,22 +12,24 @@
 
 #include "minishell.h"
 
-t_cmd	*new_command()
+t_cmd *new_command()
 {
-	t_cmd	*cmd;
+    t_cmd *cmd;
 
-	cmd	= malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	ft_memset(cmd, 0, sizeof(t_cmd));
-	cmd->args = malloc(sizeof(char *) * 2);
-	if (!cmd->args)
-	{
-		free(cmd);
-		return (NULL);
-	}
-	cmd->args[0] = NULL;
-	return cmd;
+    cmd = malloc(sizeof(t_cmd));
+    if (!cmd)
+        return (NULL);
+    ft_memset(cmd, 0, sizeof(t_cmd));
+    cmd->args = malloc(sizeof(char *) * 2);
+    if (!cmd->args)
+    {
+        free(cmd);
+        return (NULL);
+    }
+    cmd->args[0] = NULL;
+    cmd->redirections = NULL;
+    cmd->redir_count = 0;
+    return cmd;
 }
 
 void	add_argument(t_cmd *cmd, char *arg)
@@ -58,32 +60,51 @@ void	add_argument(t_cmd *cmd, char *arg)
 	cmd->args = new_args;
 }
 
-
-void	free_command(t_cmd *cmd)
+void add_redirection(t_cmd *cmd, int type, char *file)
 {
-	int	i;
+    t_redir *new_redirs;
+    int i;
 
-	i = 0;
-	if (!cmd)
-		return ;
-	if (cmd->args)
+    new_redirs = malloc(sizeof(t_redir) * (cmd->redir_count + 1));
+    if (!new_redirs)
+        return;
+	i = 0
+    while (i < cmd->redir_count)
 	{
-		while (cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		free(cmd->args);
-	}
-	if (cmd->input_file)
-		free(cmd->input_file);
-	if (cmd->output_file)
-		free(cmd->output_file);
-	if (cmd->heredoc_delim)
-		free(cmd->heredoc_delim);
-	if (cmd->path)
-		free(cmd->path);
-	free(cmd);
+        new_redirs[i].type = cmd->redirections[i].type;
+        new_redirs[i].file = cmd->redirections[i].file;
+		i++
+    }
+
+    new_redirs[cmd->redir_count].type = type;
+    new_redirs[cmd->redir_count].file = ft_strdup(file);
+
+    free(cmd->redirections);
+    cmd->redirections = new_redirs;
+    cmd->redir_count++;
+}
+
+void free_command(t_cmd *cmd)
+{
+    int i;
+
+    if (!cmd)
+        return;
+    if (cmd->args) {
+        for (i = 0; cmd->args[i]; i++)
+            free(cmd->args[i]);
+        free(cmd->args);
+    }
+
+    if (cmd->redirections) {
+        for (i = 0; i < cmd->redir_count; i++)
+            free(cmd->redirections[i].file);
+        free(cmd->redirections);
+    }
+    
+    if (cmd->path)
+        free(cmd->path);
+    free(cmd);
 }
 
 void	free_commands(t_cmd *commands)
@@ -150,7 +171,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				current_cmd->input_file = ft_strdup(token->value);
+				add_redirection(current_cmd, REDIR_IN, token->value);
 				token = token->next;
 			}
 			else
@@ -166,8 +187,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				current_cmd->output_file = ft_strdup(token->value);
-				current_cmd->append_mode = 0;
+				add_redirection(current_cmd, REDIR_OUT, token->value);
 				token = token->next;
 			}
 			else
@@ -183,8 +203,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				current_cmd->output_file = ft_strdup(token->value);
-				current_cmd->append_mode = 1;
+				add_redirection(current_cmd, REDIR_APPEND, token->value);
 				token = token->next;
 			}
 			else
@@ -200,7 +219,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				current_cmd->heredoc_delim = ft_strdup(token->value);
+				add_redirection(current_cmd, REDIR_HEREDOC, token->value);
 				token = token->next;
 			}
 			else

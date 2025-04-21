@@ -70,14 +70,14 @@ int main(int ac, char *av[], char **envp)
 			free(line);
 			continue ;
 		}
-		set_cmd_path(data->cmds, data->env);
+		// set_cmd_path(data->cmds, data->env);
 
 		// ! ======[ DEBUG: ]======
 		print_tokens(tokens);
 		print_cmds(data->cmds);
 		// ! ======================
 		
-		exec(data);
+		// exec(data);
 
 		free_tokens(tokens);
 		free_commands(data->cmds);

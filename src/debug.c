@@ -29,29 +29,68 @@ void print_tokens(t_token *tokens)
 
 void print_cmds(t_cmd *cmds)
 {
-	t_cmd *current_cmd = cmds;
-	int j = 0;
+    t_cmd *current_cmd = cmds;
+    int j = 0;
 
-	printf(PURPLE "\n========== COMMANDS ==========\n" RESET);
-	while (current_cmd)
-	{
-		j++;
-		printf(BLUE "Command: [%d]\n" RESET, j);
+    printf(PURPLE "\n========== COMMANDS ==========\n" RESET);
+    while (current_cmd)
+    {
+        j++;
+        printf(BLUE "Command: [%d]\n" RESET, j);
 
-		for (int i = 0; current_cmd->args && current_cmd->args[i]; i++)
-		{
-			printf(GREEN "  args[%d]: " YELLOW "'%s'\n" RESET, i, current_cmd->args[i]);
-		}
+        for (int i = 0; current_cmd->args && current_cmd->args[i]; i++)
+        {
+            printf(GREEN "  args[%d]: " YELLOW "'%s'\n" RESET, i, current_cmd->args[i]);
+        }
 
-		printf(CYAN "  path          : " YELLOW "'%s'\n" RESET, current_cmd->path);
-		printf(CYAN "  input file    : " YELLOW "'%s'\n" RESET, current_cmd->input_file ? current_cmd->input_file : "(null)");
-		printf(CYAN "  output file   : " YELLOW "'%s'\n" RESET, current_cmd->output_file ? current_cmd->output_file : "(null)");
-		printf(CYAN "  append mode   : " YELLOW "'%d'\n" RESET, current_cmd->append_mode);
-		printf(CYAN "  heredoc delim : " YELLOW "'%s'\n" RESET, current_cmd->heredoc_delim ? current_cmd->heredoc_delim : "(null)");
+        printf(CYAN "  path          : " YELLOW "'%s'\n" RESET, current_cmd->path);
+        
+        // Print the original input/output properties for backwards compatibility
+        // printf(CYAN "  input file    : " YELLOW "'%s'\n" RESET, current_cmd->input_file ? current_cmd->input_file : "(null)");
+        // printf(CYAN "  output file   : " YELLOW "'%s'\n" RESET, current_cmd->output_file ? current_cmd->output_file : "(null)");
+        // printf(CYAN "  append mode   : " YELLOW "'%d'\n" RESET, current_cmd->append_mode);
+        // printf(CYAN "  heredoc delim : " YELLOW "'%s'\n" RESET, current_cmd->heredoc_delim ? current_cmd->heredoc_delim : "(null)");
+        
+        // Print all redirections in order
+        if (current_cmd->redirections && current_cmd->redir_count > 0)
+        {
+            printf(GREEN "  Redirections   : \n" RESET);
+            for (int i = 0; i < current_cmd->redir_count; i++)
+            {
+                printf(GREEN "    [%d] Type: " YELLOW, i);
+                
+                // Print the type in human-readable form
+                switch (current_cmd->redirections[i].type)
+                {
+                    case REDIR_IN:
+                        printf("INPUT (<)");
+                        break;
+                    case REDIR_OUT:
+                        printf("OUTPUT (>)");
+                        break;
+                    case REDIR_APPEND:
+                        printf("APPEND (>>)");
+                        break;
+                    case REDIR_HEREDOC:
+                        printf("HEREDOC (<<)");
+                        break;
+                    default:
+                        printf("UNKNOWN (%d)", current_cmd->redirections[i].type);
+                }
+                
+                printf(RESET GREEN ", File: " YELLOW "'%s'\n" RESET, 
+                       current_cmd->redirections[i].file ? 
+                       current_cmd->redirections[i].file : "(null)");
+            }
+        }
+        else
+        {
+            printf(GREEN "  Redirections   : " YELLOW "(none)\n" RESET);
+        }
 
-		printf(PURPLE "----------------------------\n" RESET);
-		current_cmd = current_cmd->next;
-	}
-	printf(PURPLE "=============================\n" RESET);
-	printf("\n" RESET);
+        printf(PURPLE "----------------------------\n" RESET);
+        current_cmd = current_cmd->next;
+    }
+    printf(PURPLE "=============================\n" RESET);
+    printf("\n" RESET);
 }
