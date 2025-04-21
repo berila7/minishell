@@ -67,13 +67,13 @@ void add_redirection(t_cmd *cmd, int type, char *file)
 
     new_redirs = malloc(sizeof(t_redir) * (cmd->redir_count + 1));
     if (!new_redirs)
-        return;
-	i = 0
+		return ;
+	i = 0;
     while (i < cmd->redir_count)
 	{
         new_redirs[i].type = cmd->redirections[i].type;
         new_redirs[i].file = cmd->redirections[i].file;
-		i++
+		i++;
     }
 
     new_redirs[cmd->redir_count].type = type;
