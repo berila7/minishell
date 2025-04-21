@@ -11,6 +11,7 @@
         "typeinfo": "c",
         "limits.h": "c",
         "__config": "c",
-        "text_encoding": "c"
+        "text_encoding": "c",
+        "readline.h": "c"
     }
 }
