@@ -170,82 +170,102 @@ void	unset_env(t_env **env, char *key)
 	}
 }
 
-char	*expand_variables(char *str, t_env *env, int exit_status)
+char *expand_variables(char *str, t_env *env, int exit_status)
 {
-	int		i;
-	char	*result;
-	char	*status_str;
-	char	*temp;
-	char	*var_name;
-	char	*var_value;
-	int		in_single_quote;
-	int		in_double_quote;
-	int		start;
-	char	*quoted_result;
+    int     i;
+    char    *result;
+    char    *status_str;
+    char    *temp;
+    char    *var_name;
+    char    *var_value;
+    int     in_single_quote;
+    int     in_double_quote;
+    int     start;
+    char    *quoted_result;
 
-	result = ft_strdup("");
-	if (!result)
-		return (NULL);
-	in_single_quote = 0;
-	in_double_quote = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' && !in_double_quote)
-		{
-			in_single_quote = !in_single_quote;
-			temp = ft_strjoin_char(result, str[i]);
-			free(result);
-			result = temp;
-			i++;
-		}
-		else if (str[i] == '\"' && !in_single_quote)
-		{
-			in_double_quote = !in_double_quote;
-			temp = ft_strjoin_char(result, str[i]);
-			free(result);
-			result = temp;
-			i++;
-		}
-		if (str[i] == '$' && str[i + 1] && !in_single_quote)
-		{
-			i++;
-			if (str[i] == '?')
-			{
-				status_str = ft_itoa(exit_status);
-				temp = ft_strjoin(result, status_str);
-				free(result);
-				free(status_str);
-				result = temp;
-				i++;
-			}
-			start = i;
-			while (str[i] && is_valid_var_char(str[i]))
-				i++;
-			if (i > start)
-			{
-				var_name = ft_substr(str, start, i - start);
-				var_value = get_env(env, var_name);
-				if (var_value)
-				{
-					temp = ft_strjoin(result, var_value);
-					free(result);
-					result = temp;
-				}
-				free(var_name);
-			}
-		}
-		else if (str[i])
-		{
-			temp = ft_strjoin_char(result, str[i]);
-			free(result);
-			result = temp;
-			i++;
-		} 
-		else
-			break ;
-	}
-	quoted_result = result;
+    result = ft_strdup("");
+    if (!result)
+        return (NULL);
+    in_single_quote = 0;
+    in_double_quote = 0;
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '\'' && !in_double_quote)
+        {
+            in_single_quote = !in_single_quote;
+            temp = ft_strjoin_char(result, str[i]);
+            free(result);
+            result = temp;
+            i++;
+        }
+        else if (str[i] == '\"' && !in_single_quote)
+        {
+            in_double_quote = !in_double_quote;
+            temp = ft_strjoin_char(result, str[i]);
+            free(result);
+            result = temp;
+            i++;
+        }
+        else if (str[i] == '$' && str[i + 1] && !in_single_quote)
+        {
+            i++;
+            if (str[i] == '?')
+            {
+                status_str = ft_itoa(exit_status);
+                temp = ft_strjoin(result, status_str);
+                free(result);
+                free(status_str);
+                result = temp;
+                i++;
+            }
+            else if (ft_isdigit(str[i]))
+            {
+                char first_digit = str[i];
+                i++;
+                if (first_digit == '0')
+                {
+                    temp = ft_strjoin(result, "minishell");
+                    free(result);
+                    result = temp;
+                }
+            }
+            else
+            {
+                start = i;
+                while (str[i] && is_valid_var_char(str[i]))
+                    i++;
+                if (i > start)
+                {
+                    var_name = ft_substr(str, start, i - start);
+                    var_value = get_env(env, var_name);
+                    if (var_value)
+                    {
+                        temp = ft_strjoin(result, var_value);
+                        free(result);
+                        result = temp;
+                    }
+                    free(var_name);
+                }
+                else
+                {
+                    temp = ft_strjoin_char(result, '$');
+                    free(result);
+                    result = temp;
+                }
+            }
+        }
+        else if (str[i])
+        {
+            temp = ft_strjoin_char(result, str[i]);
+            free(result);
+            result = temp;
+            i++;
+        }
+        else
+            break;
+    }
+    quoted_result = result;
     result = remove_quotes(quoted_result);
     free(quoted_result);
     return (result);
