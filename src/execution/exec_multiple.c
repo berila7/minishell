@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 10:44:57 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 12:02:23 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int child1(t_cmd *cmd, int i, t_data *data, int *pid)
 		if (is_builtin(cmd))
 		{
 			exec_builtin(cmd, data, 0);
-			return (0);
+			exit(0);
 		}
 		else if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{
