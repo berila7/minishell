@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/23 13:18:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:23:06 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ struct s_data
 	int			curr_pipe[2];
 };
 
-t_token		*tokenize(char *line, t_env *env, int exit_status);
+t_token		*tokenize(char *line);
 void		free_tokens(t_token *tokens);
-t_cmd		*parse_tokens(t_token *tokens);
+t_cmd		*parse_tokens(t_token *tokens, t_data *data);
 void		free_commands(t_cmd *commands);
 void		free_command(t_cmd *cmd);
 void		free_env(t_env *env);
@@ -109,7 +109,7 @@ t_env		*init_env(char	**envp);
 long	    ft_atol(const char *str);
 int     	count_args(char **args);
 int			exec(t_data *data);
-char		*expand_variables(char *str, t_env *env, int exit_status);
+char		*expand_variables(char *str, t_data *data);
 void		set_cmd_path(t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
 void		unset_env(t_env **env, char *key);
@@ -120,7 +120,7 @@ void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
 // char		*remove_escape_chars(char *str);
-
+void		extract_word(t_token **tokens, char *line, int *i);
 // builtins:
 int			is_builtin(t_cmd *cmd);
 int			exec_builtin(t_cmd *cmd, t_data *data, int flag);
@@ -142,12 +142,12 @@ char		*join_path(char *path, char *cmd);
 int			count_cmd(t_cmd *cmd);
 int			ft_dup2(int oldfd, int newfd);
 char		**env_to_array(t_env *env);
-int			handle_redirections(t_cmd *cmd);
+int			handle_redirections(t_data *data);
 int			ft_wait(pid_t last_pid, int default_st);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
-int			handle_herdoc(char *end, int *hd_fd);
+int			handle_herdoc(char *end, int *hd_fd, t_data *data);
 
 
 // Debug functions:

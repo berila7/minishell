@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 13:20:21 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:41:50 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	open_outfile(char *file, int mode)
 // In Child
 // export no args
 
-int handle_redirections(t_cmd *cmd)
+int handle_redirections(t_data *data)
 {
 	t_redir	*redir;
 	int		hd_fd[2];
@@ -62,9 +62,9 @@ int handle_redirections(t_cmd *cmd)
 	int flag = 0;
 
 	i = 0;
-	while (i < cmd->redir_count)
+	while (i < data->cmds->redir_count)
 	{
-		redir = &cmd->redirections[i];
+		redir = &data->cmds->redirections[i];
 		// type == IN
 		if (redir->type == REDIR_IN)
 		{
@@ -86,7 +86,7 @@ int handle_redirections(t_cmd *cmd)
 		}
 		else if (redir->type == REDIR_HEREDOC)
 		{
-			handle_herdoc(redir->file, hd_fd);
+			handle_herdoc(redir->file, hd_fd, data);
 			flag = 1;
 		}
 		i++;
@@ -105,7 +105,7 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 	{
 		fd[0] = dup(STDIN_FILENO);
 		fd[1] = dup(STDOUT_FILENO);
-		if (handle_redirections(cmd))
+		if (handle_redirections(data))
 			return (1);
 	}
 	name = cmd->args[0];

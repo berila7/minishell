@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple_origin.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 10:16:34 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:41:57 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int child1(t_cmd *cmd, int i, t_data *data, int *pid)
 			ft_dup2(data->curr_pipe[1], STDOUT_FILENO);
 			close(data->curr_pipe[0]); // close unused pipe
 		}
-		if (handle_redirections(cmd))
+		if (handle_redirections(data))
 			return (1);
 		// Close all pipe fds in child
 		// if (i > 0) {

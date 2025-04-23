@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/17 12:09:09 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:21:07 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	add_command(t_cmd **cmds, t_cmd *new_cmd)
 	current->next = new_cmd;
 }
 
-t_cmd	*parse_tokens(t_token *tokens)
+t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 {
 	t_token		*token;
 	t_cmd	*current_cmd;
@@ -152,7 +152,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 	{
 		if (token->type == TOKEN_WORD)
 		{
-			add_argument(current_cmd, token->value);
+			add_argument(current_cmd, expand_variables(token->value, data));
 			token = token->next;
 		}
 		else if (token->type == TOKEN_PIPE)
@@ -171,7 +171,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				add_redirection(current_cmd, REDIR_IN, token->value);
+				add_redirection(current_cmd, REDIR_IN, expand_variables(token->value, data));
 				token = token->next;
 			}
 			else
@@ -187,7 +187,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				add_redirection(current_cmd, REDIR_OUT, token->value);
+				add_redirection(current_cmd, REDIR_OUT, expand_variables(token->value, data));
 				token = token->next;
 			}
 			else
@@ -203,7 +203,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				add_redirection(current_cmd, REDIR_APPEND, token->value);
+				add_redirection(current_cmd, REDIR_APPEND, expand_variables(token->value, data));
 				token = token->next;
 			}
 			else

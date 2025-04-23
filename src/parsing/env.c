@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/17 12:06:42 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:18:10 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void	unset_env(t_env **env, char *key)
 	}
 }
 
-char *expand_variables(char *str, t_env *env, int exit_status)
+char *expand_variables(char *str, t_data *data)
 {
     int     i;
     char    *result;
@@ -212,7 +212,7 @@ char *expand_variables(char *str, t_env *env, int exit_status)
             i++;
             if (str[i] == '?')
             {
-                status_str = ft_itoa(exit_status);
+                status_str = ft_itoa(data->exit_status);
                 temp = ft_strjoin(result, status_str);
                 free(result);
                 free(status_str);
@@ -238,7 +238,7 @@ char *expand_variables(char *str, t_env *env, int exit_status)
                 if (i > start)
                 {
                     var_name = ft_substr(str, start, i - start);
-                    var_value = get_env(env, var_name);
+                    var_value = get_env(data->env, var_name);
                     if (var_value)
                     {
                         temp = ft_strjoin(result, var_value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 17:09:30 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:42:05 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	exec_single_cmd(t_data *data)
 		return (perror("fork failed"), 1);
 	if (id == 0)
 	{
-		if (handle_redirections(cmd))
+		if (handle_redirections(data))
 			return (1);
 		if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{

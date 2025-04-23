@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/23 09:50:01 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:23:12 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ int main(int ac, char *av[], char **envp)
 			break ;
 		if (line[0])
 			add_history(line);
-		tokens = tokenize(line, data->env, data->exit_status);
+		tokens = tokenize(line);
 		if (!tokens || !validate_token(tokens))
 		{
 			free_tokens(tokens);
 			free(line);
 			continue ;
 		}
-		data->cmds = parse_tokens(tokens);
+		data->cmds = parse_tokens(tokens, data);
 		if (!data->cmds)
 		{
 			free_tokens(tokens);

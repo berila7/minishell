@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/17 12:07:23 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:22:51 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	add_token(t_token **tokens, t_token *new_token)
 	current->next = new_token;
 }
 
-void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_status)
+void	extract_word(t_token **tokens, char *line, int *i)
 {
 	int		start;
 	int		in_quote;
 	char 	*word;
-	char	*expanded_word;
+	// char	*expanded_word;
 	char	*quote_state;
 	start = *i;
 	in_quote = 0;
@@ -89,19 +89,21 @@ void	extract_word(t_token **tokens, char *line, int *i, t_env *env, int exit_sta
 	if (*i > start)
 	{
 		word = ft_substr(line, start, *i - start);
-		expanded_word = expand_variables(word, env, exit_status);
+		// expanded_word = expand_variables(word, data);
+		// free(word);
+		add_token(tokens, new_token(word, TOKEN_WORD));
 		free(word);
-		add_token(tokens, new_token(expanded_word, TOKEN_WORD));
-		free(expanded_word);
 	}
 }
 
-t_token	*tokenize(char *line, t_env *env, int exit_status)
+t_token	*tokenize(char *line)
 {
 	t_token	*token = NULL;
 	int		i;
+	int		is_delim;
 
 	i = 0;
+	is_delim = 0;
 	while (line[i])
 	{
 		while (line[i] == ' ' || line[i] == '\t')
@@ -140,7 +142,7 @@ t_token	*tokenize(char *line, t_env *env, int exit_status)
 			}
 		}
 		else
-			extract_word(&token, line, &i, env, exit_status);
+			extract_word(&token, line, &i);
 	}
 	return (token);
 }

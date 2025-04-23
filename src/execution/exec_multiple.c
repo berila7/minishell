@@ -3,53 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 13:24:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:42:01 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	open_heredoc(int *fd)
-{
-	unlink("here_doc");
-	fd[1] = open("here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	if (fd[1] < 0)
-		return (perror("cannot open here_doc file"), -1);
-	fd[0] = open("here_doc", O_RDONLY);
-	if (fd[0] < 0)
-		return (perror("cannot open here_doc file"),
-			close(fd[1]), unlink("here_doc"), -1);
-	// unlink("here_doc");
-	return (0);
-}
-
-int handle_herdoc(char *del, int *hd_fd)
-{
-	char	*line;
-	int		len;
-
-	if (open_heredoc(hd_fd) == -1)
-		return (-1);
-	line = readline("mini herdoc> ");
-	while (line)
-	{
-		len = ft_strlen(line);
-		if (equal(line, del))
-			return (free(line), 0);
-			// break ;
-		// char *exp_line = dkjsdsjhds(line);
-		// ft_putstr_fd(exp_line, hd_fd[1]);
-		ft_putstr_fd(line, hd_fd[1]);
-		write(hd_fd[1], "\n", 1);
-		free(line);
-		line = readline("mini herdoc> ");
-	}
-	return (free(line), 0);	
-}
-
 
 int child1(t_cmd *cmd, int i, t_data *data, int *pid)
 {
@@ -72,7 +33,7 @@ int child1(t_cmd *cmd, int i, t_data *data, int *pid)
 			ft_dup2(data->pipe[1], STDOUT_FILENO);
 		}
 
-		if (handle_redirections(cmd))
+		if (handle_redirections(data))
 			return (1);
 
 		if (is_builtin(cmd))
