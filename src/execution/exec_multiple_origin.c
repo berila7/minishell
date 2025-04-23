@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple_origin.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 13:41:57 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:33:53 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,20 @@ int child1(t_cmd *cmd, int i, t_data *data, int *pid)
 		}
 		if (handle_redirections(data))
 			return (1);
-		// Close all pipe fds in child
-		// if (i > 0) {
-		// 	close(data->prev_pipe[0]);
-		// 	close(data->prev_pipe[1]);
-		// }
-		// if (cmd->next) {
-		// 	close(data->curr_pipe[0]);
-		// 	close(data->curr_pipe[1]);
-		// }
 		
-		if (is_builtin(cmd))
+		if (cmd->path)
 		{
-			exec_builtin(cmd, data, 0);
+			if (is_builtin(cmd))
+				exec_builtin(cmd, data, 0);
+			else if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
+			{
+				perror("execve failed");
+				exit(1);
+			}
+			return (0);
 		}
-		else if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
-		{
-			perror("execve failed");
-			exit(1);
-		}
-		return (0);
+		else if (cmd->redirections[0].type != REDIR_HEREDOC)
+			return (printf("%s: command not found\n", cmd->args[0]), 1);
 	}
 	else
 	{
@@ -96,8 +90,6 @@ int	exec_multiple_cmd(t_data *data)
 
 	last_pid = 0;
 	cmd = data->cmds;
-	if (!cmd->path)
-		return (printf("%s: command not found\n", cmd->args[0]), 1);
 	i = 0;
 	while (cmd)
 	{

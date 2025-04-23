@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/23 15:09:59 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:51:14 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int handle_herdoc(char *del, int *hd_fd, t_data *data)
 
 	if (open_heredoc(hd_fd) == -1)
 		return (-1);
-	line = readline("heredoc> ");
+	line = readline("> ");
 	while (line)
 	{
 		len = ft_strlen(line);
@@ -49,7 +49,7 @@ int handle_herdoc(char *del, int *hd_fd, t_data *data)
 		// ft_putstr_fd(line, hd_fd[1]);
 		write(hd_fd[1], "\n", 1);
 		free(line);
-		line = readline("heredoc> ");
+		line = readline("> ");
 	}
 	return (free(line), 0);	
 }
