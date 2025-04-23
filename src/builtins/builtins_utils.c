@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 09:52:08 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:20:21 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ int	open_outfile(char *file, int mode)
 int handle_redirections(t_cmd *cmd)
 {
 	t_redir	*redir;
+	int		hd_fd[2];
 	int		fd;
 	int		i;
+	int flag = 0;
 
 	i = 0;
 	while (i < cmd->redir_count)
@@ -72,7 +74,7 @@ int handle_redirections(t_cmd *cmd)
 			ft_dup2(fd, STDIN_FILENO);
 		}
 		// type == OUT
-		if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
+		else if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
 		{
 			if (redir->type == REDIR_OUT)
 				fd = open_outfile(redir->file, 0);
@@ -82,8 +84,15 @@ int handle_redirections(t_cmd *cmd)
 				return (perror("failed to open infile"), 1);
 			ft_dup2(fd, STDOUT_FILENO);
 		}
+		else if (redir->type == REDIR_HEREDOC)
+		{
+			handle_herdoc(redir->file, hd_fd);
+			flag = 1;
+		}
 		i++;
 	}
+	if (flag)
+		ft_dup2(hd_fd[0], STDIN_FILENO);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/23 10:11:23 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:18:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int			ft_wait(pid_t last_pid, int default_st);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
+int			handle_herdoc(char *end, int *hd_fd);
 
 
 // Debug functions:
