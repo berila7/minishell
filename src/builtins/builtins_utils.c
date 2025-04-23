@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 17:22:04 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 17:35:04 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ int	open_outfile(char *file, int mode)
 // In Child
 // export no args
 
-int handle_redirections(t_data *data)
+int handle_redirections(t_data *data, t_cmd *cmd)
 {
 	t_redir	*redir;
 	int		hd_fd[2];
 	int		fd;
 	int		i;
-	int flag = 0;
+	int		flag = 0;
 
 	i = 0;
-	while (i < data->cmds->redir_count)
+	while (i < cmd->redir_count)
 	{
-		redir = &data->cmds->redirections[i];
+		redir = &cmd->redirections[i];
 		// type == IN
 		if (redir->type == REDIR_IN)
 		{
@@ -91,7 +91,7 @@ int handle_redirections(t_data *data)
 		}
 		i++;
 	}
-	if (flag)
+	if (cmd->path && flag)
 		ft_dup2(hd_fd[0], STDIN_FILENO);
 	return (0);
 }
@@ -105,7 +105,7 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 	{
 		fd[0] = dup(STDIN_FILENO);
 		fd[1] = dup(STDOUT_FILENO);
-		if (handle_redirections(data))
+		if (handle_redirections(data, cmd))
 			return (1);
 	}
 	name = cmd->args[0];
