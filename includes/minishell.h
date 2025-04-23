@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/22 13:18:39 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 10:11:23 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ struct s_data
 	t_cmd		*cmds;
 	t_env		*env;
 	int			exit_status;
+	int			pipe[2];
 	int			prev_pipe[2];
 	int			curr_pipe[2];
 };

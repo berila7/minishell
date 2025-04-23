@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_multiple.c                                    :+:      :+:    :+:   */
+/*   exec_multiple_origin.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 10:44:57 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 10:16:34 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,74 @@ int child1(t_cmd *cmd, int i, t_data *data, int *pid)
 {
 	pid_t id;
 
-	(void)i;
-	if (pipe(data->pipe) < 0)
-		return (perror("pipe failed"), 1);
+	if (cmd->next)
+	{
+		if (pipe(data->curr_pipe) < 0)
+			return (perror("pipe failed"), 1);
+	}
 	id = fork();
 	if (id < 0)
 		return (perror("fork failed"), 1);
 	if (id == 0)
 	{
 		*pid = id;
-		
-		if (cmd->next)
-		{	
-			close(data->pipe[0]); // in child we only use write end in parent we use read end;
-			// pipe redirection:
-			ft_dup2(data->pipe[1], STDOUT_FILENO);
-		}
 
+		if (i == 0) // FIRST cmd
+		{
+			ft_dup2(data->curr_pipe[1], STDOUT_FILENO);
+			close(data->curr_pipe[0]); // close unused pipe
+			close(data->curr_pipe[1]); // close unused pipe
+			close(data->curr_pipe[0]); // close unused pipe
+		}
+		else if (!cmd->next) // LAST cmd
+		{
+				ft_dup2(data->prev_pipe[0], STDIN_FILENO);
+				close(data->prev_pipe[1]); // close unused pipe
+				close(data->prev_pipe[0]); // close unused pipe
+				close(data->prev_pipe[1]); // close unused pipe
+		}
+		else // MIDDLE cmd
+		{
+			ft_dup2(data->prev_pipe[0], STDIN_FILENO);
+			close(data->prev_pipe[1]); // close unused pipe
+			ft_dup2(data->curr_pipe[1], STDOUT_FILENO);
+			close(data->curr_pipe[0]); // close unused pipe
+		}
 		if (handle_redirections(cmd))
 			return (1);
-
+		// Close all pipe fds in child
+		// if (i > 0) {
+		// 	close(data->prev_pipe[0]);
+		// 	close(data->prev_pipe[1]);
+		// }
+		// if (cmd->next) {
+		// 	close(data->curr_pipe[0]);
+		// 	close(data->curr_pipe[1]);
+		// }
+		
 		if (is_builtin(cmd))
 		{
 			exec_builtin(cmd, data, 0);
-			return (0);
 		}
 		else if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{
 			perror("execve failed");
+			exit(1);
 		}
 		return (0);
 	}
 	else
 	{
-		close(data->pipe[1]);
-		ft_dup2(data->pipe[0], STDIN_FILENO);
+		if (i > 0)
+		{
+			close(data->prev_pipe[0]); // close unused pipe
+			close(data->prev_pipe[1]); // close unused pipe
+		}
+		if (cmd->next)
+		{
+			data->prev_pipe[0] = data->curr_pipe[0]; // forward pipes
+			data->prev_pipe[1] = data->curr_pipe[1]; // forward pipes
+		}
 		return (0);
 	}
 }
@@ -63,10 +96,6 @@ int	exec_multiple_cmd(t_data *data)
 
 	last_pid = 0;
 	cmd = data->cmds;
-
-	int stdin_backup = dup(STDIN_FILENO);
-	int stdout_backup = dup(STDOUT_FILENO);
-
 	if (!cmd->path)
 		return (printf("%s: command not found\n", cmd->args[0]), 1);
 	i = 0;
@@ -76,14 +105,8 @@ int	exec_multiple_cmd(t_data *data)
 		cmd = cmd->next;
 		i++;
 	}
-	
 	while (wait(NULL) != -1)
 		;
-
-	dup2(stdin_backup, STDIN_FILENO);
-	dup2(stdout_backup, STDOUT_FILENO);
-	close(stdin_backup);
-	close(stdout_backup);
 	return (0);
 	// return (ft_wait(last_pid, 0));
 }

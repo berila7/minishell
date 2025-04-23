@@ -1,0 +1,12 @@
+expansion_tests.sh
+includes
+lib
+Makefile
+minishell
+minishell_linux
+minishell_mac
+out1
+out2
+out3
+README.md
+src
