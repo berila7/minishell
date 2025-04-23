@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/17 12:20:28 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 09:52:08 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,45 @@ int	open_outfile(char *file, int mode)
 	return (fd);
 }
 
+// In Parent:
+// export with args
+// cd
+// exit
+// unset
+
+// In Child
+// export no args
+
 int handle_redirections(t_cmd *cmd)
 {
-	int	fd;
+	t_redir	*redir;
+	int		fd;
+	int		i;
 
-	if (cmd->input_file)
+	i = 0;
+	while (i < cmd->redir_count)
 	{
-		fd = open(cmd->input_file, O_RDONLY);
-		if (fd < 0)
-			return (perror("failed to open infile"), 1);
-		ft_dup2(fd, STDIN_FILENO);
-	}
-	if (cmd->output_file)
-	{
-		fd = open_outfile(cmd->output_file, cmd->append_mode);
-		if (fd < 0)
-			return (perror("failed to open outfile"), 1);
-		ft_dup2(fd, STDOUT_FILENO);
+		redir = &cmd->redirections[i];
+		// type == IN
+		if (redir->type == REDIR_IN)
+		{
+			fd = open(redir->file, O_RDONLY);
+			if (fd < 0)
+				return (perror("failed to open infile"), 1);
+			ft_dup2(fd, STDIN_FILENO);
+		}
+		// type == OUT
+		if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
+		{
+			if (redir->type == REDIR_OUT)
+				fd = open_outfile(redir->file, 0);
+			else if (redir->type == REDIR_APPEND)
+				fd = open_outfile(redir->file, 1);
+			if (fd < 0)
+				return (perror("failed to open infile"), 1);
+			ft_dup2(fd, STDOUT_FILENO);
+		}
+		i++;
 	}
 	return (0);
 }

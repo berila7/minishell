@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/17 12:11:34 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/23 09:49:25 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	equal(char *s1, char *s2)
-{
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
-	return (0);
-}
 
 char	*ft_strjoin_char(char *str, char c)
 {

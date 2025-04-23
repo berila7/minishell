@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/17 12:13:14 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/23 09:48:54 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,60 +27,31 @@ int child1(t_cmd *cmd, int i, t_data *data, int *pid)
 	if (id == 0)
 	{
 		*pid = id;
-		if (handle_redirections(cmd))
-			return (1);
+
 		if (i == 0) // FIRST cmd
 		{
-			if (!cmd->output_file)
-			{
-				ft_dup2(data->curr_pipe[1], STDOUT_FILENO);
-				close(data->curr_pipe[0]); // close unused pipe
-			}
-			else
-			{
-				close(data->curr_pipe[1]); // close unused pipe
-				close(data->curr_pipe[0]); // close unused pipe
-			}
-			// close(data->prev_pipe[0]); // close unused pipe
-			// close(data->prev_pipe[1]); // close unused pipe
+
+			ft_dup2(data->curr_pipe[1], STDOUT_FILENO);
+			close(data->curr_pipe[0]); // close unused pipe
+			close(data->curr_pipe[1]); // close unused pipe
+			close(data->curr_pipe[0]); // close unused pipe
 		}
 		else if (!cmd->next) // LAST cmd
 		{
-			if (!cmd->input_file)
-			{
 				ft_dup2(data->prev_pipe[0], STDIN_FILENO);
 				close(data->prev_pipe[1]); // close unused pipe
-			}
-			else
-			{
 				close(data->prev_pipe[0]); // close unused pipe
 				close(data->prev_pipe[1]); // close unused pipe
-			}
 		}
 		else // MIDDLE cmd
 		{
-			if (!cmd->input_file)
-			{
-				ft_dup2(data->prev_pipe[0], STDIN_FILENO);
-				close(data->prev_pipe[1]); // close unused pipe
-			}
-			else
-			{
-				close(data->prev_pipe[0]); // close unused pipe
-				close(data->prev_pipe[1]); // close unused pipe
-			}
-			if (!cmd->output_file)
-			{
-				ft_dup2(data->curr_pipe[1], STDOUT_FILENO);
-				close(data->curr_pipe[0]); // close unused pipe
-			}
-			else
-			{
-				close(data->curr_pipe[1]); // close unused pipe
-				close(data->curr_pipe[0]); // close unused pipe
-			}
+			ft_dup2(data->prev_pipe[0], STDIN_FILENO);
+			close(data->prev_pipe[1]); // close unused pipe
+			ft_dup2(data->curr_pipe[1], STDOUT_FILENO);
+			close(data->curr_pipe[0]); // close unused pipe
 		}
-		
+		if (handle_redirections(cmd))
+			return (1);
 		// Close all pipe fds in child
 		// if (i > 0) {
 		// 	close(data->prev_pipe[0]);
