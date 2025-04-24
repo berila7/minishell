@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/23 18:10:42 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 10:55:59 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ int	exec_single_cmd(t_data *data)
 		if (handle_redirections(data, cmd))
 			return (1);
 
-		if (!cmd->path && cmd->redirections[0].type != REDIR_HEREDOC)
-			return (printf("%s: command not found\n", cmd->args[0]), 1);
-		else if (!cmd->path)
-			return (exit(0), 0);
-
+		if (count_args(cmd->args) == 0)
+		{
+			if (cmd->redir_count == 0)
+				return (printf("%s: command not found\n", cmd->args[0]), exit(1), 1);
+			exit(0);
+		}
+			
 		if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{
 			perror("execve failed");

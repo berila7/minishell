@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 17:11:49 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 10:10:22 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void print_cmds(t_cmd *cmds)
     {
         j++;
         printf(BLUE "Command: [%d]\n" RESET, j);
+        printf(RED "Args Count: [%d]\n" RESET, count_args(current_cmd->args));
 
         for (int i = 0; current_cmd->args && current_cmd->args[i]; i++)
         {
