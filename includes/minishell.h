@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/23 17:29:37 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 14:47:58 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ typedef enum e_token_type
 }	t_token_type;
 
 struct s_cmd {
-    char **args;
-    char *path;
-    t_redir *redirections;
-    int redir_count;
-    t_cmd *next;
+	char	**args;
+	char	*path;
+	t_redir *redirections;
+	int		redir_count;
+	int		hd_fd;
+	t_cmd	*next;
 };
 
 struct s_token
@@ -119,6 +120,7 @@ char		*get_env(t_env *env, char *key);
 void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
+int			open_heredoc(int *fd);
 // char		*remove_escape_chars(char *str);
 void		extract_word(t_token **tokens, char *line, int *i);
 // builtins:

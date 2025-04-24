@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 11:33:16 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 14:51:18 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,16 @@ int	handle_other_redirs(t_cmd *cmd)
 
 int	handle_redirections(t_data *data, t_cmd *cmd)
 {
-	int	hd_fd;
+	// int	hd_fd;
 
-	hd_fd = -1;
-	if (handle_heredocs(data, cmd, &hd_fd) != 0)
-		return (1);
+	(void)data;
+	// hd_fd = -1;
+	// if (handle_heredocs(data, cmd, &hd_fd) != 0)
+	// 	return (1);
 	if (handle_other_redirs(cmd) != 0)
 		return (1);
-	if (hd_fd != -1 && count_args(cmd->args) > 0)
-		ft_dup2(hd_fd, STDIN_FILENO);
+	if (cmd->hd_fd != -1 && count_args(cmd->args) > 0)
+		ft_dup2(cmd->hd_fd, STDIN_FILENO);
 	return (0);
 }
 

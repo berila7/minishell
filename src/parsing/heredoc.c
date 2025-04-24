@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/24 11:29:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 14:45:21 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	open_heredoc(int *fd)
 	if (fd[0] < 0)
 		return (perror("cannot open here_doc file"),
 			close(fd[1]), unlink("here_doc"), 1);
-	unlink("here_doc");
+	// unlink("here_doc");
 	return (0);
 }
 
@@ -49,5 +49,5 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
 		free(line);
 		line = readline("> ");
 	}
-	return (free(line), 0);	
+	return (free(line), 0);
 }

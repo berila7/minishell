@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/23 15:21:07 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/24 14:48:34 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,8 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
+				if (handle_herdoc(token->value, &current_cmd->hd_fd, data))
+					return(exit(1), NULL);
 				add_redirection(current_cmd, REDIR_HEREDOC, token->value);
 				token = token->next;
 			}

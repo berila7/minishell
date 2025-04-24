@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 10:10:22 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 14:48:18 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void print_cmds(t_cmd *cmds)
         }
 
         printf(CYAN "  path          : " YELLOW "'%s'\n" RESET, current_cmd->path);
+        printf(CYAN "  herdoc fd     : " YELLOW "'%d'\n" RESET, current_cmd->hd_fd);
         
         // Print the original input/output properties for backwards compatibility
         // printf(CYAN "  input file    : " YELLOW "'%s'\n" RESET, current_cmd->input_file ? current_cmd->input_file : "(null)");
