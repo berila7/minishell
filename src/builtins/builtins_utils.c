@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 14:51:18 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/24 14:59:16 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,8 @@ int	handle_other_redirs(t_cmd *cmd)
 	return (0);
 }
 
-int	handle_redirections(t_data *data, t_cmd *cmd)
+int	handle_redirections(t_cmd *cmd)
 {
-	// int	hd_fd;
-
-	(void)data;
-	// hd_fd = -1;
-	// if (handle_heredocs(data, cmd, &hd_fd) != 0)
-	// 	return (1);
 	if (handle_other_redirs(cmd) != 0)
 		return (1);
 	if (cmd->hd_fd != -1 && count_args(cmd->args) > 0)
@@ -136,7 +130,7 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 	{
 		fd[0] = dup(STDIN_FILENO);
 		fd[1] = dup(STDOUT_FILENO);
-		if (handle_redirections(data, cmd))
+		if (handle_redirections(cmd))
 			return (1);
 	}
 	name = cmd->args[0];

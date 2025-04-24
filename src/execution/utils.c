@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:03:22 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 16:30:09 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 15:41:39 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,16 @@ int	ft_dup2(int oldfd, int newfd)
 	close(oldfd);
 	return (res);
 }
+int is_exec(char *path)
+{
+	if (access(path, X_OK) == 0)
+		return (1);
+	return (0);
+}
 
 int	cmd_exists(char *path)
 {
-	if (access(path, F_OK | X_OK) == 0)
+	if (access(path, F_OK) == 0)
 		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/24 14:47:58 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/24 15:42:12 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,12 +139,13 @@ void		ft_export(char **args, t_data *data);
 int			exec(t_data *data);
 void		free_arr(char **arr);
 int			cmd_exists(char *path);
+int			is_exec(char *path);
 char		*find_cmd(char **paths, char *cmd);
 char		*join_path(char *path, char *cmd);
 int			count_cmd(t_cmd *cmd);
 int			ft_dup2(int oldfd, int newfd);
 char		**env_to_array(t_env *env);
-int			handle_redirections(t_data *data, t_cmd *cmd);
+int			handle_redirections(t_cmd *cmd);
 int			ft_wait(pid_t last_pid, int default_st);
 
 int			exec_single_cmd(t_data *data);

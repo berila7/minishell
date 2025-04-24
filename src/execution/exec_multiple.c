@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 10:55:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 15:07:33 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 			ft_dup2(data->pipe[1], STDOUT_FILENO);
 		}
 
-		if (handle_redirections(data, cmd))
+		if (handle_redirections(cmd))
 			return (1);
-			
-		if (count_args(cmd->args) == 0)
+
+		if (!cmd->path)
 		{
 			if (cmd->redir_count == 0)
 				return (printf("%s: command not found\n", cmd->args[0]), exit(1), 1);
-			exit(0);
+			exit(127);
 		}
 		if (is_builtin(cmd))
 			exec_builtin(cmd, data, 0);
