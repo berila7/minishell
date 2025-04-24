@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 11:17:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/24 11:33:16 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ int	handle_heredocs(t_data *data, t_cmd *cmd, int *heredoc_fd)
 
 
 
-int	handle_other_redirs(t_cmd *cmd, int *heredoc_fd)
+int	handle_other_redirs(t_cmd *cmd)
 {
 	t_redir	*redir;
-	int		i;
 	int		fd;
+	int		i;
 
 	i = 0;
 	while (i < cmd->redir_count)
@@ -108,22 +108,20 @@ int	handle_other_redirs(t_cmd *cmd, int *heredoc_fd)
 		}
 		i++;
 	}
-	// Apply heredoc only if needed and command is not null
-	if (heredoc_fd && count_args(cmd->args) > 0)
-		ft_dup2(heredoc_fd[0], STDIN_FILENO);
 	return (0);
 }
 
-
-
 int	handle_redirections(t_data *data, t_cmd *cmd)
 {
-	int	heredoc_fd[2];
+	int	hd_fd;
 
-	if (handle_heredocs(data, cmd, heredoc_fd) != 0)
+	hd_fd = -1;
+	if (handle_heredocs(data, cmd, &hd_fd) != 0)
 		return (1);
-	if (handle_other_redirs(cmd, heredoc_fd) != 0)
+	if (handle_other_redirs(cmd) != 0)
 		return (1);
+	if (hd_fd != -1 && count_args(cmd->args) > 0)
+		ft_dup2(hd_fd, STDIN_FILENO);
 	return (0);
 }
 
