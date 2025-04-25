@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 14:59:16 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/25 11:57:31 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	handle_other_redirs(t_cmd *cmd)
 	i = 0;
 	while (i < cmd->redir_count)
 	{
+		printf("cmd->redir_count: %d\n", cmd->redir_count);
 		redir = &cmd->redirections[i];
 		if (redir->type == REDIR_IN)
 		{
