@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/25 12:44:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/25 12:51:58 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 		}
 
 		if (handle_redirections(cmd))
-			return (1);
+			return (exit(1), 1);
 
 		if (!cmd->path)
 		{

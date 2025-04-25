@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/25 10:27:52 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/25 12:49:14 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_cmd	*new_command(void)
 		return (NULL);
 	ft_memset(cmd, 0, sizeof(t_cmd));
 	cmd->args = malloc(sizeof(char *) * 2);
+	cmd->hd_fd = -1;
 	if (!cmd->args)
 	{
 		free(cmd);

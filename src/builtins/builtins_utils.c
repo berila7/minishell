@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/25 11:57:31 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/25 12:50:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	handle_other_redirs(t_cmd *cmd)
 	i = 0;
 	while (i < cmd->redir_count)
 	{
-		printf("cmd->redir_count: %d\n", cmd->redir_count);
 		redir = &cmd->redirections[i];
 		if (redir->type == REDIR_IN)
 		{
@@ -114,7 +113,7 @@ int	handle_other_redirs(t_cmd *cmd)
 
 int	handle_redirections(t_cmd *cmd)
 {
-	if (handle_other_redirs(cmd) != 0)
+	if (handle_other_redirs(cmd))
 		return (1);
 	if (cmd->hd_fd != -1 && count_args(cmd->args) > 0)
 		ft_dup2(cmd->hd_fd, STDIN_FILENO);
