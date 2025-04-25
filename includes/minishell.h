@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/24 15:42:12 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/25 12:42:15 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef enum e_token_type
 {
 	TOKEN_WORD,			//	(commands, arguments, filenames)
 	TOKEN_PIPE,			//	|
-	TOKEN_REDIR_IN,		//	<
+	TOKEN_REDIR_IN,		//	<f
 	TOKEN_REDIR_OUT,	//	>
 	TOKEN_REDIR_APPEND,	//	>>
 	TOKEN_HEREDOC		//	<<
