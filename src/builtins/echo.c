@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/17 13:04:47 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/25 13:17:21 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ void	ft_echo(char **args)
 			new_line = 0;
 		while (args[i])
 		{
-			ft_putstr_fd(args[i], 1);
+			ft_putstr_fd(args[i], STDOUT_FILENO);
 			i++;
 			if (args[i])
-				ft_putchar_fd(' ', 1);
+				ft_putchar_fd(' ', STDOUT_FILENO);
 		}
 	}
 	if (new_line)
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+
 }

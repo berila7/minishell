@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/25 12:51:58 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/25 13:10:00 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 			close(data->pipe[0]);
 			ft_dup2(data->pipe[1], STDOUT_FILENO);
 		}
-
 		if (handle_redirections(cmd))
-			return (exit(1), 1);
+			exit(1);
 
 		if (!cmd->path)
 		{

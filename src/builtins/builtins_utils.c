@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/25 12:50:17 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/25 13:13:28 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	handle_other_redirs(t_cmd *cmd)
 		{
 			fd = open(redir->file, O_RDONLY);
 			if (fd < 0)
-				return (perror("failed to open infile"), 1);
+				return (perror(redir->file), 1);
 			if (count_args(cmd->args) > 0)
 				ft_dup2(fd, STDIN_FILENO);
 		}
@@ -102,7 +102,7 @@ int	handle_other_redirs(t_cmd *cmd)
 			fd = open_outfile(redir->file,
 				redir->type == REDIR_APPEND);
 			if (fd < 0)
-				return (perror("failed to open outfile"), 1);
+				return (perror(redir->file), 1);
 			if (count_args(cmd->args) > 0)
 				ft_dup2(fd, STDOUT_FILENO);
 		}

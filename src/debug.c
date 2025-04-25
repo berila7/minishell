@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 14:48:18 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/25 13:09:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 void print_tokens(t_token *tokens)
 {
