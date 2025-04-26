@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 15:45:09 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:17:58 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static pid_t	exec_cmd(t_cmd *cmd, t_data *data)
 			exit(1);
 		}
 		if (!is_exec(cmd->path))
-			return (printf("minishell: %s: Permission denied\n", cmd->path), exit(126), 1);
+			return (print_err(": Permission denied\n", cmd->path), exit(126), 1);
 		if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{
 			perror("execve failed");
