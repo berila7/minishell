@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/23 15:22:51 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/26 10:47:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	extract_word(t_token **tokens, char *line, int *i)
 			quote_state = "single";
 		else
 			quote_state = "double";
-		printf(RED"minishell: syntax error: unclosed %s quote\n"RESET, 
+		printf("minishell: syntax error: unclosed %s quote\n", 
 				quote_state);
 		free_tokens(*tokens);
 		*tokens = NULL;

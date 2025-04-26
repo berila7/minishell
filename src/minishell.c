@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/23 15:23:12 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/26 10:49:06 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 // 	system("lsof | grep '^minishell'");
 // }
 
-static void	print_header()
-{
-	printf(RED"\n███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     ");
-	printf("\n████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     ");
-	printf("\n██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     ");
-	printf("\n██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     ");
-	printf("\n██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗");
-	printf("\n╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n\n" RESET);
-}
+// static void	print_header()
+// {
+// 	printf("\n███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     ");
+// 	printf("\n████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     ");
+// 	printf("\n██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     ");
+// 	printf("\n██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     ");
+// 	printf("\n██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗");
+// 	printf("\n╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n\n" );
+// }
 
 int main(int ac, char *av[], char **envp)
 {
@@ -43,15 +43,14 @@ int main(int ac, char *av[], char **envp)
 		return (printf("Failed to allocat"), 0);
 	data->env = init_env(envp);
 	data->exit_status = 0;
-	// ft_env(data->env);
-	print_header();
+	// print_header();
 	while (1)
 	{
 		if (data->exit_status == 0)
-			printf(GREEN "✔ " RESET);
+			printf( "✔ " );
 		else
-			printf(RED "✘ " RESET);
-		line = readline(BLUE"minishell ➤ "RESET);
+			printf( "✘ " );
+		line = readline("minishell ➤ ");
 		if (!line)
 			break ;
 		if (line[0])
@@ -73,8 +72,8 @@ int main(int ac, char *av[], char **envp)
 		set_cmd_path(data->cmds, data->env);
 
 		// ! ======[ DEBUG: ]======
-		print_tokens(tokens);
-		print_cmds(data->cmds);
+		// print_tokens(tokens);
+		// print_cmds(data->cmds);
 		// ! ======================
 		
 		exec(data);

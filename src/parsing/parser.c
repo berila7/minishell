@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/25 12:49:14 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/26 10:47:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			}
 			else
 			{
-				printf(RED"minishell: syntax error near unexpected token '\\n'\n"RESET);
+				printf("minishell: syntax error near unexpected token '\\n'\n");
 				free_commands(cmd_list);
 				free_command(current_cmd);
 				return (NULL);
@@ -197,7 +197,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			}
 			else
 			{
-				printf(RED"minishell: syntax error near unexpected token '\\n'\n"RESET);
+				printf("minishell: syntax error near unexpected token '\\n'\n");
 				free_commands(cmd_list);
 				free_command(current_cmd);
 				return (NULL);
@@ -213,7 +213,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			}
 			else
 			{
-				printf(RED"minishell: syntax error near unexpected token 'newline'\n"RESET);
+				printf("minishell: syntax error near unexpected token 'newline'\n");
 				free_commands(cmd_list);
 				free_command(current_cmd);
 				return (NULL);
@@ -231,7 +231,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			}
 			else
 			{
-				printf(RED"minishell: syntax error near unexpected token '<<'\n"RESET);
+				printf("minishell: syntax error near unexpected token '<<'\n");
 				free_commands(cmd_list);
 				free_command(current_cmd);
 				return (NULL);
