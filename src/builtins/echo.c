@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/26 10:42:09 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/26 11:09:34 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,4 @@ void	ft_echo(char **args)
 	}
 	if (new_line)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	exit(0);
 }

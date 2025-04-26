@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/25 13:13:28 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/26 11:10:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,7 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 		ft_dup2(fd[0], STDIN_FILENO);
 		ft_dup2(fd[1], STDOUT_FILENO);
 	}
+	else
+		exit(0);
 	return (0);
 }
