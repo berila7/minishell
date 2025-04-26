@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/26 10:43:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:08:18 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,9 @@ void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
 int			open_heredoc(int *fd);
+void		print_err(char *msg, char *var);
+
+
 // char		*remove_escape_chars(char *str);
 void		extract_word(t_token **tokens, char *line, int *i);
 // builtins:

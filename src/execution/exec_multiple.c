@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/25 13:10:00 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:13:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,21 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 		return (perror("fork failed"), 1);
 	if (id == 0)
 	{
-		*pid = id;
 		
 		if (cmd->next)
 		{
 			close(data->pipe[0]);
 			ft_dup2(data->pipe[1], STDOUT_FILENO);
 		}
+		
 		if (handle_redirections(cmd))
 			exit(1);
 
 		if (!cmd->path)
 		{
 			if (cmd->redir_count == 0)
-				return (printf("%s: command not found\n", cmd->args[0]), exit(1), 1);
+				return (print_err(": command not found\n", cmd->args[0]), exit(1), 1);
+				// return (printf("%s: command not found\n", cmd->args[0]), exit(1), 1);
 			exit(127);
 		}
 		if (is_builtin(cmd))
@@ -49,6 +50,8 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 	}
 	else
 	{
+		if (!cmd->next)
+			*pid = id;
 		close(data->pipe[1]);
 		ft_dup2(data->pipe[0], STDIN_FILENO);
 	}
@@ -57,6 +60,7 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 
 int	exec_multiple_cmd(t_data *data)
 {
+	int		exit_status;
 	pid_t	last_pid;
 	t_cmd	*cmd;
 
@@ -71,14 +75,12 @@ int	exec_multiple_cmd(t_data *data)
 		child1(cmd, data, &last_pid);
 		cmd = cmd->next;
 	}
-	
-	while (wait(NULL) != -1)
-		;
 
-	dup2(stdin_backup, STDIN_FILENO);
-	dup2(stdout_backup, STDOUT_FILENO);
-	close(stdin_backup);
-	close(stdout_backup);
-	return (0);
-	// return (ft_wait(last_pid, 0));
+	exit_status = ft_wait(last_pid, 0);
+
+
+	ft_dup2(stdin_backup, STDIN_FILENO);
+	ft_dup2(stdout_backup, STDOUT_FILENO);
+	
+	return (exit_status);
 }
