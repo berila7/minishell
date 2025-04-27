@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/27 14:21:25 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/27 14:32:31 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,39 @@ int	open_heredoc(int *fd)
 
 int handle_herdoc(char *del, int *hd_in, t_data *data)
 {
-	char	*expanded_str;
-	char	*line;
-	char    *quoted_delim;
-	int		hd_fd[2];
+    char    *expanded_str;
+    char    *line = NULL;
+    char    *quoted_delim;
+    int     hd_fd[2];
 
-	if (open_heredoc(hd_fd))
-		return (1);
-	*hd_in = hd_fd[0];
-	quoted_delim = remove_quotes(del);
-	line = readline("> ");
-	while (line)
-	{
-		if (line[0] == '\'' || line[0] == '\"')
-			expanded_str = expand_variables(line, data);
-		else
-			expanded_str = line;
-		if (equal(line, remove_quotes(del)))
-		{
-			free(line);
-			if (expanded_str != line)
-				free(expanded_str);
-			break ;
-		}
-		ft_putstr_fd(expanded_str, hd_fd[1]);
-		write(hd_fd[1], "\n", 1);
-		if (expanded_str != line)
+    if (open_heredoc(hd_fd))
+        return (1);
+    *hd_in = hd_fd[0];
+    quoted_delim = remove_quotes(del);
+    line = readline("> ");
+    while (line)
+    {
+        if (line[0] == '\'' || line[0] == '\"')
+            expanded_str = expand_variables(line, data);
+        else
+            expanded_str = line;
+        if (equal(line, quoted_delim))
+        {
+            free(line);
+            if (expanded_str != line)
+                free(expanded_str);
+            free(quoted_delim);
+            close(hd_fd[1]);
+            return (0);
+        }
+        ft_putstr_fd(expanded_str, hd_fd[1]);
+        write(hd_fd[1], "\n", 1);
+        if (expanded_str != line)
             free(expanded_str);
-		free(line);
-		line = readline("> ");
-	}
-	return (free(line), 0);
+        free(line);
+        line = readline("> ");
+    } 
+    free(quoted_delim);
+    close(hd_fd[1]);
+    return (0);
 }
