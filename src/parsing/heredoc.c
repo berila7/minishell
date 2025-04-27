@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/27 14:32:31 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/27 15:45:15 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	open_heredoc(int *fd)
 	if (fd[0] < 0)
 		return (perror("cannot open here_doc file"),
 			close(fd[1]), unlink("here_doc"), 1);
-	// unlink("here_doc");
+	unlink("here_doc");
 	return (0);
 }
 
@@ -49,9 +49,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
             free(line);
             if (expanded_str != line)
                 free(expanded_str);
-            free(quoted_delim);
-            close(hd_fd[1]);
-            return (0);
+            break ;
         }
         ft_putstr_fd(expanded_str, hd_fd[1]);
         write(hd_fd[1], "\n", 1);
@@ -60,7 +58,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         free(line);
         line = readline("> ");
     } 
-    free(quoted_delim);
     close(hd_fd[1]);
+    free(quoted_delim);
     return (0);
 }

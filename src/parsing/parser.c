@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/27 14:15:16 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/27 15:27:23 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,9 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 	t_token	*token;
 	t_cmd	*current_cmd;
 	t_cmd	*cmd_list;
+	char	*expanded;
 
+	// (void)expanded;
 	if (!tokens)
 		return (NULL);
 	current_cmd = new_command();
@@ -157,7 +159,9 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 	{
 		if (token->type == TOKEN_WORD)
 		{
-			add_argument(current_cmd, expand_variables(token->value, data));
+			expanded = expand_variables(token->value, data);
+			add_argument(current_cmd, expanded);
+			free(expanded);
 			token = token->next;
 		}
 		else if (token->type == TOKEN_PIPE)
@@ -176,7 +180,9 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				add_redirection(current_cmd, REDIR_IN, expand_variables(token->value, data));
+				expanded = expand_variables(token->value, data);
+				add_redirection(current_cmd, REDIR_IN, expanded);
+				free(expanded);
 				token = token->next;
 			}
 			else
@@ -192,7 +198,9 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				add_redirection(current_cmd, REDIR_OUT, expand_variables(token->value, data));
+				expanded = expand_variables(token->value, data);
+				add_redirection(current_cmd, REDIR_OUT, expanded);
+				free(expanded);
 				token = token->next;
 			}
 			else
@@ -208,7 +216,9 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			token = token->next;
 			if (token && token->type == TOKEN_WORD)
 			{
-				add_redirection(current_cmd, REDIR_APPEND, expand_variables(token->value, data));
+				expanded = expand_variables(token->value, data);
+				add_redirection(current_cmd, REDIR_APPEND, expanded);
+				free(expanded);
 				token = token->next;
 			}
 			else

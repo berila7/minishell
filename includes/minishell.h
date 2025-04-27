@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/26 12:08:18 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/27 15:24:56 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void		print_err(char *msg, char *var);
 
 
 // char		*remove_escape_chars(char *str);
-void		extract_word(t_token **tokens, char *line, int *i);
+void	extract_word(t_token **tokens, char *line, int *i);
 // builtins:
 int			is_builtin(t_cmd *cmd);
 int			exec_builtin(t_cmd *cmd, t_data *data, int flag);
