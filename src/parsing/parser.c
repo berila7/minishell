@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/26 10:47:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/27 14:15:16 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,11 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			if (token && token->type == TOKEN_WORD)
 			{
 				if (handle_herdoc(token->value, &current_cmd->hd_fd, data))
-					return(exit(1), NULL);
+				{
+					free_commands(cmd_list);
+					free_command(current_cmd);
+					return(NULL);
+				}
 				add_redirection(current_cmd, REDIR_HEREDOC, token->value);
 				token = token->next;
 			}

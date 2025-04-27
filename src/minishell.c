@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/26 10:50:02 by anachat          ###   ########.fr       */
+/*   Updated: 2025/04/27 14:09:53 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	f(void)
-// {
-// 	// system("leaks minishell");
-// 	system("lsof | grep '^minishell'");
-// }
+void	f(void)
+{
+	system("leaks minishell");
+	// system("lsof | grep '^minishell'");
+}
 
 static void	print_header()
 {
@@ -30,14 +30,14 @@ static void	print_header()
 
 int main(int ac, char *av[], char **envp)
 {
-	t_token		*tokens;
-	t_data		*data;
-	char		*line;
+	t_token				*tokens;
+	t_data				*data;
+	char				*line;
 
 	data = NULL;
 	(void)ac;
 	(void)av;
-	// atexit(f);
+	atexit(f);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (printf("Failed to allocat"), 0);
@@ -72,8 +72,8 @@ int main(int ac, char *av[], char **envp)
 		set_cmd_path(data->cmds, data->env);
 
 		// ! ======[ DEBUG: ]======
-		// print_tokens(tokens);
-		// print_cmds(data->cmds);
+		print_tokens(tokens);
+		print_cmds(data->cmds);
 		// ! ======================
 		
 		exec(data);
