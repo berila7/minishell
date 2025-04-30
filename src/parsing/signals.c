@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/04/30 18:09:50 by berila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:21:19 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,17 @@ void signal_handler_heredoc(int signum)
 {
     if (signum == SIGINT)
     {
-        // Set the flag
         g_sigint_received = 1;
         
-        // Write newline for visual clarity
+        // Don't close STDIN_FILENO - that's causing our problem!
+        
+        // Write a newline for visual clarity
         write(STDOUT_FILENO, "\n", 1);
         
-        // This is the key part - we need to force readline to return
-        rl_done = 1;        // This tells readline to return immediately
-        rl_event_hook = 0;  // Clear any event hooks
+        // Use readline functions to interrupt the current readline call
+        rl_done = 1;               // Tell readline we're done
+        rl_replace_line("", 0);    // Clear the line buffer
+        rl_on_new_line();          // Move to a new line
     }
 }
 
@@ -49,16 +51,34 @@ void	signal_handler_exec(int signum)
 		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
 }
 
-void	setup_interactive_signals(void)
+void setup_interactive_signals(void)
 {
-	struct sigaction	sa_int;
+    struct sigaction sa_int;
 
-	sa_int.sa_handler = &signal_handler_interactive;
-	sa_int.sa_flags = SA_RESTART;
-	sigemptyset(&sa_int.sa_mask);
-	sigaction(SIGINT, &sa_int, NULL);
+    sa_int.sa_handler = &signal_handler_interactive;
+    sa_int.sa_flags = SA_RESTART;
+    sigemptyset(&sa_int.sa_mask);
+    sigaction(SIGINT, &sa_int, NULL);
 
-	signal(SIGQUIT, SIG_IGN);
+    signal(SIGQUIT, SIG_IGN);
+    
+    // Add this line to properly reset readline's terminal state
+    rl_reset_terminal(NULL);
+    
+    // Force readline to redisplay the prompt when appropriate
+    rl_forced_update_display();
+}
+
+void reset_readline_after_signal(void)
+{
+    // Reset readline's internal state
+    rl_reset_after_signal();
+    
+    // Make sure cursor is on a fresh line
+    rl_on_new_line();
+    
+    // Force redisplay of the prompt
+    rl_forced_update_display();
 }
 
 void	setup_heredoc_signals(void)

@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/30 18:08:57 by berila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:22:11 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
 
     // Restore interactive signals
     setup_interactive_signals();
+    reset_readline_after_signal();
 
     // Handle interruption
     if (g_sigint_received)

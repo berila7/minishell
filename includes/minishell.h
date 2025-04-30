@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/30 18:11:34 by berila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:22:43 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,5 +168,6 @@ void	setup_heredoc_signals(void);
 void	setup_exec_signals(void);
 void	reset_signals(void);
 void	reset_readline_signal_handlers(void);
+void	reset_readline_after_signal(void);
 
 #endif
