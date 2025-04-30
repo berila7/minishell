@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/27 15:37:55 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/30 17:35:25 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	f(void)
-{
-	system("leaks minishell");
-	// system("lsof | grep '^minishell'");
-}
+// void	f(void)
+// {
+// 	system("leaks minishell");
+// 	// system("lsof | grep '^minishell'");
+// }
 
 static void	print_header()
 {
@@ -37,12 +37,13 @@ int main(int ac, char *av[], char **envp)
 	data = NULL;
 	(void)ac;
 	(void)av;
-	atexit(f);
+	// atexit(f);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (printf("Failed to allocat"), 0);
 	data->env = init_env(envp);
 	data->exit_status = 0;
+	setup_interactive_signals();
 	print_header();
 	while (1)
 	{
@@ -76,8 +77,12 @@ int main(int ac, char *av[], char **envp)
 		print_cmds(data->cmds);
 		// ! ======================
 		
+		setup_exec_signals();
+		
 		exec(data);
 
+		setup_interactive_signals();
+		
 		free_tokens(tokens);
 		free_commands(data->cmds);
 		data->cmds = NULL;

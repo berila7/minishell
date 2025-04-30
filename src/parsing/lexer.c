@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/27 15:24:45 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/30 17:34:17 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,8 @@ t_token	*tokenize(char *line)
 {
 	t_token	*token = NULL;
 	int		i;
-	int		is_delim;
 
 	i = 0;
-	is_delim = 0;
 	while (line[i])
 	{
 		while (line[i] == ' ' || line[i] == '\t')

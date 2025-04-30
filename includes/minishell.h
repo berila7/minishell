@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/27 15:24:56 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/30 17:31:43 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,11 @@ void		print_tokens(t_token *tokens);
 void		print_cmds(t_cmd *cmds);
 
 
+// Signal handling
+extern volatile sig_atomic_t g_sigint_received;
+void	setup_interactive_signals(void);
+void	setup_heredoc_signals(void);
+void	setup_exec_signals(void);
+void	reset_signals(void);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/27 15:45:15 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/30 17:32:33 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         return (1);
     *hd_in = hd_fd[0];
     quoted_delim = remove_quotes(del);
+    setup_heredoc_signals();
     line = readline("> ");
     while (line)
     {
@@ -57,7 +58,19 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
             free(expanded_str);
         free(line);
         line = readline("> ");
-    } 
+    }
+
+        // Restore interactive signal handling
+    setup_interactive_signals();
+
+    // Check if we exited due to SIGINT
+    if (g_sigint_received)
+    {
+        close(hd_fd[0]);
+        close(hd_fd[1]);
+        free(quoted_delim);
+        return (1);
+    }
     close(hd_fd[1]);
     free(quoted_delim);
     return (0);
