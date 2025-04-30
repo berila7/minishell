@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/27 15:27:23 by mberila          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:08:25 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 				{
 					free_commands(cmd_list);
 					free_command(current_cmd);
-					return(NULL);
+					return (NULL);
 				}
 				add_redirection(current_cmd, REDIR_HEREDOC, token->value);
 				token = token->next;

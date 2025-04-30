@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/04/30 17:52:09 by berila           ###   ########.fr       */
+/*   Updated: 2025/04/30 18:09:50 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,20 @@ void	signal_handler_interactive(int signum)
 	}
 }
 
-void	signal_handler_heredoc(int signum)
+void signal_handler_heredoc(int signum)
 {
-	if (signum == SIGINT)
-	{
-		g_sigint_received = 1;
-		close(STDIN_FILENO);
-		write(STDOUT_FILENO, "\n", 1);
-	}
+    if (signum == SIGINT)
+    {
+        // Set the flag
+        g_sigint_received = 1;
+        
+        // Write newline for visual clarity
+        write(STDOUT_FILENO, "\n", 1);
+        
+        // This is the key part - we need to force readline to return
+        rl_done = 1;        // This tells readline to return immediately
+        rl_event_hook = 0;  // Clear any event hooks
+    }
 }
 
 void	signal_handler_exec(int signum)
@@ -84,4 +90,10 @@ void	reset_signals(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+}
+
+void reset_readline_signal_handlers(void)
+{
+    rl_catch_signals = 1;  // Let readline handle signals in its own way
+    rl_set_signals();     // Reset readline's signal handlers
 }
