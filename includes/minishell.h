@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/01 14:14:10 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/01 16:23:08 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,9 @@ struct s_data
 {
 	t_cmd		*cmds;
 	t_env		*env;
-	int			exit_status;
 	int			pipe[2];
-	int			prev_pipe[2];
-	int			curr_pipe[2];
+	int			og_fd[2];
+	int			exit_status;
 };
 
 t_token		*tokenize(char *line);
@@ -125,7 +124,7 @@ void		print_err(char *msg, char *var);
 
 
 // char		*remove_escape_chars(char *str);
-void	extract_word(t_token **tokens, char *line, int *i);
+void		extract_word(t_token **tokens, char *line, int *i);
 // builtins:
 int			is_builtin(t_cmd *cmd);
 int			exec_builtin(t_cmd *cmd, t_data *data, int flag);
@@ -148,8 +147,10 @@ char		*join_path(char *path, char *cmd);
 int			count_cmd(t_cmd *cmd);
 int			ft_dup2(int oldfd, int newfd);
 char		**env_to_array(t_env *env);
-int			handle_redirections(t_cmd *cmd);
+int			handle_redirections(t_cmd *cmd, t_data *data);
 int			ft_wait(pid_t last_pid, int default_st);
+void		dup2_og(t_data *data);
+void		close_pipes(t_data *data);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
@@ -159,6 +160,7 @@ int			handle_herdoc(char *end, int *hd_fd, t_data *data);
 // Debug functions:
 void		print_tokens(t_token *tokens);
 void		print_cmds(t_cmd *cmds);
+void		check_fds_in_child(const char *msg);
 
 
 // Signal handling
@@ -167,4 +169,5 @@ void	setup_interactive_signals(void);
 void	setup_heredoc_signals(void);
 void	setup_exec_signals(void);
 void	reset_signals(void);
+
 #endif

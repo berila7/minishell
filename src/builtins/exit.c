@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/14 11:38:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/01 15:30:38 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	ft_exit(char **args, t_data *data)
 		status = 1;	
 	}
 	free_data(data);
+	ft_dup2(data->og_fd[0], STDIN_FILENO);
+	ft_dup2(data->og_fd[1], STDOUT_FILENO);
 	exit(status);
 	return (0);
 }

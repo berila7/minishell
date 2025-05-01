@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/26 11:10:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/01 17:47:54 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,16 @@ int	handle_other_redirs(t_cmd *cmd)
 	return (0);
 }
 
-int	handle_redirections(t_cmd *cmd)
+int	handle_redirections(t_cmd *cmd, t_data *data)
 {
 	if (handle_other_redirs(cmd))
+	{
+		close(data->pipe[0]);
+		close(data->pipe[1]);
+		ft_dup2(data->og_fd[0], STDIN_FILENO);
+		ft_dup2(data->og_fd[1], STDOUT_FILENO);
 		return (1);
+	}
 	if (cmd->hd_fd != -1 && count_args(cmd->args) > 0)
 		ft_dup2(cmd->hd_fd, STDIN_FILENO);
 	return (0);
@@ -124,19 +130,18 @@ int	handle_redirections(t_cmd *cmd)
 int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 {
 	char	*name;
-	int		fd[2];
 
 	if (flag)
 	{
-		fd[0] = dup(STDIN_FILENO);
-		fd[1] = dup(STDOUT_FILENO);
-		if (handle_redirections(cmd))
+		data->og_fd[0] = dup(STDIN_FILENO);
+		data->og_fd[1] = dup(STDOUT_FILENO);
+		if (handle_redirections(cmd, data))
 			return (1);
 	}
 	name = cmd->args[0];
 	if (equal(name, "echo"))
 		ft_echo(cmd->args);
-	if (equal(name, "cd"))
+	else if (equal(name, "cd"))
 		ft_cd(cmd->args, data);
 	else if (equal(name, "pwd"))
 		ft_pwd();
@@ -148,12 +153,15 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 		ft_env(data->env);
 	else if (equal(name, "exit"))
 		ft_exit(cmd->args, data);
-	if (flag)
+	if (!flag)
 	{
-		ft_dup2(fd[0], STDIN_FILENO);
-		ft_dup2(fd[1], STDOUT_FILENO);
+		close(data->pipe[0]);
+		close(data->pipe[1]);
 	}
-	else
-		exit(0);
+	else 
+	{
+		ft_dup2(data->og_fd[0], STDIN_FILENO);
+		ft_dup2(data->og_fd[1], STDOUT_FILENO);
+	}
 	return (0);
 }

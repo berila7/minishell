@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/26 12:17:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/01 18:14:28 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,35 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 		return (perror("fork failed"), 1);
 	if (id == 0)
 	{
-		
 		if (cmd->next)
 		{
 			close(data->pipe[0]);
 			ft_dup2(data->pipe[1], STDOUT_FILENO);
 		}
 		
-		if (handle_redirections(cmd))
+		if (handle_redirections(cmd, data))
 			exit(1);
-
+		
 		if (!cmd->path)
 		{
-			if (cmd->redir_count == 0)
+			dup2_og(data);
+			if (count_args(cmd->args) > 0)
 				return (print_err(": command not found\n", cmd->args[0]), exit(127), 1);
 			exit(1);
 		}
 		if (!is_exec(cmd->path))
+		{
+			dup2_og(data);
+			if (cmd->next)
+				check_fds_in_child(cmd->args[0]);
 			return (print_err(": Permission denied\n", cmd->path), exit(126), 1);
+		}
+		close(data->og_fd[0]);
+		close(data->og_fd[1]);
 		if (is_builtin(cmd))
+		{
 			exec_builtin(cmd, data, 0);
+		}
 		else if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{
 			perror("execve failed");
@@ -68,8 +77,8 @@ int	exec_multiple_cmd(t_data *data)
 	last_pid = 0;
 	cmd = data->cmds;
 
-	int stdin_backup = dup(STDIN_FILENO);
-	int stdout_backup = dup(STDOUT_FILENO);
+	data->og_fd[0] = dup(STDIN_FILENO);
+	data->og_fd[1] = dup(STDOUT_FILENO);
 
 	while (cmd)
 	{
@@ -78,10 +87,6 @@ int	exec_multiple_cmd(t_data *data)
 	}
 
 	exit_status = ft_wait(last_pid, 0);
-
-
-	ft_dup2(stdin_backup, STDIN_FILENO);
-	ft_dup2(stdout_backup, STDOUT_FILENO);
-	
+	dup2_og(data);
 	return (exit_status);
 }
