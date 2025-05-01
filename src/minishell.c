@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/30 18:10:21 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/01 13:28:38 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int main(int ac, char *av[], char **envp)
 		exec(data);
 
 		setup_interactive_signals();
-		reset_readline_signal_handlers();
 		
 		free_tokens(tokens);
 		free_commands(data->cmds);
