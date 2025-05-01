@@ -1,7 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -Iincludes
+FLAGS			=	-Wall -Wextra -Werror -Iincludes -L /goinfre/mberila/homebrew/opt/readline/lib -I/goinfre/mberila/homebrew/opt/readline/includes
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -30,7 +30,7 @@ $(LIBFT_DIR):
 	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) includes/minishell.h
-	$(CC) $(FLAGS) $(OBJS) -lreadline $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 
 src/%.o: src/%.c $(LIBFT)
 	$(CC) $(FLAGS) -c $< -o $@ 
