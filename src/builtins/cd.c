@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/14 11:50:05 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/01 18:24:30 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@ void	ft_cd(char **args, t_data *data)
 	ac = count_args(args);
 	if (ac == 1)
 		path = get_env(data->env, "HOME");
-	else if (equal(args[1], "-"))
+	else if (equal(args[1], "--"))
 		path = get_env(data->env, "OLDPWD");
+	else if (equal(args[1], "-"))
+	{
+		path = get_env(data->env, "OLDPWD");
+		printf("%s\n", path);
+	}
 	else
 		path = args[1];
 	if (chdir(path) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/01 13:28:38 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/01 16:06:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 // void	f(void)
 // {
-// 	system("leaks minishell");
-// 	// system("lsof | grep '^minishell'");
+// 	// system("leaks minishell");
+// 	system("sh -c 'echo \"====================================================\" && lsof -c minishell && echo \"====================================================\"'");
 // }
 
 static void	print_header()

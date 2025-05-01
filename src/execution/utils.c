@@ -6,11 +6,23 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:03:22 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/24 15:41:39 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/01 16:22:53 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	close_pipes(t_data *data)
+{
+	close(data->pipe[0]);
+	close(data->pipe[1]);
+}
+
+void	dup2_og(t_data *data)
+{
+	ft_dup2(data->og_fd[0], STDIN_FILENO);
+	ft_dup2(data->og_fd[1], STDOUT_FILENO);
+}
 
 int	ft_dup2(int oldfd, int newfd)
 {

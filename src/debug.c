@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/25 13:09:56 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/01 16:08:59 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,3 +98,15 @@ void print_cmds(t_cmd *cmds)
     printf(PURPLE "=============================\n" RESET);
     printf("\n" RESET);
 }
+
+
+void	check_fds_in_child(const char *msg)
+{
+	pid_t pid = getpid();
+	char cmd[256];
+
+	dprintf(2, "\033[38;5;226m" "%s (PID: %d)\n" "\033[0m", msg, pid);  // Print to stderr instead of stdout
+	snprintf(cmd, sizeof(cmd), "lsof -p %d >&2", pid); // Redirect output to stderr
+	system(cmd);
+}
+
