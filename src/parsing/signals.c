@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/01 13:24:04 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/01 13:24:21 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void signal_handler_heredoc(int signum)
         
         write(STDOUT_FILENO, "\n", 1);
         
-        rl_done = 1;               // Tell readline we're done
-        rl_replace_line("", 0);    // Clear the line buffer
-        rl_on_new_line();          // Move to a new line
+        rl_done = 1;
+        rl_replace_line("", 0);
+        rl_on_new_line(); 
     }
 }
 
