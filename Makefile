@@ -1,7 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -Iincludes -L /goinfre/mberila/homebrew/opt/readline/lib -I/goinfre/mberila/homebrew/opt/readline/includes
+FLAGS			=	-Wall -Wextra -Werror -Iincludes
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
