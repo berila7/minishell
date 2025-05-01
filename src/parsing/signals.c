@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/01 13:27:06 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/01 15:48:26 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void setup_interactive_signals(void)
     struct sigaction sa_int;
 
     sa_int.sa_handler = &signal_handler_interactive;
-    sa_int.sa_flags = SA_RESTART;
+    sa_int.sa_flags = 0;
     sigemptyset(&sa_int.sa_mask);
     sigaction(SIGINT, &sa_int, NULL);
 

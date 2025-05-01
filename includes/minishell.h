@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/01 14:14:10 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/01 15:39:06 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define __USE_POSIX
+# define _POSIX_C_SOURCE 199309L
+
+# include <signal.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <stdlib.h>
@@ -22,7 +26,6 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/stat.h> 
-# include <signal.h>
 # include <string.h>
 # include <errno.h>
 # include <termios.h>

@@ -1,7 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -Iincludes -L /goinfre/mberila/homebrew/opt/readline/lib -I/goinfre/mberila/homebrew/opt/readline/includes
+FLAGS			=	-Wall -Wextra -Werror -Iincludes
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -10,7 +10,7 @@ SRC_DIR     	=	src
 PARSING_DIR		=	$(SRC_DIR)/parsing
 BUILTINS_DIR	=	$(SRC_DIR)/builtins
 HELPERS_DIR		=	$(SRC_DIR)/helpers
-EXEC_DIR	=	$(SRC_DIR)/execution
+EXEC_DIR		=	$(SRC_DIR)/execution
 
 SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c \
 					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
