@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/30 18:22:11 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/01 13:28:00 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,14 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         return (1);
     *hd_in = hd_fd[0];
     quoted_delim = remove_quotes(del);
-    
-    // Reset the flag before starting
+
     g_sigint_received = 0;
     setup_heredoc_signals();
     
     line = readline("> ");
     while (line && !g_sigint_received)
     {
-        if (g_sigint_received) // Check if we were interrupted
+        if (g_sigint_received)
             break;
             
         if (line[0] == '\'' || line[0] == '\"')
@@ -70,21 +69,16 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         line = readline("> ");
     }
 
-    // Restore interactive signals
     setup_interactive_signals();
-    reset_readline_after_signal();
 
-    // Handle interruption
     if (g_sigint_received)
     {
-        // Free resources
         if (line)
             free(line);
         close(hd_fd[0]);
         close(hd_fd[1]);
         free(quoted_delim);
         
-        // Set appropriate exit status for Ctrl+C (like bash does)
         data->exit_status = 130;
         return (1);
     }

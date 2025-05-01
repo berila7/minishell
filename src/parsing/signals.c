@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/01 13:24:21 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/01 13:27:06 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ void signal_handler_heredoc(int signum)
     if (signum == SIGINT)
     {
         g_sigint_received = 1;
-        
-        
         write(STDOUT_FILENO, "\n", 1);
-        
-        rl_done = 1;
         rl_replace_line("", 0);
         rl_on_new_line(); 
     }
@@ -58,20 +54,8 @@ void setup_interactive_signals(void)
     sigaction(SIGINT, &sa_int, NULL);
 
     signal(SIGQUIT, SIG_IGN);
-    
-    rl_reset_terminal(NULL);
-    
-    rl_forced_update_display();
 }
 
-void reset_readline_after_signal(void)
-{
-    rl_reset_after_signal();
-    
-    rl_on_new_line();
-    
-    rl_forced_update_display();
-}
 
 void	setup_heredoc_signals(void)
 {
@@ -102,10 +86,4 @@ void	reset_signals(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-}
-
-void reset_readline_signal_handlers(void)
-{
-    rl_catch_signals = 1;
-    rl_set_signals();   
 }

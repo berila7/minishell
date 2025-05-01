@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/30 18:22:43 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/01 13:27:41 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,4 @@ void	setup_interactive_signals(void);
 void	setup_heredoc_signals(void);
 void	setup_exec_signals(void);
 void	reset_signals(void);
-void	reset_readline_signal_handlers(void);
-void	reset_readline_after_signal(void);
-
 #endif
