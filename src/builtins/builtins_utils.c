@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/01 17:47:54 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/03 11:52:00 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 	else if (equal(name, "cd"))
 		ft_cd(cmd->args, data);
 	else if (equal(name, "pwd"))
-		ft_pwd();
+		ft_pwd(data);
 	else if (equal(name, "export"))
 		ft_export(cmd->args, data);
 	else if (equal(name, "unset"))

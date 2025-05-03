@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/01 18:24:30 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/03 12:55:15 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,34 @@ void	ft_cd(char **args, t_data *data)
 	char	*cwd;
 	int		ac;
 
-	cwd = getcwd(NULL, 0);
 	ac = count_args(args);
 	if (ac == 1)
 		path = get_env(data->env, "HOME");
-	else if (equal(args[1], "--"))
-		path = get_env(data->env, "OLDPWD");
-	else if (equal(args[1], "-"))
-	{
-		path = get_env(data->env, "OLDPWD");
-		printf("%s\n", path);
-	}
 	else
 		path = args[1];
-	if (chdir(path) == -1)
-		ft_cd_error(path);
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+	{
+		if (chdir(path) == -1)
+			ft_cd_error(path);
+		else if (cwd)
+		{
+			set_env(&(data->env), "OLDPWD", cwd);
+			free(cwd);
+			cwd = getcwd(NULL, 0);
+			set_env(&(data->env), "PWD", cwd);
+		}
+	}
 	else
-		set_env(&(data->env), "OLDPWD", cwd);
-	free(cwd);
+	{
+		if (equal(path, ".") || equal(path, ".."))
+		{	
+			cwd = ft_strjoin(get_env(data->env, "PWD"), "/");
+			cwd = ft_strjoin(cwd, path);
+		}
+		else
+			perror("getcwd");
+		set_env(&(data->env), "PWD", cwd);
+		free(cwd);
+	}
 }
