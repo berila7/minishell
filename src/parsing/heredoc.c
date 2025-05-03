@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/01 13:28:00 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/03 10:55:26 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
     {
         if (g_sigint_received)
             break;
-            
+        
         if (line[0] == '\'' || line[0] == '\"')
-            expanded_str = expand_variables(line, data);
-        else
             expanded_str = line;
+        else
+            expanded_str = expand_variables(line, data);
             
         if (equal(line, quoted_delim))
         {
@@ -78,7 +78,6 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         close(hd_fd[0]);
         close(hd_fd[1]);
         free(quoted_delim);
-        
         data->exit_status = 130;
         return (1);
     }
