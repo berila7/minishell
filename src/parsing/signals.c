@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/03 12:13:02 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/03 13:04:42 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void signal_handler_heredoc(int signum)
     {
         g_sigint_received = 1;
         write(STDOUT_FILENO, "\n", 1);
-        rl_replace_line("", 0);
-        rl_on_new_line(); 
+        rl_done = 1;
     }
 }
 
@@ -54,6 +53,7 @@ void setup_interactive_signals(void)
     sigaction(SIGINT, &sa_int, NULL);
 
     signal(SIGQUIT, SIG_IGN);
+	rl_on_new_line();
 }
 
 
