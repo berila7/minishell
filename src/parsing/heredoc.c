@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/03 10:55:26 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/03 12:15:08 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         
         line = readline("> ");
     }
-
-    setup_interactive_signals();
 
     if (g_sigint_received)
     {
