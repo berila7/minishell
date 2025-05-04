@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/01 13:28:00 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/03 13:04:08 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         if (g_sigint_received)
             break;
             
+        if (equal(line, quoted_delim))
+        {
+            free(line);
+            // if (expanded_str != line)
+            //     free(expanded_str);
+            break;
+        }
+            
         if (line[0] == '\'' || line[0] == '\"')
             expanded_str = expand_variables(line, data);
         else
             expanded_str = line;
-            
-        if (equal(line, quoted_delim))
-        {
-            free(line);
-            if (expanded_str != line)
-                free(expanded_str);
-            break;
-        }
         
         ft_putstr_fd(expanded_str, hd_fd[1]);
         write(hd_fd[1], "\n", 1);
@@ -69,17 +69,28 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         line = readline("> ");
     }
 
+    // Clean up and properly restore terminal state
+    if (line && g_sigint_received)
+        free(line);
+    
+    // Restore interactive signals BEFORE terminal cleanup
     setup_interactive_signals();
 
+    // Check if we exited due to SIGINT
     if (g_sigint_received)
     {
-        if (line)
-            free(line);
         close(hd_fd[0]);
         close(hd_fd[1]);
         free(quoted_delim);
         
+        // Set appropriate exit status
         data->exit_status = 130;
+        
+        // Force immediate prompt redisplay
+        write(STDOUT_FILENO, "\n", 1);
+        rl_on_new_line();
+        rl_redisplay();
+        
         return (1);
     }
     

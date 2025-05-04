@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/01 13:27:06 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/03 13:04:42 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void signal_handler_heredoc(int signum)
     {
         g_sigint_received = 1;
         write(STDOUT_FILENO, "\n", 1);
-        rl_replace_line("", 0);
-        rl_on_new_line(); 
+        rl_done = 1;
     }
 }
 
@@ -49,11 +48,12 @@ void setup_interactive_signals(void)
     struct sigaction sa_int;
 
     sa_int.sa_handler = &signal_handler_interactive;
-    sa_int.sa_flags = SA_RESTART;
+    sa_int.sa_flags = 0;
     sigemptyset(&sa_int.sa_mask);
     sigaction(SIGINT, &sa_int, NULL);
 
     signal(SIGQUIT, SIG_IGN);
+	rl_on_new_line();
 }
 
 

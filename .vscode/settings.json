@@ -17,6 +17,9 @@
         "array": "c",
         "string": "c",
         "string_view": "c",
-        "span": "c"
+        "span": "c",
+        "signal.h": "c",
+        "signum-generic.h": "c",
+        "types.h": "c"
     }
 }
