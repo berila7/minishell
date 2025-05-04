@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/02 11:47:56 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/04 13:37:26 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <signal.h>
 # include <fcntl.h>
+#include <termios.h>
 # include <limits.h>
 # include <stdlib.h>
 # include <stdio.h>
