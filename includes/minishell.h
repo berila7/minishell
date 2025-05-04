@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/02 11:47:56 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/03 11:51:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void		ft_echo(char **args);
 int			ft_exit(char **args, t_data *data);
 int			ft_env(t_env *env);
 void		ft_unset(char **args, t_env *env);
-void		ft_pwd();
+void		ft_pwd(t_data *data);
 void		ft_cd(char **args, t_data *data);
 void		ft_export(char **args, t_data *data);
 
