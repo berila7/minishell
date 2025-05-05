@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/05 13:04:54 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:19:22 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void signal_handler_heredoc(int signum)
     {
         g_sigint_received = 1;
         write(STDOUT_FILENO, "\n", 1);
+		close(STDIN_FILENO);
     }
 }
 

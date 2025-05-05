@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/05 13:04:43 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:50:47 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int main(int ac, char *av[], char **envp)
 			printf( "✘ " );
 		setup_interactive_signals();
 		line = readline("minishell ➤ ");
-		printf("Debug: readline returned: %s\n", line ? line : "NULL");
 		if (!line)
     	{
         	if (g_sigint_received)

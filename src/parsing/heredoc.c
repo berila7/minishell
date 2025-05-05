@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/05 13:01:53 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:27:09 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
     char    *line = NULL;
     char    *quoted_delim;
     int     hd_fd[2];
-
+    int dupped_in = dup(STDIN_FILENO);
+    
     if (open_heredoc(hd_fd))
         return (1);
     *hd_in = hd_fd[0];
@@ -77,6 +78,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         
     }
     
+    dup2(dupped_in, STDIN_FILENO);
     
     if (g_sigint_received)
     {
@@ -89,7 +91,6 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
     }
     setup_interactive_signals();
     restore_terminal();
-    
     close(hd_fd[1]);
     free(quoted_delim);
     return (0);
