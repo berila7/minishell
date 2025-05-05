@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/01 18:14:28 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/04 16:05:51 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,16 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 		
 		if (handle_redirections(cmd, data))
 			exit(1);
-		
+		if (is_builtin(cmd))
+		{
+			exec_builtin(cmd, data, 0);
+			// close(data->pipe[0]);
+			// close(data->pipe[1]);
+			// dup2_og(data);
+			check_fds_in_child(cmd->args[0]);
+			exit(data->exit_status);
+		}
+			
 		if (!cmd->path)
 		{
 			dup2_og(data);
@@ -48,11 +57,7 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 		}
 		close(data->og_fd[0]);
 		close(data->og_fd[1]);
-		if (is_builtin(cmd))
-		{
-			exec_builtin(cmd, data, 0);
-		}
-		else if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
+		if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		{
 			perror("execve failed");
 			exit(1);
@@ -87,6 +92,5 @@ int	exec_multiple_cmd(t_data *data)
 	}
 
 	exit_status = ft_wait(last_pid, 0);
-	dup2_og(data);
 	return (exit_status);
 }

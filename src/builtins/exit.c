@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/01 15:30:38 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/05 15:21:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ int	ft_exit(char **args, t_data *data)
 		printf("exit: too many arguments\n");
 		status = 1;	
 	}
-	free_data(data);
-	ft_dup2(data->og_fd[0], STDIN_FILENO);
-	ft_dup2(data->og_fd[1], STDOUT_FILENO);
-	exit(status);
+	data->exit_status = status;
 	return (0);
 }
 

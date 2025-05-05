@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/26 11:47:55 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/05 15:32:28 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,26 @@ int	ft_wait(pid_t last_pid, int default_st)
 
 int	exec(t_data *data)
 {
+	int	exit_st;
+
 	if (count_cmd(data->cmds) == 1)
 	{
 		if (is_builtin(data->cmds))
-			data->exit_status = exec_builtin(data->cmds, data, 1);
+		{
+			data->og_fd[0] = dup(STDIN_FILENO);
+			data->og_fd[1] = dup(STDOUT_FILENO);
+			if (handle_redirections(data->cmds, data))
+				return (1);
+			exec_builtin(data->cmds, data, 1);
+			dup2_og(data);
+			check_fds_in_child("Parent BuiltIn:");
+			if (equal(data->cmds->args[0], "exit"))
+			{
+				exit_st = data->exit_status;
+				free_data(data);
+				exit(exit_st);
+			}
+		}
 		else
 			data->exit_status = exec_single_cmd(data);
 	}

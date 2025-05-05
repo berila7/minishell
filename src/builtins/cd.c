@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/04 15:08:20 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/05 11:42:39 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ void	ft_cd(char **args, t_data *data)
 	int		ac;
 
 	ac = count_args(args);
-	if (ac == 1)
+	if (ac > 1)
+	{
+		print_err(": too many arguments\n", "cd");
+		return ;
+	}
+	else if (ac == 1)
 		path = get_env(data->env, "HOME");
 	else
 		path = args[1];

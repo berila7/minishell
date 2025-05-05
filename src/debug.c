@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/02 12:01:01 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/04 16:02:12 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	check_fds_in_child(const char *msg)
 	pid_t pid = getpid();
 	char cmd[256];
 
-	fprintf(stderr, "\033[38;5;226m" "%s (PID: %d)\n" "\033[0m", msg, pid);  // Print to stderr instead of stdout
+	fprintf(stderr, "\033[38;5;226m" "===========> [%s] (PID: %d)\n" "\033[0m", msg, pid);  // Print to stderr instead of stdout
 	snprintf(cmd, sizeof(cmd), "lsof -p %d >&2", pid); // Redirect output to stderr
 	system(cmd);
 }

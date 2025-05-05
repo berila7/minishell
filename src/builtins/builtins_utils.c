@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/03 11:52:00 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/05 15:30:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,7 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 {
 	char	*name;
 
-	if (flag)
-	{
-		data->og_fd[0] = dup(STDIN_FILENO);
-		data->og_fd[1] = dup(STDOUT_FILENO);
-		if (handle_redirections(cmd, data))
-			return (1);
-	}
+	(void)flag;
 	name = cmd->args[0];
 	if (equal(name, "echo"))
 		ft_echo(cmd->args);
@@ -153,15 +147,5 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 		ft_env(data->env);
 	else if (equal(name, "exit"))
 		ft_exit(cmd->args, data);
-	if (!flag)
-	{
-		close(data->pipe[0]);
-		close(data->pipe[1]);
-	}
-	else 
-	{
-		ft_dup2(data->og_fd[0], STDIN_FILENO);
-		ft_dup2(data->og_fd[1], STDOUT_FILENO);
-	}
 	return (0);
 }

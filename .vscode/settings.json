@@ -20,6 +20,8 @@
         "span": "c",
         "signal.h": "c",
         "signum-generic.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "fcntl.h": "c",
+        "climits": "c"
     }
 }
