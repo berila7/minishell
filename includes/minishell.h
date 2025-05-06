@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/05 10:47:44 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/06 11:42:41 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
 int			open_heredoc(int *fd);
-void		print_err(char *msg, char *var);
+void		print_err(char *msg, void *var);
 
 
 // char		*remove_escape_chars(char *str);
@@ -153,6 +153,8 @@ char		**env_to_array(t_env *env);
 int			handle_redirections(t_cmd *cmd, t_data *data);
 int			ft_wait(pid_t last_pid, int default_st);
 void		dup2_og(t_data *data);
+void		dup_og(t_data *data);
+void		close2(int *fds);
 void		close_pipes(t_data *data);
 
 int			exec_single_cmd(t_data *data);
