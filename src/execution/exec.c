@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/06 11:45:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/07 10:58:47 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	exec(t_data *data)
 		if (is_builtin(data->cmds))
 		{
 			if (handle_redirections(data->cmds, data))
+			{
+				check_fds_in_child("Parent BuiltIn:");	
 				return (1);
+			}
 			exec_builtin(data->cmds, data, 1);
 			// check_fds_in_child("Parent BuiltIn:");
 		}
@@ -45,7 +48,7 @@ int	exec(t_data *data)
 		{
 			data->exit_status = exec_single_cmd(data);
 			dup2_og(data);
-			// check_fds_in_child("Parent:");
+			check_fds_in_child("Parent:");
 		}
 	}
 	else
