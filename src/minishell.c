@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/08 10:15:20 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/09 09:53:36 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ static void	print_header()
 	printf("\n██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗");
 	printf("\n╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n\n" );
 }
-
-static void	write_cmd(char *str)
-{
-	write(1, str, ft_strlen(str));
-}
-
 
 int main(int ac, char *av[], char **envp)
 {
@@ -58,7 +52,6 @@ int main(int ac, char *av[], char **envp)
 			printf( "✔ " );
 		else
 			printf( "✘ " );
-		write_cmd("\n< Makefile cat | grep src\n\n");
 		line = readline("minishell ➤ ");
 		if (!line)
 			break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/13 12:02:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/09 09:54:23 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	set_cmd_path(t_cmd *cmds, t_env *env)
 	cmd = cmds;
 	while (cmd)
 	{
-		if (cmd->args && cmd->args[0])
+		if (cmd->args && cmd->args[0] && cmd->args[0][0])
 			cmd->path = get_cmd_path(cmd->args[0], env);
 		cmd = cmd->next;
 	}
