@@ -29,7 +29,7 @@ $(LIBFT_DIR):
 	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) includes/minishell.h
-	$(CC) $(FLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) -lreadline -lncurses -o $(NAME)
 
 src/%.o: src/%.c $(LIBFT)
 	$(CC) $(FLAGS) -c $< -o $@ 
