@@ -127,6 +127,8 @@ void		print_err(char *msg, char *var);
 char		*ft_strjoin_char_free(char *str, char c);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		*word_split_join(char *dest, char *src);
+void    	add_argument(t_cmd *cmd, char *arg);
+void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data);
 
 
 // char		*remove_escape_chars(char *str);

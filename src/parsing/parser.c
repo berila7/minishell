@@ -159,9 +159,10 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 	{
 		if (token->type == TOKEN_WORD)
 		{
-			expanded = expand_variables(token->value, data);
-			add_argument(current_cmd, expanded);
-			free(expanded);
+			// expanded = expand_variables(token->value, data);
+			// add_argument(current_cmd, expanded);
+			// free(expanded);
+			process_token_word(token, current_cmd, data);
 			token = token->next;
 		}
 		else if (token->type == TOKEN_PIPE)

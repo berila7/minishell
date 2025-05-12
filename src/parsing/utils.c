@@ -171,6 +171,42 @@ char	*word_split_join(char *dest, char *src)
 	return (result);
 }
 
+void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
+{
+    char *expanded;
+    char **split_words;
+    int i;
+    
+    expanded = expand_variables(token->value, data);
+    
+    int has_quotes = 0;
+    i = 0;
+    while (token->value[i])
+    {
+        if (token->value[i] == '\'' || token->value[i] == '\"')
+            has_quotes = 1;
+        i++;
+    }
+    
+    if (has_quotes)
+    {
+        add_argument(current_cmd, expanded);
+    }
+    else
+    {
+        split_words = ft_split(expanded, ' ');
+        i = 0;
+        while (split_words[i])
+        {
+            add_argument(current_cmd, split_words[i]);
+            i++;
+        }
+        free_arr(split_words);
+    }
+    
+    free(expanded);
+}
+
 // char	*remove_escape_chars(char *str)
 // {
 // 	int		i;
