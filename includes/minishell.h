@@ -160,6 +160,7 @@ void		close_pipes(t_data *data);
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
 int			handle_herdoc(char *end, int *hd_fd, t_data *data);
+void		close_hds(t_data *data);
 
 
 // Debug functions:

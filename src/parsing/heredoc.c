@@ -35,6 +35,8 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
 
 	if (open_heredoc(hd_fd))
 		return (1);
+	if (*hd_in)
+		close(*hd_in);
 	*hd_in = hd_fd[0];
 	quoted_delim = remove_quotes(del);
 

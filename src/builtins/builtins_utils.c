@@ -161,6 +161,8 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 	else if (equal(name, "exit"))
 		ft_exit(cmd->args, data);
 	dup2_og(data);
+	// if (cmd->hd_fd != -1)
+	// 	close(cmd->hd_fd);
 	if (equal(name, "exit"))
 	{
 		ext_status = data->exit_status;

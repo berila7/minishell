@@ -150,8 +150,7 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 		}
 		if (handle_redirections(cmd, data))
 		{
-			if (cmd->next)
-				check_fds_in_child(ft_strjoin("Multi one cmd --> : [", cmd->args[0]));
+			check_fds_in_child(ft_strjoin("Multi cmd ERROR redirec's --> : [", cmd->args[0]));
 			exit(1);
 		}
 		if (is_builtin(cmd))
@@ -195,6 +194,21 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 	return (0);
 }
 
+
+
+void print_hds(t_data *data)
+{
+	t_cmd	*cmd;
+
+	cmd = data->cmds;
+	while (cmd)
+	{
+		if (cmd->hd_fd != -1)
+			printf("cmd->hd_fd: %d\n", cmd->hd_fd);
+		cmd = cmd->next;
+	}
+}
+
 int	exec_multiple_cmd(t_data *data)
 {
 	int		exit_status;
@@ -214,9 +228,10 @@ int	exec_multiple_cmd(t_data *data)
 			close(cmd->hd_fd);
 		cmd = cmd->next;
 	}
-
+	print_hds(data);
+	close_hds(data);
 	exit_status = ft_wait(last_pid, 0);
 	dup2_og(data);
-	check_fds_in_child("\n\nParent MULTI CMD:");
+	check_fds_in_child("Parent MULTI CMD:");
 	return (exit_status);
 }
