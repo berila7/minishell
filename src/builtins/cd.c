@@ -6,23 +6,11 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 15:20:47 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 18:18:13 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void	ft_cd_error(const char *path)
-// {
-// 	if (errno == ENOENT)
-// 		printf("cd: %s: No such file or directory\n", path);
-// 	else if (errno == ENOTDIR)
-// 		printf("cd: %s: Not a directory\n", path);
-// 	else if (errno == EACCES)
-// 		printf("cd: %s: Permission denied\n", path);
-// 	else
-// 		printf("cd: %s: %s\n", path, strerror(errno));
-// }
 
 int	update_pwd(t_data *data, char *path)
 {
@@ -34,7 +22,6 @@ int	update_pwd(t_data *data, char *path)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		// TODO: Check malloc Errors:
 		tmp = get_env(data->env, "PWD");
 		if (tmp[ft_strlen(tmp) - 1] == '/')
 			pwd = ft_strjoin(tmp, path);

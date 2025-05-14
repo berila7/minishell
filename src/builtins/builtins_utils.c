@@ -6,78 +6,11 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 14:59:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 18:27:22 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	equal(char *s1, char *s2)
-{
-	if (!s1 || !s2)
-		return (0);
-	if (ft_strcmp(s1, s2) == 0)
-		return (1);
-	return (0);
-}
-
-int	is_builtin(t_cmd *cmd)
-{
-	char	*name;
-
-	name = cmd->args[0];
-	if (equal(name, "echo") || equal(name, "cd") || equal(name, "pwd")
-		|| equal(name, "export") || equal(name, "unset")
-		|| equal(name, "env") || equal(name, "exit"))
-		return (1);
-	return (0);
-}
-
-int	open_outfile(char *file, int mode)
-{
-	int	fd;
-
-	if (mode == 1)
-		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	else
-		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	return (fd);
-}
-
-// In Parent:
-// export with args
-// cd
-// exit
-// unset
-
-// In Child
-// export no args
-
-
-
-// int	handle_heredocs(t_data *data, t_cmd *cmd, int *heredoc_fd)
-// {
-// 	t_redir	*redir;
-// 	int		i;
-
-// 	i = 0;
-// 	while (i < cmd->redir_count)
-// 	{
-// 		redir = &cmd->redirections[i];
-// 		if (redir->type == REDIR_HEREDOC)
-// 		{
-// 			if (handle_herdoc(redir->file, heredoc_fd, data) != 0)
-// 			{
-// 				perror("heredoc failed");
-// 				return (1);
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-
 
 int	handle_other_redirs(t_cmd *cmd)
 {
@@ -90,17 +23,11 @@ int	handle_other_redirs(t_cmd *cmd)
 	{
 		redir = &cmd->redirections[i];
 		if (redir->type == REDIR_IN)
-		{
-			fd = open(redir->file, O_RDONLY);
-			if (fd < 0)
-				return (perror(redir->file), 1);
-			if (count_args(cmd->args) > 0)
-				ft_dup2(fd, STDIN_FILENO);
-		}
+			open_infile(redir->file, cmd);
 		else if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
 		{
 			fd = open_outfile(redir->file,
-				redir->type == REDIR_APPEND);
+					redir->type == REDIR_APPEND);
 			if (fd < 0)
 				return (perror(redir->file), 1);
 			if (count_args(cmd->args) > 0)
@@ -111,7 +38,7 @@ int	handle_other_redirs(t_cmd *cmd)
 	return (0);
 }
 
-void close_hds(t_data *data)
+void	close_hds(t_data *data)
 {
 	t_cmd	*cmd;
 
@@ -124,10 +51,9 @@ void close_hds(t_data *data)
 	}
 }
 
-
-void close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
+void	close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = cmds;
 	while (cmd)
@@ -141,7 +67,6 @@ void close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
 	}
 }
 
-
 int	handle_redirections(t_cmd *cmd, t_data *data)
 {
 	if (handle_other_redirs(cmd))
@@ -151,15 +76,13 @@ int	handle_redirections(t_cmd *cmd, t_data *data)
 		close_hds(data);
 		return (1);
 	}
-	// close all herdocs except current cmd hd 
 	close_other_hds(data->cmds, cmd);
 	if (cmd->hd_fd != -1 && count_args(cmd->args) > 0)
 		ft_dup2(cmd->hd_fd, STDIN_FILENO);
 	return (0);
 }
 
-
-int	exec_builtin(t_cmd *cmd, t_data *data)
+void	exec_builtin(t_cmd *cmd, t_data *data)
 {
 	char	*name;
 	int		ext_status;
@@ -186,5 +109,4 @@ int	exec_builtin(t_cmd *cmd, t_data *data)
 		free_data(data);
 		exit(ext_status);
 	}
-	return (0);
 }

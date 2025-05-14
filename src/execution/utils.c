@@ -6,44 +6,13 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:03:22 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/06 11:43:36 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 17:18:59 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close2(int *fds)
-{
-	close(fds[0]);
-	close(fds[1]);
-}
-
-void	close_pipes(t_data *data)
-{
-	close2(data->pipe);
-}
-
-void	dup2_og(t_data *data)
-{
-	ft_dup2(data->og_fd[0], STDIN_FILENO);
-	ft_dup2(data->og_fd[1], STDOUT_FILENO);
-}
-
-void	dup_og(t_data *data)
-{
-	data->og_fd[0] = dup(STDIN_FILENO);
-	data->og_fd[1] = dup(STDOUT_FILENO);
-}
-
-int	ft_dup2(int oldfd, int newfd)
-{
-	int	res;
-
-	res = dup2(oldfd, newfd);
-	close(oldfd);
-	return (res);
-}
-int is_exec(char *path)
+int	is_exec(char *path)
 {
 	if (access(path, X_OK) == 0)
 		return (1);

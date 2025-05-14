@@ -6,15 +6,54 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 15:01:08 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 18:12:40 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int child1(t_cmd *cmd, t_data *data, int *pid)
+static int	exec_cmd(t_cmd *cmd, t_data *data)
 {
-	pid_t id;
+	if (!cmd->path)
+	{
+		dup2_og(data);
+		if (count_args(cmd->args) > 0)
+			return (print_err("%s: command not found\n", cmd->args[0]),
+				exit(127), 1);
+		exit(1);
+	}
+	if (!is_exec(cmd->path))
+	{
+		dup2_og(data);
+		return (print_err("%s: Permission denied\n", cmd->path),
+			exit(126), 1);
+	}
+	close2(data->og_fd);
+	if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
+		return (perror("execve failed"), exit(1), 1);
+}
+
+void	exec_child(t_cmd *cmd, t_data *data)
+{
+	if (cmd->next)
+	{
+		close(data->pipe[0]);
+		ft_dup2(data->pipe[1], STDOUT_FILENO);
+	}
+	if (handle_redirections(cmd, data))
+		exit(1);
+	if (is_builtin(cmd))
+	{
+		exec_builtin(cmd, data);
+		exit(data->exit_status);
+	}
+	else
+		exec_cmd(cmd, data);
+}
+
+int	child1(t_cmd *cmd, t_data *data, int *pid)
+{
+	pid_t	id;
 
 	if (cmd->next && pipe(data->pipe) < 0)
 		return (perror("pipe failed"), 1);
@@ -22,35 +61,7 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 	if (id < 0)
 		return (perror("fork failed"), 1);
 	if (id == 0)
-	{
-		if (cmd->next)
-		{
-			close(data->pipe[0]);
-			ft_dup2(data->pipe[1], STDOUT_FILENO);
-		}
-		if (handle_redirections(cmd, data))
-			exit(1);
-		if (is_builtin(cmd))
-		{
-			exec_builtin(cmd, data);
-			exit(data->exit_status);
-		}
-		else
-		{
-			if (!cmd->path)
-			{
-				dup2_og(data);
-				if (count_args(cmd->args) > 0)
-					return (print_err("%s: command not found\n", cmd->args[0]), exit(127), 1);
-				exit(1);
-			}
-			if (!is_exec(cmd->path))
-				return (dup2_og(data), print_err("%s: Permission denied\n", cmd->path), exit(126), 1);
-			close2(data->og_fd);
-			if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
-				return (perror("execve failed"), exit(1), 1);
-		}
-	}
+		exec_child(cmd, data);
 	else
 	{
 		if (!cmd->next)
@@ -59,8 +70,6 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 	}
 	return (0);
 }
-
-
 
 int	exec_multiple_cmd(t_data *data)
 {

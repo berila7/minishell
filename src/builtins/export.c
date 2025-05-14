@@ -6,13 +6,13 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 15:16:44 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 18:17:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	print_env(t_env *env)
+statuc int	print_env(t_env *env)
 {
 	t_env	*current;
 
@@ -26,6 +26,25 @@ int	print_env(t_env *env)
 		current = current->next;
 	}
 	return (0);
+}
+
+static void	create_env(char *equals, char *arg, t_data *data)
+{
+	char	*key;
+	char	*val;
+
+	key = ft_substr(arg, 0, (equals - arg));
+	if (*(equals - 1) == '+')
+	{
+		key[ft_strlen(key) - 1] = '\0';
+		val = get_env(data->env, key);
+		if (!val)
+			val = ft_strdup("");
+		val = ft_strjoin(val, equals + 1);
+	}
+	else
+		val = ft_strdup(equals + 1);
+	set_env(&data->env, key, val);
 }
 
 void	ft_export(char **args, t_data *data)
@@ -44,25 +63,11 @@ void	ft_export(char **args, t_data *data)
 		{
 			equals = ft_strchr(args[i], '=');
 			if (equals)
-			{
-				key = ft_substr(args[i], 0, (equals - args[i]));
-				if (*(equals - 1) == '+')
-				{
-					key[ft_strlen(key) - 1] = '\0';
-					val = get_env(data->env, key);
-					if (!val)
-						val = ft_strdup("");
-					val = ft_strjoin(val, equals + 1);
-				}
-				else
-					val = ft_strdup(equals + 1);
-				set_env(&data->env, key, val);
-			}
+				create_env(equals, args[i], data);
 			else
 			{
 				key = ft_strdup(args[i]);
-				print_err("Env Val Is Null for Key : %s\n\n", key);
-				set_env(&data->env, key, NULL);	
+				set_env(&data->env, key, NULL);
 			}
 			i++;
 		}
