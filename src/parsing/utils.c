@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/07 11:32:26 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/14 22:07:25 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
     char *expanded;
     char **split_words;
     int i;
+    char *final_str;
     
     expanded = expand_variables(token->value, data);
     
@@ -190,7 +191,10 @@ void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
     
     if (has_quotes)
     {
-        add_argument(current_cmd, expanded);
+        // For quoted strings, we need to remove quotes but preserve quoted content
+        final_str = remove_quotes(expanded);
+        add_argument(current_cmd, final_str);
+        free(final_str);
     }
     else
     {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/14 14:38:35 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 22:13:32 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ char *expand_variables(char *str, t_data *data)
     int     in_single_quote;
     int     in_double_quote;
     int     start;
-    char    *quoted_result;
+    // char    *quoted_result;
 
     result = ft_strdup("");
     if (!result)
@@ -243,9 +243,6 @@ char *expand_variables(char *str, t_data *data)
             i++;
         }
     }
-    quoted_result = result;
-    result = remove_quotes(quoted_result);
-    free(quoted_result);
     return (result);
 }
 
