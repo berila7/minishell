@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/14 14:42:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:59:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void		process_token_word(t_token *token, t_cmd *current_cmd, t_data *data);
 void		extract_word(t_token **tokens, char *line, int *i);
 // builtins:
 int			is_builtin(t_cmd *cmd);
-int			exec_builtin(t_cmd *cmd, t_data *data, int flag);
+int			exec_builtin(t_cmd *cmd, t_data *data);
 
 void		ft_echo(char **args);
 int			ft_exit(char **args, t_data *data);

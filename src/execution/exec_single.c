@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/07 11:04:47 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:55:09 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ static pid_t	exec_cmd(t_cmd *cmd, t_data *data)
 	if (id == 0)
 	{
 		if (handle_redirections(cmd, data))
-		{
-			check_fds_in_child("Child single cmd:");
 			exit(1);
-		}
 		if (!cmd->path)
 		{
 			dup2_og(data);
@@ -34,17 +31,10 @@ static pid_t	exec_cmd(t_cmd *cmd, t_data *data)
 			exit(1);
 		}
 		if (!is_exec(cmd->path))
-		{	
-			dup2_og(data);
-			return (print_err("%s: Permission denied\n", cmd->path), exit(126), 1);
-		}
+			return (dup2_og(data), print_err("%s: Permission denied\n", cmd->path), exit(126), 1);
 		close2(data->og_fd);
-		check_fds_in_child(cmd->args[0]);
 		if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
-		{
-			perror("execve failed");
-			exit(1);
-		}
+			return (perror("execve failed"), exit(1), 1);
 	}
 	return (id);
 }

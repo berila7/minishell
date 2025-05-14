@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 12:21:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:59:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,11 @@ int	handle_redirections(t_cmd *cmd, t_data *data)
 }
 
 
-int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
+int	exec_builtin(t_cmd *cmd, t_data *data)
 {
 	char	*name;
 	int		ext_status;
 
-	(void)flag;
 	name = cmd->args[0];
 	if (equal(name, "echo"))
 		ft_echo(cmd->args);
@@ -181,17 +180,11 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 	else if (equal(name, "exit"))
 		ft_exit(cmd->args, data);
 	dup2_og(data);
-	// if (cmd->hd_fd != -1)
-	// 	close(cmd->hd_fd);
 	if (equal(name, "exit"))
 	{
 		ext_status = data->exit_status;
 		free_data(data);
-		if (cmd->next)
-		check_fds_in_child("==> Exit Builtin:");
 		exit(ext_status);
 	}
-	else
-		check_fds_in_child("==> Builtin:");
 	return (0);
 }
