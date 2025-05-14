@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 12:11:46 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:20:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 			{
 				dup2_og(data);
 				if (count_args(cmd->args) > 0)
-					return (print_err(": command not found\n", cmd->args[0]), exit(127), 1);
+					return (print_err("%s: command not found\n", cmd->args[0]), exit(127), 1);
 				exit(1);
 			}
 			if (!is_exec(cmd->path))
@@ -172,11 +172,11 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 				dup2_og(data);
 				if (cmd->next)
 					check_fds_in_child(cmd->args[0]);
-				return (print_err(": Permission denied\n", cmd->path), exit(126), 1);
+				return (print_err("%s: Permission denied\n", cmd->path), exit(126), 1);
 			}
 			close2(data->og_fd);
-			if (cmd->next)
-				check_fds_in_child(ft_strjoin("Multi not BUILTIN--> : [", cmd->args[0]));
+			// if (cmd->next)
+				// check_fds_in_child(ft_strjoin("Multi not BUILTIN--> : [", cmd->args[0]));
 			if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 			{
 				perror("execve failed");
@@ -195,19 +195,6 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 }
 
 
-
-void print_hds(t_data *data)
-{
-	t_cmd	*cmd;
-
-	cmd = data->cmds;
-	while (cmd)
-	{
-		if (cmd->hd_fd != -1)
-			printf("cmd->hd_fd: %d\n", cmd->hd_fd);
-		cmd = cmd->next;
-	}
-}
 
 int	exec_multiple_cmd(t_data *data)
 {
@@ -228,7 +215,6 @@ int	exec_multiple_cmd(t_data *data)
 			close(cmd->hd_fd);
 		cmd = cmd->next;
 	}
-	print_hds(data);
 	close_hds(data);
 	exit_status = ft_wait(last_pid, 0);
 	dup2_og(data);
