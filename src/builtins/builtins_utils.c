@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/05 15:30:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 12:21:32 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,27 @@ int	open_outfile(char *file, int mode)
 
 
 
-int	handle_heredocs(t_data *data, t_cmd *cmd, int *heredoc_fd)
-{
-	t_redir	*redir;
-	int		i;
+// int	handle_heredocs(t_data *data, t_cmd *cmd, int *heredoc_fd)
+// {
+// 	t_redir	*redir;
+// 	int		i;
 
-	i = 0;
-	while (i < cmd->redir_count)
-	{
-		redir = &cmd->redirections[i];
-		if (redir->type == REDIR_HEREDOC)
-		{
-			if (handle_herdoc(redir->file, heredoc_fd, data) != 0)
-			{
-				perror("heredoc failed");
-				return (1);
-			}
-		}
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (i < cmd->redir_count)
+// 	{
+// 		redir = &cmd->redirections[i];
+// 		if (redir->type == REDIR_HEREDOC)
+// 		{
+// 			if (handle_herdoc(redir->file, heredoc_fd, data) != 0)
+// 			{
+// 				perror("heredoc failed");
+// 				return (1);
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 
 
@@ -111,16 +111,48 @@ int	handle_other_redirs(t_cmd *cmd)
 	return (0);
 }
 
+void close_hds(t_data *data)
+{
+	t_cmd	*cmd;
+
+	cmd = data->cmds;
+	while (cmd)
+	{
+		if (cmd->hd_fd != -1)
+			close(cmd->hd_fd);
+		cmd = cmd->next;
+	}
+}
+
+
+void close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
+{
+	t_cmd *cmd;
+
+	cmd = cmds;
+	while (cmd)
+	{
+		if (cmd != current_cmd && cmd->hd_fd >= 0)
+		{
+			close(cmd->hd_fd);
+			cmd->hd_fd = -1;
+		}
+		cmd = cmd->next;
+	}
+}
+
+
 int	handle_redirections(t_cmd *cmd, t_data *data)
 {
 	if (handle_other_redirs(cmd))
 	{
-		close(data->pipe[0]);
-		close(data->pipe[1]);
-		ft_dup2(data->og_fd[0], STDIN_FILENO);
-		ft_dup2(data->og_fd[1], STDOUT_FILENO);
+		close2(data->pipe);
+		dup2_og(data);
+		close_hds(data);
 		return (1);
 	}
+	// close all herdocs except current cmd hd 
+	close_other_hds(data->cmds, cmd);
 	if (cmd->hd_fd != -1 && count_args(cmd->args) > 0)
 		ft_dup2(cmd->hd_fd, STDIN_FILENO);
 	return (0);
@@ -130,6 +162,7 @@ int	handle_redirections(t_cmd *cmd, t_data *data)
 int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 {
 	char	*name;
+	int		ext_status;
 
 	(void)flag;
 	name = cmd->args[0];
@@ -147,5 +180,18 @@ int	exec_builtin(t_cmd *cmd, t_data *data, int flag)
 		ft_env(data->env);
 	else if (equal(name, "exit"))
 		ft_exit(cmd->args, data);
+	dup2_og(data);
+	// if (cmd->hd_fd != -1)
+	// 	close(cmd->hd_fd);
+	if (equal(name, "exit"))
+	{
+		ext_status = data->exit_status;
+		free_data(data);
+		if (cmd->next)
+		check_fds_in_child("==> Exit Builtin:");
+		exit(ext_status);
+	}
+	else
+		check_fds_in_child("==> Builtin:");
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/07 11:37:26 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:38:35 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	set_env(t_env **env, char *key, char *value)
 		return ;
 	new_var->key = ft_strdup(key);
 	if (!value)
-		new_var->value = ft_strdup("");
+		new_var->value = NULL;
 	else
 		new_var->value = ft_strdup(value);
 	new_var->next = *env;

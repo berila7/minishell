@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/14 11:44:24 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:42:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,12 +123,12 @@ void		set_env(t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
 int			open_heredoc(int *fd);
-void		print_err(char *msg, char *var);
+void		print_err(char *fmt, void *arg);
 char		*ft_strjoin_char_free(char *str, char c);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		*word_split_join(char *dest, char *src);
-void    	add_argument(t_cmd *cmd, char *arg);
-void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data);
+void		add_argument(t_cmd *cmd, char *arg);
+void		process_token_word(t_token *token, t_cmd *current_cmd, t_data *data);
 
 
 // char		*remove_escape_chars(char *str);
@@ -158,11 +158,14 @@ char		**env_to_array(t_env *env);
 int			handle_redirections(t_cmd *cmd, t_data *data);
 int			ft_wait(pid_t last_pid, int default_st);
 void		dup2_og(t_data *data);
+void		dup_og(t_data *data);
+void		close2(int *fds);
 void		close_pipes(t_data *data);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
 int			handle_herdoc(char *end, int *hd_fd, t_data *data);
+void		close_hds(t_data *data);
 
 
 // Debug functions:

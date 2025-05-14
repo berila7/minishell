@@ -6,27 +6,35 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:04:18 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/26 12:12:10 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/06 10:54:57 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_err(char *msg, char *var)
+void print_err(char *fmt, void *arg)
 {
-	size_t	i;
+	int	i;
 
+	if (!fmt)
+		return ;
 	i = 0;
-	while (msg && msg[i])
+	while (fmt[i])
 	{
-		if (msg[i] == ':')
+		if (fmt[i] == '%' && fmt[i + 1])
 		{
-			if (!var)
-				ft_putstr_fd("(null)", 2);
+			i++;
+			if (fmt[i] == 'c')
+				ft_putchar_fd(*(char *)arg, 2);
+			else if (fmt[i] == 's')
+				ft_putstr_fd((char *)arg, 2);
+			else if (fmt[i] == 'd')
+				ft_putnbr_fd(*(int *)arg, 2);
 			else
-				ft_putstr_fd(var, 2);
+				ft_putchar_fd(fmt[i], 2);
 		}
-		ft_putchar_fd(msg[i], 2);
+		else
+			ft_putchar_fd(fmt[i], 2);
 		i++;
 	}
 }

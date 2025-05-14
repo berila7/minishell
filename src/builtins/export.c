@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/15 10:35:41 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 11:52:53 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,20 @@ void	ft_export(char **args, t_data *data)
 			if (equals)
 			{
 				key = ft_substr(args[i], 0, (equals - args[i]));
-				val = ft_strdup(equals + 1);
+				if (*(equals - 1) == '+')
+				{
+					key[ft_strlen(key) - 1] = '\0';
+					val = get_env(data->env, key);
+					if (!val)
+						val = ft_strdup("");
+					val = ft_strjoin(val, equals + 1);
+				}
+				else
+					val = ft_strdup(equals + 1);
 				set_env(&data->env, key, val);
 			}
+			else
+				set_env(&data->env, key, NULL);	
 			i++;
 		}
 	}

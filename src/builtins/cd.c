@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/05 11:42:39 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/06 10:52:01 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_cd(char **args, t_data *data)
 	ac = count_args(args);
 	if (ac > 1)
 	{
-		print_err(": too many arguments\n", "cd");
+		print_err("cd: too many arguments\n", NULL);
 		return ;
 	}
 	else if (ac == 1)
