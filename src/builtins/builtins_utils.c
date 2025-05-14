@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/07 12:00:27 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 12:21:32 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,24 @@ void close_hds(t_data *data)
 	}
 }
 
+
+void close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
+{
+	t_cmd *cmd;
+
+	cmd = cmds;
+	while (cmd)
+	{
+		if (cmd != current_cmd && cmd->hd_fd >= 0)
+		{
+			close(cmd->hd_fd);
+			cmd->hd_fd = -1;
+		}
+		cmd = cmd->next;
+	}
+}
+
+
 int	handle_redirections(t_cmd *cmd, t_data *data)
 {
 	if (handle_other_redirs(cmd))
@@ -133,6 +151,8 @@ int	handle_redirections(t_cmd *cmd, t_data *data)
 		close_hds(data);
 		return (1);
 	}
+	// close all herdocs except current cmd hd 
+	close_other_hds(data->cmds, cmd);
 	if (cmd->hd_fd != -1 && count_args(cmd->args) > 0)
 		ft_dup2(cmd->hd_fd, STDIN_FILENO);
 	return (0);

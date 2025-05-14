@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/07 11:30:11 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 12:11:46 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,8 @@ int child1(t_cmd *cmd, t_data *data, int *pid)
 				return (print_err(": Permission denied\n", cmd->path), exit(126), 1);
 			}
 			close2(data->og_fd);
-			// if (!cmd->next)
-			// check_fds_in_child(ft_strjoin("Multi not BUILTIN--> : [", cmd->args[0]));
+			if (cmd->next)
+				check_fds_in_child(ft_strjoin("Multi not BUILTIN--> : [", cmd->args[0]));
 			if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 			{
 				perror("execve failed");
