@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 18:12:40 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 21:48:34 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	exec_cmd(t_cmd *cmd, t_data *data)
 	close2(data->og_fd);
 	if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
 		return (perror("execve failed"), exit(1), 1);
+	return (0);
 }
 
 void	exec_child(t_cmd *cmd, t_data *data)

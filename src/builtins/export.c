@@ -6,13 +6,13 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 18:17:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 21:46:53 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-statuc int	print_env(t_env *env)
+static int	print_env(t_env *env)
 {
 	t_env	*current;
 
@@ -49,9 +49,8 @@ static void	create_env(char *equals, char *arg, t_data *data)
 
 void	ft_export(char **args, t_data *data)
 {
-	char	*key;
-	char	*val;
 	char	*equals;
+	char	*key;
 	int		i;
 
 	if (count_args(args) == 1)

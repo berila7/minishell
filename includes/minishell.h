@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/14 18:27:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 21:48:02 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,11 @@ void		ft_unset(char **args, t_env *env);
 void		ft_pwd(t_data *data);
 void		ft_cd(char **args, t_data *data);
 void		ft_export(char **args, t_data *data);
+
+int			open_infile(char *path, t_cmd *cmd);
+int			open_outfile(char *file, int mode);
+int			is_builtin(t_cmd *cmd);
+
 
 // exec utils:
 int			exec(t_data *data);
