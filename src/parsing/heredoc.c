@@ -6,11 +6,19 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/03 13:04:08 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:27:09 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void restore_terminal(void)
+{
+    struct termios term;
+    tcgetattr(STDIN_FILENO, &term);
+    term.c_lflag |= (ICANON | ECHO); // Restore canonical mode and echo
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
 
 int	open_heredoc(int *fd)
 {
@@ -32,7 +40,8 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
     char    *line = NULL;
     char    *quoted_delim;
     int     hd_fd[2];
-
+    int dupped_in = dup(STDIN_FILENO);
+    
     if (open_heredoc(hd_fd))
         return (1);
     *hd_in = hd_fd[0];
@@ -41,17 +50,18 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
     g_sigint_received = 0;
     setup_heredoc_signals();
     
-    line = readline("> ");
-    while (line && !g_sigint_received)
+    while (1)
     {
+        line = readline("> ");
         if (g_sigint_received)
-            break;
-            
-        if (equal(line, quoted_delim))
         {
             free(line);
-            // if (expanded_str != line)
-            //     free(expanded_str);
+            break ;
+        }
+            
+        if (!line || equal(line, quoted_delim))
+        {
+            free(line);
             break;
         }
             
@@ -66,34 +76,21 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
             free(expanded_str);
         free(line);
         
-        line = readline("> ");
     }
-
-    // Clean up and properly restore terminal state
-    if (line && g_sigint_received)
-        free(line);
     
-    // Restore interactive signals BEFORE terminal cleanup
-    setup_interactive_signals();
-
-    // Check if we exited due to SIGINT
+    dup2(dupped_in, STDIN_FILENO);
+    
     if (g_sigint_received)
     {
         close(hd_fd[0]);
         close(hd_fd[1]);
         free(quoted_delim);
         
-        // Set appropriate exit status
         data->exit_status = 130;
-        
-        // Force immediate prompt redisplay
-        write(STDOUT_FILENO, "\n", 1);
-        rl_on_new_line();
-        rl_redisplay();
-        
         return (1);
     }
-    
+    setup_interactive_signals();
+    restore_terminal();
     close(hd_fd[1]);
     free(quoted_delim);
     return (0);

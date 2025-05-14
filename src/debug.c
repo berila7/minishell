@@ -109,4 +109,3 @@ void	check_fds_in_child(const char *msg)
 	snprintf(cmd, sizeof(cmd), "lsof -p %d >&2", pid); // Redirect output to stderr
 	system(cmd);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/26 10:47:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/07 11:32:26 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,91 @@ int	validate_token(t_token *token)
 		return (printf("minishell: syntax error: \
 			unexpected end of file\n"), 0);
 	return (1);
+}
+
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char	*result;
+
+	result = ft_strjoin(s1, s2);
+	free(s1);
+	return (result);
+}
+
+char	*ft_strjoin_char_free(char *str, char c)
+{
+	char	*result;
+
+	result = ft_strjoin_char(str, c);
+	free(str);
+	return (result);
+}
+
+char	*word_split_join(char *dest, char *src)
+{
+	int		i;
+	int		was_space;
+	char	*result;
+
+	i = 0;
+	was_space = 1;
+	result = dest;
+	while (src[i])
+	{
+		if (src[i] == ' ' || src[i] == '\t')
+		{
+			if (!was_space)
+			{
+				result = ft_strjoin_char_free(result, ' ');
+				was_space = 1;
+			}
+			while (src[i] && (src[i] == ' ' || src[i] == '\t'))
+				i++;
+		}
+		else
+		{
+			result = ft_strjoin_char_free(result, src[i]);
+			was_space = 0;
+			i++;
+		}
+	}
+	return (result);
+}
+
+void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
+{
+    char *expanded;
+    char **split_words;
+    int i;
+    
+    expanded = expand_variables(token->value, data);
+    
+    int has_quotes = 0;
+    i = 0;
+    while (token->value[i])
+    {
+        if (token->value[i] == '\'' || token->value[i] == '\"')
+            has_quotes = 1;
+        i++;
+    }
+    
+    if (has_quotes)
+    {
+        add_argument(current_cmd, expanded);
+    }
+    else
+    {
+        split_words = ft_split(expanded, ' ');
+        i = 0;
+        while (split_words[i])
+        {
+            add_argument(current_cmd, split_words[i]);
+            i++;
+        }
+        free_arr(split_words);
+    }
+    
+    free(expanded);
 }
 
 // char	*remove_escape_chars(char *str)

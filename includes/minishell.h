@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/05 10:47:44 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 11:44:24 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <signal.h>
 # include <fcntl.h>
+#include <termios.h>
 # include <limits.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -28,7 +29,6 @@
 # include <sys/stat.h> 
 # include <string.h>
 # include <errno.h>
-# include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -124,6 +124,11 @@ void		free_data(t_data *data);
 int			validate_token(t_token *token);
 int			open_heredoc(int *fd);
 void		print_err(char *msg, char *var);
+char		*ft_strjoin_char_free(char *str, char c);
+char		*ft_strjoin_free(char *s1, char *s2);
+char		*word_split_join(char *dest, char *src);
+void    	add_argument(t_cmd *cmd, char *arg);
+void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data);
 
 
 // char		*remove_escape_chars(char *str);
