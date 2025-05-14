@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 11:52:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 15:16:44 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	print_env(t_env *env)
 	current = env;
 	while (current)
 	{
-		printf("declare -x %s=\"%s\"\n", current->key, current->value);
+		if (current->value)
+			printf("declare -x %s=\"%s\"\n", current->key, current->value);
+		else
+			printf("declare -x %s\n", current->key);
 		current = current->next;
 	}
 	return (0);
@@ -56,7 +59,11 @@ void	ft_export(char **args, t_data *data)
 				set_env(&data->env, key, val);
 			}
 			else
+			{
+				key = ft_strdup(args[i]);
+				print_err("Env Val Is Null for Key : %s\n\n", key);
 				set_env(&data->env, key, NULL);	
+			}
 			i++;
 		}
 	}

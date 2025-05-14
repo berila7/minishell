@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:01:21 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/11 16:33:29 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 15:17:37 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	ft_env(t_env *env)
 	current = env;
 	while (current)
 	{
-		printf("%s=%s\n", current->key, current->value);
+		if (current->value)
+			printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
 	return (0);
