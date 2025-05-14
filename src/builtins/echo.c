@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/26 11:09:34 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 15:39:59 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@ int	count_args(char **args)
 	return (i);
 }
 
+int	valid_nflag(char *flag)
+{
+	size_t	i;
+
+	i = 0;
+	if (flag[i++] != '-')
+		return (0);
+	while (flag[i])
+	{
+		if (flag[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	ft_echo(char **args)
 {
 	int	i;
@@ -30,12 +46,13 @@ void	ft_echo(char **args)
 	new_line = 1;
 	if (count_args(args) > 1)
 	{
-		i = 0;
-		while (args[++i] && ft_strcmp("-n", args[i]) == 0)
-			new_line = 0;
+		i = 1;
 		while (args[i])
 		{
-			ft_putstr_fd(args[i], STDOUT_FILENO);
+			if (valid_nflag(args[i]) && i == 1)
+				new_line = 0;
+			else
+				ft_putstr_fd(args[i], STDOUT_FILENO);
 			i++;
 			if (args[i])
 				ft_putchar_fd(' ', STDOUT_FILENO);
