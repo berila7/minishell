@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/14 11:54:05 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:38:35 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,6 @@ char *expand_variables(char *str, t_data *data)
     int     i;
     char    *result;
     char    *status_str;
-    char    *temp;
     char    *var_name;
     char    *var_value;
     int     in_single_quote;
@@ -194,17 +193,13 @@ char *expand_variables(char *str, t_data *data)
         if (str[i] == '\'' && !in_double_quote)
         {
             in_single_quote = !in_single_quote;
-            temp = ft_strjoin_char(result, str[i]);
-            free(result);
-            result = temp;
+            result = ft_strjoin_char_free(result, str[i]);
             i++;
         }
         else if (str[i] == '\"' && !in_single_quote)
         {
             in_double_quote = !in_double_quote;
-            temp = ft_strjoin_char(result, str[i]);
-            free(result);
-            result = temp;
+            result = ft_strjoin_char_free(result, str[i]);
             i++;
         }
         else if (str[i] == '$' && str[i + 1] && !in_single_quote)
@@ -213,57 +208,40 @@ char *expand_variables(char *str, t_data *data)
             if (str[i] == '?')
             {
                 status_str = ft_itoa(data->exit_status);
-                temp = ft_strjoin(result, status_str);
-                free(result);
+                result = ft_strjoin_free(result, status_str);
                 free(status_str);
-                result = temp;
                 i++;
             }
-            else if (ft_isdigit(str[i]))
-            {
-                char first_digit = str[i];
-                i++;
+			else if (ft_isdigit(str[i]))
+			{
+				char first_digit = str[i++];
                 if (first_digit == '0')
-                {
-                    temp = ft_strjoin(result, "minishell");
-                    free(result);
-                    result = temp;
-                }
-            }
-            else
+                    result = ft_strjoin_free(result, "minishell");
+			}
+            else if (str[i] && is_valid_var_char(str[i]))
             {
                 start = i;
-                while (str[i] && is_valid_var_char(str[i]))
+                while (str[i] && (is_valid_var_char(str[i])))
                     i++;
-                if (i > start)
-                {
-                    var_name = ft_substr(str, start, i - start);
-                    var_value = get_env(data->env, var_name);
-                    if (var_value)
-                    {
-                        temp = ft_strjoin(result, var_value);
-                        free(result);
-                        result = temp;
-                    }
-                    free(var_name);
-                }
-                else
-                {
-                    temp = ft_strjoin_char(result, '$');
-                    free(result);
-                    result = temp;
-                }
+				var_name = ft_substr(str, start, i - start);
+				var_value = get_env(data->env, var_name);
+				free(var_name);
+				if (var_value)
+				{
+					if (in_double_quote)
+						result = ft_strjoin_free(result, var_value);
+					else
+						result = word_split_join(result, var_value);
+				}
             }
+			else
+				result = ft_strjoin_char_free(result, '$');
         }
-        else if (str[i])
+        else 
         {
-            temp = ft_strjoin_char(result, str[i]);
-            free(result);
-            result = temp;
+            result = ft_strjoin_char_free(result, str[i]);
             i++;
         }
-        else
-            break;
     }
     quoted_result = result;
     result = remove_quotes(quoted_result);

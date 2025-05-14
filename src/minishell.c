@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/09 09:53:36 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:38:16 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,21 @@ int main(int ac, char *av[], char **envp)
 			printf( "✔ " );
 		else
 			printf( "✘ " );
+		setup_interactive_signals();
 		line = readline("minishell ➤ ");
 		if (!line)
-			break ;
+    	{
+        	if (g_sigint_received)
+       		{
+           		g_sigint_received = 0;
+            	continue;
+        	}
+			else
+			{
+				printf("exit\n");
+				break;
+			}
+    	}
 		if (line[0])
 			add_history(line);
 		tokens = tokenize(line);
@@ -69,6 +81,7 @@ int main(int ac, char *av[], char **envp)
 		{
 			free_tokens(tokens);
 			free(line);
+			g_sigint_received = 0;
 			continue ;
 		}
 		set_cmd_path(data->cmds, data->env);
@@ -82,12 +95,13 @@ int main(int ac, char *av[], char **envp)
 		
 		exec(data);
 
-		setup_interactive_signals();
+		
 		
 		free_tokens(tokens);
 		free_commands(data->cmds);
 		data->cmds = NULL;
 		free(line);
+		g_sigint_received = 0;
 	}
 	clear_history();
 	free_env(data->env);
