@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/14 22:13:32 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/15 10:12:21 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ char *expand_variables(char *str, t_data *data)
             result = ft_strjoin_char_free(result, str[i]);
             i++;
         }
-        else if (str[i] == '$' && str[i + 1] && !in_single_quote)
+        else if (str[i] == '$' && str[i + 1] && (!in_single_quote || data->in_heredoc))
         {
             i++;
             if (str[i] == '?')

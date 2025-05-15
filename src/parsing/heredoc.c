@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/14 14:39:14 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/15 10:12:37 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
 
     g_sigint_received = 0;
     setup_heredoc_signals();
-    
+    data->in_heredoc = 1;
     while (1)
     {
         line = readline("> ");
@@ -65,10 +65,10 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
             break;
         }
             
-        if (line[0] == '\'' || line[0] == '\"')
-            expanded_str = expand_variables(line, data);
-        else
+        if (del[0] == '\'' || del[0] == '\"')
             expanded_str = line;
+        else
+            expanded_str = expand_variables(line, data);
         
         ft_putstr_fd(expanded_str, hd_fd[1]);
         write(hd_fd[1], "\n", 1);
