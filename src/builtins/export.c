@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 21:46:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:31:18 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,61 @@ static int	print_env(t_env *env)
 	return (0);
 }
 
-static void	create_env(char *equals, char *arg, t_data *data)
+static int	create_env(char *equals, char *arg, t_data *data)
 {
 	char	*key;
 	char	*val;
+	char	*tmp;
 
 	key = ft_substr(arg, 0, (equals - arg));
+	if (!key)
+		return (1);
+
 	if (*(equals - 1) == '+')
 	{
 		key[ft_strlen(key) - 1] = '\0';
 		val = get_env(data->env, key);
 		if (!val)
+		{
 			val = ft_strdup("");
-		val = ft_strjoin(val, equals + 1);
+			if (!val)
+			{
+				free(key);
+				return (1);
+			}
+		}
+		else
+		{
+			val = ft_strdup(val);
+			if (!val)
+			{
+				free(key);
+				return (1);
+			}
+		}
+		tmp = ft_strjoin(val, equals + 1);
+		if (!tmp)
+		{
+			free(key);
+			free(val);
+			return (1);
+		}
+		free(val);
+		val = tmp;
 	}
 	else
+	{
 		val = ft_strdup(equals + 1);
+		if (!val)
+		{
+			free(key);
+			return (1);
+		}
+	}
 	set_env(&data->env, key, val);
+	free(key);
+	free(val);
+	return (0);
 }
 
 void	ft_export(char **args, t_data *data)

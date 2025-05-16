@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 15:39:59 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:08:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_echo(char **args)
 		i = 1;
 		while (args[i])
 		{
-			if (valid_nflag(args[i]) && i == 1)
+			if (i == 1 && valid_nflag(args[i]))
 				new_line = 0;
 			else
 				ft_putstr_fd(args[i], STDOUT_FILENO);

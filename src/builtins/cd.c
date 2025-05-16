@@ -6,11 +6,17 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 18:18:13 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:11:10 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void exit_program(t_data *data)
+{
+	free_data(data);
+	exit(1);
+}
 
 int	update_pwd(t_data *data, char *path)
 {
@@ -27,6 +33,8 @@ int	update_pwd(t_data *data, char *path)
 			pwd = ft_strjoin(tmp, path);
 		else
 			pwd = join_path(tmp, path);
+		if (!pwd)
+			exit_program(data);
 		perror("getcwd");
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/15 11:50:34 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:33:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ int main(int ac, char *av[], char **envp)
 	(void)av;
 	
 	// atexit(f);
+	ac = N;
 	data = malloc(sizeof(t_data));
 	if (!data)
-		return (print_err("Allocation Error\n", NULL), 0);
+		return (print_err("1- Allocation Error [%d]\n", &ac), 0);
 	data->env = init_env(envp);
+	if (!data->env)
+		return (print_err("2- Allocation Error [%d]\n", &ac), 0);
 	data->exit_status = 0;
 	setup_interactive_signals();
 	print_header();
@@ -84,7 +87,11 @@ int main(int ac, char *av[], char **envp)
 			g_sigint_received = 0;
 			continue ;
 		}
-		set_cmd_path(data->cmds, data->env);
+		if (set_cmd_path(data->cmds, data->env))
+		{
+			free_data(data);
+			exit(1);
+		}
 
 		// ! ======[ DEBUG: ]======
 		print_tokens(tokens);
