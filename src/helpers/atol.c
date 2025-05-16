@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atol.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:21:16 by anachat           #+#    #+#             */
-/*   Updated: 2025/04/11 16:34:10 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 20:09:37 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,13 @@ long	ft_atol(const char *str)
 		i++;
 	}
 	return (result * sign);
+}
+
+char	*ft_strjoin_char_free(char *str, char c)
+{
+	char	*result;
+
+	result = ft_strjoin_char(str, c);
+	free(str);
+	return (result);
 }

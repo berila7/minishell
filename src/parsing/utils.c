@@ -6,30 +6,11 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 10:39:15 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 20:19:59 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_strjoin_char(char *str, char c)
-{
-	char	*result;
-	int		i;
-
-	result = malloc(ft_strlen(str) + 2);
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		result[i] = str[i];
-		i++;
-	}
-	result[i] = c;
-	result[i + 1] = '\0';
-	return (result);
-}
 
 int	noquotes_len(char *str)
 {
@@ -84,18 +65,6 @@ char	*remove_quotes(char *str)
 	return (result);
 }
 
-void	free_data(t_data *data)
-{
-	if (data)
-	{
-		if (data->cmds)
-			free_commands(data->cmds);
-		if (data->env)
-			free_env(data->env);
-		free(data);
-	}
-}
-
 int	validate_token(t_token *token)
 {
 	t_token	*current;
@@ -122,93 +91,21 @@ int	validate_token(t_token *token)
 	return (1);
 }
 
-char	*ft_strjoin_free(char *s1, char *s2)
+int	skip_spaces(char *src, int i)
 {
-	char	*result;
-
-	result = ft_strjoin(s1, s2);
-	free(s1);
-	return (result);
+	while (src[i] && (src[i] == ' ' || src[i] == '\t'))
+		i++;
+	return (i);
 }
 
-char	*ft_strjoin_char_free(char *str, char c)
+char	*handle_space(char *result, int *was_space)
 {
-	char	*result;
-
-	result = ft_strjoin_char(str, c);
-	free(str);
-	return (result);
-}
-
-char	*word_split_join(char *dest, char *src)
-{
-	int		i;
-	int		was_space;
-	char	*result;
-
-	i = 0;
-	was_space = 1;
-	result = dest;
-	while (src[i])
+	if (!*was_space)
 	{
-		if (src[i] == ' ' || src[i] == '\t')
-		{
-			if (!was_space)
-			{
-				result = ft_strjoin_char_free(result, ' ');
-				was_space = 1;
-			}
-			while (src[i] && (src[i] == ' ' || src[i] == '\t'))
-				i++;
-		}
-		else
-		{
-			result = ft_strjoin_char_free(result, src[i]);
-			was_space = 0;
-			i++;
-		}
+		result = ft_strjoin_char_free(result, ' ');
+		*was_space = 1;
 	}
 	return (result);
-}
-
-void	process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
-{
-    char *expanded;
-    char **split_words;
-    int i;
-    char *final_str;
-    
-    expanded = expand_variables(token->value, data);
-    
-    int has_quotes = 0;
-    i = 0;
-    while (token->value[i])
-    {
-        if (token->value[i] == '\'' || token->value[i] == '\"')
-            has_quotes = 1;
-        i++;
-    }
-    
-    if (has_quotes)
-    {
-        // For quoted strings, we need to remove quotes but preserve quoted content
-        final_str = remove_quotes(expanded);
-        add_argument(current_cmd, final_str);
-        free(final_str);
-    }
-    else
-    {
-        split_words = ft_split(expanded, ' ');
-        i = 0;
-        while (split_words[i])
-        {
-            add_argument(current_cmd, split_words[i]);
-            i++;
-        }
-        free_arr(split_words);
-    }
-    
-    free(expanded);
 }
 
 // char	*remove_escape_chars(char *str)

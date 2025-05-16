@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/16 16:28:34 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 21:05:57 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
 typedef struct s_data t_data;
 typedef struct s_redir t_redir;
+typedef struct s_expand t_expand;
 
 struct s_redir {
     int type;
@@ -120,6 +121,14 @@ struct s_data
 	int			exit_status;
 };
 
+struct s_expand
+{
+	int		i;
+	char	*result;
+	int		in_single_quote;
+	int		in_double_quote;
+};
+
 t_token		*tokenize(char *line);
 void		free_tokens(t_token *tokens);
 t_cmd		*parse_tokens(t_token *tokens, t_data *data);
@@ -147,7 +156,22 @@ char		*ft_strjoin_free(char *s1, char *s2);
 char		*word_split_join(char *dest, char *src);
 void		add_argument(t_cmd *cmd, char *arg);
 void		process_token_word(t_token *token, t_cmd *current_cmd, t_data *data);
-
+t_env		*create_env_node(char *env_var);
+int			is_valid_var_char(char c);
+void		add_token(t_token **tokens, t_token *new_token);
+t_token		*new_token(char *value, t_token_type type);
+t_cmd		*new_command(void);
+void		add_argument(t_cmd *cmd, char *arg);
+void		add_redirection(t_cmd *cmd, int type, char *file);
+void		init_expand_vars(t_expand *exp);
+void		handle_quoted_word(char *expanded, t_cmd *current_cmd);
+int			has_quotes_in_token(char *str);
+void		handle_unquoted_word(char *expanded, t_cmd *current_cmd);
+int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list);
+void		init_parser(t_cmd **current_cmd, t_cmd **cmd_list);
+void		add_command(t_cmd **cmds, t_cmd *new_cmd);
+int			skip_spaces(char *src, int i);
+char		*handle_space(char *result, int *was_space);
 
 // char		*remove_escape_chars(char *str);
 void		extract_word(t_token **tokens, char *line, int *i);
