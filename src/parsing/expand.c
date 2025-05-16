@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 18:33:56 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 19:53:44 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 20:01:28 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	init_expand_vars(t_expand *exp)
-{
-	exp->in_single_quote = 0;
-	exp->in_double_quote = 0;
-	exp->i = 0;
-}
 
 static void	handle_quotes(char *str, t_expand *exp)
 {

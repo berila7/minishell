@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 19:52:45 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 20:12:55 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	add_command(t_cmd **cmds, t_cmd *new_cmd)
-{
-	t_cmd	*current;
-
-	if (!*cmds)
-	{
-		*cmds = new_cmd;
-		return ;
-	}
-	current = *cmds;
-	while (current->next)
-		current = current->next;
-	current->next = new_cmd;
-}
-
-static void	init_parser(t_cmd **current_cmd, t_cmd **cmd_list)
-{
-	*current_cmd = new_command();
-	*cmd_list = NULL;
-}
-
-static int	handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list)
-{
-	add_command(cmd_list, *current_cmd);
-	*current_cmd = new_command();
-	if (!*current_cmd)
-	{
-		free_commands(*cmd_list);
-		return (0);
-	}
-	*token = (*token)->next;
-	return (1);
-}
 
 static int	handle_redir_error(t_token_type type, t_cmd *current_cmd,
 		t_cmd *cmd_list)

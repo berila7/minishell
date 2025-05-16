@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 18:41:39 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 20:11:06 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,18 @@ static void	process_output_redirection(t_token **token, char *line, int *i)
 	}
 }
 
+void	process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
+{
+	char	*expanded;
+
+	expanded = expand_variables(token->value, data);
+	if (has_quotes_in_token(token->value))
+		handle_quoted_word(expanded, current_cmd);
+	else
+		handle_unquoted_word(expanded, current_cmd);
+	free(expanded);
+}
+
 t_token	*tokenize(char *line)
 {
 	t_token	*token;
@@ -69,19 +81,4 @@ t_token	*tokenize(char *line)
 			extract_word(&token, line, &i);
 	}
 	return (token);
-}
-
-void	free_tokens(t_token *tokens)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = tokens;
-	while (current)
-	{
-		next = current->next;
-		free(current->value);
-		free(current);
-		current = next;
-	}
 }

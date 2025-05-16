@@ -6,11 +6,39 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 18:46:58 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 19:15:55 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 20:17:14 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	add_command(t_cmd **cmds, t_cmd *new_cmd)
+{
+	t_cmd	*current;
+
+	if (!*cmds)
+	{
+		*cmds = new_cmd;
+		return ;
+	}
+	current = *cmds;
+	while (current->next)
+		current = current->next;
+	current->next = new_cmd;
+}
+
+int	handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list)
+{
+	add_command(cmd_list, *current_cmd);
+	*current_cmd = new_command();
+	if (!*current_cmd)
+	{
+		free_commands(*cmd_list);
+		return (0);
+	}
+	*token = (*token)->next;
+	return (1);
+}
 
 t_cmd	*new_command(void)
 {
@@ -81,46 +109,4 @@ void	add_redirection(t_cmd *cmd, int type, char *file)
 	free(cmd->redirections);
 	cmd->redirections = new_redirs;
 	cmd->redir_count++;
-}
-
-void	free_command(t_cmd *cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	if (cmd->args)
-	{
-		i = 0;
-		while (cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		free(cmd->args);
-	}
-	if (cmd->redirections)
-	{
-		i = 0;
-		while (i < cmd->redir_count)
-			free(cmd->redirections[i++].file);
-		free(cmd->redirections);
-	}
-	if (cmd->path)
-		free(cmd->path);
-	free(cmd);
-}
-
-void	free_commands(t_cmd *commands)
-{
-	t_cmd	*current;
-	t_cmd	*next;
-
-	current = commands;
-	while (current)
-	{
-		next = current->next;
-		free_command(current);
-		current = next;
-	}
 }

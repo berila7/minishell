@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/16 19:17:11 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 20:20:13 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,15 @@ t_token		*new_token(char *value, t_token_type type);
 t_cmd		*new_command(void);
 void		add_argument(t_cmd *cmd, char *arg);
 void		add_redirection(t_cmd *cmd, int type, char *file);
+void		init_expand_vars(t_expand *exp);
+void		handle_quoted_word(char *expanded, t_cmd *current_cmd);
+int			has_quotes_in_token(char *str);
+void		handle_unquoted_word(char *expanded, t_cmd *current_cmd);
+int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list);
+void		init_parser(t_cmd **current_cmd, t_cmd **cmd_list);
+void		add_command(t_cmd **cmds, t_cmd *new_cmd);
+int			skip_spaces(char *src, int i);
+char		*handle_space(char *result, int *was_space);
 
 // char		*remove_escape_chars(char *str);
 void		extract_word(t_token **tokens, char *line, int *i);
