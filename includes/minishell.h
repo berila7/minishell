@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/16 17:05:30 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 19:17:11 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,13 @@ char		*ft_strjoin_free(char *s1, char *s2);
 char		*word_split_join(char *dest, char *src);
 void		add_argument(t_cmd *cmd, char *arg);
 void		process_token_word(t_token *token, t_cmd *current_cmd, t_data *data);
-
+t_env		*create_env_node(char *env_var);
+int			is_valid_var_char(char c);
+void		add_token(t_token **tokens, t_token *new_token);
+t_token		*new_token(char *value, t_token_type type);
+t_cmd		*new_command(void);
+void		add_argument(t_cmd *cmd, char *arg);
+void		add_redirection(t_cmd *cmd, int type, char *file);
 
 // char		*remove_escape_chars(char *str);
 void		extract_word(t_token **tokens, char *line, int *i);
