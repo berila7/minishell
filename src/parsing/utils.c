@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/14 22:07:25 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 10:39:15 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ char	*word_split_join(char *dest, char *src)
 	return (result);
 }
 
-void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
+void	process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
 {
     char *expanded;
     char **split_words;

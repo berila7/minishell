@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/15 10:27:56 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 10:38:14 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_env	*init_env(char	**envp)
 	t_env	*env_list;
 	t_env	*last;
 	t_env	*new_node;
-	char 	*equals;
+	char	*equals;
 	int		key_len;
 	int		i;
 
@@ -94,7 +94,7 @@ char	*get_env(t_env *env, char *key)
 	current = env;
 	while (current)
 	{
-		if(ft_strcmp(current->key, key) == 0)
+		if (ft_strcmp(current->key, key) == 0)
 			return (current->value);
 		current = current->next;
 	}
@@ -170,59 +170,60 @@ void	unset_env(t_env **env, char *key)
 	}
 }
 
-char *expand_variables(char *str, t_data *data)
+char	*expand_variables(char *str, t_data *data)
 {
-    int     i;
-    char    *result;
-    char    *status_str;
-    char    *var_name;
-    char    *var_value;
-    int     in_single_quote;
-    int     in_double_quote;
-    int     start;
-    // char    *quoted_result;
+	int		i;
+	char	*result;
+	char	*status_str;
+	char	*var_name;
+	char	*var_value;
+	int		in_single_quote;
+	int		in_double_quote;
+	int		start;
+	char	first_digit;
 
-    result = ft_strdup("");
-    if (!result)
-        return (NULL);
-    in_single_quote = 0;
-    in_double_quote = 0;
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '\'' && !in_double_quote)
-        {
-            in_single_quote = !in_single_quote;
-            result = ft_strjoin_char_free(result, str[i]);
-            i++;
-        }
-        else if (str[i] == '\"' && !in_single_quote)
-        {
-            in_double_quote = !in_double_quote;
-            result = ft_strjoin_char_free(result, str[i]);
-            i++;
-        }
-        else if (str[i] == '$' && str[i + 1] && (!in_single_quote || data->in_heredoc))
-        {
-            i++;
-            if (str[i] == '?')
-            {
-                status_str = ft_itoa(data->exit_status);
-                result = ft_strjoin_free(result, status_str);
-                free(status_str);
-                i++;
-            }
+	result = ft_strdup("");
+	if (!result)
+		return (NULL);
+	in_single_quote = 0;
+	in_double_quote = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' && !in_double_quote)
+		{
+			in_single_quote = !in_single_quote;
+			result = ft_strjoin_char_free(result, str[i]);
+			i++;
+		}
+		else if (str[i] == '\"' && !in_single_quote)
+		{
+			in_double_quote = !in_double_quote;
+			result = ft_strjoin_char_free(result, str[i]);
+			i++;
+		}
+		else if (str[i] == '$' && str[i + 1]
+			&& (!in_single_quote || data->in_heredoc))
+		{
+			i++;
+			if (str[i] == '?')
+			{
+				status_str = ft_itoa(data->exit_status);
+				result = ft_strjoin_free(result, status_str);
+				free(status_str);
+				i++;
+			}
 			else if (ft_isdigit(str[i]))
 			{
-				char first_digit = str[i++];
-                if (first_digit == '0')
-                    result = ft_strjoin_free(result, "minishell");
+				first_digit = str[i++];
+				if (first_digit == '0')
+					result = ft_strjoin_free(result, "minishell");
 			}
-            else if (str[i] && is_valid_var_char(str[i]))
-            {
-                start = i;
-                while (str[i] && (is_valid_var_char(str[i])))
-                    i++;
+			else if (str[i] && is_valid_var_char(str[i]))
+			{
+				start = i;
+				while (str[i] && (is_valid_var_char(str[i])))
+					i++;
 				var_name = ft_substr(str, start, i - start);
 				var_value = get_env(data->env, var_name);
 				free(var_name);
@@ -233,17 +234,17 @@ char *expand_variables(char *str, t_data *data)
 					else
 						result = word_split_join(result, var_value);
 				}
-            }
+			}
 			else
 				result = ft_strjoin_char_free(result, '$');
-        }
-        else 
-        {
-            result = ft_strjoin_char_free(result, str[i]);
-            i++;
-        }
-    }
-    return (result);
+		}
+		else
+		{
+			result = ft_strjoin_char_free(result, str[i]);
+			i++;
+		}
+	}
+	return (result);
 }
 
 // void	f(void)
