@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/15 10:11:37 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 10:51:04 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,5 +186,8 @@ void	setup_interactive_signals(void);
 void	setup_heredoc_signals(void);
 void	setup_exec_signals(void);
 void	reset_signals(void);
+void	signal_handler_heredoc(int signum);
+void	signal_handler_interactive(int signum);
+void	signal_handler_exec(int signum);
 
 #endif

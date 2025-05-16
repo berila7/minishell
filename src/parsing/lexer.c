@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/30 17:34:17 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 10:41:41 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ void	extract_word(t_token **tokens, char *line, int *i)
 {
 	int		start;
 	int		in_quote;
-	char 	*word;
-	// char	*expanded_word;
+	char	*word;
 	char	*quote_state;
 	start = *i;
 	in_quote = 0;
@@ -89,8 +88,6 @@ void	extract_word(t_token **tokens, char *line, int *i)
 	if (*i > start)
 	{
 		word = ft_substr(line, start, *i - start);
-		// expanded_word = expand_variables(word, data);
-		// free(expanded_word);
 		add_token(tokens, new_token(word, TOKEN_WORD));
 		free(word);
 	}
