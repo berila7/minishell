@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 18:36:27 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:44:55 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,14 @@ static void	handle_unquoted_word(char *expanded, t_cmd *current_cmd)
 {
 	char	**split_words;
 	int		i;
+
+	// Check for equals sign to handle export correctly
+	if (ft_strchr(expanded, '='))
+	{
+		// For export commands, don't split on spaces
+		add_argument(current_cmd, expanded);
+		return;
+	}
 
 	split_words = ft_split(expanded, ' ');
 	i = 0;
