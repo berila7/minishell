@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 10:39:15 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 17:45:44 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,23 @@ char	*ft_strjoin_char_free(char *str, char c)
 	return (result);
 }
 
+static int	skip_spaces(char *src, int i)
+{
+	while (src[i] && (src[i] == ' ' || src[i] == '\t'))
+		i++;
+	return (i);
+}
+
+static char	*handle_space(char *result, int *was_space)
+{
+	if (!*was_space)
+	{
+		result = ft_strjoin_char_free(result, ' ');
+		*was_space = 1;
+	}
+	return (result);
+}
+
 char	*word_split_join(char *dest, char *src)
 {
 	int		i;
@@ -153,13 +170,8 @@ char	*word_split_join(char *dest, char *src)
 	{
 		if (src[i] == ' ' || src[i] == '\t')
 		{
-			if (!was_space)
-			{
-				result = ft_strjoin_char_free(result, ' ');
-				was_space = 1;
-			}
-			while (src[i] && (src[i] == ' ' || src[i] == '\t'))
-				i++;
+			result = handle_space(result, &was_space);
+			i = skip_spaces(src, i);
 		}
 		else
 		{
@@ -171,44 +183,54 @@ char	*word_split_join(char *dest, char *src)
 	return (result);
 }
 
+static int	has_quotes_in_token(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static void	handle_quoted_word(char *expanded, t_cmd *current_cmd)
+{
+	char	*final_str;
+
+	final_str = remove_quotes(expanded);
+	add_argument(current_cmd, final_str);
+	free(final_str);
+}
+
+static void	handle_unquoted_word(char *expanded, t_cmd *current_cmd)
+{
+	char	**split_words;
+	int		i;
+
+	split_words = ft_split(expanded, ' ');
+	i = 0;
+	while (split_words[i])
+	{
+		add_argument(current_cmd, split_words[i]);
+		i++;
+	}
+	free_arr(split_words);
+}
+
 void	process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
 {
-    char *expanded;
-    char **split_words;
-    int i;
-    char *final_str;
-    
-    expanded = expand_variables(token->value, data);
-    
-    int has_quotes = 0;
-    i = 0;
-    while (token->value[i])
-    {
-        if (token->value[i] == '\'' || token->value[i] == '\"')
-            has_quotes = 1;
-        i++;
-    }
-    
-    if (has_quotes)
-    {
-        // For quoted strings, we need to remove quotes but preserve quoted content
-        final_str = remove_quotes(expanded);
-        add_argument(current_cmd, final_str);
-        free(final_str);
-    }
-    else
-    {
-        split_words = ft_split(expanded, ' ');
-        i = 0;
-        while (split_words[i])
-        {
-            add_argument(current_cmd, split_words[i]);
-            i++;
-        }
-        free_arr(split_words);
-    }
-    
-    free(expanded);
+	char	*expanded;
+
+	expanded = expand_variables(token->value, data);
+	if (has_quotes_in_token(token->value))
+		handle_quoted_word(expanded, current_cmd);
+	else
+		handle_unquoted_word(expanded, current_cmd);
+	free(expanded);
 }
 
 // char	*remove_escape_chars(char *str)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/16 11:27:19 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 17:05:30 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
 typedef struct s_data t_data;
 typedef struct s_redir t_redir;
+typedef struct s_expand t_expand;
 
 struct s_redir {
     int type;
@@ -111,6 +112,14 @@ struct s_data
 	int			og_fd[2];
 	int			in_heredoc;
 	int			exit_status;
+};
+
+struct s_expand
+{
+	int		i;
+	char	*result;
+	int		in_single_quote;
+	int		in_double_quote;
 };
 
 t_token		*tokenize(char *line);

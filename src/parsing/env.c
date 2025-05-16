@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 10:38:14 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 17:09:39 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,27 @@ int	is_valid_var_char(char c)
 	return (ft_isalnum(c) || c == '_');
 }
 
-char	**env_to_array(t_env *env)
+static int	count_env_vars(t_env *env)
 {
 	t_env	*current;
-	char	**env_array;
+	int		count;
+
+	current = env;
+	count = 0;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	return (count);
+}
+
+static void	fill_env_array(t_env *env, char **env_array)
+{
+	t_env	*current;
 	int		i;
 	char	*temp;
 
-	current = env;
-	i = 0;
-	while (current)
-	{
-		i++;
-		current = current->next;
-	}
-	env_array = malloc(sizeof(char *) * (i + 1));
-	if (!env_array)
-		return (NULL);
 	current = env;
 	i = 0;
 	while (current)
@@ -45,43 +49,69 @@ char	**env_to_array(t_env *env)
 		current = current->next;
 	}
 	env_array[i] = NULL;
+}
+
+char	**env_to_array(t_env *env)
+{
+	char	**env_array;
+	int		count;
+
+	count = count_env_vars(env);
+	env_array = malloc(sizeof(char *) * (count + 1));
+	if (!env_array)
+		return (NULL);
+	fill_env_array(env, env_array);
 	return (env_array);
 }
 
-t_env	*init_env(char	**envp)
+static t_env	*create_env_node(char *env_var)
+{
+	t_env	*new_node;
+	char	*equals;
+	int		key_len;
+
+	equals = ft_strchr(env_var, '=');
+	if (!equals)
+		return (NULL);
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	key_len = equals - env_var;
+	new_node->key = ft_substr(env_var, 0, key_len);
+	new_node->value = ft_strdup(equals + 1);
+	new_node->next = NULL;
+	return (new_node);
+}
+
+static void	add_to_env_list(t_env **env_list, t_env **last, t_env *new_node)
+{
+	if (!*env_list)
+	{
+		*env_list = new_node;
+		*last = new_node;
+	}
+	else
+	{
+		(*last)->next = new_node;
+		*last = new_node;
+	}
+}
+
+t_env	*init_env(char **envp)
 {
 	t_env	*env_list;
 	t_env	*last;
 	t_env	*new_node;
-	char	*equals;
-	int		key_len;
 	int		i;
 
 	env_list = NULL;
+	last = NULL;
 	i = 0;
 	while (envp[i])
 	{
-		equals = ft_strchr(envp[i], '=');
-		if (equals)
-		{
-			new_node = malloc(sizeof(t_env));
-			if (!new_node)
-				return (NULL);
-			key_len = equals - envp[i];
-			new_node->key = ft_substr(envp[i], 0, key_len);
-			new_node->value = ft_strdup(equals + 1);
-			new_node->next = NULL;
-			if (!env_list)
-			{
-				env_list = new_node;
-				last = new_node;
-			}
-			else
-			{
-				last->next = new_node;
-				last = new_node;
-			}
-		}
+		new_node = create_env_node(envp[i]);
+		if (new_node)
+			add_to_env_list(&env_list, &last, new_node);
 		i++;
 	}
 	return (env_list);
@@ -170,81 +200,103 @@ void	unset_env(t_env **env, char *key)
 	}
 }
 
-char	*expand_variables(char *str, t_data *data)
+static void	init_expand_vars(t_expand *exp)
 {
-	int		i;
-	char	*result;
+	exp->in_single_quote = 0;
+	exp->in_double_quote = 0;
+	exp->i = 0;
+}
+
+static void	handle_quotes(char *str, t_expand *exp)
+{
+	if (str[exp->i] == '\'' && !exp->in_double_quote)
+	{
+		exp->in_single_quote = !exp->in_single_quote;
+		exp->result = ft_strjoin_char_free(exp->result, str[exp->i]);
+		exp->i++;
+	}
+	else if (str[exp->i] == '\"' && !exp->in_single_quote)
+	{
+		exp->in_double_quote = !exp->in_double_quote;
+		exp->result = ft_strjoin_char_free(exp->result, str[exp->i]);
+		exp->i++;
+	}
+}
+
+static void	handle_special_var(char *str, t_expand *exp, t_data *data)
+{
 	char	*status_str;
-	char	*var_name;
-	char	*var_value;
-	int		in_single_quote;
-	int		in_double_quote;
-	int		start;
 	char	first_digit;
 
-	result = ft_strdup("");
-	if (!result)
-		return (NULL);
-	in_single_quote = 0;
-	in_double_quote = 0;
-	i = 0;
-	while (str[i])
+	if (str[exp->i] == '?')
 	{
-		if (str[i] == '\'' && !in_double_quote)
-		{
-			in_single_quote = !in_single_quote;
-			result = ft_strjoin_char_free(result, str[i]);
-			i++;
-		}
-		else if (str[i] == '\"' && !in_single_quote)
-		{
-			in_double_quote = !in_double_quote;
-			result = ft_strjoin_char_free(result, str[i]);
-			i++;
-		}
-		else if (str[i] == '$' && str[i + 1]
-			&& (!in_single_quote || data->in_heredoc))
-		{
-			i++;
-			if (str[i] == '?')
-			{
-				status_str = ft_itoa(data->exit_status);
-				result = ft_strjoin_free(result, status_str);
-				free(status_str);
-				i++;
-			}
-			else if (ft_isdigit(str[i]))
-			{
-				first_digit = str[i++];
-				if (first_digit == '0')
-					result = ft_strjoin_free(result, "minishell");
-			}
-			else if (str[i] && is_valid_var_char(str[i]))
-			{
-				start = i;
-				while (str[i] && (is_valid_var_char(str[i])))
-					i++;
-				var_name = ft_substr(str, start, i - start);
-				var_value = get_env(data->env, var_name);
-				free(var_name);
-				if (var_value)
-				{
-					if (in_double_quote)
-						result = ft_strjoin_free(result, var_value);
-					else
-						result = word_split_join(result, var_value);
-				}
-			}
-			else
-				result = ft_strjoin_char_free(result, '$');
-		}
+		status_str = ft_itoa(data->exit_status);
+		exp->result = ft_strjoin_free(exp->result, status_str);
+		free(status_str);
+		exp->i++;
+	}
+	else if (ft_isdigit(str[exp->i]))
+	{
+		first_digit = str[exp->i++];
+		if (first_digit == '0')
+			exp->result = ft_strjoin_free(exp->result, "minishell");
+	}
+}
+
+static void	expand_env_var(char *str, t_expand *exp, t_data *data)
+{
+	int		start;
+	char	*var_name;
+	char	*var_value;
+
+	start = exp->i;
+	while (str[exp->i] && (is_valid_var_char(str[exp->i])))
+		exp->i++;
+	var_name = ft_substr(str, start, exp->i - start);
+	var_value = get_env(data->env, var_name);
+	free(var_name);
+	if (var_value)
+	{
+		if (exp->in_double_quote)
+			exp->result = ft_strjoin_free(exp->result, var_value);
+		else
+			exp->result = word_split_join(exp->result, var_value);
+	}
+}
+
+static void	process_dollar(char *str, t_expand *exp, t_data *data)
+{
+	exp->i++;
+	if (str[exp->i] == '?' || ft_isdigit(str[exp->i]))
+		handle_special_var(str, exp, data);
+	else if (str[exp->i] && is_valid_var_char(str[exp->i]))
+		expand_env_var(str, exp, data);
+	else
+		exp->result = ft_strjoin_char_free(exp->result, '$');
+}
+
+char	*expand_variables(char *str, t_data *data)
+{
+	t_expand	exp;
+
+	exp.result = ft_strdup("");
+	if (!exp.result)
+		return (NULL);
+	init_expand_vars(&exp);
+	while (str[exp.i])
+	{
+		if (str[exp.i] == '\'' || str[exp.i] == '\"')
+			handle_quotes(str, &exp);
+		else if (str[exp.i] == '$' && str[exp.i + 1]
+			&& (!exp.in_single_quote || data->in_heredoc))
+			process_dollar(str, &exp, data);
 		else
 		{
-			result = ft_strjoin_char_free(result, str[i]);
-			i++;
+			exp.result = ft_strjoin_char_free(exp.result, str[exp.i]);
+			exp.i++;
 		}
 	}
-	return (result);
+	return (exp.result);
 }
 
 // void	f(void)
