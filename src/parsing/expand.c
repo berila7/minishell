@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 18:33:56 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 19:43:01 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 19:53:44 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void	handle_special_var(char *str, t_expand *exp, t_data *data)
 		first_digit = str[exp->i];
 		exp->i++;
 		if (first_digit == '0')
-			exp->result = ft_strjoin_free(exp->result, "minishell");
-		// Don't need to handle other numeric parameters since they're not set in your shell
+			exp->result = ft_strjoin_free(exp->result,
+					"minishell");
 	}
 }
 

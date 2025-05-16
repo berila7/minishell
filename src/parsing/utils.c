@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 19:44:55 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 19:54:53 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,14 +227,11 @@ static void	handle_unquoted_word(char *expanded, t_cmd *current_cmd)
 	char	**split_words;
 	int		i;
 
-	// Check for equals sign to handle export correctly
 	if (ft_strchr(expanded, '='))
 	{
-		// For export commands, don't split on spaces
 		add_argument(current_cmd, expanded);
-		return;
+		return ;
 	}
-
 	split_words = ft_split(expanded, ' ');
 	i = 0;
 	while (split_words[i])

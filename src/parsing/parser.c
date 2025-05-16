@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 19:51:10 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 19:52:45 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,10 @@ static int	process_token(t_token **token, t_cmd **current_cmd,
 		if (!handle_pipe(token, current_cmd, cmd_list))
 			return (0);
 	}
-	else if ((*token)->type == TOKEN_REDIR_IN || (*token)->type == TOKEN_REDIR_OUT
-		|| (*token)->type == TOKEN_REDIR_APPEND || (*token)->type == TOKEN_HEREDOC)
+	else if ((*token)->type == TOKEN_REDIR_IN
+		|| (*token)->type == TOKEN_REDIR_OUT
+		|| (*token)->type == TOKEN_REDIR_APPEND
+		|| (*token)->type == TOKEN_HEREDOC)
 	{
 		if (!handle_redir(token, *current_cmd, cmd_list, data))
 			return (0);
