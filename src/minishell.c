@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/14 14:38:16 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:50:34 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int ac, char *av[], char **envp)
 	// atexit(f);
 	data = malloc(sizeof(t_data));
 	if (!data)
-		return (printf("Failed to allocat"), 0);
+		return (print_err("Allocation Error\n", NULL), 0);
 	data->env = init_env(envp);
 	data->exit_status = 0;
 	setup_interactive_signals();

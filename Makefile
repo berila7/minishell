@@ -1,7 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -Iincludes
+FLAGS			=	-Wall -Wextra -Werror -Iincludes -g
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -14,7 +14,7 @@ EXEC_DIR		=	$(SRC_DIR)/execution
 
 SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c \
 					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
-					$(PARSING_DIR)/utils.c $(PARSING_DIR)/heredoc.c $(PARSING_DIR)/signals.c \
+					$(PARSING_DIR)/utils.c $(PARSING_DIR)/heredoc.c $(PARSING_DIR)/signals.c $(PARSING_DIR)/signals_setup.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c \
 					$(BUILTINS_DIR)/builtins_utils.c $(BUILTINS_DIR)/pwd.c $(BUILTINS_DIR)/unset.c \
 					$(BUILTINS_DIR)/cd.c $(BUILTINS_DIR)/export.c $(BUILTINS_DIR)/builtins_helpers.c \

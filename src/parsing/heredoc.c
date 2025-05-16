@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 11:14:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 11:16:10 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	open_heredoc(int *fd)
 	return (0);
 }
 
-void	handle_cleanup(int *hd_fd, char *delim, t_data *data, int dupped_in)
+void	cleanup(int *hd_fd, char *delim, t_data *data, int dupped_in)
 {
 	dup2(dupped_in, STDIN_FILENO);
 	close(hd_fd[0]);
