@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 19:15:35 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:51:10 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ static int	handle_redir_error(t_token_type type, t_cmd *current_cmd,
 	return (0);
 }
 
+static int	set_redir_type(t_token_type type)
+{
+	if (type == TOKEN_REDIR_IN)
+		return (REDIR_IN);
+	else if (type == TOKEN_REDIR_OUT)
+		return (REDIR_OUT);
+	else
+		return (REDIR_APPEND);
+}
+
 static int	handle_redir(t_token **token, t_cmd *current_cmd,
 		t_cmd **cmd_list, t_data *data)
 {
@@ -74,14 +84,15 @@ static int	handle_redir(t_token **token, t_cmd *current_cmd,
 	if (type == TOKEN_HEREDOC)
 	{
 		if (handle_herdoc((*token)->value, &current_cmd->hd_fd, data))
+		{
 			return (free_commands(*cmd_list), free_command(current_cmd), 0);
+		}
 		redir_type = REDIR_HEREDOC;
 	}
 	else
 	{
 		expanded = expand_variables((*token)->value, data);
-		redir_type = (type == TOKEN_REDIR_IN) ? REDIR_IN :
-			(type == TOKEN_REDIR_OUT) ? REDIR_OUT : REDIR_APPEND;
+		redir_type = set_redir_type(type);
 		add_redirection(current_cmd, redir_type, expanded);
 		free(expanded);
 	}

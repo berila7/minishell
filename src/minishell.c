@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 19:34:30 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/16 19:51:39 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int main(int ac, char *av[], char **envp)
 		set_cmd_path(data->cmds, data->env);
 
 		// ! ======[ DEBUG: ]======
-		// print_tokens(tokens);
-		// print_cmds(data->cmds);
+		print_tokens(tokens);
+		print_cmds(data->cmds);
 		// ! ======================
 		
 		setup_exec_signals();
