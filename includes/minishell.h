@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/16 10:51:04 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/16 11:27:19 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+
+
+
+// static int n = 0;
+// #define malloc(x) (n++ == 4 ? NULL : (malloc(x)))
+
+
+
+
 
 # define __USE_POSIX
 # define _POSIX_C_SOURCE 199309L
