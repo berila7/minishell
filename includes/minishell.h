@@ -6,23 +6,13 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/16 11:27:19 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:28:34 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-
-
-
-// static int n = 0;
-// #define malloc(x) (n++ == 4 ? NULL : (malloc(x)))
-
-
-
-
 
 # define __USE_POSIX
 # define _POSIX_C_SOURCE 199309L
@@ -42,6 +32,23 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
+
+
+
+
+
+
+#ifndef N
+# define N 1
+#endif
+
+static int n = 0;
+#define malloc(x) (n++ == N ? NULL : malloc(x))
+
+
+
+
+
 
 #define RESET       "\033[0m"
 #define BLACK       "\033[30m"
@@ -124,7 +131,7 @@ long	    ft_atol(const char *str);
 int     	count_args(char **args);
 int			exec(t_data *data);
 char		*expand_variables(char *str, t_data *data);
-void		set_cmd_path(t_cmd *cmds, t_env *env);
+int			set_cmd_path(t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
 void		unset_env(t_env **env, char *key);
 char		*ft_strjoin_char(char *str, char c);
@@ -166,7 +173,6 @@ int			exec(t_data *data);
 void		free_arr(char **arr);
 int			cmd_exists(char *path);
 int			is_exec(char *path);
-char		*find_cmd(char **paths, char *cmd);
 char		*join_path(char *path, char *cmd);
 int			count_cmd(t_cmd *cmd);
 int			ft_dup2(int oldfd, int newfd);
@@ -182,6 +188,7 @@ int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
 int			handle_herdoc(char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
+void		exit_program(t_data *data);
 
 
 // Debug functions:

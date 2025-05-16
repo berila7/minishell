@@ -22,6 +22,9 @@
         "signum-generic.h": "c",
         "types.h": "c",
         "fcntl.h": "c",
-        "climits": "c"
+        "climits": "c",
+        "ostream": "c",
+        "unistd.h": "c",
+        "cstdlib": "c"
     }
 }

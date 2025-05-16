@@ -3,6 +3,8 @@ NAME			=	minishell
 CC				=	cc
 FLAGS			=	-Wall -Wextra -Werror -Iincludes
 
+FLAGS			+= -DN=$(N)
+
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
 
