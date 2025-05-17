@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 20:11:06 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/17 11:56:15 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,19 @@ static void	process_output_redirection(t_token **token, char *line, int *i)
 void	process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
 {
 	char	*expanded;
+	// int		is_first_word;
 
+	// is_first_word = (current_cmd->args[0] == NULL);
 	expanded = expand_variables(token->value, data);
+	
+	// Handle quotation - Bash treats quoted commands differently
 	if (has_quotes_in_token(token->value))
+	{
 		handle_quoted_word(expanded, current_cmd);
+	}
 	else
 		handle_unquoted_word(expanded, current_cmd);
+		
 	free(expanded);
 }
 
