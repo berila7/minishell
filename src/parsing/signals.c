@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/16 10:49:47 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:39:53 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	signal_handler_interactive(int signum)
 	}
 }
 
-void	signal_handler_heredoc(int signum)
+void signal_handler_heredoc(int signum)
 {
-	if (signum == SIGINT)
-	{
-		g_sigint_received = 1;
-		write(STDOUT_FILENO, "\n", 1);
+    if (signum == SIGINT)
+    {
+        g_sigint_received = 1;
+        write(STDOUT_FILENO, "\n", 1);
 		close(STDIN_FILENO);
-	}
+    }
 }
 
 void	signal_handler_exec(int signum)
@@ -41,6 +41,45 @@ void	signal_handler_exec(int signum)
 		write(STDOUT_FILENO, "\n", 1);
 	else if (signum == SIGQUIT)
 		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+}
+
+void setup_interactive_signals(void)
+{
+    struct sigaction sa_int;
+
+    sa_int.sa_handler = &signal_handler_interactive;
+    sa_int.sa_flags = 0;
+    sigemptyset(&sa_int.sa_mask);
+    sigaction(SIGINT, &sa_int, NULL);
+
+    signal(SIGQUIT, SIG_IGN);
+	rl_on_new_line();
+}
+
+
+void	setup_heredoc_signals(void)
+{
+	g_sigint_received = 0;
+	
+	struct sigaction	sa_int;
+
+	sa_int.sa_handler = &signal_handler_heredoc;
+	sa_int.sa_flags = 0;
+	sigemptyset(&sa_int.sa_mask);
+	sigaction(SIGINT, &sa_int, NULL);
+
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	setup_exec_signals(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = &signal_handler_exec;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
 void	reset_signals(void)
