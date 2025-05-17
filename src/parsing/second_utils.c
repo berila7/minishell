@@ -6,9 +6,11 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:01:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/17 12:04:35 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/17 12:21:19 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 
@@ -48,33 +50,16 @@ void	handle_quoted_word(char *expanded, t_cmd *current_cmd)
 	free(final_str);
 }
 
-int	is_export_command(t_cmd *cmd, t_token *token)
-{
-	if (!cmd || !cmd->args || !cmd->args[0])
-		return (0);
-    
-	// If this is the first token and it contains quotes, 
-	// it's not the builtin export command
-	if (token && has_quotes_in_token(token->value))
-		return (0);
-    
-	return (ft_strcmp(cmd->args[0], "export") == 0);
-}
-
-void	handle_unquoted_word(char *expanded, t_cmd *current_cmd, t_token *token)
+void	handle_unquoted_word(char *expanded, t_cmd *current_cmd)
 {
 	char	**split_words;
 	int		i;
 
-	// Special handling for export command - but only if it's not quoted
-	if (ft_strchr(expanded, '=') && is_export_command(current_cmd, token))
-	{
-		// For export commands, don't split on spaces to preserve them in variable values
-		add_argument(current_cmd, expanded);
-		return;
-	}
-	
-	// Regular handling for other commands or other arguments
+	// if (ft_strchr(expanded, '='))
+	// {
+	// 	add_argument(current_cmd, expanded);
+	// 	return ;
+	// }
 	split_words = ft_split(expanded, ' ');
 	i = 0;
 	while (split_words[i])
