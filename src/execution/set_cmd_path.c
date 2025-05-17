@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/16 15:55:18 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/17 18:48:27 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*get_env_path(t_env *env)
 {
 	while (env)
 	{
-		if (equal(env->key, "PATH"))
+		if (env->value && equal(env->key, "PATH"))
 			return (env->value);
 		env = env->next;
 	}

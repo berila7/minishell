@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/17 10:19:42 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/17 18:42:29 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,61 +28,23 @@ static int	print_env(t_env *env)
 	return (0);
 }
 
-static int	create_env(char *equals, char *arg, t_data *data)
+static void	create_env(char *equals, char *arg, t_data *data)
 {
 	char	*key;
 	char	*val;
-	char	*tmp;
 
 	key = ft_substr(arg, 0, (equals - arg));
-	if (!key)
-		return (1);
-
 	if (*(equals - 1) == '+')
 	{
 		key[ft_strlen(key) - 1] = '\0';
 		val = get_env(data->env, key);
 		if (!val)
-		{
 			val = ft_strdup("");
-			if (!val)
-			{
-				free(key);
-				return (1);
-			}
-		}
-		else
-		{
-			val = ft_strdup(val);
-			if (!val)
-			{
-				free(key);
-				return (1);
-			}
-		}
-		tmp = ft_strjoin(val, equals + 1);
-		if (!tmp)
-		{
-			free(key);
-			free(val);
-			return (1);
-		}
-		free(val);
-		val = tmp;
+		val = ft_strjoin(val, equals + 1);
 	}
 	else
-	{
 		val = ft_strdup(equals + 1);
-		if (!val)
-		{
-			free(key);
-			return (1);
-		}
-	}
 	set_env(&data->env, key, val);
-	free(key);
-	free(val);
-	return (0);
 }
 
 void	ft_export(char **args, t_data *data)
@@ -91,6 +53,7 @@ void	ft_export(char **args, t_data *data)
 	char	*key;
 	int		i;
 
+	(void)key;
 	if (count_args(args) == 1)
 		print_env(data->env);
 	else if (count_args(args) > 1)
@@ -98,16 +61,11 @@ void	ft_export(char **args, t_data *data)
 		i = 1;
 		while (args[i])
 		{
-			printf("Hello 1\n");
 			equals = ft_strchr(args[i], '=');
 			if (equals)
-			{
-				printf("create env with equal\n");
 				create_env(equals, args[i], data);
-			}
 			else
 			{
-				printf("create env with null val\n");
 				key = ft_strdup(args[i]);
 				set_env(&data->env, key, NULL);
 			}

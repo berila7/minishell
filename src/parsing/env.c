@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/15 10:27:56 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/17 18:51:27 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	**env_to_array(t_env *env)
 	i = 0;
 	while (current)
 	{
-		i++;
+		if (current->value)
+			i++;
 		current = current->next;
 	}
 	env_array = malloc(sizeof(char *) * (i + 1));
@@ -38,10 +39,13 @@ char	**env_to_array(t_env *env)
 	i = 0;
 	while (current)
 	{
-		temp = ft_strjoin(current->key, "=");
-		env_array[i] = ft_strjoin(temp, current->value);
-		free(temp);
-		i++;
+		if (current->value)
+		{
+			temp = ft_strjoin(current->key, "=");
+			env_array[i] = ft_strjoin(temp, current->value);
+			free(temp);
+			i++;
+		}
 		current = current->next;
 	}
 	env_array[i] = NULL;
