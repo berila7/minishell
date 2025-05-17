@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/17 10:06:57 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/17 12:07:24 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,9 @@ void		add_redirection(t_cmd *cmd, int type, char *file);
 void		init_expand_vars(t_expand *exp);
 void		handle_quoted_word(char *expanded, t_cmd *current_cmd);
 int			has_quotes_in_token(char *str);
-void		handle_unquoted_word(char *expanded, t_cmd *current_cmd);
 int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list);
+int			is_export_command(t_cmd *cmd, t_token *token);
+void		handle_unquoted_word(char *expanded, t_cmd *current_cmd, t_token *token);
 void		init_parser(t_cmd **current_cmd, t_cmd **cmd_list);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd);
 int			skip_spaces(char *src, int i);
