@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/14 22:07:25 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:07:57 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
         i++;
     }
     
-    if (has_quotes)
+    if (has_quotes || !data->is_export)
     {
         // For quoted strings, we need to remove quotes but preserve quoted content
         final_str = remove_quotes(expanded);

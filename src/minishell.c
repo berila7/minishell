@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/17 10:07:08 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/17 16:23:08 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int main(int ac, char *av[], char **envp)
 	while (1)
 	{
 		if (data->exit_status == 0)
-			printf( "✔ " );
+		printf( "✔ " );
 		else
-			printf( "✘ " );
+		printf( "✘ " );
 		setup_interactive_signals();
 		line = readline("minishell ➤ ");
 		if (!line)
@@ -72,7 +72,7 @@ int main(int ac, char *av[], char **envp)
     	}
 		if (line[0])
 			add_history(line);
-		tokens = tokenize(line);
+		tokens = tokenize(line, data);
 		if (!tokens || !validate_token(tokens))
 		{
 			free_tokens(tokens);

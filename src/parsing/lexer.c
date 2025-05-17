@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/30 17:34:17 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:08:51 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	add_token(t_token **tokens, t_token *new_token)
 	current->next = new_token;
 }
 
-void	extract_word(t_token **tokens, char *line, int *i)
+void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 {
 	int		start;
 	int		in_quote;
@@ -92,11 +92,15 @@ void	extract_word(t_token **tokens, char *line, int *i)
 		// expanded_word = expand_variables(word, data);
 		// free(expanded_word);
 		add_token(tokens, new_token(word, TOKEN_WORD));
+		if (equal(word, "export"))
+			data->is_export = 0;
+		printf("export flag %d\n", data->is_export);
+		printf("word %s\n", word);
 		free(word);
 	}
 }
 
-t_token	*tokenize(char *line)
+t_token	*tokenize(char *line, t_data *data)
 {
 	t_token	*token = NULL;
 	int		i;
@@ -140,7 +144,7 @@ t_token	*tokenize(char *line)
 			}
 		}
 		else
-			extract_word(&token, line, &i);
+			extract_word(&token, line, &i, data);
 	}
 	return (token);
 }

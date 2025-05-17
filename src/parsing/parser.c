@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/04/30 18:08:25 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:26:08 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,11 @@ void	free_commands(t_cmd *commands)
 	}
 }
 
-void	add_command(t_cmd **cmds, t_cmd *new_cmd)
+void	add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data)
 {
 	t_cmd	*current;
 
+	data->is_export = 1;
 	if (!*cmds)
 	{
 		*cmds = new_cmd;
@@ -167,7 +168,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 		}
 		else if (token->type == TOKEN_PIPE)
 		{
-			add_command(&cmd_list, current_cmd);
+			add_command(&cmd_list, current_cmd, data);
 			current_cmd = new_command();
 			if (!current_cmd)
 			{
@@ -253,6 +254,6 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 			}
 		}
 	}
-	add_command(&cmd_list, current_cmd);
+	add_command(&cmd_list, current_cmd, data);
 	return (cmd_list);
 }
