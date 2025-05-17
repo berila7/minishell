@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/17 13:45:25 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/17 16:26:33 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ struct s_data
 	int			pipe[2];
 	int			og_fd[2];
 	int			in_heredoc;
+	int			is_export;
 	int			exit_status;
 };
 
@@ -129,7 +130,7 @@ struct s_expand
 	int		in_double_quote;
 };
 
-t_token		*tokenize(char *line);
+t_token		*tokenize(char *line, t_data *data);
 void		free_tokens(t_token *tokens);
 t_cmd		*parse_tokens(t_token *tokens, t_data *data);
 void		free_commands(t_cmd *commands);
@@ -169,12 +170,12 @@ int			has_quotes_in_token(char *str);
 void		handle_unquoted_word(char *expanded, t_cmd *current_cmd);
 int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list);
 void		init_parser(t_cmd **current_cmd, t_cmd **cmd_list);
-void		add_command(t_cmd **cmds, t_cmd *new_cmd);
+void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
 int			skip_spaces(char *src, int i);
 char		*handle_space(char *result, int *was_space);
 
 // char		*remove_escape_chars(char *str);
-void		extract_word(t_token **tokens, char *line, int *i);
+void		extract_word(t_token **tokens, char *line, int *i, t_data *data);
 // builtins:
 int			is_builtin(t_cmd *cmd);
 void		exec_builtin(t_cmd *cmd, t_data *data);
