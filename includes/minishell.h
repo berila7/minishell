@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/16 21:05:57 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/17 10:06:57 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@
 
 
 
-#ifndef N
-# define N 1
-#endif
+// #ifndef N
+// # define N 1
+// #endif
 
-static int n = 0;
-#define malloc(x) (n++ == N ? NULL : malloc(x))
+// static int n = 0;
+// #define malloc(x) (n++ == N ? NULL : malloc(x))
 
 
 

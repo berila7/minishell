@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/16 19:31:18 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/17 10:19:42 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,16 @@ void	ft_export(char **args, t_data *data)
 		i = 1;
 		while (args[i])
 		{
+			printf("Hello 1\n");
 			equals = ft_strchr(args[i], '=');
 			if (equals)
+			{
+				printf("create env with equal\n");
 				create_env(equals, args[i], data);
+			}
 			else
 			{
+				printf("create env with null val\n");
 				key = ft_strdup(args[i]);
 				set_env(&data->env, key, NULL);
 			}

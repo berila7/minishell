@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/16 21:06:08 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/17 10:07:08 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main(int ac, char *av[], char **envp)
 	(void)av;
 	
 	// atexit(f);
-	ac = N;
+	// ac = N;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (print_err("1- Allocation Error [%d]\n", &ac), 0);
