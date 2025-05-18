@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/17 16:08:51 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/18 10:42:09 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,15 @@ void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 	if (*i > start)
 	{
 		word = ft_substr(line, start, *i - start);
-		// expanded_word = expand_variables(word, data);
-		// free(expanded_word);
 		add_token(tokens, new_token(word, TOKEN_WORD));
-		if (equal(word, "export"))
+		if ((equal((*tokens)->value, "export")) 
+			|| (*tokens)->type == TOKEN_REDIR_APPEND
+			|| (*tokens)->type == TOKEN_REDIR_IN
+			|| (*tokens)->type == TOKEN_REDIR_OUT
+		)
 			data->is_export = 0;
 		printf("export flag %d\n", data->is_export);
+		printf("token head %s\n", (*tokens)->value);
 		printf("word %s\n", word);
 		free(word);
 	}
