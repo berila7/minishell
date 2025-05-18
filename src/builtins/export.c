@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 19:05:14 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:07:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	create_env(char *equals, char *arg, t_data *data)
 	char	*key;
 	char	*val;
 
-	key = ft_substr(arg, 0, (equals - arg));
+	key = gc_substr(&data->gc, arg, 0, (equals - arg));
 	if (*(equals - 1) == '+')
 	{
 		key[ft_strlen(key) - 1] = '\0';
