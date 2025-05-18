@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/18 18:00:51 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:58:27 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,40 +149,40 @@ char	*gc_strdup(t_gcnode **gc, char *src);
 
 
 
-t_token		*tokenize(char *line, t_data *data);
+t_token		*tokenize(t_gcnode **gc, char *line, t_data *data);
 void		free_tokens(t_token *tokens);
-t_cmd		*parse_tokens(t_token *tokens, t_data *data);
+t_cmd		*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data);
 void		free_commands(t_cmd *commands);
 void		free_command(t_cmd *cmd);
 void		free_env(t_env *env);
-t_env		*init_env(char	**envp);
+t_env		*init_env(t_gcnode **gc, char	**envp);
 long	    ft_atol(const char *str);
 int     	count_args(char **args);
 int			exec(t_data *data);
-char		*expand_variables(char *str, t_data *data);
+char		*expand_variables(t_gcnode **gc, char *str, t_data *data);
 void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
 void		unset_env(t_env **env, char *key);
-char		*ft_strjoin_char(char *str, char c);
-char		*remove_quotes(char *str);
+char		*ft_strjoin_char(t_gcnode **gc, char *str, char c);
+char		*remove_quotes(t_gcnode **gc, char *str);
 char		*get_env(t_env *env, char *key);
-void		set_env(t_env **env, char *key, char *value);
+void		set_env(t_gcnode **gc, t_env **env, char *key, char *value);
 void		free_data(t_data *data);
 int			validate_token(t_token *token);
 int			open_heredoc(int *fd);
 void		print_err(char *fmt, void *arg);
-char		*ft_strjoin_char_free(char *str, char c);
-char		*ft_strjoin_free(char *s1, char *s2);
-char		*word_split_join(char *dest, char *src);
-void		add_argument(t_cmd *cmd, char *arg);
-void		process_token_word(t_token *token, t_cmd *current_cmd, t_data *data);
+char		*ft_strjoin_char_free(t_gcnode **gc, char *str, char c);
+char		*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2);
+char		*word_split_join(t_gcnode **gc, char *dest, char *src);
+void		add_argument(t_gcnode **gc, t_cmd *cmd, char *arg);
+void		process_token_word(t_gcnode **gc, t_token *token, t_cmd *current_cmd, t_data *data);
 t_env		*create_env_node(char *env_var);
 int			is_valid_var_char(char c);
 void		add_token(t_token **tokens, t_token *new_token);
-t_token		*new_token(char *value, t_token_type type);
-t_cmd		*new_command(void);
-void		add_argument(t_cmd *cmd, char *arg);
-void		add_redirection(t_cmd *cmd, int type, char *file);
+t_token		*new_token(t_gcnode **gc, char *value, t_token_type type);
+t_cmd		*new_command(t_gcnode **gc);
+char		*gc_itoa(t_gcnode **gc, int n);
+void		add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file);
 void		init_expand_vars(t_expand *exp);
 void		handle_quoted_word(char *expanded, t_cmd *current_cmd);
 int			has_quotes_in_token(char *str);
@@ -193,9 +193,10 @@ void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
 int			skip_spaces(char *src, int i);
 char		*handle_space(char *result, int *was_space);
 int			exit_status(int	status, int	is_accessor);
+char		*gc_substr(t_gcnode **gc, const char *s, unsigned int start, size_t len);
 
 // char		*remove_escape_chars(char *str);
-void		extract_word(t_token **tokens, char *line, int *i, t_data *data);
+void		extract_word(t_gcnode **gc, t_token **tokens, char *line, int *i, t_data *data);
 // builtins:
 int			is_builtin(t_cmd *cmd);
 void		exec_builtin(t_cmd *cmd, t_data *data);
@@ -231,7 +232,7 @@ void		close_pipes(t_data *data);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
-int			handle_herdoc(char *end, int *hd_fd, t_data *data);
+int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
 void		exit_program(t_data *data);
 

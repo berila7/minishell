@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 12:43:56 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:59:22 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	open_heredoc(int *fd)
 	return (0);
 }
 
-int handle_herdoc(char *del, int *hd_in, t_data *data)
+int handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
 {
     char    *expanded_str;
     char    *line = NULL;
@@ -45,7 +45,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
     if (open_heredoc(hd_fd))
         return (1);
     *hd_in = hd_fd[0];
-    quoted_delim = remove_quotes(del);
+    quoted_delim = remove_quotes(gc, del);
 
     g_sigint_received = 0;
     setup_heredoc_signals();
@@ -68,7 +68,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         if (del[0] == '\'' || del[0] == '\"')
             expanded_str = line;
         else
-            expanded_str = expand_variables(line, data);
+            expanded_str = expand_variables(gc, line, data);
         
         ft_putstr_fd(expanded_str, hd_fd[1]);
         write(hd_fd[1], "\n", 1);

@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 12:13:57 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:59:01 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	exit_status(int	status, int	is_accessor)
 	return (exit_status);
 }
 
-char	*ft_strjoin_char(char *str, char c)
+char	*ft_strjoin_char(t_gcnode **gc, char *str, char c)
 {
 	char	*result;
 	int		i;
 
-	result = malloc(ft_strlen(str) + 2);
+	result = gc_malloc(gc, ft_strlen(str) + 2);
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -63,7 +63,7 @@ int	noquotes_len(char *str)
 	return (len);
 }
 
-char	*remove_quotes(char *str)
+char	*remove_quotes(t_gcnode **gc, char *str)
 {
 	int		i;
 	int		j;
@@ -74,7 +74,7 @@ char	*remove_quotes(char *str)
 	j = 0;
 	in_single_quote = 0;
 	in_double_quote = 0;
-	result = malloc(noquotes_len(str) + 1);
+	result = gc_malloc(gc, noquotes_len(str) + 1);
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -130,25 +130,25 @@ int	validate_token(t_token *token)
 	return (1);
 }
 
-char	*ft_strjoin_free(char *s1, char *s2)
+char	*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2)
 {
 	char	*result;
 
-	result = ft_strjoin(s1, s2);
+	result = gc_strjoin(gc, s1, s2);
 	free(s1);
 	return (result);
 }
 
-char	*ft_strjoin_char_free(char *str, char c)
+char	*ft_strjoin_char_free(t_gcnode **gc, char *str, char c)
 {
 	char	*result;
 
-	result = ft_strjoin_char(str, c);
+	result = ft_strjoin_char(gc, str, c);
 	free(str);
 	return (result);
 }
 
-char	*word_split_join(char *dest, char *src)
+char	*word_split_join(t_gcnode **gc, char *dest, char *src)
 {
 	int		i;
 	int		was_space;
@@ -163,7 +163,7 @@ char	*word_split_join(char *dest, char *src)
 		{
 			if (!was_space)
 			{
-				result = ft_strjoin_char_free(result, ' ');
+				result = ft_strjoin_char_free(gc, result, ' ');
 				was_space = 1;
 			}
 			while (src[i] && (src[i] == ' ' || src[i] == '\t'))
@@ -171,7 +171,7 @@ char	*word_split_join(char *dest, char *src)
 		}
 		else
 		{
-			result = ft_strjoin_char_free(result, src[i]);
+			result = ft_strjoin_char_free(gc, result, src[i]);
 			was_space = 0;
 			i++;
 		}
@@ -179,14 +179,14 @@ char	*word_split_join(char *dest, char *src)
 	return (result);
 }
 
-void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
+void process_token_word(t_gcnode **gc, t_token *token, t_cmd *current_cmd, t_data *data)
 {
     char *expanded;
     char **split_words;
     int i;
     char *final_str;
     
-    expanded = expand_variables(token->value, data);
+    expanded = expand_variables(gc, token->value, data);
     
     int has_quotes = 0;
     i = 0;
@@ -200,17 +200,17 @@ void process_token_word(t_token *token, t_cmd *current_cmd, t_data *data)
     if (has_quotes || !data->is_export)
     {
         // For quoted strings, we need to remove quotes but preserve quoted content
-        final_str = remove_quotes(expanded);
-        add_argument(current_cmd, final_str);
+        final_str = remove_quotes(gc, expanded);
+        add_argument(gc, current_cmd, final_str);
         free(final_str);
     }
     else
     {
-        split_words = ft_split(expanded, ' ');
+        split_words = gc_split(gc, expanded, ' ');
         i = 0;
         while (split_words[i])
         {
-            add_argument(current_cmd, split_words[i]);
+            add_argument(gc, current_cmd, split_words[i]);
             i++;
         }
         free_arr(split_words);

@@ -6,20 +6,20 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 10:42:09 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:41:07 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*new_token(char *value, t_token_type type)
+t_token	*new_token(t_gcnode **gc, char *value, t_token_type type)
 {
 	t_token	*token;
 
-	token = malloc(sizeof(t_token));
+	token = gc_malloc(gc, sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->value = ft_strdup(value);
+	token->value = gc_strdup(gc, value);
 	if (!token->value)
 	{
 		free(token);
@@ -45,7 +45,7 @@ void	add_token(t_token **tokens, t_token *new_token)
 	current->next = new_token;
 }
 
-void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
+void	extract_word(t_gcnode **gc, t_token **tokens, char *line, int *i, t_data *data)
 {
 	int		start;
 	int		in_quote;
@@ -88,8 +88,8 @@ void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 	}
 	if (*i > start)
 	{
-		word = ft_substr(line, start, *i - start);
-		add_token(tokens, new_token(word, TOKEN_WORD));
+		word = gc_substr(gc, line, start, *i - start);
+		add_token(tokens, new_token(gc, word, TOKEN_WORD));
 		if ((equal((*tokens)->value, "export")) 
 			|| (*tokens)->type == TOKEN_REDIR_APPEND
 			|| (*tokens)->type == TOKEN_REDIR_IN
@@ -103,7 +103,7 @@ void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 	}
 }
 
-t_token	*tokenize(char *line, t_data *data)
+t_token	*tokenize(t_gcnode **gc, char *line, t_data *data)
 {
 	t_token	*token = NULL;
 	int		i;
@@ -117,19 +117,19 @@ t_token	*tokenize(char *line, t_data *data)
 			break ;
 		if (line[i] == '|')
 		{
-			add_token(&token, new_token("|", TOKEN_PIPE));
+			add_token(&token, new_token(gc, "|", TOKEN_PIPE));
 			i++;
 		}
 		else if (line[i] == '<')
 		{
 			if (line[i + 1] == '<')
 			{
-				add_token(&token, new_token("<<", TOKEN_HEREDOC));
+				add_token(&token, new_token(gc, "<<", TOKEN_HEREDOC));
 				i += 2;
 			}
 			else
 			{
-				add_token(&token, new_token("<", TOKEN_REDIR_IN));
+				add_token(&token, new_token(gc, "<", TOKEN_REDIR_IN));
 				i++;
 			}				
 		}
@@ -137,17 +137,17 @@ t_token	*tokenize(char *line, t_data *data)
 		{
 			if (line[i + 1] == '>')
 			{
-				add_token(&token, new_token(">>", TOKEN_REDIR_APPEND));
+				add_token(&token, new_token(gc, ">>", TOKEN_REDIR_APPEND));
 				i += 2;
 			}
 			else
 			{
-				add_token(&token, new_token(">", TOKEN_REDIR_OUT));
+				add_token(&token, new_token(gc, ">", TOKEN_REDIR_OUT));
 				i++;
 			}
 		}
 		else
-			extract_word(&token, line, &i, data);
+			extract_word(gc, &token, line, &i, data);
 	}
 	return (token);
 }
