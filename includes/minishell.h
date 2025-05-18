@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/17 16:26:33 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/18 12:16:41 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ struct s_data
 	int			og_fd[2];
 	int			in_heredoc;
 	int			is_export;
-	int			exit_status;
+	// int			exit_status;
 };
 
 struct s_expand
@@ -173,6 +173,7 @@ void		init_parser(t_cmd **current_cmd, t_cmd **cmd_list);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
 int			skip_spaces(char *src, int i);
 char		*handle_space(char *result, int *was_space);
+int			exit_status(int	status, int	is_accessor);
 
 // char		*remove_escape_chars(char *str);
 void		extract_word(t_token **tokens, char *line, int *i, t_data *data);

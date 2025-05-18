@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/17 16:23:08 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/18 12:47:12 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,14 @@ int main(int ac, char *av[], char **envp)
 	data->env = init_env(envp);
 	if (!data->env)
 		return (print_err("2- Allocation Error [%d]\n", &ac), 0);
-	data->exit_status = 0;
 	setup_interactive_signals();
 	print_header();
 	while (1)
 	{
-		if (data->exit_status == 0)
-		printf( "✔ " );
+		if (exit_status(0, 0) == 0)
+			printf( "✔ " );
 		else
-		printf( "✘ " );
+			printf( "✘ " );
 		setup_interactive_signals();
 		line = readline("minishell ➤ ");
 		if (!line)
@@ -101,7 +100,6 @@ int main(int ac, char *av[], char **envp)
 		setup_exec_signals();
 		
 		exec(data);
-
 		
 		
 		free_tokens(tokens);

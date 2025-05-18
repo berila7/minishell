@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/15 10:12:37 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 12:43:56 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int handle_herdoc(char *del, int *hd_in, t_data *data)
         close(hd_fd[1]);
         free(quoted_delim);
         
-        data->exit_status = 130;
+        exit_status(130, 1);
         return (1);
     }
     setup_interactive_signals();

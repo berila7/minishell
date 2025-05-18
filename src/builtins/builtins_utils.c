@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 18:27:22 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 12:22:02 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	exec_builtin(t_cmd *cmd, t_data *data)
 	dup2_og(data);
 	if (equal(name, "exit"))
 	{
-		ext_status = data->exit_status;
+		ext_status = exit_status(0, 0);
 		free_data(data);
 		exit(ext_status);
 	}

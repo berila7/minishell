@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/14 14:39:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 12:45:04 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,15 @@ void signal_handler_heredoc(int signum)
 void	signal_handler_exec(int signum)
 {
 	if (signum == SIGINT)
+	{
+		exit_status(130, 1);
 		write(STDOUT_FILENO, "\n", 1);
+	}
 	else if (signum == SIGQUIT)
+	{
+		exit_status(131, 1);
 		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+	}
 }
 
 void setup_interactive_signals(void)

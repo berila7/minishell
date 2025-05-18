@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 18:19:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 12:25:20 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	ft_exit(char **args, t_data *data)
 	long	nb;
 
 	status = 0;
+	(void)data;
 	printf("exit\n");
 	if (args[1] && !is_long(args[1]))
 	{
@@ -66,6 +67,6 @@ int	ft_exit(char **args, t_data *data)
 		print_err("exit: too many arguments\n", NULL);
 		status = 1;
 	}
-	data->exit_status = status;
+	exit_status(status, 1);
 	return (0);
 }

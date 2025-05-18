@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 17:51:15 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 12:23:20 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static pid_t	exec_cmd(t_cmd *cmd, t_data *data)
 
 	id = fork();
 	if (id < 0)
-		return (perror("fork failed"), data->exit_status = 1, dup2_og(data), 1);
+		return (perror("fork failed"), exit_status(1, 1), dup2_og(data), 1);
 	if (id == 0)
 	{
 		if (handle_redirections(cmd, data))

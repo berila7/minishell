@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 21:48:34 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 12:23:06 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	exec_child(t_cmd *cmd, t_data *data)
 	if (is_builtin(cmd))
 	{
 		exec_builtin(cmd, data);
-		exit(data->exit_status);
+		exit(exit_status(0, 0));
 	}
 	else
 		exec_cmd(cmd, data);

@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/17 16:07:57 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/18 12:13:57 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	exit_status(int	status, int	is_accessor)
+{
+	static int	exit_status;
+	if (is_accessor)
+		exit_status = status;
+	return (exit_status);
+}
 
 char	*ft_strjoin_char(char *str, char c)
 {

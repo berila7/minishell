@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/17 18:51:27 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/18 12:18:39 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ char *expand_variables(char *str, t_data *data)
             i++;
             if (str[i] == '?')
             {
-                status_str = ft_itoa(data->exit_status);
+                status_str = ft_itoa(exit_status(0, 0));
                 result = ft_strjoin_free(result, status_str);
                 free(status_str);
                 i++;

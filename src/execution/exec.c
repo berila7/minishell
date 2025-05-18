@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 18:27:40 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 12:24:30 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ int	exec(t_data *data)
 		if (is_builtin(data->cmds))
 		{
 			if (handle_redirections(data->cmds, data))
-				return (data->exit_status = 1, 1);
+				return (exit_status(1, 1), 1);
 			exec_builtin(data->cmds, data);
 		}
 		else
 		{
-			data->exit_status = exec_single_cmd(data);
+			exit_status(exec_single_cmd(data), 1);
 			dup2_og(data);
 		}
 	}
 	else
-		data->exit_status = exec_multiple_cmd(data);
+		exit_status(exec_multiple_cmd(data), 1);
 	return (0);
 }
