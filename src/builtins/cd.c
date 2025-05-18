@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/16 16:11:10 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 17:47:21 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	update_pwd(t_data *data, char *path)
 	{
 		tmp = get_env(data->env, "PWD");
 		if (tmp[ft_strlen(tmp) - 1] == '/')
-			pwd = ft_strjoin(tmp, path);
+			pwd = gc_strjoin(&data->gc, tmp, path);
 		else
-			pwd = join_path(tmp, path);
+			pwd = join_path(&data->gc, tmp, path);
 		if (!pwd)
 			exit_program(data);
 		perror("getcwd");

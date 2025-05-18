@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_err.c                                        :+:      :+:    :+:   */
+/*   gc_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 12:04:18 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 17:15:39 by anachat          ###   ########.fr       */
+/*   Created: 2025/05/18 17:05:28 by anachat           #+#    #+#             */
+/*   Updated: 2025/05/18 17:16:13 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_err(char *fmt, void *arg)
+char	*gc_strdup(t_gcnode **gc, char *src)
 {
-	int	i;
+	size_t	len;
+	char	*p_src;
 
-	if (!fmt)
-		return ;
-	i = 0;
-	while (fmt[i])
-	{
-		if (fmt[i] == '%' && fmt[i + 1])
-		{
-			i++;
-			if (fmt[i] == 'c')
-				ft_putchar_fd(*(char *)arg, 2);
-			else if (fmt[i] == 's')
-				ft_putstr_fd((char *)arg, 2);
-			else if (fmt[i] == 'd')
-				ft_putnbr_fd(*(int *)arg, 2);
-			else
-				ft_putchar_fd(fmt[i], 2);
-		}
-		else
-			ft_putchar_fd(fmt[i], 2);
-		i++;
-	}
+	if (!src)
+		return (NULL);
+	len = ft_strlen(src) + 1;
+	p_src = gc_malloc(gc, sizeof(char) * len);
+	ft_strlcpy(p_src, src, len);
+	return (p_src);
 }

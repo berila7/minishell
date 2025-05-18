@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 12:18:39 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 17:25:49 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	is_valid_var_char(char c)
 	return (ft_isalnum(c) || c == '_');
 }
 
-char	**env_to_array(t_env *env)
+char	**env_to_array(t_gcnode **gc, t_env *env)
 {
 	t_env	*current;
 	char	**env_array;
-	int		i;
 	char	*temp;
+	int		i;
 
 	current = env;
 	i = 0;
@@ -32,7 +32,7 @@ char	**env_to_array(t_env *env)
 			i++;
 		current = current->next;
 	}
-	env_array = malloc(sizeof(char *) * (i + 1));
+	env_array = gc_malloc(gc, sizeof(char *) * (i + 1));
 	if (!env_array)
 		return (NULL);
 	current = env;
@@ -41,8 +41,8 @@ char	**env_to_array(t_env *env)
 	{
 		if (current->value)
 		{
-			temp = ft_strjoin(current->key, "=");
-			env_array[i] = ft_strjoin(temp, current->value);
+			temp = gc_strjoin(gc, current->key, "=");
+			env_array[i] = gc_strjoin(gc, temp, current->value);
 			free(temp);
 			i++;
 		}

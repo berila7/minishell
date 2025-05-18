@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 12:23:06 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 17:54:58 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	exec_cmd(t_cmd *cmd, t_data *data)
 			exit(126), 1);
 	}
 	close2(data->og_fd);
-	if (execve(cmd->path, cmd->args, env_to_array(data->env)) == -1)
+	if (execve(cmd->path, cmd->args, env_to_array(&data->gc, data->env)) == -1)
 		return (perror("execve failed"), exit(1), 1);
 	return (0);
 }
