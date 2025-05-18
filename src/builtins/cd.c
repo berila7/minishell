@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 17:47:21 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:04:50 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	update_pwd(t_data *data, char *path)
 	}
 	else
 		pwd = cwd;
-	set_env(&(data->env), "PWD", pwd);
+	set_env(&data->gc, &data->env, "PWD", pwd);
 	if (cwd)
 		free(cwd);
 	return (0);

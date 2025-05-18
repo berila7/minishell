@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 18:05:47 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:05:14 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	create_env(char *equals, char *arg, t_data *data)
 	}
 	else
 		val = gc_strdup(&data->gc, equals + 1);
-	set_env(&data->env, key, val);
+	set_env(&data->gc, &data->env, key, val);
 }
 
 void	ft_export(char **args, t_data *data)
@@ -66,7 +66,7 @@ void	ft_export(char **args, t_data *data)
 			else
 			{
 				key = gc_strdup(&data->gc, args[i]);
-				set_env(&data->env, key, NULL);
+				set_env(&data->gc, &data->env, key, NULL);
 			}
 			i++;
 		}

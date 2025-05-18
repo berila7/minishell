@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 18:31:22 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:04:26 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int ac, char *av[], char **envp)
 	gc = NULL;
 	data = gc_malloc(&gc, sizeof(t_data));
 	data->gc = gc;
-	data->env = init_env(envp);
+	data->env = init_env(&gc, envp);
 	setup_interactive_signals();
 	print_header();
 	while (1)
@@ -67,14 +67,14 @@ int main(int ac, char *av[], char **envp)
     	}
 		if (line[0])
 			add_history(line);
-		tokens = tokenize(line, data);
+		tokens = tokenize(&gc, line, data);
 		if (!tokens || !validate_token(tokens))
 		{
 			free_tokens(tokens);
 			free(line);
 			continue ;
 		}
-		data->cmds = parse_tokens(tokens, data);
+		data->cmds = parse_tokens(&gc, tokens, data);
 		if (!data->cmds)
 		{
 			free_tokens(tokens);

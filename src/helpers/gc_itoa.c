@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:31:57 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 18:32:36 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:03:24 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char	*gc_itoa(t_gcnode **gc, int n)
 
 	len = digits_count(n);
 	result = gc_malloc(gc, (len + 1) * sizeof(char));
-	if (!result)
-		return (NULL);
 	num = n;
 	if (n < 0)
 		num = -n;
