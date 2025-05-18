@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/18 12:16:41 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:00:51 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_env t_env;
 typedef struct s_data t_data;
 typedef struct s_redir t_redir;
 typedef struct s_expand t_expand;
+typedef struct s_gcnode	t_gcnode;
 
 struct s_redir {
     int type;
@@ -115,11 +116,11 @@ struct s_data
 {
 	t_cmd		*cmds;
 	t_env		*env;
+	t_gcnode	*gc;
 	int			pipe[2];
 	int			og_fd[2];
 	int			in_heredoc;
 	int			is_export;
-	// int			exit_status;
 };
 
 struct s_expand
@@ -129,6 +130,24 @@ struct s_expand
 	int		in_single_quote;
 	int		in_double_quote;
 };
+
+
+// garbage colletor
+struct s_gcnode {
+	void		*ptr;
+	t_gcnode	*next;
+};
+
+void		*gc_malloc(t_gcnode **gc, size_t size);
+void		free_gc(t_gcnode **gc);
+
+// helpers + gc implementation
+char	*gc_strjoin(t_gcnode **gc, char *s1, char *s2);
+char	**gc_split(t_gcnode **gc, char *s, char c);
+char	*gc_strdup(t_gcnode **gc, char *src);
+
+
+
 
 t_token		*tokenize(char *line, t_data *data);
 void		free_tokens(t_token *tokens);
@@ -141,7 +160,7 @@ long	    ft_atol(const char *str);
 int     	count_args(char **args);
 int			exec(t_data *data);
 char		*expand_variables(char *str, t_data *data);
-int			set_cmd_path(t_cmd *cmds, t_env *env);
+void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
 void		unset_env(t_env **env, char *key);
 char		*ft_strjoin_char(char *str, char c);
@@ -199,10 +218,10 @@ int			exec(t_data *data);
 void		free_arr(char **arr);
 int			cmd_exists(char *path);
 int			is_exec(char *path);
-char		*join_path(char *path, char *cmd);
+char		*join_path(t_gcnode **gc, char *path, char *cmd);
 int			count_cmd(t_cmd *cmd);
 int			ft_dup2(int oldfd, int newfd);
-char		**env_to_array(t_env *env);
+char		**env_to_array(t_gcnode **gc, t_env *env);
 int			handle_redirections(t_cmd *cmd, t_data *data);
 int			ft_wait(pid_t last_pid, int default_st);
 void		dup2_og(t_data *data);

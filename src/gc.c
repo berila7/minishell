@@ -6,18 +6,12 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:01:58 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/16 21:03:23 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 17:27:33 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef struct s_gcnode	t_gcnode;
-
-struct s_gcnode {
-	void		*ptr;
-	t_gcnode	*next;
-};
 
 void	free_gc(t_gcnode **gc)
 {
@@ -30,7 +24,11 @@ void	free_gc(t_gcnode **gc)
 	while (curr)
 	{
 		next = curr->next;
-		free(curr->ptr);
+		if (curr->ptr)
+		{	
+			free(curr->ptr);
+			curr->ptr = NULL;
+		}
 		free(curr);
 		curr = next;
 	}
@@ -45,6 +43,7 @@ static void	append_gc(t_gcnode **gc, void *ptr)
 	node = malloc(sizeof(t_gcnode));
 	if (!node)
 	{
+		print_err("Allocation Error\n", NULL);
 		free_gc(gc);
 		exit(1);
 	}
@@ -68,6 +67,7 @@ void	*gc_malloc(t_gcnode **gc, size_t size)
 	ptr = malloc(size);
 	if (!ptr)
 	{
+		print_err("Allocation Error\n", NULL);
 		free_gc(gc);
 		exit(1);
 	}

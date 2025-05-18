@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:03:22 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 17:18:59 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/18 17:24:03 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ int	cmd_exists(char *path)
 	return (0);
 }
 
-char	*join_path(char *path, char *cmd)
+char	*join_path(t_gcnode **gc, char *path, char *cmd)
 {
 	char	*cmd_path;
 	char	*tmp;
 
-	tmp = ft_strjoin(path, "/");
+	tmp = gc_strjoin(gc, path, "/");
 	if (!tmp)
 		return (NULL);
-	cmd_path = ft_strjoin(tmp, cmd);
+	cmd_path = gc_strjoin(gc, tmp, cmd);
 	free(tmp);
 	if (!cmd_path)
 		return (NULL);
