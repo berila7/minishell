@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/19 10:18:51 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:57:54 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	exec_builtin(t_cmd *cmd, t_data *data)
 	else if (equal(name, "export"))
 		ft_export(cmd->args, data);
 	else if (equal(name, "unset"))
-		ft_unset(cmd->args, data->env);
+		ft_unset(cmd->args, data);
 	else if (equal(name, "env"))
 		ft_env(data->env);
 	else if (equal(name, "exit"))

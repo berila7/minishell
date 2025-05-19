@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/19 11:01:08 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:59:11 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void		exec_builtin(t_cmd *cmd, t_data *data);
 void		ft_echo(char **args);
 int			ft_exit(char **args, t_data *data);
 int			ft_env(t_env *env);
-void		ft_unset(char **args, t_env *env);
+void		ft_unset(char **args, t_data *data);
 void		ft_pwd(t_data *data);
 void		ft_cd(char **args, t_data *data);
 void		ft_export(char **args, t_data *data);
@@ -236,7 +236,6 @@ int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
-void		exit_program(t_data *data);
 
 
 // Debug functions:
