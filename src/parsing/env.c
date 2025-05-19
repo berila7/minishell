@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 10:47:46 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 14:29:07 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ int	is_valid_var_char(char c)
 	return (ft_isalnum(c) || c == '_');
 }
 
-char	**env_to_array(t_gcnode **gc, t_env *env)
+int	count_nodes(t_env *env)
 {
 	t_env	*current;
-	char	**env_array;
-	char	*temp;
 	int		i;
 
 	current = env;
@@ -32,9 +30,17 @@ char	**env_to_array(t_gcnode **gc, t_env *env)
 			i++;
 		current = current->next;
 	}
-	env_array = gc_malloc(gc, sizeof(char *) * (i + 1));
-	if (!env_array)
-		return (NULL);
+	return (i);
+}
+
+char	**env_to_array(t_gcnode **gc, t_env *env)
+{
+	t_env	*current;
+	char	**env_array;
+	char	*temp;
+	int		i;
+
+	env_array = gc_malloc(gc, sizeof(char *) * (count_nodes(env) + 1));
 	current = env;
 	i = 0;
 	while (current)
@@ -52,10 +58,24 @@ char	**env_to_array(t_gcnode **gc, t_env *env)
 	return (env_array);
 }
 
+void	env_append(t_env **env, t_env *new_node)
+{
+	t_env	*current;
+
+	if (!*env)
+	{
+		*env = new_node;
+		return ;	
+	}
+	current = *env;
+	while (current->next)
+		current = current->next;
+	current->next = new_node;
+}
+
 t_env	*init_env(t_gcnode **gc, char	**envp)
 {
 	t_env	*env_list;
-	t_env	*last;
 	t_env	*new_node;
 	char 	*equals;
 	int		key_len;
@@ -69,22 +89,11 @@ t_env	*init_env(t_gcnode **gc, char	**envp)
 		if (equals)
 		{
 			new_node = gc_malloc(gc, sizeof(t_env));
-			if (!new_node)
-				return (NULL);
 			key_len = equals - envp[i];
 			new_node->key = gc_substr(gc, envp[i], 0, key_len);
 			new_node->value = gc_strdup(gc, equals + 1);
 			new_node->next = NULL;
-			if (!env_list)
-			{
-				env_list = new_node;
-				last = new_node;
-			}
-			else
-			{
-				last->next = new_node;
-				last = new_node;
-			}
+			env_append(&env_list, new_node);
 		}
 		i++;
 	}
@@ -169,82 +178,6 @@ void	unset_env(t_gcnode **gc, t_env **env, char *key)
 		prev = current;
 		current = current->next;
 	}
-}
-
-char *expand_variables(t_gcnode **gc, char *str, t_data *data)
-{
-    int     i;
-    char    *result;
-    char    *status_str;
-    char    *var_name;
-    char    *var_value;
-    int     in_single_quote;
-    int     in_double_quote;
-    int     start;
-    // char    *quoted_result;
-
-    result = gc_strdup(gc, "");
-    if (!result)
-        return (NULL);
-    in_single_quote = 0;
-    in_double_quote = 0;
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '\'' && !in_double_quote)
-        {
-            in_single_quote = !in_single_quote;
-            result = ft_strjoin_char_free(gc, result, str[i]);
-            i++;
-        }
-        else if (str[i] == '\"' && !in_single_quote)
-        {
-            in_double_quote = !in_double_quote;
-            result = ft_strjoin_char_free(gc, result, str[i]);
-            i++;
-        }
-        else if (str[i] == '$' && str[i + 1] && (!in_single_quote || data->in_heredoc))
-        {
-            i++;
-            if (str[i] == '?')
-            {
-                status_str = gc_itoa(gc ,exit_status(0, 0));
-                result = ft_strjoin_free(gc, result, status_str);
-                gc_free(gc, status_str);
-                i++;
-            }
-			else if (ft_isdigit(str[i]))
-			{
-				char first_digit = str[i++];
-                if (first_digit == '0')
-                    result = ft_strjoin_free(gc, result, "minishell");
-			}
-            else if (str[i] && is_valid_var_char(str[i]))
-            {
-                start = i;
-                while (str[i] && (is_valid_var_char(str[i])))
-                    i++;
-				var_name = gc_substr(gc, str, start, i - start);
-				var_value = get_env(data->env, var_name);
-				gc_free(gc, var_name);
-				if (var_value)
-				{
-					if (in_double_quote)
-						result = ft_strjoin_free(gc, result, var_value);
-					else
-						result = word_split_join(gc, result, var_value);
-				}
-            }
-			else
-				result = ft_strjoin_char_free(gc, result, '$');
-        }
-        else 
-        {
-            result = ft_strjoin_char_free(gc, result, str[i]);
-            i++;
-        }
-    }
-    return (result);
 }
 
 // void	f(void)

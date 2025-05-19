@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 10:56:26 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 14:16:38 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_cmd	*new_command(t_gcnode **gc)
 	t_cmd	*cmd;
 
 	cmd = gc_malloc(gc ,sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
 	cmd->args = gc_malloc(gc, sizeof(char *) * 2);
 	cmd->hd_fd = -1;
 	if (!cmd->args)
