@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 18:35:39 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:06:32 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	set_env(t_gcnode **gc, t_env **env, char *key, char *value)
 		}
 		current = current->next;
 	}
-	new_var = malloc(sizeof(t_env));
+	new_var = gc_malloc(gc, sizeof(t_env));
 	if (!new_var)
 		return ;
 	new_var->key = gc_strdup(gc, key);
