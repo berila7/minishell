@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 10:49:30 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:42:15 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ void	extract_word(t_gcnode **gc, t_token **tokens, char *line, int *i, t_data *d
 	{
 		word = gc_substr(gc, line, start, *i - start);
 		add_token(tokens, new_token(gc, word, TOKEN_WORD));
-		if ((equal((*tokens)->value, "export")) 
-			|| (*tokens)->type == TOKEN_REDIR_APPEND
+		if ((equal((*tokens)->value, "export")) || (((*tokens)->type == TOKEN_REDIR_APPEND
 			|| (*tokens)->type == TOKEN_REDIR_IN
-			|| (*tokens)->type == TOKEN_REDIR_OUT
+			|| (*tokens)->type == TOKEN_REDIR_OUT )
+			&& equal((*tokens)->next->value, "export"))
+		
 		)
 			data->is_export = 0;
 		printf("export flag %d\n", data->is_export);
