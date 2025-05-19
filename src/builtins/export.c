@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 19:07:56 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:26:00 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,20 @@ static void	create_env(char *equals, char *arg, t_data *data)
 	set_env(&data->gc, &data->env, key, val);
 }
 
+int	env_exists(t_env *env, char *key)
+{
+	t_env	*curr;
+
+	curr = env;
+	while (curr)
+	{
+		if (equal(key, curr->key))
+			return (1);
+		curr = curr->next;
+	}
+	return (0);
+}
+
 void	ft_export(char **args, t_data *data)
 {
 	char	*equals;
@@ -63,8 +77,9 @@ void	ft_export(char **args, t_data *data)
 			equals = ft_strchr(args[i], '=');
 			if (equals)
 				create_env(equals, args[i], data);
-			else
+			else if (!env_exists(data->env, args[i]))
 			{
+				printf("\n=====================> env key does not exists, create new envwith key: %s\n\n", key);
 				key = gc_strdup(&data->gc, args[i]);
 				set_env(&data->gc, &data->env, key, NULL);
 			}
