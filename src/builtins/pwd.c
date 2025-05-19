@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 20:38:21 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/19 11:30:29 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:01:36 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@ void	ft_pwd(t_data *data)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
+	{
 		cwd = get_env(data->env, "PWD");
+		printf("%s\n", cwd);
+	}
 	else
+	{
+		printf("%s\n", cwd);
 		free(cwd);
-	printf("%s\n", cwd);
+	}
 }
