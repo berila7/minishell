@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 18:47:30 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:56:26 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd	*new_command(t_gcnode **gc)
 	cmd->hd_fd = -1;
 	if (!cmd->args)
 	{
-		free(cmd);
+		gc_free(gc, cmd);
 		return (NULL);
 	}
 	cmd->args[0] = NULL;
@@ -56,7 +56,7 @@ void	add_argument(t_gcnode **gc, t_cmd *cmd, char *arg)
 	}
 	new_args[i] = gc_strdup(gc, arg);
 	new_args[i + 1] = NULL;
-	free(cmd->args);
+	gc_free(gc, cmd->args);
 	cmd->args = new_args;
 }
 
@@ -77,12 +77,12 @@ void	add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file)
 	}
 	new_redirs[cmd->redir_count].type = type;
 	new_redirs[cmd->redir_count].file = gc_strdup(gc, file);
-	free(cmd->redirections);
+	gc_free(gc, cmd->redirections);
 	cmd->redirections = new_redirs;
 	cmd->redir_count++;
 }
 
-void	free_command(t_cmd *cmd)
+void	free_command(t_gcnode **gc, t_cmd *cmd)
 {
 	int	i;
 
@@ -93,24 +93,24 @@ void	free_command(t_cmd *cmd)
 		i = 0;
 		while (cmd->args[i])
 		{
-			free(cmd->args[i]);
+			gc_free(gc, cmd->args[i]);
 			i++;
 		}
-		free(cmd->args);
+		gc_free(gc, cmd->args);
 	}
 	if (cmd->redirections)
 	{
 		i = 0;
 		while (i < cmd->redir_count)
-			free(cmd->redirections[i++].file);
-		free(cmd->redirections);
+			gc_free(gc, cmd->redirections[i++].file);
+		gc_free(gc, cmd->redirections);
 	}
 	if (cmd->path)
-		free(cmd->path);
-	free(cmd);
+		gc_free(gc, cmd->path);
+	gc_free(gc, cmd);
 }
 
-void	free_commands(t_cmd *commands)
+void	free_commands(t_gcnode **gc, t_cmd *commands)
 {
 	t_cmd	*current;
 	t_cmd	*next;
@@ -119,7 +119,7 @@ void	free_commands(t_cmd *commands)
 	while (current)
 	{
 		next = current->next;
-		free_command(current);
+		free_command(gc, current);
 		current = next;
 	}
 }
@@ -171,7 +171,7 @@ t_cmd	*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data)
 			current_cmd = new_command(gc);
 			if (!current_cmd)
 			{
-				free_commands(cmd_list);
+				free_commands(gc, cmd_list);
 				return (NULL);
 			}
 			token = token->next;
@@ -183,15 +183,15 @@ t_cmd	*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data)
 			{
 				expanded = expand_variables(gc, token->value, data);
 				add_redirection(gc, current_cmd, REDIR_IN, expanded);
-				free(expanded);
+				gc_free(gc, expanded);
 				token = token->next;
 			}
 			else
 			{
 				printf("minishell: syntax error near unexpected token 'newline'\n");
 				exit_status(2, 1);
-				free_commands(cmd_list);
-				free_command(current_cmd);
+				free_commands(gc, cmd_list);
+				free_command(gc, current_cmd);
 				return (NULL);
 			}
 		}
@@ -202,15 +202,15 @@ t_cmd	*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data)
 			{
 				expanded = expand_variables(gc, token->value, data);
 				add_redirection(gc, current_cmd, REDIR_OUT, expanded);
-				free(expanded);
+				gc_free(gc, expanded);
 				token = token->next;
 			}
 			else
 			{
 				printf("minishell: syntax error near unexpected token 'newline'\n");
 				exit_status(2, 1);
-				free_commands(cmd_list);
-				free_command(current_cmd);
+				free_commands(gc, cmd_list);
+				free_command(gc, current_cmd);
 				return (NULL);
 			}
 		}
@@ -221,15 +221,15 @@ t_cmd	*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data)
 			{
 				expanded = expand_variables(gc, token->value, data);
 				add_redirection(gc, current_cmd, REDIR_APPEND, expanded);
-				free(expanded);
+				gc_free(gc, expanded);
 				token = token->next;
 			}
 			else
 			{
 				printf("minishell: syntax error near unexpected token 'newline'\n");
 				exit_status(2, 1);
-				free_commands(cmd_list);
-				free_command(current_cmd);
+				free_commands(gc, cmd_list);
+				free_command(gc, current_cmd);
 				return (NULL);
 			}
 		}
@@ -240,8 +240,8 @@ t_cmd	*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data)
 			{
 				if (handle_herdoc(gc, token->value, &current_cmd->hd_fd, data))
 				{
-					free_commands(cmd_list);
-					free_command(current_cmd);
+					free_commands(gc, cmd_list);
+					free_command(gc, current_cmd);
 					return (NULL);
 				}
 				add_redirection(gc, current_cmd, REDIR_HEREDOC, token->value);
@@ -251,8 +251,8 @@ t_cmd	*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data)
 			{
 				printf("minishell: syntax error near unexpected token '<<'\n");
 				exit_status(2, 1);
-				free_commands(cmd_list);
-				free_command(current_cmd);
+				free_commands(gc, cmd_list);
+				free_command(gc, current_cmd);
 				return (NULL);
 			}
 		}

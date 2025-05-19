@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 18:41:07 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:49:30 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*new_token(t_gcnode **gc, char *value, t_token_type type)
 	token->value = gc_strdup(gc, value);
 	if (!token->value)
 	{
-		free(token);
+		gc_free(gc, token);
 		return (NULL);
 	}
 	token->type = type;
@@ -82,7 +82,7 @@ void	extract_word(t_gcnode **gc, t_token **tokens, char *line, int *i, t_data *d
 			quote_state = "double";
 		printf("minishell: syntax error: unclosed %s quote\n", 
 				quote_state);
-		free_tokens(*tokens);
+		free_tokens(gc, *tokens);
 		*tokens = NULL;
 		return ;
 	}
@@ -99,7 +99,7 @@ void	extract_word(t_gcnode **gc, t_token **tokens, char *line, int *i, t_data *d
 		printf("export flag %d\n", data->is_export);
 		printf("token head %s\n", (*tokens)->value);
 		printf("word %s\n", word);
-		free(word);
+		gc_free(gc, word);
 	}
 }
 
@@ -152,7 +152,7 @@ t_token	*tokenize(t_gcnode **gc, char *line, t_data *data)
 	return (token);
 }
 
-void	free_tokens(t_token *tokens)
+void	free_tokens(t_gcnode **gc, t_token *tokens)
 {
 	t_token	*current;
 	t_token	*next;
@@ -161,8 +161,8 @@ void	free_tokens(t_token *tokens)
 	while (current)
 	{
 		next = current->next;
-		free(current->value);
-		free(current);
+		gc_free(gc, current->value);
+		gc_free(gc, current);
 		current = next;
 	}
 }

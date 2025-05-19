@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 11:25:56 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:56:24 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ char	*remove_quotes(t_gcnode **gc, char *str)
 	return (result);
 }
 
-void	free_data(t_data *data)
+void	free_data(t_gcnode **gc, t_data *data)
 {
 	if (data)
 	{
 		if (data->cmds)
-			free_commands(data->cmds);
+			free_commands(gc, data->cmds);
 		if (data->env)
 			free_env(&data->gc, data->env);
-		gc_free(&data->gc, data);
+		gc_free(gc, data);
 	}
 }
 
@@ -135,7 +135,7 @@ char	*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2)
 	char	*result;
 
 	result = gc_strjoin(gc, s1, s2);
-	free(s1);
+	gc_free(gc, s1);
 	return (result);
 }
 
@@ -144,7 +144,7 @@ char	*ft_strjoin_char_free(t_gcnode **gc, char *str, char c)
 	char	*result;
 
 	result = ft_strjoin_char(gc, str, c);
-	free(str);
+	gc_free(gc, str);
 	return (result);
 }
 
@@ -202,7 +202,7 @@ void process_token_word(t_gcnode **gc, t_token *token, t_cmd *current_cmd, t_dat
         // For quoted strings, we need to remove quotes but preserve quoted content
         final_str = remove_quotes(gc, expanded);
         add_argument(gc, current_cmd, final_str);
-        free(final_str);
+        gc_free(gc, final_str);
     }
     else
     {
@@ -215,7 +215,8 @@ void process_token_word(t_gcnode **gc, t_token *token, t_cmd *current_cmd, t_dat
         }
         free_arr(gc, split_words);
     }
-    free(expanded);
+    
+    gc_free(gc, expanded);
 }
 
 // char	*remove_escape_chars(char *str)
