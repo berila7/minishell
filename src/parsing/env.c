@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 10:40:49 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:47:46 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	free_env(t_gcnode **gc, t_env *env)
 	}
 }
 
-void	unset_env(t_env **env, char *key)
+void	unset_env(t_gcnode **gc, t_env **env, char *key)
 {
 	t_env	*current;
 	t_env	*prev;
@@ -161,9 +161,9 @@ void	unset_env(t_env **env, char *key)
 				prev->next = current->next;
 			else
 				*env = current->next;
-			free(current->key);
-			free(current->value);
-			free(current);
+			gc_free(gc, current->key);
+			gc_free(gc, current->value);
+			gc_free(gc, current);
 			return ;
 		}
 		prev = current;
@@ -210,7 +210,7 @@ char *expand_variables(t_gcnode **gc, char *str, t_data *data)
             {
                 status_str = gc_itoa(gc ,exit_status(0, 0));
                 result = ft_strjoin_free(gc, result, status_str);
-                free(status_str);
+                gc_free(gc, status_str);
                 i++;
             }
 			else if (ft_isdigit(str[i]))
@@ -226,7 +226,7 @@ char *expand_variables(t_gcnode **gc, char *str, t_data *data)
                     i++;
 				var_name = gc_substr(gc, str, start, i - start);
 				var_value = get_env(data->env, var_name);
-				free(var_name);
+				gc_free(gc, var_name);
 				if (var_value)
 				{
 					if (in_double_quote)
