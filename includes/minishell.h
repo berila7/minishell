@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/19 15:03:49 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:04:19 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ char		*gc_substr(t_gcnode **gc, const char *s, unsigned int start, size_t len);
 void		gc_free(t_gcnode **gc, void *ptr);
 
 // char		*remove_escape_chars(char *str);
-void		extract_word(t_gcnode **gc, t_token **tokens, char *line, int *i, t_data *data);
+void		extract_word(t_token **tokens, char *line, int *i, t_data *data);
 // builtins:
 int			is_builtin(t_cmd *cmd);
 void		exec_builtin(t_cmd *cmd, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/05/19 13:50:30 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:36:17 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char *expand_variables(t_gcnode **gc, char *str, t_data *data)
     int     in_single_quote;
     int     in_double_quote;
     int     start;
-    // char    *quoted_result;
 
     result = gc_strdup(gc, "");
     if (!result)
