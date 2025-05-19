@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 12:24:30 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:39:14 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ int	ft_wait(pid_t last_pid, int default_st)
 	}
 	return (exit_st);
 }
+
+
+
+
+// else if (WIFSIGNALED(status))
+// 	exit_status(1, 128 + WTERMSIG(status));
+
 
 int	exec(t_data *data)
 {

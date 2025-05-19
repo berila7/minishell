@@ -6,11 +6,24 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:01:58 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/19 10:26:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:27:53 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+
+void	print_gc_nodes(t_gcnode *gc) {
+	int i = 0;
+	t_gcnode *curr = gc;
+	while (curr)
+	{
+		printf("Node %d: ptr = %p\n", i, curr->ptr);
+		curr = curr->next;
+		i++;
+    }
+}
 
 void	gc_free(t_gcnode **gc, void *ptr)
 {
@@ -43,6 +56,7 @@ void	gc_free_all(t_gcnode **gc)
 
 	if (!gc)
 		return ;
+	print_gc_nodes(*gc);
 	curr = *gc;
 	while (curr)
 	{
@@ -83,6 +97,7 @@ static void	append_gc(t_gcnode **gc, void *ptr)
 	}
 }
 
+
 void	*gc_malloc(t_gcnode **gc, size_t size)
 {
 	void	*ptr;
@@ -98,3 +113,4 @@ void	*gc_malloc(t_gcnode **gc, size_t size)
 	append_gc(gc, ptr);
 	return (ptr);
 }
+

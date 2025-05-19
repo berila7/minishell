@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 10:41:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:25:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	free_data(t_data *data)
 			free_commands(data->cmds);
 		if (data->env)
 			free_env(&data->gc, data->env);
-		free_gc(&data->gc, data);
+		gc_free(&data->gc, data);
 	}
 }
 
@@ -213,9 +213,8 @@ void process_token_word(t_gcnode **gc, t_token *token, t_cmd *current_cmd, t_dat
             add_argument(gc, current_cmd, split_words[i]);
             i++;
         }
-        free_arr(split_words);
+        free_arr(gc, split_words);
     }
-    
     free(expanded);
 }
 
