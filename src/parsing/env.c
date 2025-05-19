@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 14:29:07 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:46:25 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,7 @@ void	set_env(t_gcnode **gc, t_env **env, char *key, char *value)
 		return ;
 	new_var->key = gc_strdup(gc, key);
 	new_var->value = gc_strdup(gc, value);
-	new_var->next = *env;
-	*env = new_var;
+	env_append(&(*env), new_var);
 }
 
 void	free_env(t_gcnode **gc, t_env *env)
