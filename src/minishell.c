@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 10:39:21 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:04:02 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ int main(int ac, char *av[], char **envp)
 		tokens = tokenize(&gc, line, data);
 		if (!tokens || !validate_token(tokens))
 		{
-			free_tokens(tokens);
+			free_tokens(&gc, tokens);
 			gc_free(&gc, line);
 			continue ;
 		}
 		data->cmds = parse_tokens(&gc, tokens, data);
 		if (!data->cmds)
 		{
-			free_tokens(tokens);
+			free_tokens(&gc, tokens);
 			gc_free(&gc, line);
 			g_sigint_received = 0;
 			continue ;
@@ -93,8 +93,8 @@ int main(int ac, char *av[], char **envp)
 		exec(data);
 		
 		
-		free_tokens(tokens);
-		free_commands(data->cmds);
+		free_tokens(&gc, tokens);
+		free_commands(&gc, data->cmds);
 		data->cmds = NULL;
 		gc_free(&gc, line);
 		g_sigint_received = 0;
