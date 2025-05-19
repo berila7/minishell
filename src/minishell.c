@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 19:04:26 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:18:51 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,6 @@ int main(int ac, char *av[], char **envp)
 	}
 	reset_signals();
 	clear_history();
-	free_gc(&gc);
+	gc_free_all(&gc);
 	return (0);
 }

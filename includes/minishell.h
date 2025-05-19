@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/18 18:58:27 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:19:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,8 @@ struct s_gcnode {
 };
 
 void		*gc_malloc(t_gcnode **gc, size_t size);
-void		free_gc(t_gcnode **gc);
+void		gc_free_all(t_gcnode **gc);
+void		gc_free(t_gcnode **gc, void *ptr);
 
 // helpers + gc implementation
 char	*gc_strjoin(t_gcnode **gc, char *s1, char *s2);
