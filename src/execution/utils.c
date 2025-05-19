@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:03:22 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 17:24:03 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:30:22 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ char	*join_path(t_gcnode **gc, char *path, char *cmd)
 	if (!tmp)
 		return (NULL);
 	cmd_path = gc_strjoin(gc, tmp, cmd);
-	free(tmp);
+	gc_free(gc, tmp);
 	if (!cmd_path)
 		return (NULL);
 	return (cmd_path);
 }
 
-void	free_arr(char **arr)
+void	free_arr(t_gcnode **gc, char **arr)
 {
 	int	i;
 
 	i = 0;
 	while (arr[i])
 	{
-		free(arr[i]);
+		gc_free(gc, arr[i]);
 		i++;
 	}
-	free(arr);
+	gc_free(gc, arr);
 }
 
 int	count_cmd(t_cmd *cmds)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 18:59:01 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:41:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ void	free_data(t_data *data)
 		if (data->cmds)
 			free_commands(data->cmds);
 		if (data->env)
-			free_env(data->env);
-		free(data);
+			free_env(&data->gc, data->env);
+		free_gc(&data->gc, data);
 	}
 }
 

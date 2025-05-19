@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/19 10:19:17 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:41:07 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void		free_tokens(t_token *tokens);
 t_cmd		*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data);
 void		free_commands(t_cmd *commands);
 void		free_command(t_cmd *cmd);
-void		free_env(t_env *env);
+void		free_env(t_gcnode **gc, t_env *env);
 t_env		*init_env(t_gcnode **gc, char	**envp);
 long	    ft_atol(const char *str);
 int     	count_args(char **args);
@@ -217,7 +217,7 @@ int			is_builtin(t_cmd *cmd);
 
 // exec utils:
 int			exec(t_data *data);
-void		free_arr(char **arr);
+void		free_arr(t_gcnode **gc, char **arr);
 int			cmd_exists(char *path);
 int			is_exec(char *path);
 char		*join_path(t_gcnode **gc, char *path, char *cmd);

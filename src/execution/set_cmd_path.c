@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 17:42:44 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:29:27 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*find_cmd(t_gcnode **gc, char **paths, char *cmd)
 		cmd_path = join_path(gc, paths[i], cmd);
 		if (cmd_exists(cmd_path))
 			return (cmd_path);
-		free(cmd_path);
+		gc_free(gc, cmd_path);
 		i++;
 	}
 	return (NULL);
@@ -58,7 +58,7 @@ static char	*get_cmd_path(t_gcnode **gc, char *cmd, t_env *env)
 		return (printf("Cannot find PATH env\n"), NULL);
 	paths = gc_split(gc, env_path, ':');
 	cmd_path = find_cmd(gc, paths, cmd);
-	free_arr(paths);
+	free_arr(gc, paths);
 	return (cmd_path);
 }
 

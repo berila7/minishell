@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 10:18:51 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:39:21 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int main(int ac, char *av[], char **envp)
 			else
 			{
 				printf("exit\n");
-				break;
+				break ;
 			}
     	}
 		if (line[0])
@@ -71,14 +71,14 @@ int main(int ac, char *av[], char **envp)
 		if (!tokens || !validate_token(tokens))
 		{
 			free_tokens(tokens);
-			free(line);
+			gc_free(&gc, line);
 			continue ;
 		}
 		data->cmds = parse_tokens(&gc, tokens, data);
 		if (!data->cmds)
 		{
 			free_tokens(tokens);
-			free(line);
+			gc_free(&gc, line);
 			g_sigint_received = 0;
 			continue ;
 		}
@@ -96,7 +96,7 @@ int main(int ac, char *av[], char **envp)
 		free_tokens(tokens);
 		free_commands(data->cmds);
 		data->cmds = NULL;
-		free(line);
+		gc_free(&gc, line);
 		g_sigint_received = 0;
 	}
 	reset_signals();

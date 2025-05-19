@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 10:00:33 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:40:49 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**env_to_array(t_gcnode **gc, t_env *env)
 		{
 			temp = gc_strjoin(gc, current->key, "=");
 			env_array[i] = gc_strjoin(gc, temp, current->value);
-			free(temp);
+			gc_free(gc, temp);
 			i++;
 		}
 		current = current->next;
@@ -115,7 +115,7 @@ void	set_env(t_gcnode **gc, t_env **env, char *key, char *value)
 	{
 		if (equal(current->key, key))
 		{
-			free(current->value);
+			gc_free(gc, current->value);
 			current->value = gc_strdup(gc, value);
 			return ;
 		}
@@ -125,15 +125,12 @@ void	set_env(t_gcnode **gc, t_env **env, char *key, char *value)
 	if (!new_var)
 		return ;
 	new_var->key = gc_strdup(gc, key);
-	if (!value)
-		new_var->value = NULL;
-	else
-		new_var->value = gc_strdup(gc, value);
+	new_var->value = gc_strdup(gc, value);
 	new_var->next = *env;
 	*env = new_var;
 }
 
-void	free_env(t_env *env)
+void	free_env(t_gcnode **gc, t_env *env)
 {
 	t_env	*current;
 	t_env	*next;
@@ -142,9 +139,9 @@ void	free_env(t_env *env)
 	while (current)
 	{
 		next = current->next;
-		free(current->key);
-		free(current->value);
-		free(current);
+		gc_free(gc, current->key);
+		gc_free(gc, current->value);
+		gc_free(gc, current);
 		current = next;
 	}
 }

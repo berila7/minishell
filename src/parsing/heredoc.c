@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/18 18:59:22 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:43:03 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ int handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
         line = readline("> ");
         if (g_sigint_received)
         {
-            free(line);
+            gc_free(gc, line);
             break ;
         }
             
         if (!line || equal(line, quoted_delim))
         {
-            free(line);
+            gc_free(gc, line);
             break;
         }
             
@@ -73,8 +73,8 @@ int handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
         ft_putstr_fd(expanded_str, hd_fd[1]);
         write(hd_fd[1], "\n", 1);
         if (expanded_str != line)
-            free(expanded_str);
-        free(line);
+            gc_free(gc, expanded_str);
+        gc_free(gc, line);
         
     }
     
@@ -84,7 +84,7 @@ int handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
     {
         close(hd_fd[0]);
         close(hd_fd[1]);
-        free(quoted_delim);
+        gc_free(gc, quoted_delim);
         
         exit_status(130, 1);
         return (1);
@@ -92,6 +92,6 @@ int handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
     setup_interactive_signals();
     restore_terminal();
     close(hd_fd[1]);
-    free(quoted_delim);
+    gc_free(gc, quoted_delim);
     return (0);
 }
