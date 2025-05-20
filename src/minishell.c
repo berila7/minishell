@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/20 19:53:51 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/20 20:21:20 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main(int ac, char *av[], char **envp)
 			gc_free(&gc, line);
 			continue ;
 		}
-		data->cmds = parse_tokens(&gc, tokens, data);
+		data->cmds = parse_tokens(tokens, data);
 		if (!data->cmds)
 		{
 			free_tokens(&gc, tokens);

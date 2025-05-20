@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/20 19:52:56 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/20 20:38:36 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char	*gc_strdup(t_gcnode **gc, char *src);
 
 t_token		*tokenize(char *line, t_data *data);
 void		free_tokens(t_gcnode **gc, t_token *tokens);
-t_cmd		*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data);
+t_cmd		*parse_tokens(t_token *tokens, t_data *data);
 void		free_commands(t_gcnode **gc, t_cmd *commands);
 void		free_command(t_gcnode **gc, t_cmd *cmd);
 void		free_env(t_gcnode **gc, t_env *env);
@@ -178,6 +178,12 @@ char		*ft_strjoin_char_free(t_gcnode **gc, char *str, char c);
 char		*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2);
 char		*word_split_join(t_gcnode **gc, char *dest, char *src);
 void		add_argument(t_gcnode **gc, t_cmd *cmd, char *arg);
+int			process_pipe_token(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list, t_data *data);
+int			process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list, int redir_type, t_data *data);
+int			handle_redir_error(t_cmd *cmd_list, t_cmd *current_cmd, t_data *data);
+int 		process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
+int			process_word_token(t_token **token, t_cmd *current_cmd, t_data *data);
+int			process_token(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list, t_data *data);
 void		process_token_word(t_gcnode **gc, t_token *token, t_cmd *current_cmd, t_data *data);
 t_env		*create_env_node(char *env_var);
 int			is_valid_var_char(char c);
