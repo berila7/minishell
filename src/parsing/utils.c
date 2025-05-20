@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 11:56:24 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:40:33 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,6 @@ char	*remove_quotes(t_gcnode **gc, char *str)
 	}
 	result[j] = '\0';
 	return (result);
-}
-
-void	free_data(t_gcnode **gc, t_data *data)
-{
-	if (data)
-	{
-		if (data->cmds)
-			free_commands(gc, data->cmds);
-		if (data->env)
-			free_env(&data->gc, data->env);
-		gc_free(gc, data);
-	}
 }
 
 int	validate_token(t_token *token)
