@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/19 11:59:11 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:58:46 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int			is_builtin(t_cmd *cmd);
 void		exec_builtin(t_cmd *cmd, t_data *data);
 
 void		ft_echo(char **args);
-int			ft_exit(char **args, t_data *data);
+int			ft_exit(char **args);
 int			ft_env(t_env *env);
 void		ft_unset(char **args, t_data *data);
 void		ft_pwd(t_data *data);

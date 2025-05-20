@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/19 11:57:54 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/20 17:04:31 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,12 @@ void	exec_builtin(t_cmd *cmd, t_data *data)
 	else if (equal(name, "env"))
 		ft_env(data->env);
 	else if (equal(name, "exit"))
-		ft_exit(cmd->args, data);
+		ft_exit(cmd->args);
 	dup2_og(data);
 	if (equal(name, "exit"))
 	{
-		ext_status = exit_status(0, 0);
 		gc_free_all(&data->gc);
+		ext_status = exit_status(0, 0);
 		exit(ext_status);
 	}
 }
