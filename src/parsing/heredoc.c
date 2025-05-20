@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 11:14:50 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/19 15:05:44 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void restore_terminal(void)
+void	restore_terminal(void)
 {
-    struct termios term;
-    tcgetattr(STDIN_FILENO, &term);
-    term.c_lflag |= (ICANON | ECHO); // Restore canonical mode and echo
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag |= (ICANON | ECHO);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 int	open_heredoc(int *fd)
@@ -34,64 +35,62 @@ int	open_heredoc(int *fd)
 	return (0);
 }
 
-int handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
+void	cleanup(t_gcnode **gc, int *hd_fd, char *delim, int dupped_in)
 {
-    char    *expanded_str;
-    char    *line = NULL;
-    char    *quoted_delim;
-    int     hd_fd[2];
-    int dupped_in = dup(STDIN_FILENO);
-    
-    if (open_heredoc(hd_fd))
-        return (1);
-    *hd_in = hd_fd[0];
-    quoted_delim = remove_quotes(gc, del);
+	dup2(dupped_in, STDIN_FILENO);
+	close(hd_fd[0]);
+	close(hd_fd[1]);
+	gc_free(gc, delim);
+	exit_status(130, 1);
+}
 
-    g_sigint_received = 0;
-    setup_heredoc_signals();
-    data->in_heredoc = 1;
-    while (1)
-    {
-        line = readline("> ");
-        if (g_sigint_received)
-        {
-            gc_free(gc, line);
-            break ;
-        }
-            
-        if (!line || equal(line, quoted_delim))
-        {
-            gc_free(gc, line);
-            break;
-        }
-            
-        if (del[0] == '\'' || del[0] == '\"')
-            expanded_str = line;
-        else
-            expanded_str = expand_variables(gc, line, data);
-        
-        ft_putstr_fd(expanded_str, hd_fd[1]);
-        write(hd_fd[1], "\n", 1);
-        if (expanded_str != line)
-            gc_free(gc, expanded_str);
-        gc_free(gc, line);
-        
-    }
-    
-    dup2(dupped_in, STDIN_FILENO);
-    
-    if (g_sigint_received)
-    {
-        close(hd_fd[0]);
-        close(hd_fd[1]);
-        gc_free(gc, quoted_delim);
-        
-        exit_status(130, 1);
-        return (1);
-    }
-    setup_interactive_signals();
-    restore_terminal();
-    close(hd_fd[1]);
-    gc_free(gc, quoted_delim);
-    return (0);
+int	heredoc_loop(t_gcnode **gc, char *del, char *delim, int hd_out, t_data *data)
+{
+	char	*line;
+	char	*expanded_str;
+
+	line = NULL;
+	while (1)
+	{
+		line = readline("> ");
+		if (g_sigint_received || !line || equal(line, delim))
+		{
+			gc_free(gc, line);
+			break ;
+		}
+		if (del[0] == '\'' || del[0] == '\"')
+			expanded_str = line;
+		else
+			expanded_str = expand_variables(gc, line, data);
+		ft_putstr_fd(expanded_str, hd_out);
+		write(hd_out, "\n", 1);
+		if (expanded_str != line)
+			gc_free(gc, expanded_str);
+		gc_free(gc, line);
+	}
+	return (g_sigint_received);
+}
+
+int	handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
+{
+	char	*quoted_delim;
+	int		hd_fd[2];
+	int		og_stdin;
+
+	og_stdin = dup(STDIN_FILENO);
+	if (open_heredoc(hd_fd))
+		return (1);
+	*hd_in = hd_fd[0];
+	quoted_delim = remove_quotes(gc, del);
+	setup_heredoc_signals();
+	data->in_heredoc = 1;
+	g_sigint_received = 0;
+	if (heredoc_loop(gc, del, quoted_delim, hd_fd[1], data))
+		return (cleanup(gc, hd_fd, quoted_delim, og_stdin), 1);
+	dup2(og_stdin, STDIN_FILENO);
+	setup_interactive_signals();
+	restore_terminal();
+	close(hd_fd[1]);
+	gc_free(gc, quoted_delim);
+	return (0);
 }

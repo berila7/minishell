@@ -6,9 +6,10 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/20 16:58:46 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/20 19:29:10 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef MINISHELL_H
@@ -183,6 +184,7 @@ void		add_token(t_token **tokens, t_token *new_token);
 t_token		*new_token(t_gcnode **gc, char *value, t_token_type type);
 t_cmd		*new_command(t_gcnode **gc);
 char		*gc_itoa(t_gcnode **gc, int n);
+void		env_append(t_env **env, t_env *new_node);
 void		add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file);
 void		init_expand_vars(t_expand *exp);
 void		handle_quoted_word(char *expanded, t_cmd *current_cmd);
@@ -198,7 +200,7 @@ char		*gc_substr(t_gcnode **gc, const char *s, unsigned int start, size_t len);
 void		gc_free(t_gcnode **gc, void *ptr);
 
 // char		*remove_escape_chars(char *str);
-void		extract_word(t_gcnode **gc, t_token **tokens, char *line, int *i, t_data *data);
+void		extract_word(t_token **tokens, char *line, int *i, t_data *data);
 // builtins:
 int			is_builtin(t_cmd *cmd);
 void		exec_builtin(t_cmd *cmd, t_data *data);
