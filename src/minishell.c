@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/20 19:45:22 by berila           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/05/20 19:53:51 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 
@@ -38,6 +40,8 @@ int main(int ac, char *av[], char **envp)
 	(void)ac;
 	(void)av;
 
+	if (!isatty(STDIN_FILENO))
+		return (print_err("STDIN is not a valid tty\n", NULL), 1);
 	gc = NULL;
 	data = gc_malloc(&gc, sizeof(t_data));
 	data->gc = gc;

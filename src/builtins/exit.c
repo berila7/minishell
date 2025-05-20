@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 12:25:20 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:50:38 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,12 @@ int	is_long(const char *str)
 	return (1);
 }
 
-int	ft_exit(char **args, t_data *data)
+int	ft_exit(char **args)
 {
 	int		status;
 	long	nb;
 
 	status = 0;
-	(void)data;
 	printf("exit\n");
 	if (args[1] && !is_long(args[1]))
 	{

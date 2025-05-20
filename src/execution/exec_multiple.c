@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 17:54:58 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:19:10 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,13 @@ int	exec_multiple_cmd(t_data *data)
 	{
 		child1(cmd, data, &last_pid);
 		if (cmd->hd_fd != -1)
-			close(cmd->hd_fd);
+		close(cmd->hd_fd);
 		cmd = cmd->next;
 	}
 	close_hds(data);
-	exit_status = ft_wait(last_pid, 0);
 	dup2_og(data);
+	exit_status = ft_wait(last_pid, 0);
+	// exit_status(1, exit_status);
+	printf("hi 2\n");
 	return (exit_status);
 }

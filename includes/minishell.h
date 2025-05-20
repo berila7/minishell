@@ -6,9 +6,10 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/20 19:36:54 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/20 19:52:56 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef MINISHELL_H
@@ -206,7 +207,7 @@ int			is_builtin(t_cmd *cmd);
 void		exec_builtin(t_cmd *cmd, t_data *data);
 
 void		ft_echo(char **args);
-int			ft_exit(char **args, t_data *data);
+int			ft_exit(char **args);
 int			ft_env(t_env *env);
 void		ft_unset(char **args, t_data *data);
 void		ft_pwd(t_data *data);

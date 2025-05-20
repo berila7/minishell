@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:01:58 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/19 11:27:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/20 17:18:25 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_gc_nodes(t_gcnode *gc) {
 	t_gcnode *curr = gc;
 	while (curr)
 	{
-		printf("Node %d: ptr = %p\n", i, curr->ptr);
+		printf("Node [%d]: value: ptr = %p\n", i, curr->ptr);
 		curr = curr->next;
 		i++;
     }
@@ -32,7 +32,8 @@ void	gc_free(t_gcnode **gc, void *ptr)
 
 	curr = *gc;
 	prev = NULL;
-	while (curr) {
+	while (curr)
+	{
 		if (curr->ptr == ptr) {
 			if (prev)
 				prev->next = curr->next;
@@ -54,7 +55,7 @@ void	gc_free_all(t_gcnode **gc)
 	t_gcnode	*curr;
 	t_gcnode	*next;
 
-	if (!gc)
+	if (!gc	|| !*gc)
 		return ;
 	print_gc_nodes(*gc);
 	curr = *gc;
@@ -62,14 +63,10 @@ void	gc_free_all(t_gcnode **gc)
 	{
 		next = curr->next;
 		if (curr->ptr)
-		{
 			free(curr->ptr);
-			curr->ptr = NULL;
-		}
 		free(curr);
 		curr = next;
 	}
-	*gc = NULL;
 }
 
 static void	append_gc(t_gcnode **gc, void *ptr)
