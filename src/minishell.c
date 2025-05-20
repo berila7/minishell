@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/19 11:04:02 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:45:22 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int main(int ac, char *av[], char **envp)
 	gc = NULL;
 	data = gc_malloc(&gc, sizeof(t_data));
 	data->gc = gc;
+	data->hered_count = 0;
 	data->env = init_env(&gc, envp);
 	setup_interactive_signals();
 	print_header();
@@ -67,7 +68,7 @@ int main(int ac, char *av[], char **envp)
     	}
 		if (line[0])
 			add_history(line);
-		tokens = tokenize(&gc, line, data);
+		tokens = tokenize(line, data);
 		if (!tokens || !validate_token(tokens))
 		{
 			free_tokens(&gc, tokens);
@@ -92,7 +93,8 @@ int main(int ac, char *av[], char **envp)
 		
 		exec(data);
 		
-		
+		printf("number of heredocs [%d]\n", data->hered_count);
+		data->hered_count = 0;
 		free_tokens(&gc, tokens);
 		free_commands(&gc, data->cmds);
 		data->cmds = NULL;

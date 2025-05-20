@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/19 17:04:19 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/20 19:36:54 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ struct s_data
 	t_gcnode	*gc;
 	int			pipe[2];
 	int			og_fd[2];
+	int			hered_count;
 	int			in_heredoc;
 	int			is_export;
 };
@@ -150,7 +151,7 @@ char	*gc_strdup(t_gcnode **gc, char *src);
 
 
 
-t_token		*tokenize(t_gcnode **gc, char *line, t_data *data);
+t_token		*tokenize(char *line, t_data *data);
 void		free_tokens(t_gcnode **gc, t_token *tokens);
 t_cmd		*parse_tokens(t_gcnode **gc, t_token *tokens, t_data *data);
 void		free_commands(t_gcnode **gc, t_cmd *commands);
