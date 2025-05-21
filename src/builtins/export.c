@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/19 12:26:00 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/21 21:21:23 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@ static int	print_env(t_env *env)
 	return (0);
 }
 
-static void	create_env(char *equals, char *arg, t_data *data)
+static void	create_env(char *key, char *arg, t_data *data)
 {
-	char	*key;
 	char	*val;
+	char	*equals;
 
-	key = gc_substr(&data->gc, arg, 0, (equals - arg));
+	equals = ft_strchr(arg, '=');
 	if (*(equals - 1) == '+')
 	{
-		key[ft_strlen(key) - 1] = '\0';
 		val = get_env(data->env, key);
 		if (!val)
 			val = gc_strdup(&data->gc, "");
@@ -61,9 +60,23 @@ int	env_exists(t_env *env, char *key)
 	return (0);
 }
 
+char	*get_key(t_gcnode **gc, char *arg)
+{
+    char	*equals;
+	size_t	key_len;
+
+	equals = ft_strchr(arg, '=');
+    if (equals) {
+        key_len = equals - arg;
+		if (arg[key_len - 1] == '+')
+			key_len--;
+		return (gc_substr(gc, arg, 0, key_len));
+    }
+    return (gc_strdup(gc, arg));
+}
+
 void	ft_export(char **args, t_data *data)
 {
-	char	*equals;
 	char	*key;
 	int		i;
 
@@ -74,16 +87,19 @@ void	ft_export(char **args, t_data *data)
 		i = 1;
 		while (args[i])
 		{
-			equals = ft_strchr(args[i], '=');
-			if (equals)
-				create_env(equals, args[i], data);
-			else if (!env_exists(data->env, args[i]))
-			{
-				printf("\n=====================> env key does not exists, create new envwith key: %s\n\n", key);
-				key = gc_strdup(&data->gc, args[i]);
-				set_env(&data->gc, &data->env, key, NULL);
+			key = get_key(&data->gc, args[i]);
+			if (!is_valid_env_key(key))
+				print_err("export: '%s': not a valid identifier\n", args[i]);
+			else
+			{	
+				if (ft_strchr(args[i], '='))
+					create_env(key, args[i], data);
+				else if (!env_exists(data->env, key))
+					set_env(&data->gc, &data->env, key, NULL);
 			}
 			i++;
 		}
 	}
 }
+
+// if (!is_valid_env_key(key))
