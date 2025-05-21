@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/20 20:41:12 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/21 21:21:23 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	env_exists(t_env *env, char *key)
 	return (0);
 }
 
-char	*get_key(t_gcnode *gc, char *arg)
+char	*get_key(t_gcnode **gc, char *arg)
 {
     char	*equals;
 	size_t	key_len;
@@ -75,9 +75,8 @@ char	*get_key(t_gcnode *gc, char *arg)
     return (gc_strdup(gc, arg));
 }
 
-int	ft_export(char **args, t_data *data)
+void	ft_export(char **args, t_data *data)
 {
-	char	*equals;
 	char	*key;
 	int		i;
 
@@ -89,12 +88,14 @@ int	ft_export(char **args, t_data *data)
 		while (args[i])
 		{
 			key = get_key(&data->gc, args[i]);
-			if (ft_strchr(args[i], '='))
-				create_env(key, args[i], data);
-			else if (!env_exists(data->env, args[i]))
-			{
-				key = gc_strdup(&data->gc, args[i]);
-				set_env(&data->gc, &data->env, key, NULL);
+			if (!is_valid_env_key(key))
+				print_err("export: '%s': not a valid identifier\n", args[i]);
+			else
+			{	
+				if (ft_strchr(args[i], '='))
+					create_env(key, args[i], data);
+				else if (!env_exists(data->env, key))
+					set_env(&data->gc, &data->env, key, NULL);
 			}
 			i++;
 		}
