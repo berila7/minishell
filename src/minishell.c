@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 09:38:11 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/20 19:34:02 by ayoub            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/05/20 20:21:20 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 
@@ -43,6 +45,7 @@ int main(int ac, char *av[], char **envp)
 	gc = NULL;
 	data = gc_malloc(&gc, sizeof(t_data));
 	data->gc = gc;
+	data->hered_count = 0;
 	data->env = init_env(&gc, envp);
 	setup_interactive_signals();
 	print_header();
@@ -69,14 +72,14 @@ int main(int ac, char *av[], char **envp)
     	}
 		if (line[0])
 			add_history(line);
-		tokens = tokenize(&gc, line, data);
+		tokens = tokenize(line, data);
 		if (!tokens || !validate_token(tokens))
 		{
 			free_tokens(&gc, tokens);
 			gc_free(&gc, line);
 			continue ;
 		}
-		data->cmds = parse_tokens(&gc, tokens, data);
+		data->cmds = parse_tokens(tokens, data);
 		if (!data->cmds)
 		{
 			free_tokens(&gc, tokens);
@@ -94,7 +97,8 @@ int main(int ac, char *av[], char **envp)
 		
 		exec(data);
 		
-		
+		printf("number of heredocs [%d]\n", data->hered_count);
+		data->hered_count = 0;
 		free_tokens(&gc, tokens);
 		free_commands(&gc, data->cmds);
 		data->cmds = NULL;

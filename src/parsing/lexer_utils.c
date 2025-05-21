@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/05/19 17:35:39 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/20 20:15:39 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,10 @@ void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 			|| (*tokens)->type == TOKEN_REDIR_OUT
 		)
 			data->is_export = 0;
+		if (((*tokens)->next && equal((*tokens)->value, "export"))
+			&& (*tokens)->next->value[0] == '$'
+		)
+			data->is_export = 1;
 		gc_free(&data->gc, word);
 	}
 }
