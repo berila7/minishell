@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:53 by berila            #+#    #+#             */
-/*   Updated: 2025/05/19 17:39:36 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 11:21:22 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cmd	*new_command(t_gcnode **gc)
 {
 	t_cmd	*cmd;
 
-	cmd = gc_malloc(gc ,sizeof(t_cmd));
+	cmd = gc_malloc(gc, sizeof(t_cmd));
 	cmd->args = gc_malloc(gc, sizeof(char *) * 2);
 	cmd->hd_fd = -1;
 	if (!cmd->args)
@@ -79,6 +79,7 @@ void	add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file)
 	cmd->redirections = new_redirs;
 	cmd->redir_count++;
 }
+
 void	add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data)
 {
 	t_cmd	*current;
@@ -93,4 +94,11 @@ void	add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data)
 	while (current->next)
 		current = current->next;
 	current->next = new_cmd;
+}
+
+int	process_word_token(t_token **token, t_cmd *current_cmd, t_data *data)
+{
+	process_token_word(&data->gc, *token, current_cmd, data);
+	*token = (*token)->next;
+	return (1);
 }

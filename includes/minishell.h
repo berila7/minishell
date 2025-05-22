@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/21 21:21:14 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/22 11:58:33 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ char		*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2);
 char		*word_split_join(t_gcnode **gc, char *dest, char *src);
 void		add_argument(t_gcnode **gc, t_cmd *cmd, char *arg);
 int			process_pipe_token(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list, t_data *data);
-int			process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list, int redir_type, t_data *data);
+int			process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list	, t_data *data);
 int			handle_redir_error(t_cmd *cmd_list, t_cmd *current_cmd, t_data *data);
 int 		process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
 int			process_word_token(t_token **token, t_cmd *current_cmd, t_data *data);
