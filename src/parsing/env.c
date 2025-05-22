@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/20 20:17:25 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/22 15:49:00 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_env	*init_env(t_gcnode **gc, char	**envp)
 
 	env_list = NULL;
 	i = 0;
+	if (!envp)
+		return (NULL);
 	while (envp[i])
 	{
 		equals = ft_strchr(envp[i], '=');
