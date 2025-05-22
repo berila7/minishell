@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 15:52:25 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 17:02:59 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int main(int ac, char *av[], char **envp)
 	data->gc = gc;
 	data->hered_count = 0;
 	data->env = init_env(&gc, envp);
-	if (!data->env)
-		set_env(&gc, &data->env, "PATH", "/usr/local/sbin:/usr/local/bin:/usr/bin");
+	if (!env_exists(data->env, "PATH"))
+		set_env(&gc, &data->env, "PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
 	set_default_env(data);
 	setup_interactive_signals();
 	print_header();
