@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/22 11:50:46 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:38:44 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 						t_data *data)
 {
 	char	*expanded;
-	int redir_type;
+	int		redir_type;
 
 	redir_type = set_redir_type((*token)->type);
 	*token = (*token)->next;
@@ -99,33 +99,6 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	else
 	{
 		printf("minishell: syntax error near unexpected token 'newline'\n");
-		exit_status(2, 1);
-		free_commands(&data->gc, cmd_list);
-		free_command(&data->gc, current_cmd);
-		return (0);
-	}
-}
-
-int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
-				t_data *data)
-{
-	*token = (*token)->next;
-	if (*token && (*token)->type == TOKEN_WORD)
-	{
-		if (handle_herdoc(&data->gc, (*token)->value,
-				&current_cmd->hd_fd, data))
-		{
-			free_commands(&data->gc, cmd_list);
-			free_command(&data->gc, current_cmd);
-			return (0);
-		}
-		add_redirection(&data->gc, current_cmd, REDIR_HEREDOC, (*token)->value);
-		*token = (*token)->next;
-		return (1);
-	}
-	else
-	{
-		printf("minishell: syntax error near unexpected token '<<'\n");
 		exit_status(2, 1);
 		free_commands(&data->gc, cmd_list);
 		free_command(&data->gc, current_cmd);

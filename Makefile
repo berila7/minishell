@@ -19,6 +19,7 @@ SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c $(SRC_DIR)/gc.c \
 					$(PARSING_DIR)/utils.c $(PARSING_DIR)/heredoc.c $(PARSING_DIR)/signals.c \
 					$(PARSING_DIR)/expand.c $(PARSING_DIR)/env_utils.c $(PARSING_DIR)/lexer_utils.c \
 					$(PARSING_DIR)/parser_utils.c $(PARSING_DIR)/free.c $(PARSING_DIR)/setup_signals.c \
+					$(PARSING_DIR)/expand_utils.c $(PARSING_DIR)/expand_utils2.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c \
 					$(BUILTINS_DIR)/builtins_utils.c $(BUILTINS_DIR)/pwd.c $(BUILTINS_DIR)/unset.c \
 					$(BUILTINS_DIR)/cd.c $(BUILTINS_DIR)/export.c $(BUILTINS_DIR)/builtins_helpers.c \
