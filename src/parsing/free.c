@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:38:22 by berila            #+#    #+#             */
-/*   Updated: 2025/05/19 17:40:40 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 11:25:58 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	free_commands(t_gcnode **gc, t_cmd *commands)
 		current = next;
 	}
 }
+
 void	free_tokens(t_gcnode **gc, t_token *tokens)
 {
 	t_token	*current;

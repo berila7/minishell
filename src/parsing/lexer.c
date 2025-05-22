@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/20 19:51:03 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 11:55:15 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	handle_redin_tokens(t_data *data, t_token **token, char *line, int *i)
 			data->hered_count++;
 			if (data->hered_count > 16)
 			{
-				print_err("minishell: maximum here-document count exceeded\n", NULL);
+				print_err("minishell: maximum\
+					here-document count exceeded\n", NULL);
 				gc_free_all(&data->gc);
 				exit(2);
 			}
