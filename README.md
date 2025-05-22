@@ -1,6 +1,5 @@
 # minishell
 
-
 A simple Unix shell implementation made as a 42 project.
 
 ## ✨ Features
