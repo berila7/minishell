@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:52:21 by berila            #+#    #+#             */
-/*   Updated: 2025/05/19 14:52:24 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:14:12 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,18 @@ void	env_append(t_env **env, t_env *new_node)
 	while (current->next)
 		current = current->next;
 	current->next = new_node;
+}
+
+void	set_default_env(t_data *data)
+{
+	char	*cwd;
+
+	if (!env_exists(data->env, "OLDPWD"))
+		set_env(&data->gc, &data->env, "OLDPWD", NULL);
+	if (!env_exists(data->env, "PWD"))
+	{
+		cwd = getcwd(NULL, 0);
+		set_env(&data->gc, &data->env, "PWD", cwd);
+		free(cwd);
+	}
 }

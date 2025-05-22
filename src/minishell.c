@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/20 20:21:20 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:15:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int main(int ac, char *av[], char **envp)
 	data->gc = gc;
 	data->hered_count = 0;
 	data->env = init_env(&gc, envp);
+	set_default_env(data);
 	setup_interactive_signals();
 	print_header();
 	while (1)
@@ -97,7 +98,7 @@ int main(int ac, char *av[], char **envp)
 		
 		exec(data);
 		
-		printf("number of heredocs [%d]\n", data->hered_count);
+		// printf("number of heredocs [%d]\n", data->hered_count);
 		data->hered_count = 0;
 		free_tokens(&gc, tokens);
 		free_commands(&gc, data->cmds);

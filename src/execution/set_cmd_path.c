@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/19 10:29:27 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/22 14:57:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,13 @@ void	set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env)
 	while (cmd)
 	{
 		if (cmd->args && cmd->args[0] && cmd->args[0][0])
-			cmd->path = get_cmd_path(gc, cmd->args[0], env);
+		{
+			
+			if (is_builtin(cmd))
+				cmd->path = gc_strdup(gc, "builtin");
+			else
+				cmd->path = get_cmd_path(gc, cmd->args[0], env);
+		}
 		cmd = cmd->next;
 	}
 }
