@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/14 21:47:54 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/20 20:11:59 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,19 @@ int	open_infile(char *path, t_cmd *cmd)
 	if (count_args(cmd->args) > 0)
 		ft_dup2(fd, STDIN_FILENO);
 	return (0);
+}
+
+int	is_valid_env_key(char *str)
+{
+	size_t	i;
+
+	if (!str || (str[0] != '_' && !ft_isalpha(str[0])))
+		return (0);
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] != '_' && !ft_isalnum(str[i]))
+			return (0);
+	}
+	return (1);	
 }

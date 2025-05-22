@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 11:53:42 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 11:58:33 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,8 +209,8 @@ void		gc_free(t_gcnode **gc, void *ptr);
 // char		*remove_escape_chars(char *str);
 void		extract_word(t_token **tokens, char *line, int *i, t_data *data);
 // builtins:
-int			is_builtin(t_cmd *cmd);
 void		exec_builtin(t_cmd *cmd, t_data *data);
+
 
 void		ft_echo(char **args);
 int			ft_exit(char **args);
@@ -223,6 +223,7 @@ void		ft_export(char **args, t_data *data);
 int			open_infile(char *path, t_cmd *cmd);
 int			open_outfile(char *file, int mode);
 int			is_builtin(t_cmd *cmd);
+int			is_valid_env_key(char *str);
 
 
 // exec utils:
