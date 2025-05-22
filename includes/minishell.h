@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 15:40:19 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:45:10 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define MINISHELL_H
 
 # define __USE_POSIX
-# define _POSIX_C_SOURCE 199309L
+# define _POSIX_C_SOURCE 200809L
 
 # include <signal.h>
 # include <fcntl.h>
@@ -25,7 +25,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
-# include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/stat.h> 
 # include <string.h>
@@ -182,7 +181,7 @@ int 		process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list
 int			process_word_token(t_token **token, t_cmd *current_cmd, t_data *data);
 int			process_token(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list, t_data *data);
 void		process_token_word(t_gcnode **gc, t_token *token, t_cmd *current_cmd, t_data *data);
-t_env		*create_env_node(char *env_var);
+int			check_quotes_in_token(char *value);
 int			is_valid_var_char(char c);
 void		add_token(t_token **tokens, t_token *new_token);
 t_token		*new_token(t_gcnode **gc, char *value, t_token_type type);
@@ -197,20 +196,15 @@ int			handle_variable(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_exit_status(t_gcnode **gc, int i, t_expand *exp);
 int			handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_named_var(t_gcnode **gc, char *str, int i, t_expand *exp);
+int			noquotes_len(char *str);
 int			get_var_name_end(char *str, int i);
 int			process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp);
 void		add_var_to_result(t_gcnode **gc, char *var_value, t_expand *exp);
 int			process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
 int			process_char(t_gcnode **gc, char *str, int i, t_expand *exp);
-void		init_expand_vars(t_expand *exp);
-void		handle_quoted_word(char *expanded, t_cmd *current_cmd);
-int			has_quotes_in_token(char *str);
-void		handle_unquoted_word(char *expanded, t_cmd *current_cmd);
-int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list);
-void		init_parser(t_cmd **current_cmd, t_cmd **cmd_list);
+void		process_unquoted_token(t_gcnode **gc, char *expanded, t_cmd *current_cmd);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
-int			skip_spaces(char *src, int i);
-char		*handle_space(char *result, int *was_space);
+void		process_quoted_token(t_gcnode **gc, char *expanded, t_cmd *current_cmd);
 int			exit_status(int	status, int	is_accessor);
 char		*gc_substr(t_gcnode **gc, const char *s, unsigned int start, size_t len);
 void		gc_free(t_gcnode **gc, void *ptr);
@@ -266,7 +260,7 @@ void		check_fds_in_child(const char *msg);
 
 
 // Signal handling
-extern volatile sig_atomic_t g_sigint_received;
+extern int g_sigint_received;
 void	setup_interactive_signals(void);
 void	setup_heredoc_signals(void);
 void	setup_exec_signals(void);

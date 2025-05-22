@@ -6,9 +6,11 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 17:21:51 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/22 20:56:34 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 
 
@@ -57,6 +59,7 @@ int main(int ac, char *av[], char **envp)
 	(void)ac;
 	(void)av;
 
+	rl_catch_signals = 0;
 	if (!isatty(STDIN_FILENO))
 		return (print_err("STDIN is not a valid tty\n", NULL), 1);
 	// check if current dir is deleted:
@@ -78,7 +81,6 @@ int main(int ac, char *av[], char **envp)
 			printf( "✔ " );
 		else
 			printf( "✘ " );
-		setup_interactive_signals();
 		line = readline("minishell ➤ ");
 		if (!line)
     	{
@@ -119,7 +121,7 @@ int main(int ac, char *av[], char **envp)
 		setup_exec_signals();
 		
 		exec(data);
-		
+		setup_interactive_signals();
 		data->hered_count = 0;
 		free_tokens(&gc, tokens);
 		free_commands(&gc, data->cmds);
@@ -127,7 +129,6 @@ int main(int ac, char *av[], char **envp)
 		gc_free(&gc, line);
 		g_sigint_received = 0;
 	}
-	reset_signals();
 	clear_history();
 	gc_free_all(&gc);
 	return (0);
