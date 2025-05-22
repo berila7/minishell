@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/22 11:25:04 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:34:51 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t	g_sigint_received = 0;
+int	g_sigint_received = 0;
 
 void	signal_handler_interactive(int signum)
 {

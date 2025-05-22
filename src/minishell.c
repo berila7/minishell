@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 17:02:59 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:47:14 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int main(int ac, char *av[], char **envp)
 	(void)ac;
 	(void)av;
 
+	rl_catch_signals = 0;
 	if (!isatty(STDIN_FILENO))
 		return (print_err("STDIN is not a valid tty\n", NULL), 1);
 	gc = NULL;
@@ -59,7 +60,6 @@ int main(int ac, char *av[], char **envp)
 			printf( "✔ " );
 		else
 			printf( "✘ " );
-		setup_interactive_signals();
 		line = readline("minishell ➤ ");
 		if (!line)
     	{
@@ -100,7 +100,7 @@ int main(int ac, char *av[], char **envp)
 		setup_exec_signals();
 		
 		exec(data);
-		
+		setup_interactive_signals();
 		data->hered_count = 0;
 		free_tokens(&gc, tokens);
 		free_commands(&gc, data->cmds);
@@ -108,7 +108,6 @@ int main(int ac, char *av[], char **envp)
 		gc_free(&gc, line);
 		g_sigint_received = 0;
 	}
-	reset_signals();
 	clear_history();
 	gc_free_all(&gc);
 	return (0);

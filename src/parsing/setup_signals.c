@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:24:44 by berila            #+#    #+#             */
-/*   Updated: 2025/05/22 11:25:07 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:39:42 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	setup_interactive_signals(void)
 	struct sigaction	sa_int;
 
 	sa_int.sa_handler = &signal_handler_interactive;
-	sa_int.sa_flags = 0;
+	sa_int.sa_flags = SA_RESTART;
 	sigemptyset(&sa_int.sa_mask);
 	sigaction(SIGINT, &sa_int, NULL);
 	signal(SIGQUIT, SIG_IGN);

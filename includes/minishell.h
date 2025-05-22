@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 17:40:37 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:45:10 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define MINISHELL_H
 
 # define __USE_POSIX
-# define _POSIX_C_SOURCE 199309L
+# define _POSIX_C_SOURCE 200809L
 
 # include <signal.h>
 # include <fcntl.h>
@@ -25,7 +25,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
-# include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/stat.h> 
 # include <string.h>
@@ -261,7 +260,7 @@ void		check_fds_in_child(const char *msg);
 
 
 // Signal handling
-extern volatile sig_atomic_t g_sigint_received;
+extern int g_sigint_received;
 void	setup_interactive_signals(void);
 void	setup_heredoc_signals(void);
 void	setup_exec_signals(void);
