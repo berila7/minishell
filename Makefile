@@ -27,7 +27,7 @@ SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/debug.c $(SRC_DIR)/gc.c \
 					$(EXEC_DIR)/exec_multiple.c $(EXEC_DIR)/exec_single.c $(EXEC_DIR)/utils2.c \
 					$(HELPERS_DIR)/atol.c $(HELPERS_DIR)/gc_strdup.c $(HELPERS_DIR)/gc_strjoin.c \
 					$(HELPERS_DIR)/gc_split.c $(HELPERS_DIR)/print_err.c $(HELPERS_DIR)/gc_substr.c \
-					$(HELPERS_DIR)/gc_itoa.c
+					$(HELPERS_DIR)/gc_itoa.c $(HELPERS_DIR)/utils.c
 OBJS			=	$(SRCS:.c=.o)
 
 all: $(LIBFT_DIR) $(NAME)
