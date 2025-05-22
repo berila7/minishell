@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:01:21 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/14 18:17:58 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/22 14:59:38 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_env(t_env *env)
 {
 	t_env	*current;
 
+	if (!env)
+		print_err("No env vars here!\n\n", NULL);
 	current = env;
 	while (current)
 	{

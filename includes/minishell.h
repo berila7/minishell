@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 15:38:21 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:40:19 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ int			ft_exit(char **args);
 int			ft_env(t_env *env);
 void		ft_unset(char **args, t_data *data);
 void		ft_pwd(t_data *data);
-void		ft_cd(char **args, t_data *data);
+int			ft_cd(char **args, t_data *data);
 void		ft_export(char **args, t_data *data);
 
 int			open_infile(char *path, t_cmd *cmd);
@@ -244,12 +244,14 @@ char		*join_path(t_gcnode **gc, char *path, char *cmd);
 int			count_cmd(t_cmd *cmd);
 int			ft_dup2(int oldfd, int newfd);
 char		**env_to_array(t_gcnode **gc, t_env *env);
+int			env_exists(t_env *env, char *key);
 int			handle_redirections(t_cmd *cmd, t_data *data);
 int			ft_wait(pid_t last_pid, int default_st);
 void		dup2_og(t_data *data);
 void		dup_og(t_data *data);
 void		close2(int *fds);
 void		close_pipes(t_data *data);
+void		set_default_env(t_data *data);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
