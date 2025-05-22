@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 17:02:59 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/22 17:21:51 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,23 @@ static void	print_header()
 	printf("\n╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n\n" );
 }
 
+void check_dir()
+{
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		print_err("%s: error retrieving current directory\n", "minishell");
+		perror("getcwd");
+	}
+	else
+	{
+		perror("mygetcwd did not fail");
+		free(cwd);
+	}
+}
+
 int main(int ac, char *av[], char **envp)
 {
 	t_gcnode	*gc;
@@ -42,6 +59,8 @@ int main(int ac, char *av[], char **envp)
 
 	if (!isatty(STDIN_FILENO))
 		return (print_err("STDIN is not a valid tty\n", NULL), 1);
+	// check if current dir is deleted:
+	check_dir();
 	gc = NULL;
 	data = gc_malloc(&gc, sizeof(t_data));
 	data->gc = gc;

@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/19 11:39:14 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:54:57 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#include <sys/wait.h>
+#include <unistd.h>
 
 int	ft_wait(pid_t last_pid, int default_st)
 {
@@ -23,11 +26,18 @@ int	ft_wait(pid_t last_pid, int default_st)
 	while (pid != -1)
 	{
 		if (pid == last_pid)
-			exit_st = WEXITSTATUS(status);
+		{
+			if (WIFEXITED(status))
+				exit_st = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				exit_st = 128 + WTERMSIG(status);
+		}
 		pid = wait(&status);
 	}
+	printf("exit_st: %d\n", exit_st);
 	return (exit_st);
 }
+
 
 
 
