@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:01:58 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/20 17:18:25 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/22 12:40:52 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	gc_free_all(t_gcnode **gc)
 
 	if (!gc	|| !*gc)
 		return ;
-	print_gc_nodes(*gc);
+	// print_gc_nodes(*gc);
 	curr = *gc;
 	while (curr)
 	{

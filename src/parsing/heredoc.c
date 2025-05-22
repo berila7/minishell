@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/22 11:34:22 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/22 12:40:13 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	cleanup(t_gcnode **gc, int *hd_fd, char *delim, int dupped_in)
 	exit_status(130, 1);
 }
 
-int	heredoc_loop(t_gcnode **gc, char *del, char *delim, int hd_out, t_data *data)
+int	heredoc_loop(char *del, char *delim, int hd_out, t_data *data)
 {
 	char	*line;
 	char	*expanded_str;
@@ -55,18 +55,18 @@ int	heredoc_loop(t_gcnode **gc, char *del, char *delim, int hd_out, t_data *data
 		line = readline("> ");
 		if (g_sigint_received || !line || equal(line, delim))
 		{
-			gc_free(gc, line);
+			gc_free(&data->gc, line);
 			break ;
 		}
 		if (del[0] == '\'' || del[0] == '\"')
 			expanded_str = line;
 		else
-			expanded_str = expand_variables(gc, line, data);
+			expanded_str = expand_variables(&data->gc, line, data);
 		ft_putstr_fd(expanded_str, hd_out);
 		write(hd_out, "\n", 1);
 		if (expanded_str != line)
-			gc_free(gc, expanded_str);
-		gc_free(gc, line);
+			gc_free(&data->gc, expanded_str);
+		gc_free(&data->gc, line);
 	}
 	return (g_sigint_received);
 }
@@ -85,7 +85,7 @@ int	handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
 	setup_heredoc_signals();
 	data->in_heredoc = 1;
 	g_sigint_received = 0;
-	if (heredoc_loop(gc, del, quoted_delim, hd_fd[1], data))
+	if (heredoc_loop(del, quoted_delim, hd_fd[1], data))
 		return (cleanup(gc, hd_fd, quoted_delim, og_stdin), 1);
 	dup2(og_stdin, STDIN_FILENO);
 	setup_interactive_signals();
