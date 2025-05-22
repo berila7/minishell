@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 20:56:34 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/22 20:57:31 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int main(int ac, char *av[], char **envp)
 	print_header();
 	while (1)
 	{
-		printf("env path [%s]\n", getenv("USER"));
 		if (exit_status(0, 0) == 0)
 			printf( "✔ " );
 		else
@@ -114,8 +113,8 @@ int main(int ac, char *av[], char **envp)
 		}
 		set_cmd_path(&gc, data->cmds, data->env);
 		// ! ======[ DEBUG: ]======
-		print_tokens(tokens);
-		print_cmds(data->cmds);
+		// print_tokens(tokens);
+		// print_cmds(data->cmds);
 		// ! ======================
 		
 		setup_exec_signals();
