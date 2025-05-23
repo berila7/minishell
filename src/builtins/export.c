@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 14:35:49 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:30:13 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*get_key(t_gcnode **gc, char *arg)
 	return (gc_strdup(gc, arg));
 }
 
-void	ft_export(char **args, t_data *data)
+int	ft_export(char **args, t_data *data)
 {
 	char	*key;
 	int		i;
@@ -90,7 +90,7 @@ void	ft_export(char **args, t_data *data)
 		{
 			key = get_key(&data->gc, args[i]);
 			if (!is_valid_env_key(key))
-				print_err("export: '%s': not a valid identifier\n", args[i]);
+				return (print_err("export: '%s': not a valid identifier\n", args[i]), 1);
 			else
 			{
 				if (ft_strchr(args[i], '='))
@@ -101,4 +101,5 @@ void	ft_export(char **args, t_data *data)
 			i++;
 		}
 	}
+	return (0);
 }

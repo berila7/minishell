@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 16:13:00 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:44:48 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,11 +219,11 @@ void		exec_builtin(t_cmd *cmd, t_data *data);
 
 int			ft_echo(char **args);
 int			ft_exit(char **args);
-int			ft_env(t_env *env);
-void		ft_unset(char **args, t_data *data);
-void		ft_pwd(t_data *data);
+int			ft_env(t_cmd *cmd, t_env *env);
+int			ft_unset(char **args, t_data *data);
+int			ft_pwd(t_data *data);
 int			ft_cd(char **args, t_data *data);
-void		ft_export(char **args, t_data *data);
+int			ft_export(char **args, t_data *data);
 
 int			open_infile(char *path, t_cmd *cmd);
 int			open_outfile(char *file, int mode);

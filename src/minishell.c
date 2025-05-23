@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 16:14:50 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:20:21 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	init_data(t_data **data, char **envp)
 
 	if (!isatty(STDIN_FILENO))
 		return (print_err("STDIN is not a valid tty\n", NULL), 0);
-	check_dir(*data);
 	rl_catch_signals = 0;
 	gc = NULL;
 	*data = gc_malloc(&gc, sizeof(t_data));
+	check_dir(*data);
 	(*data)->gc = gc;
 	(*data)->hered_count = 0;
 	(*data)->env = init_env(&(*data)->gc, envp);

@@ -6,13 +6,13 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 14:37:25 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:31:50 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset(char **args, t_data *data)
+int	ft_unset(char **args, t_data *data)
 {
 	int	i;
 
@@ -22,4 +22,5 @@ void	ft_unset(char **args, t_data *data)
 		unset_env(&data->gc, &data->env, args[i]);
 		i++;
 	}
+	return (0);
 }

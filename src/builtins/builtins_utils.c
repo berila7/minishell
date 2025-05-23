@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 16:04:49 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:45:03 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	exec_builtin(t_cmd *cmd, t_data *data)
 	else if (equal(name, "unset"))
 		ext_st = ft_unset(cmd->args, data);
 	else if (equal(name, "env"))
-		ext_st = ft_env(data->env);
+		ext_st = ft_env(cmd, data->env);
 	else if (equal(name, "exit"))
 		ext_st = ft_exit(cmd->args);
 	dup2_og(data);
