@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 16:13:00 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:34:14 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,12 @@ void		reset_to_system_default_signals(void);
 void		setup_child_default_signals(void);
 void		setup_parent_waiting_signals(void);
 void		print_err(char *fmt, void *arg);
+void		cleanup_and_exit(t_data *data);
+void		cleanup_iteration(t_data *data, t_token *tokens, char *line);
+void		execute_commands(t_data *data);
+int			process_line(t_data *data, char *line, t_token **tokens);
+int			init_data(t_data **data, char **envp);
+void		run_shell_loop(t_data *data);
 char		*ft_strjoin_char_free(t_gcnode **gc, char *str, char c);
 char		*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2);
 char		*word_split_join(t_gcnode **gc, char *dest, char *src);
