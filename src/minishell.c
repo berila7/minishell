@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 15:59:51 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 16:14:50 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void check_dir()
+void check_dir(t_data *data)
 {
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
+		data->cwd_failed = 1;
 		print_err("%s: error retrieving current directory\n", "minishell");
 		perror("getcwd");
 	}
@@ -30,7 +31,7 @@ int	init_data(t_data **data, char **envp)
 
 	if (!isatty(STDIN_FILENO))
 		return (print_err("STDIN is not a valid tty\n", NULL), 0);
-	check_dir();
+	check_dir(*data);
 	rl_catch_signals = 0;
 	gc = NULL;
 	*data = gc_malloc(&gc, sizeof(t_data));
