@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 20:57:31 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 10:18:17 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,17 @@ int main(int ac, char *av[], char **envp)
 		line = readline("minishell ➤ ");
 		if (!line)
     	{
-        	if (g_sigint_received)
-       		{
-           		g_sigint_received = 0;
-            	continue;
-        	}
-			else
-			{
-				printf("exit\n");
-				break ;
-			}
+        	if (isatty(STDIN_FILENO) && g_sigint_received) { // Check if Ctrl+C in heredoc
+                 g_sigint_received = 0;
+                 // setup_interactive_signals(); // Ensure interactive signals are back
+                 write(STDOUT_FILENO, "\n", 1); // Or let handler do this
+                 // rl_on_new_line(); // May need to ensure readline state is good
+                 // rl_redisplay(); 
+                 continue;
+            } else if (isatty(STDIN_FILENO)) { // Check for TTY to print "exit"
+                 write(STDOUT_FILENO, "exit\n", 5);
+            }
+            break;
     	}
 		if (line[0])
 			add_history(line);
@@ -116,18 +117,19 @@ int main(int ac, char *av[], char **envp)
 		// print_tokens(tokens);
 		// print_cmds(data->cmds);
 		// ! ======================
+				
+		if (data->cmds)
+			exec(data);
 		
-		setup_exec_signals();
-		
-		exec(data);
 		setup_interactive_signals();
+		g_sigint_received = 0;
 		data->hered_count = 0;
 		free_tokens(&gc, tokens);
 		free_commands(&gc, data->cmds);
 		data->cmds = NULL;
 		gc_free(&gc, line);
-		g_sigint_received = 0;
 	}
+	reset_to_system_default_signals();
 	clear_history();
 	gc_free_all(&gc);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/22 20:54:57 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 10:17:44 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int	ft_wait(pid_t last_pid, int default_st)
 	int		status;
 	int		exit_st;
 	pid_t	pid;
+	int		sig_printed;
 
 	exit_st = default_st;
 	pid = wait(&status);
+	sig_printed = 0;
 	while (pid != -1)
 	{
 		if (pid == last_pid)
@@ -30,7 +32,19 @@ int	ft_wait(pid_t last_pid, int default_st)
 			if (WIFEXITED(status))
 				exit_st = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
+			{
 				exit_st = 128 + WTERMSIG(status);
+				if (WTERMSIG(status) == SIGINT && !sig_printed)
+				{
+					write(STDOUT_FILENO, "\n", 1);
+					sig_printed = 1;
+				}
+				else if (WTERMSIG(status) == SIGQUIT && !sig_printed)
+				{
+					write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+					sig_printed = 1;
+				}
+			}
 		}
 		pid = wait(&status);
 	}
@@ -48,6 +62,7 @@ int	ft_wait(pid_t last_pid, int default_st)
 
 int	exec(t_data *data)
 {
+	setup_parent_waiting_signals();
 	if (count_cmd(data->cmds) == 1)
 	{
 		dup_og(data);

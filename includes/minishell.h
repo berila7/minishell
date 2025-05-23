@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 20:45:10 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/23 10:21:48 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,9 @@ void		set_env(t_gcnode **gc, t_env **env, char *key, char *value);
 void		free_data(t_gcnode **gc, t_data *data);
 int			validate_token(t_token *token);
 int			open_heredoc(int *fd);
+void		reset_to_system_default_signals(void);
+void		setup_child_default_signals(void);
+void		setup_parent_waiting_signals(void);
 void		print_err(char *fmt, void *arg);
 char		*ft_strjoin_char_free(t_gcnode **gc, char *str, char c);
 char		*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2);
@@ -263,10 +266,7 @@ void		check_fds_in_child(const char *msg);
 extern int g_sigint_received;
 void	setup_interactive_signals(void);
 void	setup_heredoc_signals(void);
-void	setup_exec_signals(void);
-void	reset_signals(void);
 void	signal_handler_heredoc(int signum);
 void	signal_handler_interactive(int signum);
-void	signal_handler_exec(int signum);
 
 #endif

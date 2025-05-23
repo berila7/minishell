@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/18 17:55:14 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/23 10:01:26 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static pid_t	exec_cmd(t_cmd *cmd, t_data *data)
 		return (perror("fork failed"), exit_status(1, 1), dup2_og(data), 1);
 	if (id == 0)
 	{
+		setup_child_default_signals();
 		if (handle_redirections(cmd, data))
 			exit(1);
 		if (!cmd->path)
