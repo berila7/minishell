@@ -6,20 +6,11 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/23 10:26:27 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 15:22:49 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	restore_terminal(void)
-{
-	struct termios	term;
-
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag |= (ICANON | ECHO);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-}
 
 int	open_heredoc(int *fd)
 {
@@ -53,8 +44,10 @@ int	heredoc_loop(char *del, char *delim, int hd_out, t_data *data)
 	while (1)
 	{
 		line = readline("> ");
-		if (g_sigint_received || !line || equal(line, delim))
+		if (!line || g_sigint_received || equal(line, delim))
 		{
+			if (!line)
+				print_err("warning: delimited by EOF (wanted '%s')\n", del);
 			gc_free(&data->gc, line);
 			break ;
 		}
@@ -89,7 +82,6 @@ int	handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
 		return (cleanup(gc, hd_fd, quoted_delim, og_stdin), 1);
 	dup2(og_stdin, STDIN_FILENO);
 	setup_interactive_signals();
-	restore_terminal();
 	close(hd_fd[1]);
 	gc_free(gc, quoted_delim);
 	return (0);
