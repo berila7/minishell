@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/23 10:20:44 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 10:24:50 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	signal_handler_heredoc(int signum)
 	if (signum == SIGINT)
 	{
 		g_sigint_received = 1;
-		write(STDOUT_FILENO, "\n", 1);
 		close(STDIN_FILENO);
 	}
 }

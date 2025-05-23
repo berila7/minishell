@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 10:18:17 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 10:24:42 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int main(int ac, char *av[], char **envp)
         	if (isatty(STDIN_FILENO) && g_sigint_received) { // Check if Ctrl+C in heredoc
                  g_sigint_received = 0;
                  // setup_interactive_signals(); // Ensure interactive signals are back
-                 write(STDOUT_FILENO, "\n", 1); // Or let handler do this
+                write(STDOUT_FILENO, "\n", 1); // Or let handler do this
                  // rl_on_new_line(); // May need to ensure readline state is good
                  // rl_redisplay(); 
                  continue;

@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 10:17:44 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 10:37:14 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	ft_wait(pid_t last_pid, int default_st)
 		}
 		pid = wait(&status);
 	}
-	printf("exit_st: %d\n", exit_st);
 	return (exit_st);
 }
 

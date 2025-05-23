@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/05/22 15:09:21 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:08:48 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,8 @@ int	process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp)
 	var_value = get_env(exp->data->env, var_name);
 	gc_free(gc, var_name);
 	if (var_value)
-		add_var_to_result(gc, var_value, exp);
-	return (i);
-}
-
-void	add_var_to_result(t_gcnode **gc, char *var_value, t_expand *exp)
-{
-	if (exp->in_double_quote)
 		exp->result = ft_strjoin_free(gc, exp->result, var_value);
-	else
-		exp->result = word_split_join(gc, exp->result, var_value);
+	return (i);
 }
 
 char	*expand_variables(t_gcnode **gc, char *str, t_data *data)

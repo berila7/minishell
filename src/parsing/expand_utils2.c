@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:02:17 by berila            #+#    #+#             */
-/*   Updated: 2025/05/22 17:31:14 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:08:30 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,37 +30,6 @@ int	handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp)
 	if (first_digit == '0')
 		exp->result = ft_strjoin_free(gc, exp->result, "minishell");
 	return (i);
-}
-
-char	*word_split_join(t_gcnode **gc, char *dest, char *src)
-{
-	int		i;
-	int		was_space;
-	char	*result;
-
-	i = 0;
-	was_space = 1;
-	result = dest;
-	while (src[i])
-	{
-		if (src[i] == ' ' || src[i] == '\t')
-		{
-			if (!was_space)
-			{
-				result = ft_strjoin_char_free(gc, result, ' ');
-				was_space = 1;
-			}
-			while (src[i] && (src[i] == ' ' || src[i] == '\t'))
-				i++;
-		}
-		else
-		{
-			result = ft_strjoin_char_free(gc, result, src[i]);
-			was_space = 0;
-			i++;
-		}
-	}
-	return (result);
 }
 
 void	process_token_word(t_gcnode **gc, t_token *token,
