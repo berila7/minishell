@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/20 17:04:31 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 14:59:54 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	handle_other_redirs(t_cmd *cmd)
 	{
 		redir = &cmd->redirections[i];
 		if (redir->type == REDIR_IN)
-			open_infile(redir->file, cmd);
+		{
+			if (open_infile(redir->file, cmd))
+				return (1);
+		}
 		else if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
 		{
 			fd = open_outfile(redir->file,
