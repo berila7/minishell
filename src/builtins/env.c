@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:01:21 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/22 14:59:38 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:01:47 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	ft_env(t_env *env)
 {
 	t_env	*current;
 
-	if (!env)
-		print_err("No env vars here!\n\n", NULL);
 	current = env;
 	while (current)
 	{

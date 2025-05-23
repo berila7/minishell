@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/22 15:27:41 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:01:05 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	update_pwd(t_data *data, char *path, char *oldpwd)
+void	update_pwd(t_data *data, char *path, char *oldpwd)
 {
 	char	*cwd;
 	char	*pwd;
@@ -36,7 +36,6 @@ int	update_pwd(t_data *data, char *path, char *oldpwd)
 	set_env(&data->gc, &data->env, "PWD", pwd);
 	if (cwd)
 		free(cwd);
-	return (0);
 }
 
 int	ft_cd(char **args, t_data *data)
@@ -47,7 +46,7 @@ int	ft_cd(char **args, t_data *data)
 
 	ac = count_args(args);
 	if (ac > 2)
-		return (print_err("cd: too many arguments\n", NULL), 1);
+		return (print_err("%stoo many arguments\n", "cd: "), 1);
 	else if (ac == 1)
 	{
 		path = get_env(data->env, "HOME");
@@ -58,10 +57,7 @@ int	ft_cd(char **args, t_data *data)
 		path = args[1];
 	oldpwd = getcwd(NULL, 0);
 	if (chdir(path) == -1)
-	{
-		write(1, "cd: ", 5);
-		perror(path);
-	}
+		return (write(1, "cd: ", 5), perror(path), 1);
 	else
 		update_pwd(data, path, oldpwd);
 	return (0);

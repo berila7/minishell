@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 14:59:54 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:04:49 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,29 +87,29 @@ int	handle_redirections(t_cmd *cmd, t_data *data)
 
 void	exec_builtin(t_cmd *cmd, t_data *data)
 {
+	int		ext_st;
 	char	*name;
-	int		ext_status;
 
 	name = cmd->args[0];
 	if (equal(name, "echo"))
-		ft_echo(cmd->args);
+		ext_st = ft_echo(cmd->args);
 	else if (equal(name, "cd"))
-		ft_cd(cmd->args, data);
+		ext_st = ft_cd(cmd->args, data);
 	else if (equal(name, "pwd"))
-		ft_pwd(data);
+		ext_st = ft_pwd(data);
 	else if (equal(name, "export"))
-		ft_export(cmd->args, data);
+		ext_st = ft_export(cmd->args, data);
 	else if (equal(name, "unset"))
-		ft_unset(cmd->args, data);
+		ext_st = ft_unset(cmd->args, data);
 	else if (equal(name, "env"))
-		ft_env(data->env);
+		ext_st = ft_env(data->env);
 	else if (equal(name, "exit"))
-		ft_exit(cmd->args);
+		ext_st = ft_exit(cmd->args);
 	dup2_og(data);
+	exit_status(ext_st, 1);
 	if (equal(name, "exit"))
 	{
 		gc_free_all(&data->gc);
-		ext_status = exit_status(0, 0);
-		exit(ext_status);
+		exit(ext_st);
 	}
 }

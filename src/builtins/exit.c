@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/20 16:50:38 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:03:04 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,5 @@ int	ft_exit(char **args)
 		print_err("exit: too many arguments\n", NULL);
 		status = 1;
 	}
-	exit_status(status, 1);
-	return (0);
+	return (status);
 }

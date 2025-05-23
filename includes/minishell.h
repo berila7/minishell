@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 15:42:31 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:13:00 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ struct s_data
 	int				hered_count;
 	int				in_heredoc;
 	int				is_export;
+	int				cwd_failed;
 };
 
 // garbage colletor
@@ -216,7 +217,7 @@ void		extract_word(t_token **tokens, char *line, int *i, t_data *data);
 // builtins:
 void		exec_builtin(t_cmd *cmd, t_data *data);
 
-void		ft_echo(char **args);
+int			ft_echo(char **args);
 int			ft_exit(char **args);
 int			ft_env(t_env *env);
 void		ft_unset(char **args, t_data *data);

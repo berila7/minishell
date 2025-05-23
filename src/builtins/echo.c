@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 14:55:50 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:01:32 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int	valid_nflag(char *flag)
 	return (1);
 }
 
-void	ft_echo(char **args)
+int	ft_echo(char **args)
 {
-	int	i;
 	int	new_line;
+	int	i;
 
 	new_line = 1;
 	if (count_args(args) > 1)
@@ -62,4 +62,5 @@ void	ft_echo(char **args)
 	}
 	if (new_line)
 		ft_putchar_fd('\n', STDOUT_FILENO);
+	return (0);
 }
