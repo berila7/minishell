@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:21:27 by berila            #+#    #+#             */
-/*   Updated: 2025/05/23 16:30:44 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:54:23 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	init_data(t_data **data, char **envp)
 	(*data)->gc = gc;
 	(*data)->hered_count = 0;
 	(*data)->env = init_env(&(*data)->gc, envp);
+	// update_shlvl(*data);
 	if (!env_exists((*data)->env, "PATH"))
 		set_env(&(*data)->gc, &(*data)->env, "PATH",
 			"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");

@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 16:30:13 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 17:51:11 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,32 @@ char	*get_key(t_gcnode **gc, char *arg)
 	return (gc_strdup(gc, arg));
 }
 
+
+int handle_env(char *arg, char *key, t_data *data)
+{
+	if (!is_valid_env_key(key))
+	{
+		print_err("export: '%s': not a valid identifier\n", arg);
+		return (1);
+	}
+	else
+	{	
+		if (ft_strchr(arg, '='))
+			create_env(key, arg, data);
+		else if (!env_exists(data->env, key))
+			set_env(&data->gc, &data->env, key, NULL);
+	}
+	return (0);
+}
+
+
 int	ft_export(char **args, t_data *data)
 {
+	int		ext_st;
 	char	*key;
 	int		i;
 
+	ext_st = 0;
 	if (count_args(args) == 1)
 		print_env(data->env);
 	else if (count_args(args) > 1)
@@ -89,17 +110,10 @@ int	ft_export(char **args, t_data *data)
 		while (args[i])
 		{
 			key = get_key(&data->gc, args[i]);
-			if (!is_valid_env_key(key))
-				return (print_err("export: '%s': not a valid identifier\n", args[i]), 1);
-			else
-			{
-				if (ft_strchr(args[i], '='))
-					create_env(key, args[i], data);
-				else if (!env_exists(data->env, key))
-					set_env(&data->gc, &data->env, key, NULL);
-			}
+			if (handle_env(args[i], key, data))
+				ext_st = 1;
 			i++;
 		}
 	}
-	return (0);
+	return (ext_st);
 }
