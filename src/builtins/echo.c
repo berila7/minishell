@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/16 16:08:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/23 14:55:50 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	valid_nflag(char *flag)
 	size_t	i;
 
 	i = 0;
-	if (flag[i++] != '-')
+	if (flag[i++] != '-' || !flag[i])
 		return (0);
 	while (flag[i])
 	{
@@ -49,13 +49,15 @@ void	ft_echo(char **args)
 		i = 1;
 		while (args[i])
 		{
-			if (i == 1 && valid_nflag(args[i]))
+			if (valid_nflag(args[i]))
 				new_line = 0;
 			else
+			{
 				ft_putstr_fd(args[i], STDOUT_FILENO);
+				if (args[i + 1])
+					ft_putchar_fd(' ', STDOUT_FILENO);
+			}
 			i++;
-			if (args[i])
-				ft_putchar_fd(' ', STDOUT_FILENO);
 		}
 	}
 	if (new_line)

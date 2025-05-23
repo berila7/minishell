@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 15:54:40 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 15:59:51 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@ void check_dir()
 	{
 		print_err("%s: error retrieving current directory\n", "minishell");
 		perror("getcwd");
-	}
-	else
-	{
-		perror("mygetcwd did not fail");
-		free(cwd);
 	}
 }
 
