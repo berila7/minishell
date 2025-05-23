@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 11:38:57 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 15:08:53 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,17 @@
 #define REDIR_APPEND 3
 #define REDIR_HEREDOC 4
 
-typedef struct s_token t_token;
-typedef struct s_cmd t_cmd;
-typedef struct s_env t_env;
-typedef struct s_data t_data;
-typedef struct s_redir t_redir;
-typedef struct s_expand t_expand;
+typedef struct s_token	t_token;
+typedef struct s_cmd	t_cmd;
+typedef struct s_env	t_env;
+typedef struct s_data	t_data;
+typedef struct s_redir	t_redir;
+typedef struct s_expand	t_expand;
 typedef struct s_gcnode	t_gcnode;
 
 struct s_redir {
-    int type;
-    char *file;
+	int		type;
+	char	*file;
 };
 
 typedef enum e_token_type
@@ -119,10 +119,10 @@ struct s_gcnode {
 };
 
 struct s_expand {
-    int in_single_quote;
-    int in_double_quote;
-    char *result;
-    t_data *data;
+	int		in_single_quote;
+	int		in_double_quote;
+	char	*result;
+	t_data	*data;
 };
 
 void		*gc_malloc(t_gcnode **gc, size_t size);
@@ -130,9 +130,9 @@ void		gc_free_all(t_gcnode **gc);
 void		gc_free(t_gcnode **gc, void *ptr);
 
 // helpers + gc implementation
-char	*gc_strjoin(t_gcnode **gc, char *s1, char *s2);
-char	**gc_split(t_gcnode **gc, char *s, char c);
-char	*gc_strdup(t_gcnode **gc, char *src);
+char		*gc_strjoin(t_gcnode **gc, char *s1, char *s2);
+char		**gc_split(t_gcnode **gc, char *s, char c);
+char		*gc_strdup(t_gcnode **gc, char *src);
 
 
 
@@ -144,8 +144,8 @@ void		free_commands(t_gcnode **gc, t_cmd *commands);
 void		free_command(t_gcnode **gc, t_cmd *cmd);
 void		free_env(t_gcnode **gc, t_env *env);
 t_env		*init_env(t_gcnode **gc, char **envp);
-long	    ft_atol(const char *str);
-int     	count_args(char **args);
+long		ft_atol(const char *str);
+int			count_args(char **args);
 int			exec(t_data *data);
 char		*expand_variables(t_gcnode **gc, char *str, t_data *data);
 void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
@@ -251,10 +251,10 @@ void		check_fds_in_child(const char *msg);
 
 
 // Signal handling
-extern int g_sigint_received;
-void	setup_interactive_signals(void);
-void	setup_heredoc_signals(void);
-void	signal_handler_heredoc(int signum);
-void	signal_handler_interactive(int signum);
+extern int	g_sigint_received;
+void		setup_interactive_signals(void);
+void		setup_heredoc_signals(void);
+void		signal_handler_heredoc(int signum);
+void		signal_handler_interactive(int signum);
 
 #endif
