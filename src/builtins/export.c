@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/21 21:21:23 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/23 11:19:40 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,18 @@ int	env_exists(t_env *env, char *key)
 
 char	*get_key(t_gcnode **gc, char *arg)
 {
-    char	*equals;
+	char	*equals;
 	size_t	key_len;
 
 	equals = ft_strchr(arg, '=');
-    if (equals) {
-        key_len = equals - arg;
+	if (equals)
+	{
+		key_len = equals - arg;
 		if (arg[key_len - 1] == '+')
 			key_len--;
 		return (gc_substr(gc, arg, 0, key_len));
-    }
-    return (gc_strdup(gc, arg));
+	}
+	return (gc_strdup(gc, arg));
 }
 
 void	ft_export(char **args, t_data *data)
@@ -91,7 +92,7 @@ void	ft_export(char **args, t_data *data)
 			if (!is_valid_env_key(key))
 				print_err("export: '%s': not a valid identifier\n", args[i]);
 			else
-			{	
+			{
 				if (ft_strchr(args[i], '='))
 					create_env(key, args[i], data);
 				else if (!env_exists(data->env, key))
