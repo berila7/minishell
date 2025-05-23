@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 10:24:42 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:46:17 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int main(int ac, char *av[], char **envp)
 	rl_catch_signals = 0;
 	if (!isatty(STDIN_FILENO))
 		return (print_err("STDIN is not a valid tty\n", NULL), 1);
-	// check if current dir is deleted:
 	check_dir();
 	gc = NULL;
 	data = gc_malloc(&gc, sizeof(t_data));
@@ -76,10 +75,6 @@ int main(int ac, char *av[], char **envp)
 	print_header();
 	while (1)
 	{
-		if (exit_status(0, 0) == 0)
-			printf( "✔ " );
-		else
-			printf( "✘ " );
 		line = readline("minishell ➤ ");
 		if (!line)
     	{

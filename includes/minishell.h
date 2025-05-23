@@ -6,11 +6,9 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 10:21:48 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:38:57 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -33,22 +31,12 @@
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
 
-
-
-
-
-
 // #ifndef N
 // # define N 1
 // #endif
 
 // static int n = 0;
 // #define malloc(x) (n++ == N ? NULL : malloc(x))
-
-
-
-
-
 
 #define RESET       "\033[0m"
 #define BLACK       "\033[30m"
@@ -155,7 +143,7 @@ t_cmd		*parse_tokens(t_token *tokens, t_data *data);
 void		free_commands(t_gcnode **gc, t_cmd *commands);
 void		free_command(t_gcnode **gc, t_cmd *cmd);
 void		free_env(t_gcnode **gc, t_env *env);
-t_env		*init_env(t_gcnode **gc, char	**envp);
+t_env		*init_env(t_gcnode **gc, char **envp);
 long	    ft_atol(const char *str);
 int     	count_args(char **args);
 int			exec(t_data *data);
