@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:37:45 by berila            #+#    #+#             */
-/*   Updated: 2025/05/22 17:06:19 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 15:24:11 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ char	*remove_quotes(t_gcnode **gc, char *str)
 	int		in_double_quote;
 	char	*result;
 
+	if (!str)
+		return (NULL);
 	j = 0;
 	in_single_quote = 0;
 	in_double_quote = 0;
 	result = gc_malloc(gc, noquotes_len(str) + 1);
-	if (!result)
-		return (NULL);
 	i = 0;
 	while (str[i])
 	{
@@ -60,7 +60,7 @@ int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	}
 	else
 	{
-		printf("minishell: syntax error near unexpected token '<<'\n");
+		printf("minishell: syntax error near unexpected token 'newline'\n");
 		exit_status(2, 1);
 		free_commands(&data->gc, cmd_list);
 		free_command(&data->gc, current_cmd);
