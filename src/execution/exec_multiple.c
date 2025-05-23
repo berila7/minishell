@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 09:59:09 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:20:05 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	exec_child(t_cmd *cmd, t_data *data)
 	{
 		close(data->pipe[0]);
 		ft_dup2(data->pipe[1], STDOUT_FILENO);
-		close(data->pipe[1]);
 	}
 	if (handle_redirections(cmd, data))
 		exit(1);
@@ -88,7 +87,7 @@ int	exec_multiple_cmd(t_data *data)
 	{
 		child1(cmd, data, &last_pid);
 		if (cmd->hd_fd != -1)
-		close(cmd->hd_fd);
+			close(cmd->hd_fd);
 		cmd = cmd->next;
 	}
 	close_hds(data);

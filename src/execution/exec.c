@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 10:37:14 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:26:30 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,30 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+static void	print_sig_msg(int status, int *sig_printed)
+{
+	if (WTERMSIG(status) == SIGINT && !*sig_printed)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		*sig_printed = 1;
+	}
+	else if (WTERMSIG(status) == SIGQUIT && !*sig_printed)
+	{
+		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+		*sig_printed = 1;
+	}
+}
+
 int	ft_wait(pid_t last_pid, int default_st)
 {
+	pid_t	pid;
 	int		status;
 	int		exit_st;
-	pid_t	pid;
 	int		sig_printed;
 
+	sig_printed = 0;
 	exit_st = default_st;
 	pid = wait(&status);
-	sig_printed = 0;
 	while (pid != -1)
 	{
 		if (pid == last_pid)
@@ -34,30 +48,13 @@ int	ft_wait(pid_t last_pid, int default_st)
 			else if (WIFSIGNALED(status))
 			{
 				exit_st = 128 + WTERMSIG(status);
-				if (WTERMSIG(status) == SIGINT && !sig_printed)
-				{
-					write(STDOUT_FILENO, "\n", 1);
-					sig_printed = 1;
-				}
-				else if (WTERMSIG(status) == SIGQUIT && !sig_printed)
-				{
-					write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
-					sig_printed = 1;
-				}
+				print_sig_msg(status, &sig_printed);
 			}
 		}
 		pid = wait(&status);
 	}
 	return (exit_st);
 }
-
-
-
-
-
-// else if (WIFSIGNALED(status))
-// 	exit_status(1, 128 + WTERMSIG(status));
-
 
 int	exec(t_data *data)
 {

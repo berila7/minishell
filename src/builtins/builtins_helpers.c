@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/20 20:11:59 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 11:18:43 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ int	is_valid_env_key(char *str)
 		if (str[i] != '_' && !ft_isalnum(str[i]))
 			return (0);
 	}
-	return (1);	
+	return (1);
 }

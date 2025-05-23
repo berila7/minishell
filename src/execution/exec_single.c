@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 10:01:26 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:37:07 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	ft_execve(t_cmd *cmd, t_data *data)
+{
+	if (execve(cmd->path, cmd->args, env_to_array(&data->gc, data->env)) == -1)
+		return (perror("execve failed"), exit(1), 1);
+	return (0);
+}
 
 static pid_t	exec_cmd(t_cmd *cmd, t_data *data)
 {
@@ -36,8 +43,7 @@ static pid_t	exec_cmd(t_cmd *cmd, t_data *data)
 			return (dup2_og(data),
 				print_err("%s: Permission denied\n", cmd->path), exit(126), 1);
 		close2(data->og_fd);
-		if (execve(cmd->path, cmd->args, env_to_array(&data->gc, data->env)) == -1)
-			return (perror("execve failed"), exit(1), 1);
+		return (ft_execve(cmd, data));
 	}
 	return (id);
 }

@@ -6,23 +6,25 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:01:58 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/22 13:37:53 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/23 11:35:12 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	print_gc_nodes(t_gcnode *gc)
+{
+	t_gcnode	*curr;
+	int			i;
 
-
-void	print_gc_nodes(t_gcnode *gc) {
-	int i = 0;
-	t_gcnode *curr = gc;
+	i = 0;
+	curr = gc;
 	while (curr)
 	{
 		printf("Node [%d]: value: ptr = %p\n", i, curr->ptr);
 		curr = curr->next;
 		i++;
-    }
+	}
 }
 
 void	gc_free(t_gcnode **gc, void *ptr)
@@ -34,7 +36,8 @@ void	gc_free(t_gcnode **gc, void *ptr)
 	prev = NULL;
 	while (curr)
 	{
-		if (curr->ptr == ptr) {
+		if (curr->ptr == ptr)
+		{
 			if (prev)
 				prev->next = curr->next;
 			else
@@ -55,9 +58,8 @@ void	gc_free_all(t_gcnode **gc)
 	t_gcnode	*curr;
 	t_gcnode	*next;
 
-	if (!gc	|| !*gc)
+	if (!gc || !*gc)
 		return ;
-	// print_gc_nodes(*gc);
 	curr = *gc;
 	while (curr)
 	{
@@ -94,7 +96,6 @@ static void	append_gc(t_gcnode **gc, void *ptr)
 	}
 }
 
-
 void	*gc_malloc(t_gcnode **gc, size_t size)
 {
 	void	*ptr;
@@ -110,4 +111,3 @@ void	*gc_malloc(t_gcnode **gc, size_t size)
 	append_gc(gc, ptr);
 	return (ptr);
 }
-
