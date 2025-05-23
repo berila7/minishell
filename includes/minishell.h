@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 15:36:12 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/23 15:42:31 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 
 # define RESET			"\033[0m"
 # define BLACK			"\033[30m"
-# define RED				"\033[31m"
+# define RED			"\033[31m"
 # define GREEN			"\033[32m"
 # define YELLOW			"\033[33m"
 # define BLUE			"\033[38;2;70;130;255m"
@@ -167,12 +167,17 @@ char		*ft_strjoin_char_free(t_gcnode **gc, char *str, char c);
 char		*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2);
 char		*word_split_join(t_gcnode **gc, char *dest, char *src);
 void		add_argument(t_gcnode **gc, t_cmd *cmd, char *arg);
-int			process_pipe_token(t_token **tokn, t_cmd **cmd, t_cmd **cmds, t_data *data);
-int			process_redir_token(t_token **tokn, t_cmd *cmd, t_cmd *cmds	, t_data *data);
-int			process_heredoc_token(t_token **tokn, t_cmd *cmd, t_cmd *cmds, t_data *data);
-int			process_word_token(t_token **tokn, t_cmd *cmd, t_data *data);
-int			process_token(t_token **tokn, t_cmd **cmd, t_cmd **cmds, t_data *data);
-void		process_token_word(t_gcnode **gc, t_token *token, t_cmd *cmd, t_data *data);
+int			process_pipe_token(t_token **token, t_cmd **cmd,
+				t_cmd **cmds, t_data *data);
+int			process_redir_token(t_token **token, t_cmd *cmd,
+				t_cmd *cmds, t_data *data);
+int			process_heredoc_token(t_token **token, t_cmd *cmd,
+				t_cmd *cmds, t_data *data);
+int			process_word_token(t_token **token, t_cmd *cmd, t_data *data);
+int			process_token(t_token **token, t_cmd **cmd,
+				t_cmd **cmds, t_data *data);
+void		process_token_word(t_gcnode **gc, t_token *token,
+				t_cmd *cmd, t_data *data);
 int			check_quotes_in_token(char *value);
 int			is_valid_var_char(char c);
 void		add_token(t_token **tokens, t_token *new_token);
@@ -190,15 +195,20 @@ int			handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_named_var(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			noquotes_len(char *str);
 int			get_var_name_end(char *str, int i);
-int			process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp);
+int			process_var_value(t_gcnode **gc, char *var_name,
+				int i, t_expand *exp);
 void		add_var_to_result(t_gcnode **gc, char *var_value, t_expand *exp);
-int			process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
+int			process_heredoc_token(t_token **token,
+				t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
 int			process_char(t_gcnode **gc, char *str, int i, t_expand *exp);
-void		process_unquoted_token(t_gcnode **gc, char *expanded, t_cmd *current_cmd);
+void		process_unquoted_token(t_gcnode **gc, char *expanded,
+				t_cmd *current_cmd);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
-void		process_quoted_token(t_gcnode **gc, char *expanded, t_cmd *current_cmd);
+void		process_quoted_token(t_gcnode **gc, char *expanded,
+				t_cmd *current_cmd);
 int			exit_status(int status, int is_accessor);
-char		*gc_substr(t_gcnode **gc, const char *s, unsigned int start, size_t len);
+char		*gc_substr(t_gcnode **gc, const char *s,
+				unsigned int start, size_t len);
 void		gc_free(t_gcnode **gc, void *ptr);
 
 // char		*remove_escape_chars(char *str);
