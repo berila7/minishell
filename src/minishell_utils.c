@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:21:27 by berila            #+#    #+#             */
-/*   Updated: 2025/05/23 17:54:23 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/24 16:41:52 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	check_dir(t_data *data)
 		print_err("%s: error retrieving current directory\n", "minishell");
 		perror("getcwd");
 	}
+	else
+		free(cwd);
 }
 
 int	init_data(t_data **data, char **envp)
