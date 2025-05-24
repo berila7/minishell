@@ -7,3 +7,7 @@
 [-] unset a b
 [-] cat < Makefile < dfkjsdf
 [-] mkdir -p 1/2 && cd 1/2 | rm -rf 1 | pwd
+
+
+
+[-] unset PATH - ls : change error

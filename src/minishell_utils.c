@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:21:27 by berila            #+#    #+#             */
-/*   Updated: 2025/05/24 12:46:54 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:46:21 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	check_dir(t_data *data)
 		print_err("%s: error retrieving current directory\n", "minishell");
 		perror("getcwd");
 	}
+	else
+		free(cwd);
 }
 
 int	init_data(t_data **data, char **envp)
@@ -39,6 +41,7 @@ int	init_data(t_data **data, char **envp)
 	(*data)->hered_count = 0;
 	(*data)->is_quoted = 0;
 	(*data)->env = init_env(&(*data)->gc, envp);
+	// update_shlvl(*data);
 	if (!env_exists((*data)->env, "PATH"))
 		set_env(&(*data)->gc, &(*data)->env, "PATH",
 			"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
