@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/22 17:29:32 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 11:14:39 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ int	validate_token(t_token *token)
 		if (current->type == TOKEN_PIPE)
 		{
 			if (prev_pip)
-				return (printf("minishell: \
-					syntax error near unexpected token '|'\n"), 0);
+			{
+				return (exit_status(2, 1),
+					print_err("syntax error near token '|'\n", NULL), 0);
+			}
 			prev_pip = 1;
 		}
 		else
@@ -57,12 +59,13 @@ int	validate_token(t_token *token)
 		current = current->next;
 	}
 	if (prev_pip)
-		return (printf("minishell: syntax error: \
-			unexpected end of file\n"), 0);
+		return (exit_status(2, 1),
+			print_err("syntax error:unexpected %s",
+				"end of file\n"), 0);
 	return (1);
 }
 
-int	check_quotes_in_token(char *value)
+int	in_quotes(char *value)
 {
 	int	i;
 	int	has_quotes;

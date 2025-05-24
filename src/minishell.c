@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 16:47:06 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/24 16:43:16 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	process_line(t_data *data, char *line, t_token **tokens)
 		return (0);
 	}
 	set_cmd_path(&data->gc, data->cmds, data->env);
+	print_tokens(*tokens);
+	print_cmds(data->cmds);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:21:27 by berila            #+#    #+#             */
-/*   Updated: 2025/05/23 16:30:44 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 12:46:54 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	init_data(t_data **data, char **envp)
 	*data = gc_malloc(&gc, sizeof(t_data));
 	(*data)->gc = gc;
 	(*data)->hered_count = 0;
+	(*data)->is_quoted = 0;
 	(*data)->env = init_env(&(*data)->gc, envp);
 	if (!env_exists((*data)->env, "PATH"))
 		set_env(&(*data)->gc, &(*data)->env, "PATH",
