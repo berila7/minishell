@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/23 17:53:47 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/24 17:02:56 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	process_line(t_data *data, char *line, t_token **tokens)
 		return (0);
 	}
 	set_cmd_path(&data->gc, data->cmds, data->env);
+	print_tokens(*tokens);
+	print_cmds(data->cmds);
 	return (1);
 }
 
@@ -41,7 +43,7 @@ void	cleanup_iteration(t_data *data, t_token *tokens, char *line)
 	free_tokens(&data->gc, tokens);
 	free_commands(&data->gc, data->cmds);
 	data->cmds = NULL;
-	gc_free(&data->gc, line);
+	free(line);
 }
 
 void	cleanup_and_exit(t_data *data)

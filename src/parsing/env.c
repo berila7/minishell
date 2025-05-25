@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:43:30 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/22 15:49:00 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:34:02 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,32 +119,3 @@ void	unset_env(t_gcnode **gc, t_env **env, char *key)
 		current = current->next;
 	}
 }
-
-// void	f(void)
-// {
-// 	system("leaks minishell");
-// }
-
-// int main(int ac, char *av[], char **envp)
-// {
-// char		**env_array;
-// 	t_data *data;
-// 	atexit(f);
-// 	data = malloc(sizeof(t_data));
-// 	if (!data)
-// 		return (printf("error"), 1);
-// 	data->env = init_env(envp);
-// 	char *str = expand_variables("echo $USER", data->env, 1);
-// 	printf("%s", str);
-// env_array = env_to_array(data->env);
-// int	i = 0;
-// while (env_array[i])
-// {
-// 	printf("%s\n", env_array[i]);
-// 	i++;
-// }
-// free_arr(env_array);
-// free_env(data->env);
-// free(data);
-// return (0);
-// }

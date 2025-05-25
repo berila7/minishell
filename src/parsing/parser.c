@@ -6,57 +6,46 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/22 15:38:44 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:19:44 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*parse_tokens(t_token *tokens, t_data *data)
+static int	handle_redir_error(t_gcnode **gc, t_cmd *current_cmd,
+		t_cmd *cmd_list)
 {
-	t_token	*token;
-	t_cmd	*current_cmd;
-	t_cmd	*cmd_list;
-
-	if (!tokens)
-		return (NULL);
-	current_cmd = new_command(&data->gc);
-	cmd_list = NULL;
-	if (!current_cmd)
-		return (NULL);
-	token = tokens;
-	while (token)
-	{
-		if (!process_token(&token, &current_cmd, &cmd_list, data))
-			return (NULL);
-	}
-	add_command(&cmd_list, current_cmd, data);
-	return (cmd_list);
+	printf("minishell: syntax error near unexpected token 'newline'\n");
+	free_commands(gc, cmd_list);
+	free_command(gc, current_cmd);
+	return (0);
 }
 
 int	process_token(t_token **token, t_cmd **current_cmd,
-	t_cmd **cmd_list, t_data *data)
+		t_cmd **cmd_list, t_data *data)
 {
 	if ((*token)->type == TOKEN_WORD)
-		return (process_word_token(token, *current_cmd, data));
+	{
+		process_token_word(&data->gc, *token, *current_cmd, data);
+		*token = (*token)->next;
+	}
 	else if ((*token)->type == TOKEN_PIPE)
-		return (process_pipe_token(token, current_cmd, cmd_list, data));
-	else if ((*token)->type == TOKEN_REDIR_IN)
-		return (process_redir_token(token,
-				*current_cmd, *cmd_list, data));
-	else if ((*token)->type == TOKEN_REDIR_OUT)
-		return (process_redir_token(token,
-				*current_cmd, *cmd_list, data));
-	else if ((*token)->type == TOKEN_REDIR_APPEND)
-		return (process_redir_token(token,
-				*current_cmd, *cmd_list, data));
-	else if ((*token)->type == TOKEN_HEREDOC)
-		return (process_heredoc_token(token,
-				*current_cmd, *cmd_list, data));
+	{
+		if (!handle_pipe(token, current_cmd, cmd_list, data))
+			return (0);
+	}
+	else if ((*token)->type == TOKEN_REDIR_IN
+		|| (*token)->type == TOKEN_REDIR_OUT
+		|| (*token)->type == TOKEN_REDIR_APPEND
+		|| (*token)->type == TOKEN_HEREDOC)
+	{
+		if (!handle_redir(token, *current_cmd, cmd_list, data))
+			return (0);
+	}
 	return (1);
 }
 
-int	process_pipe_token(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
+int	handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
 						t_data *data)
 {
 	add_command(cmd_list, *current_cmd, data);
@@ -80,28 +69,52 @@ static int	set_redir_type(t_token_type type)
 		return (REDIR_APPEND);
 }
 
-int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
-						t_data *data)
+int	handle_redir(t_token **token, t_cmd *current_cmd,
+		t_cmd **cmd_list, t_data *data)
 {
-	char	*expanded;
-	int		redir_type;
+	t_token_type	type;
+	char			*expanded;
+	int				redir_type;
 
-	redir_type = set_redir_type((*token)->type);
+	type = (*token)->type;
 	*token = (*token)->next;
-	if (*token && (*token)->type == TOKEN_WORD)
+	if (!(*token) || (*token)->type != TOKEN_WORD)
+		return (handle_redir_error(&data->gc, current_cmd, *cmd_list));
+	if (type == TOKEN_HEREDOC)
 	{
-		expanded = expand_variables(&data->gc, (*token)->value, data);
-		add_redirection(&data->gc, current_cmd, redir_type, expanded);
-		gc_free(&data->gc, expanded);
-		*token = (*token)->next;
-		return (1);
+		if (handle_herdoc(&data->gc, (*token)->value, &current_cmd->hd_fd, data))
+			return (free_commands(&data->gc, *cmd_list),
+			free_command(&data->gc, current_cmd), 0);
+		redir_type = REDIR_HEREDOC;
+		add_redirection(&data->gc, current_cmd, redir_type, (*token)->value);
 	}
 	else
 	{
-		printf("minishell: syntax error near unexpected token 'newline'\n");
-		exit_status(2, 1);
-		free_commands(&data->gc, cmd_list);
-		free_command(&data->gc, current_cmd);
-		return (0);
+		expanded = expand_variables(&data->gc, (*token)->value, data);
+		redir_type = set_redir_type(type);
+		add_redirection(&data->gc, current_cmd, redir_type, expanded);
+		gc_free(&data->gc, expanded);
 	}
+	*token = (*token)->next;
+	return (1);
+}
+
+t_cmd	*parse_tokens(t_token *tokens, t_data *data)
+{
+	t_token	*token;
+	t_cmd	*current_cmd;
+	t_cmd	*cmd_list;
+
+	if (!tokens)
+		return (NULL);
+	current_cmd = new_command(&data->gc);
+	cmd_list = NULL;
+	token = tokens;
+	while (token)
+	{
+		if (!process_token(&token, &current_cmd, &cmd_list, data))
+			return (NULL);
+	}
+	add_command(&cmd_list, current_cmd, data);
+	return (cmd_list);
 }

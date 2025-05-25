@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 16:46:12 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/24 15:39:20 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ struct s_token
 	char			*value;
 	t_token_type	type;
 	t_token			*next;
+	t_token			*prev;
 };
 
 struct s_env
@@ -112,6 +113,7 @@ struct s_data
 	int				hered_count;
 	int				in_heredoc;
 	int				is_export;
+	int				is_quoted;
 	int				cwd_failed;
 };
 
@@ -127,7 +129,7 @@ struct s_expand
 	int				in_single_quote;
 	int				in_double_quote;
 	char			*result;
-	t_data			*data;
+	int				i;
 };
 
 void		*gc_malloc(t_gcnode **gc, size_t size);
@@ -160,9 +162,11 @@ void		set_env(t_gcnode **gc, t_env **env, char *key, char *value);
 void		free_data(t_gcnode **gc, t_data *data);
 int			validate_token(t_token *token);
 int			open_heredoc(int *fd);
+void		init_expand_vars(t_expand *exp);
 void		reset_to_system_default_signals(void);
 void		setup_child_default_signals(void);
 void		setup_parent_waiting_signals(void);
+void		handle_quotes(char *str, t_expand *exp, t_data *data);
 void		print_err(char *fmt, void *arg);
 void		cleanup_and_exit(t_data *data);
 void		cleanup_iteration(t_data *data, t_token *tokens, char *line);
@@ -174,10 +178,10 @@ char		*ft_strjoin_char_free(t_gcnode **gc, char *str, char c);
 char		*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2);
 char		*word_split_join(t_gcnode **gc, char *dest, char *src);
 void		add_argument(t_gcnode **gc, t_cmd *cmd, char *arg);
-int			process_pipe_token(t_token **token, t_cmd **cmd,
-				t_cmd **cmds, t_data *data);
-int			process_redir_token(t_token **token, t_cmd *cmd,
-				t_cmd *cmds, t_data *data);
+int			handle_redir(t_token **token, t_cmd *current_cmd,
+				t_cmd **cmd_list, t_data *data);
+int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
+						t_data *data);
 int			process_heredoc_token(t_token **token, t_cmd *cmd,
 				t_cmd *cmds, t_data *data);
 int			process_word_token(t_token **token, t_cmd *cmd, t_data *data);
@@ -185,7 +189,7 @@ int			process_token(t_token **token, t_cmd **cmd,
 				t_cmd **cmds, t_data *data);
 void		process_token_word(t_gcnode **gc, t_token *token,
 				t_cmd *cmd, t_data *data);
-int			check_quotes_in_token(char *value);
+int			in_quotes(char *value);
 int			is_valid_var_char(char c);
 void		add_token(t_token **tokens, t_token *new_token);
 t_token		*new_token(t_gcnode **gc, char *value, t_token_type type);
@@ -193,21 +197,9 @@ t_cmd		*new_command(t_gcnode **gc);
 char		*gc_itoa(t_gcnode **gc, int n);
 void		env_append(t_env **env, t_env *new_node);
 void		add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file);
-int			handle_single_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
-int			handle_double_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
-int			handle_regular_char(t_gcnode **gc, char *str, int i, t_expand *exp);
-int			handle_variable(t_gcnode **gc, char *str, int i, t_expand *exp);
-int			handle_exit_status(t_gcnode **gc, int i, t_expand *exp);
-int			handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp);
-int			handle_named_var(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			noquotes_len(char *str);
-int			get_var_name_end(char *str, int i);
-int			process_var_value(t_gcnode **gc, char *var_name,
-				int i, t_expand *exp);
-void		add_var_to_result(t_gcnode **gc, char *var_value, t_expand *exp);
 int			process_heredoc_token(t_token **token,
 				t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
-int			process_char(t_gcnode **gc, char *str, int i, t_expand *exp);
 void		process_unquoted_token(t_gcnode **gc, char *expanded,
 				t_cmd *current_cmd);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
