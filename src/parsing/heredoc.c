@@ -3,14 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/24 17:04:38 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/25 16:07:40 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+char *rand_str()
+{
+    void			*ptr;
+	unsigned long	addr;
+	char			*str;
+
+	ptr = malloc(1);
+    addr = (unsigned long)ptr;
+    str = malloc(18);
+	if (!str) {
+        free(ptr);
+        return NULL;
+    }
+    str[17] = '\0'; // Null terminator
+    int i = 18;
+
+    const char *hex = "0123456789abcdef";
+    while (addr && i > 1) {
+        str[i--] = hex[addr % 16];
+        addr /= 16;
+    }
+
+    // Fill remaining with '0'
+    while (i > 1) {
+        str[i--] = '0';
+    }
+
+    free(ptr);
+    return str;
+}
+
+int main()
+{
+	printf("%");
+}
 
 int	open_heredoc(int *fd)
 {
