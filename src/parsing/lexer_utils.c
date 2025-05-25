@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/05/24 18:41:54 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/25 16:54:10 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,54 +96,22 @@ int	handle_quote_error(t_token **tokens, t_data *data, int in_quote)
 	return (1);
 }
 
-t_token	*prev_token(t_token *token, t_token *current_token)
+void	process_token_word(t_gcnode **gc, t_token *token,
+	t_cmd *current_cmd, t_data *data)
 {
-	t_token	*prev;
-	t_token	*temp;
+	char	*expanded;
+	int		has_quotes;
 
-	if (!token || !current_token || token == current_token)
-		return (NULL);
-	
-	prev = NULL;
-	temp = token;
-	
-	while (temp && temp != current_token)
+	expanded = expand_variables(gc, token->value, data);
+	has_quotes = in_quotes(token->value);
+	if (!expanded || (ft_strlen(expanded) == 0 && !has_quotes))
 	{
-		prev = temp;
-		temp = temp->next;
-	}
-	
-	if (temp == current_token)
-		return (prev);
-	return (NULL);
-}
-
-void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
-{
-	int		start;
-	int		in_quote;
-	char	*word;
-
-	start = *i;
-	in_quote = toggel_quote(line, i);
-	if (handle_quote_error(tokens, data, in_quote))
+		gc_free(gc, expanded);
 		return ;
-	if (*i > start)
-	{
-		word = gc_substr(&data->gc, line, start, *i - start);
-		add_token(tokens, new_token(&data->gc, word, TOKEN_WORD));
-		if ((equal((*tokens)->value, "export"))
-			||( (*tokens)->type == TOKEN_REDIR_APPEND
-			|| (*tokens)->type == TOKEN_REDIR_IN
-			|| (*tokens)->type == TOKEN_REDIR_OUT)
-		)
-			data->is_export = 0;
-		if (((*tokens)->next && equal((*tokens)->value, "export"))
-			&& (*tokens)->next->value[0] == '$'
-		)
-			data->is_export = 1;
-		if ((*tokens)->next && (*tokens)->next->next && !equal((*tokens)->next->next->value, "export"))
-			data->is_export = 1;
-		gc_free(&data->gc, word);
 	}
+	if (!data->is_export)
+		process_quoted_token(gc, expanded, current_cmd);
+	else
+		process_unquoted_token(gc, expanded, current_cmd);
+	gc_free(gc, expanded);
 }
