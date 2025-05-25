@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/05/24 16:15:10 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/25 13:45:23 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,9 @@ static void	expand_env_var(char *str, t_expand *exp, t_data *data)
 		exp->i++;
 	var_name = gc_substr(&data->gc, str, start, exp->i - start);
 	var_value = get_env(data->env, var_name);
-	printf("var value %s\n", var_value);
 	gc_free(&data->gc, var_name);
 	if (var_value)
-	{
-		if (exp->in_double_quote)
-			exp->result = ft_strjoin_free(&data->gc, exp->result, var_value);
-		else
-			exp->result = word_split_join(&data->gc, exp->result, var_value);
-	}
-	else
-		exp->result = NULL;
+		exp->result = ft_strjoin_free(&data->gc, exp->result, var_value);		
 }
 
 static void	process_dollar(char *str, t_expand *exp, t_data *data)
@@ -73,8 +65,8 @@ char	*expand_variables(t_gcnode **gc, char *str, t_data *data)
 {
 	t_expand	exp;
 
-	exp.result = gc_strdup(gc, "");
 	init_expand_vars(&exp);
+	exp.result = gc_strdup(gc, "");
 	while (str[exp.i])
 	{
 		if (str[exp.i] == '\'' || str[exp.i] == '\"')

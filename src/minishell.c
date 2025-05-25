@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/24 16:45:48 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 17:02:56 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	cleanup_iteration(t_data *data, t_token *tokens, char *line)
 	free_tokens(&data->gc, tokens);
 	free_commands(&data->gc, data->cmds);
 	data->cmds = NULL;
-	gc_free(&data->gc, line);
+	free(line);
 }
 
 void	cleanup_and_exit(t_data *data)

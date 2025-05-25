@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:59:50 by berila            #+#    #+#             */
-/*   Updated: 2025/05/24 16:09:17 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 18:03:29 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void	init_expand_vars(t_expand *exp)
 	exp->in_single_quote = 0;
 	exp->in_double_quote = 0;
 	exp->i = 0;
+	exp->result = NULL;
 }

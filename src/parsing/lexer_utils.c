@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/05/24 12:46:18 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 18:41:54 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,16 @@ void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 		word = gc_substr(&data->gc, line, start, *i - start);
 		add_token(tokens, new_token(&data->gc, word, TOKEN_WORD));
 		if ((equal((*tokens)->value, "export"))
-			|| (*tokens)->type == TOKEN_REDIR_APPEND
+			||( (*tokens)->type == TOKEN_REDIR_APPEND
 			|| (*tokens)->type == TOKEN_REDIR_IN
-			|| (*tokens)->type == TOKEN_REDIR_OUT
+			|| (*tokens)->type == TOKEN_REDIR_OUT)
 		)
 			data->is_export = 0;
 		if (((*tokens)->next && equal((*tokens)->value, "export"))
 			&& (*tokens)->next->value[0] == '$'
 		)
+			data->is_export = 1;
+		if ((*tokens)->next && (*tokens)->next->next && !equal((*tokens)->next->next->value, "export"))
 			data->is_export = 1;
 		gc_free(&data->gc, word);
 	}

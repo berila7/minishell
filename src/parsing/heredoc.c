@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/24 12:47:39 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/24 17:04:38 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	heredoc_loop(char *del, char *delim, int hd_out, t_data *data)
 		{
 			if (!line)
 				print_err("warning: delimited by EOF (wanted '%s')\n", del);
-			gc_free(&data->gc, line);
+			free(line);
 			break ;
 		}
 		if (del[0] == '\'' || del[0] == '\"')
@@ -59,7 +59,7 @@ int	heredoc_loop(char *del, char *delim, int hd_out, t_data *data)
 		write(hd_out, "\n", 1);
 		if (expanded_str != line)
 			gc_free(&data->gc, expanded_str);
-		gc_free(&data->gc, line);
+		free(line);
 	}
 	return (g_sigint_received);
 }
