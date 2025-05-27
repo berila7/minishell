@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/24 15:39:20 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/27 12:05:37 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ char		*get_env(t_env *env, char *key);
 void		set_env(t_gcnode **gc, t_env **env, char *key, char *value);
 void		free_data(t_gcnode **gc, t_data *data);
 int			validate_token(t_token *token);
-int			open_heredoc(int *fd);
+int			open_heredoc(t_gcnode **gc, int *fd);
 void		init_expand_vars(t_expand *exp);
 void		reset_to_system_default_signals(void);
 void		setup_child_default_signals(void);

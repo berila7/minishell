@@ -6,60 +6,65 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/25 16:07:40 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:06:17 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-char *rand_str()
+char	*ptr_to_hex_str(t_gcnode **gc, void *ptr)
 {
-    void			*ptr;
 	unsigned long	addr;
 	char			*str;
+	char			*hex;
+	int				i;
 
-	ptr = malloc(1);
-    addr = (unsigned long)ptr;
-    str = malloc(18);
-	if (!str) {
-        free(ptr);
-        return NULL;
-    }
-    str[17] = '\0'; // Null terminator
-    int i = 18;
-
-    const char *hex = "0123456789abcdef";
-    while (addr && i > 1) {
-        str[i--] = hex[addr % 16];
-        addr /= 16;
-    }
-
-    // Fill remaining with '0'
-    while (i > 1) {
-        str[i--] = '0';
-    }
-
-    free(ptr);
-    return str;
+	addr = (unsigned long)ptr;
+	str = gc_malloc(gc, 17);
+	if (!str)
+		return (NULL);
+	str[16] = '\0';
+	hex = "0123456789abcdef";
+	i = 15;
+	while (addr)
+	{
+		str[i--] = hex[addr % 16];
+		addr /= 16;
+	}
+	while (i >= 0)
+		str[i--] = '0';
+	return (str);
 }
 
-int main()
+char	*rand_str(t_gcnode **gc)
 {
-	printf("%");
+	static int	count;
+	void		*ptr;
+
+	if (count >= 1024)
+		return (NULL);
+	ptr = gc_malloc(gc, 1);
+	if (!ptr)
+		return (NULL);
+	count++;
+	return (ptr_to_hex_str(gc, ptr));
 }
 
-int	open_heredoc(int *fd)
+int	open_heredoc(t_gcnode **gc, int *fd)
 {
-	unlink("here_doc");
-	fd[1] = open("here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	char	*hd_name;
+
+	hd_name = rand_str(gc);
+	unlink(hd_name);
+	fd[1] = open(hd_name, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd[1] < 0)
 		return (perror("cannot open here_doc file"), 1);
-	fd[0] = open("here_doc", O_RDONLY);
+	fd[0] = open(hd_name, O_RDONLY);
 	if (fd[0] < 0)
 		return (perror("cannot open here_doc file"),
-			close(fd[1]), unlink("here_doc"), 1);
-	unlink("here_doc");
+			close(fd[1]), unlink(hd_name), 1);
+	unlink(hd_name);
 	return (0);
 }
 
@@ -108,7 +113,7 @@ int	handle_herdoc(t_gcnode **gc, char *del, int *hd_in, t_data *data)
 	int		og_stdin;
 
 	og_stdin = dup(STDIN_FILENO);
-	if (open_heredoc(hd_fd))
+	if (open_heredoc(gc, hd_fd))
 		return (1);
 	*hd_in = hd_fd[0];
 	quoted_delim = remove_quotes(gc, del);
