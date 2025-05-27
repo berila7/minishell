@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:53 by berila            #+#    #+#             */
-/*   Updated: 2025/05/22 11:21:22 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/25 16:48:50 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	add_argument(t_gcnode **gc, t_cmd *cmd, char *arg)
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	new_args[i] = gc_strdup(gc, arg);
+	new_args[i] = gc_strdup(gc, remove_quotes(gc, arg));
 	new_args[i + 1] = NULL;
 	gc_free(gc, cmd->args);
 	cmd->args = new_args;
@@ -96,9 +96,12 @@ void	add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data)
 	current->next = new_cmd;
 }
 
-int	process_word_token(t_token **token, t_cmd *current_cmd, t_data *data)
+int	set_redir_type(t_token_type type)
 {
-	process_token_word(&data->gc, *token, current_cmd, data);
-	*token = (*token)->next;
-	return (1);
+	if (type == TOKEN_REDIR_IN)
+		return (REDIR_IN);
+	else if (type == TOKEN_REDIR_OUT)
+		return (REDIR_OUT);
+	else
+		return (REDIR_APPEND);
 }

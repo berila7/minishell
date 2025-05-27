@@ -6,11 +6,30 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/24 11:03:54 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/25 16:54:00 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
+{
+	int		start;
+	int		in_quote;
+	char	*word;
+
+	start = *i;
+	in_quote = toggel_quote(line, i);
+	if (handle_quote_error(tokens, data, in_quote))
+		return ;
+	if (*i > start)
+	{
+		word = gc_substr(&data->gc, line, start, *i - start);
+		add_token(tokens, new_token(&data->gc, word, TOKEN_WORD));
+		export_handler(tokens, data);
+		gc_free(&data->gc, word);
+	}
+}
 
 int	handle_redout_tokens(t_data *data, t_token **token, char *line, int *i)
 {

@@ -6,11 +6,27 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/05/25 13:45:23 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/25 16:50:09 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	expand_env_var(char *str, t_expand *exp, t_data *data)
+{
+	int		start;
+	char	*var_name;
+	char	*var_value;
+
+	start = exp->i;
+	while (str[exp->i] && (is_valid_var_char(str[exp->i])))
+		exp->i++;
+	var_name = gc_substr(&data->gc, str, start, exp->i - start);
+	var_value = get_env(data->env, var_name);
+	gc_free(&data->gc, var_name);
+	if (var_value)
+		exp->result = ft_strjoin_free(&data->gc, exp->result, var_value);
+}
 
 static void	handle_special_var(char *str, t_expand *exp, t_data *data)
 {
@@ -32,22 +48,6 @@ static void	handle_special_var(char *str, t_expand *exp, t_data *data)
 			exp->result = ft_strjoin_free(&data->gc, exp->result,
 					"minishell");
 	}
-}
-
-static void	expand_env_var(char *str, t_expand *exp, t_data *data)
-{
-	int		start;
-	char	*var_name;
-	char	*var_value;
-
-	start = exp->i;
-	while (str[exp->i] && (is_valid_var_char(str[exp->i])))
-		exp->i++;
-	var_name = gc_substr(&data->gc, str, start, exp->i - start);
-	var_value = get_env(data->env, var_name);
-	gc_free(&data->gc, var_name);
-	if (var_value)
-		exp->result = ft_strjoin_free(&data->gc, exp->result, var_value);		
 }
 
 static void	process_dollar(char *str, t_expand *exp, t_data *data)
