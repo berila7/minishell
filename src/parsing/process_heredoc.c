@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:37:45 by berila            #+#    #+#             */
-/*   Updated: 2025/05/23 15:24:11 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/27 12:15:56 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,28 @@ int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 		free_command(&data->gc, current_cmd);
 		return (0);
 	}
+}
+
+char	*ptr_to_hex_str(t_gcnode **gc, void *ptr)
+{
+	unsigned long	addr;
+	char			*str;
+	char			*hex;
+	int				i;
+
+	addr = (unsigned long)ptr;
+	str = gc_malloc(gc, 17);
+	if (!str)
+		return (NULL);
+	str[16] = '\0';
+	hex = "0123456789abcdef";
+	i = 15;
+	while (addr)
+	{
+		str[i--] = hex[addr % 16];
+		addr /= 16;
+	}
+	while (i >= 0)
+		str[i--] = '0';
+	return (str);
 }

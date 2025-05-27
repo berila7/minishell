@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/27 12:11:06 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:24:34 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ char		*get_env(t_env *env, char *key);
 void		set_env(t_gcnode **gc, t_env **env, char *key, char *value);
 void		free_data(t_gcnode **gc, t_data *data);
 int			validate_token(t_token *token);
+char		*ptr_to_hex_str(t_gcnode **gc, void *ptr);
 int			open_heredoc(t_gcnode **gc, int *fd);
 void		init_expand_vars(t_expand *exp);
 void		reset_to_system_default_signals(void);
@@ -184,7 +185,7 @@ void		add_argument(t_gcnode **gc, t_cmd *cmd, char *arg);
 int			handle_redir(t_token **token, t_cmd *current_cmd,
 				t_cmd **cmd_list, t_data *data);
 int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
-					t_data *data);
+				t_data *data);
 int			process_heredoc_token(t_token **token, t_cmd *cmd,
 				t_cmd *cmds, t_data *data);
 int			handle_redir_error(t_gcnode **gc, t_cmd *current_cmd,

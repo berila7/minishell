@@ -6,36 +6,11 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/27 12:06:17 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:15:35 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-char	*ptr_to_hex_str(t_gcnode **gc, void *ptr)
-{
-	unsigned long	addr;
-	char			*str;
-	char			*hex;
-	int				i;
-
-	addr = (unsigned long)ptr;
-	str = gc_malloc(gc, 17);
-	if (!str)
-		return (NULL);
-	str[16] = '\0';
-	hex = "0123456789abcdef";
-	i = 15;
-	while (addr)
-	{
-		str[i--] = hex[addr % 16];
-		addr /= 16;
-	}
-	while (i >= 0)
-		str[i--] = '0';
-	return (str);
-}
 
 char	*rand_str(t_gcnode **gc)
 {
