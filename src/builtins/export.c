@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 17:51:11 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:18:28 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,6 @@ static void	create_env(char *key, char *arg, t_data *data)
 	set_env(&data->gc, &data->env, key, val);
 }
 
-int	env_exists(t_env *env, char *key)
-{
-	t_env	*curr;
-
-	curr = env;
-	while (curr)
-	{
-		if (equal(key, curr->key))
-			return (1);
-		curr = curr->next;
-	}
-	return (0);
-}
-
 char	*get_key(t_gcnode **gc, char *arg)
 {
 	char	*equals;
@@ -76,8 +62,7 @@ char	*get_key(t_gcnode **gc, char *arg)
 	return (gc_strdup(gc, arg));
 }
 
-
-int handle_env(char *arg, char *key, t_data *data)
+int	handle_env(char *arg, char *key, t_data *data)
 {
 	if (!is_valid_env_key(key))
 	{
@@ -85,7 +70,7 @@ int handle_env(char *arg, char *key, t_data *data)
 		return (1);
 	}
 	else
-	{	
+	{
 		if (ft_strchr(arg, '='))
 			create_env(key, arg, data);
 		else if (!env_exists(data->env, key))
@@ -93,7 +78,6 @@ int handle_env(char *arg, char *key, t_data *data)
 	}
 	return (0);
 }
-
 
 int	ft_export(char **args, t_data *data)
 {

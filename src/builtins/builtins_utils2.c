@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   builtins_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/05/27 12:26:24 by ayoub            ###   ########.fr       */
+/*   Created: 2025/05/27 12:21:36 by ayoub             #+#    #+#             */
+/*   Updated: 2025/05/27 12:22:00 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_sigint_received = 0;
-
-void	signal_handler_interactive(int signum)
+int	env_exists(t_env *env, char *key)
 {
-	if (signum == SIGINT)
-	{
-		write(STDOUT_FILENO, "^C\n", 3);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
+	t_env	*curr;
 
-void	signal_handler_heredoc(int signum)
-{
-	if (signum == SIGINT)
+	curr = env;
+	while (curr)
 	{
-		g_sigint_received = 1;
-		close(STDIN_FILENO);
+		if (equal(key, curr->key))
+			return (1);
+		curr = curr->next;
 	}
+	return (0);
 }
