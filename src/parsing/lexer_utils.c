@@ -6,11 +6,53 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/05/25 16:54:10 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:27:27 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	check_quotes(t_token **token)
+{
+	int	i = 0;
+	int	quotes_type;
+
+	quotes_type = 0;
+	(*token)->quote_type = 0;
+	(*token)->expanded = 1;
+	(*token)->splited = 1;
+	while ((*token)->value[i])
+	{
+		if ((*token)->value[i] == '\'')
+		{
+			if (quotes_type == 0)
+				quotes_type = 1;
+			else if (quotes_type == 1)
+			{
+				quotes_type = 0;
+				(*token)->quote_type = 1;
+				(*token)->expanded = 0;
+				(*token)->splited = 0;
+			}
+		}
+		else if ((*token)->value[i] == '\"')
+		{
+			if (quotes_type == 0)
+				quotes_type = 2;
+			else if (quotes_type == 2)
+			{
+				quotes_type = 0;
+				(*token)->quote_type = 2;
+				if (ft_strchr((*token)->value, '$'))
+					(*token)->splited = 1;
+				else
+					(*token)->splited = 0;
+			}
+		}
+		i++;
+	}
+	
+}
 
 t_token	*new_token(t_gcnode **gc, char *value, t_token_type type)
 {
@@ -26,6 +68,7 @@ t_token	*new_token(t_gcnode **gc, char *value, t_token_type type)
 		return (NULL);
 	}
 	token->type = type;
+	check_quotes(&token);
 	token->next = NULL;
 	return (token);
 }
@@ -50,11 +93,12 @@ void	add_token(t_token **tokens, t_token *new_token)
 	new_token->next = NULL;
 }
 
-int	toggel_quote(char *line, int *i)
+int	toggel_quote(t_token **tokens, char *line, int *i)
 {
-	int		in_quote;
+	int	in_quote;
 
 	in_quote = 0;
+	(void)tokens;
 	while (line[*i])
 	{
 		if (line[*i] == '\'')
@@ -94,24 +138,4 @@ int	handle_quote_error(t_token **tokens, t_data *data, int in_quote)
 	free_tokens(&data->gc, *tokens);
 	*tokens = NULL;
 	return (1);
-}
-
-void	process_token_word(t_gcnode **gc, t_token *token,
-	t_cmd *current_cmd, t_data *data)
-{
-	char	*expanded;
-	int		has_quotes;
-
-	expanded = expand_variables(gc, token->value, data);
-	has_quotes = in_quotes(token->value);
-	if (!expanded || (ft_strlen(expanded) == 0 && !has_quotes))
-	{
-		gc_free(gc, expanded);
-		return ;
-	}
-	if (!data->is_export)
-		process_quoted_token(gc, expanded, current_cmd);
-	else
-		process_unquoted_token(gc, expanded, current_cmd);
-	gc_free(gc, expanded);
 }
