@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 16:45:03 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/29 09:53:47 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,21 @@ int	handle_redirections(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
+void	check_if_exit(char *name, int status, t_gcnode **gc)
+{
+	if (equal(name, "exit"))
+	{
+		gc_free_all(gc);
+		exit(status);
+	}
+}
+
 void	exec_builtin(t_cmd *cmd, t_data *data)
 {
 	int		ext_st;
 	char	*name;
 
+	ext_st = 0;
 	name = cmd->args[0];
 	if (equal(name, "echo"))
 		ext_st = ft_echo(cmd->args);
@@ -107,9 +117,5 @@ void	exec_builtin(t_cmd *cmd, t_data *data)
 		ext_st = ft_exit(cmd->args);
 	dup2_og(data);
 	exit_status(ext_st, 1);
-	if (equal(name, "exit"))
-	{
-		gc_free_all(&data->gc);
-		exit(ext_st);
-	}
+	check_if_exit(name, ext_st, &data->gc);
 }
