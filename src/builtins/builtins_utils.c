@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/29 18:04:24 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/29 18:22:31 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	handle_other_redirs(t_cmd *cmd)
 	while (i < cmd->redir_count)
 	{
 		redir = &cmd->redirections[i];
-		print_err("redire file: %s\n\n", redir->file);
-		// if (redir->quoted && env_exists())
+		if (redir->quoted)
+			return (print_err("%s: ambiguous redirect\n", "minishell"), 1);
 		if (redir->type == REDIR_IN)
 		{
 			if (open_infile(redir->file, cmd))
