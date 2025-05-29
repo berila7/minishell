@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:59:50 by berila            #+#    #+#             */
-/*   Updated: 2025/05/28 20:04:01 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/29 09:56:49 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,17 @@ int	handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp)
 
 int	should_remove_quotes(t_token *token, char *expanded)
 {
-    // If the token had quotes originally and the expansion doesn't contain spaces,
-    // or if we're in a quoted context, we should remove shell quotes
-	printf("should_remove_quotes: token->quote_type = %d, expanded = [%s]\n", token->quote_type, expanded);
+   
     if (token->quote_type > 0)
     {
-        // Check if the expanded value contains spaces
         int i = 0;
         while (expanded[i])
         {
             if ((expanded[i] == ' ' || expanded[i] == '\t') && ft_strchr(expanded, '$'))
-                return (0); // Don't remove quotes if there are spaces
+                return (0);
             i++;
         }
-        return (1); // Remove quotes if no spaces
+        return (1);
     }
     return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:37:45 by berila            #+#    #+#             */
-/*   Updated: 2025/05/28 19:04:38 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/29 09:58:19 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	*remove_quotes(t_gcnode **gc, char *str)
 		i++;
 	}
 	result[j] = '\0';
-	printf("unquoted result [%s]\n", result);
 	return (result);
 }
 
