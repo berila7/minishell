@@ -26,3 +26,7 @@ anachat@e2r8p11:/home/anachat$ lasdjf
 lasdjf: command not found
 anachat@e2r8p11:/home/anachat$ lasjfld/lsdjflds
 bash: lasjfld/lsdjflds: No such file or directory
+ambiguois
+..
+export $VAR="somthing"
+pip leaks

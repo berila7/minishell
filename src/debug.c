@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/04 16:02:12 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/29 13:39:38 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ void print_cmds(t_cmd *cmds)
                 printf(RESET GREEN ", File: " YELLOW "'%s'\n" RESET, 
                        current_cmd->redirections[i].file ? 
                        current_cmd->redirections[i].file : "(null)");
+                char *is_quoted;
+                if (current_cmd->redirections[i].quoted == 1)
+                    is_quoted = "Yes";
+                else
+                    is_quoted = "No";
+                printf("Is the file name quoted: [%s]\n", is_quoted);
             }
         }
         else
