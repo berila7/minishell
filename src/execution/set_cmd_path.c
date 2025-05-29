@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 11:26:44 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/29 18:34:36 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void	set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env)
 	{
 		if (cmd->args && cmd->args[0] && cmd->args[0][0])
 		{
-			if (is_builtin(cmd))
+			if (equal(".", cmd->args[0]) || equal("..", cmd->args[0]))
+				cmd->path = NULL;
+			else if (is_builtin(cmd))
 				cmd->path = gc_strdup(gc, "builtin");
 			else
 				cmd->path = get_cmd_path(gc, cmd->args[0], env);
