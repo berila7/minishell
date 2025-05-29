@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/25 16:54:00 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:42:11 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 	char	*word;
 
 	start = *i;
-	in_quote = toggel_quote(line, i);
+	in_quote = toggel_quote(tokens, line, i);
 	if (handle_quote_error(tokens, data, in_quote))
 		return ;
 	if (*i > start)

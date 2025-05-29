@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/25 16:19:59 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:58:12 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,7 @@ int	in_quotes(char *value)
 	return (has_quotes);
 }
 
-void	process_quoted_token(t_gcnode **gc, char *expanded, t_cmd *current_cmd)
-{
-	char	*final_str;
-
-	final_str = remove_quotes(gc, expanded);
-	add_argument(gc, current_cmd, final_str);
-	gc_free(gc, final_str);
-}
-
-void	process_unquoted_token(t_gcnode **gc, char *expanded,
+void	process_unquoted_token(t_token *token, t_gcnode **gc, char *expanded,
 	t_cmd *current_cmd)
 {
 	char	**split_words;
@@ -100,7 +91,7 @@ void	process_unquoted_token(t_gcnode **gc, char *expanded,
 	i = 0;
 	while (split_words[i])
 	{
-		add_argument(gc, current_cmd, split_words[i]);
+		add_argument(token, gc, current_cmd, split_words[i]);
 		i++;
 	}
 	free_arr(gc, split_words);

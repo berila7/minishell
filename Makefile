@@ -1,9 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -Iincludes
-
-FLAGS			+= -DN=$(N)
+FLAGS			=	-Wall -Wextra -Werror -Iincludes -fsanitize=address
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -20,7 +18,7 @@ SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/debug.c 
 					$(PARSING_DIR)/expand.c $(PARSING_DIR)/env_utils.c $(PARSING_DIR)/lexer_utils.c \
 					$(PARSING_DIR)/parser_utils.c $(PARSING_DIR)/free.c $(PARSING_DIR)/setup_signals.c \
 					$(PARSING_DIR)/expand_utils.c $(PARSING_DIR)/process_heredoc.c \
-					$(PARSING_DIR)/helpers.c \
+					$(PARSING_DIR)/helpers.c $(PARSING_DIR)/expand_helpers.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c $(BUILTINS_DIR)/builtins_utils.c \
 					$(BUILTINS_DIR)/builtins_utils2.c $(BUILTINS_DIR)/pwd.c $(BUILTINS_DIR)/unset.c \
 					$(BUILTINS_DIR)/cd.c $(BUILTINS_DIR)/export.c $(BUILTINS_DIR)/builtins_helpers.c \
