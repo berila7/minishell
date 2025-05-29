@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:53 by berila            #+#    #+#             */
-/*   Updated: 2025/05/28 19:56:18 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:54:31 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ void	add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file)
 	{
 		new_redirs[i].type = cmd->redirections[i].type;
 		new_redirs[i].file = cmd->redirections[i].file;
+		new_redirs[i].quoted = cmd->redirections[i].quoted;
 		i++;
 	}
 	new_redirs[cmd->redir_count].type = type;
 	new_redirs[cmd->redir_count].file = gc_strdup(gc, file);
+	new_redirs[cmd->redir_count].quoted = 0;
 	gc_free(gc, cmd->redirections);
 	cmd->redirections = new_redirs;
 	cmd->redir_count++;

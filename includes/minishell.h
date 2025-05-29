@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/29 13:25:15 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/29 17:10:45 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void		run_shell_loop(t_data *data);
 char		*ft_strjoin_char_free(t_gcnode **gc, char *str, char c);
 char		*ft_strjoin_free(t_gcnode **gc, char *s1, char *s2);
 void		export_handler(t_token **tokens, t_data *data);
-int			toggel_quote(t_token **tokens, char *line, int *i);
+int			toggel_quote(char *line, int *i);
 int			handle_quote_error(t_token **tokens, t_data *data, int in_quote);
 int			set_redir_type(t_token_type type);
 void		add_argument(t_token *token, t_gcnode **gc, t_cmd *cmd, char *arg);

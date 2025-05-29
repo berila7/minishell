@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/05/29 13:23:48 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/29 17:10:20 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,11 @@ void	add_token(t_token **tokens, t_token *new_token)
 	new_token->next = NULL;
 }
 
-int	toggel_quote(t_token **tokens, char *line, int *i)
+int	toggel_quote(char *line, int *i)
 {
 	int	in_quote;
 
 	in_quote = 0;
-	(void)tokens;
 	while (line[*i])
 	{
 		if (line[*i] == '\'')

@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/29 17:04:45 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/29 17:54:59 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	{
 		expanded = expand_variables(&data->gc, (*token)->value, data);
 		add_redirection(&data->gc, current_cmd, redir_type, expanded);
+		current_cmd->redirections[current_cmd->redir_count - 1].quoted = 0;
 		if ((*token)->quote_type > 0)
-			current_cmd->redirections->quoted = 1;
+			current_cmd->redirections[current_cmd->redir_count - 1].quoted = 1;
 		gc_free(&data->gc, expanded);
 		*token = (*token)->next;
 		return (1);
@@ -54,16 +55,6 @@ int	handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
 	return (1);
 }
 
-void	process_quoted_token(t_token *token, t_gcnode **gc, char *expanded,
-	t_cmd *current_cmd)
-{
-	// char	*final_str;
-
-	// final_str = remove_quotes(gc, expanded);
-	add_argument(token, gc, current_cmd, expanded);
-	// free(final_str);
-}
-
 void	process_token_word(t_gcnode **gc, t_token *token,
 	t_cmd *current_cmd, t_data *data)
 {
@@ -76,7 +67,7 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 		return ;
 	}
 	if (!token->splited || !data->is_export)
-		process_quoted_token(token, gc, expanded, current_cmd);
+		add_argument(token, gc, current_cmd, expanded);
 	else
 		process_unquoted_token(token, gc, expanded, current_cmd);
 	gc_free(gc, expanded);
