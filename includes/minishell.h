@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 15:45:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/30 15:46:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ t_env		*init_env(t_gcnode **gc, char **envp);
 long		ft_atol(const char *str);
 int			count_args(char **args);
 int			exec(t_data *data);
+char		*export_key(t_gcnode **gc, char *arg);
 int			should_remove_quotes(t_token *token, char *expanded);
 char		*smart_quote_removal(t_gcnode **gc, char *str, t_token *token);
 char		*expand_variables(t_gcnode **gc, char *str, t_data *data);

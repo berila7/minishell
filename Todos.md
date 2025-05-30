@@ -30,3 +30,18 @@ ambiguois
 ..
 export $VAR="somthing"
 pip leaks
+
+
+
+
+
+
+==========================================
+
+
+
+
+
+minishell ➤ export a="  "
+minishell ➤ $a
+	: command not found
