@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_split.c                                         :+:      :+:    :+:   */
+/*   gc_split_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 17:07:55 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 16:58:06 by berila           ###   ########.fr       */
+/*   Created: 2025/05/30 16:32:34 by berila            #+#    #+#             */
+/*   Updated: 2025/05/30 16:33:16 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	word_count(char *str)
+static int	word_count(char *str, char c)
 {
 	int		count;
 	int		flag_pnt;
@@ -23,12 +23,12 @@ static int	word_count(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] != ' ' || str[i] != '\t') && flag_pnt == 0)
+		if (str[i] != c && flag_pnt == 0)
 		{
 			flag_pnt = 1;
 			count++;
 		}
-		else if (str[i] == ' ' || str[i] == '\t')
+		else if (str[i] == c)
 			flag_pnt = 0;
 		i++;
 	}
@@ -51,7 +51,7 @@ static char	*fill_word(t_gcnode **gc, char *str, int start, int end)
 	return (word);
 }
 
-static char	**init_spl(t_gcnode **gc, char *s, char **result)
+static char	**init_spl(t_gcnode **gc, char *s, char c, char **result)
 {
 	size_t	i;
 	int		j;
@@ -62,9 +62,9 @@ static char	**init_spl(t_gcnode **gc, char *s, char **result)
 	s_word = -1;
 	while (i <= ft_strlen(s))
 	{
-		if ((s[i] != ' ' && s[i] != '\t') && s_word < 0)
+		if (s[i] != c && s_word < 0)
 			s_word = i;
-		else if (((s[i] == ' ' || s[i] == '\t') || i == ft_strlen(s)) && s_word >= 0)
+		else if ((s[i] == c || i == ft_strlen(s)) && s_word >= 0)
 		{
 			result[j] = fill_word(gc, s, s_word, i);
 			s_word = -1;
@@ -75,12 +75,12 @@ static char	**init_spl(t_gcnode **gc, char *s, char **result)
 	return (result);
 }
 
-char	**gc_split(t_gcnode **gc, char *s)
+char	**gc_split_char(t_gcnode **gc, char *s, char c)
 {
 	char	**res;
 
 	if (!s)
 		return (NULL);
-	res = gc_malloc(gc, (word_count(s) + 1) * sizeof(char *));
-	return (init_spl(gc, s, res));
+	res = gc_malloc(gc, (word_count(s, c) + 1) * sizeof(char *));
+	return (init_spl(gc, s, c, res));
 }

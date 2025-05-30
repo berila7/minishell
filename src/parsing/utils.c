@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/28 19:58:12 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/30 16:29:19 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	process_unquoted_token(t_token *token, t_gcnode **gc, char *expanded,
 	char	**split_words;
 	int		i;
 
-	split_words = gc_split(gc, expanded, ' ');
+	split_words = gc_split(gc, expanded);
 	i = 0;
 	while (split_words[i])
 	{

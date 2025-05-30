@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 15:46:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/30 16:33:33 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ void		gc_free(t_gcnode **gc, void *ptr);
 
 // helpers + gc implementation
 char		*gc_strjoin(t_gcnode **gc, char *s1, char *s2);
-char		**gc_split(t_gcnode **gc, char *s, char c);
+char		**gc_split(t_gcnode **gc, char *s);
+char		**gc_split_char(t_gcnode **gc, char *s, char c);
 char		*gc_strdup(t_gcnode **gc, char *src);
 
 t_token		*tokenize(char *line, t_data *data);

@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_split.c                                         :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 17:07:55 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 16:58:06 by berila           ###   ########.fr       */
+/*   Created: 2025/05/30 16:50:08 by berila            #+#    #+#             */
+/*   Updated: 2025/05/30 16:56:29 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include <dirent.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <termios.h>
+# include <limits.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <sys/wait.h>
+# include <sys/stat.h> 
+# include <string.h>
+# include <errno.h>
 
 static int	word_count(char *str)
 {
@@ -35,13 +46,13 @@ static int	word_count(char *str)
 	return (count);
 }
 
-static char	*fill_word(t_gcnode **gc, char *str, int start, int end)
+static char	*fill_word(char *str, int start, int end)
 {
 	char	*word;
 	int		i;
 
 	i = 0;
-	word = gc_malloc(gc, (end - start + 1) * sizeof(char));
+	word = malloc((end - start + 1) * sizeof(char));
 	while (start < end)
 	{
 		word[i] = str[start];
@@ -51,7 +62,7 @@ static char	*fill_word(t_gcnode **gc, char *str, int start, int end)
 	return (word);
 }
 
-static char	**init_spl(t_gcnode **gc, char *s, char **result)
+static char	**init_spl(char *s, char **result)
 {
 	size_t	i;
 	int		j;
@@ -60,13 +71,13 @@ static char	**init_spl(t_gcnode **gc, char *s, char **result)
 	i = 0;
 	j = 0;
 	s_word = -1;
-	while (i <= ft_strlen(s))
+	while (i <= strlen(s))
 	{
 		if ((s[i] != ' ' && s[i] != '\t') && s_word < 0)
 			s_word = i;
-		else if (((s[i] == ' ' || s[i] == '\t') || i == ft_strlen(s)) && s_word >= 0)
+		else if (((s[i] == ' ' || s[i] == '\t') || i == strlen(s)) && s_word >= 0)
 		{
-			result[j] = fill_word(gc, s, s_word, i);
+			result[j] = fill_word(s, s_word, i);
 			s_word = -1;
 			j++;
 		}
@@ -75,12 +86,30 @@ static char	**init_spl(t_gcnode **gc, char *s, char **result)
 	return (result);
 }
 
-char	**gc_split(t_gcnode **gc, char *s)
+char	**gc_split(char *s)
 {
 	char	**res;
 
 	if (!s)
 		return (NULL);
-	res = gc_malloc(gc, (word_count(s) + 1) * sizeof(char *));
-	return (init_spl(gc, s, res));
+	res = malloc((word_count(s) + 1) * sizeof(char *));
+	return (init_spl(s, res));
+}
+
+int main(void)
+{
+	char *test_str = "Hello	world!	This is    		 a test    	   string.";
+	char **result = gc_split(test_str);
+	
+	if (result)
+	{
+		for (int i = 0; result[i]; i++)
+		{
+			printf("Word %d: '%s'\n", i, result[i]);
+			free(result[i]); // Free each word
+		}
+		free(result); // Free the array itself
+	}
+	
+	return 0;
 }
