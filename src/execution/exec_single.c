@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 15:45:01 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/30 17:33:02 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int handle_exec_errors(t_cmd *cmd, t_data *data)
 	if (is_path && dir)
 		return (dup2_og(data), closedir(dir),
 			print_err("%s: Is a directory\n", cmd->args[0]), exit(126), 1);
-	if (is_path && access(cmd->args[0], X_OK) == -1)
+	if (is_path && access(cmd->args[0], F_OK) == -1)
 		return (perror(cmd->args[0]), exit(127), 1);
 	if (!cmd->path)
 	{
