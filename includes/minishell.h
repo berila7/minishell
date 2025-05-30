@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/29 17:10:45 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/30 15:45:32 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define __USE_POSIX
 # define _POSIX_C_SOURCE 200809L
 
+# include <dirent.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <termios.h>
@@ -265,6 +266,7 @@ void		set_default_env(t_data *data);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
+int			handle_exec_errors(t_cmd *cmd, t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
 

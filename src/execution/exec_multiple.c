@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 11:20:05 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/30 15:45:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,7 @@
 
 static int	exec_cmd(t_cmd *cmd, t_data *data)
 {
-	if (!cmd->path)
-	{
-		dup2_og(data);
-		if (count_args(cmd->args) > 0)
-			return (print_err("%s: command not found\n", cmd->args[0]),
-				exit(127), 1);
-		exit(1);
-	}
-	if (!is_exec(cmd->path))
-	{
-		dup2_og(data);
-		return (print_err("%s: Permission denied\n", cmd->path),
-			exit(126), 1);
-	}
+	handle_exec_errors(cmd, data);
 	close2(data->og_fd);
 	if (execve(cmd->path, cmd->args, env_to_array(&data->gc, data->env)) == -1)
 		return (perror("execve failed"), exit(1), 1);
