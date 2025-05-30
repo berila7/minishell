@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 17:56:32 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/30 18:05:22 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_exit(char **args)
 		print_err("exit: %s: numeric argument required\n", args[1]);
 		status = 2;
 	}
-	else if (args[0] && args[1] && args[2])
+	else if (count_args(args) > 2)
 	{
 		print_err("%s too many arguments\n", "exit:");
 		status = 999;
