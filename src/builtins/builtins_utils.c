@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/29 18:37:10 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/30 18:01:47 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 void	check_if_exit(char *name, int status, t_gcnode **gc)
 {
-	if (equal(name, "exit"))
+	if (status != 999)
 	{
-		gc_free_all(gc);
-		exit(status);
+		exit_status(status, 1);
+		if (equal(name, "exit"))
+		{
+			gc_free_all(gc);
+			exit(status);
+		}
 	}
+	else
+		exit_status(1, 1);
 }
 
 void	exec_builtin(t_cmd *cmd, t_data *data)
@@ -43,6 +49,5 @@ void	exec_builtin(t_cmd *cmd, t_data *data)
 	else if (equal(name, "exit"))
 		ext_st = ft_exit(cmd->args);
 	dup2_og(data);
-	exit_status(ext_st, 1);
 	check_if_exit(name, ext_st, &data->gc);
 }

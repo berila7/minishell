@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 16:03:04 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/30 17:56:32 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ int	ft_exit(char **args)
 	if (args[1] && !is_long(args[1]))
 	{
 		print_err("exit: %s: numeric argument required\n", args[1]);
-		status = 255;
+		status = 2;
+	}
+	else if (args[0] && args[1] && args[2])
+	{
+		print_err("%s too many arguments\n", "exit:");
+		status = 999;
 	}
 	else if (args[1])
 	{
@@ -60,11 +65,6 @@ int	ft_exit(char **args)
 			status = 256 + nb;
 		else
 			status = (nb % 256);
-	}
-	else if (args[0] && args[1] && args[2])
-	{
-		print_err("exit: too many arguments\n", NULL);
-		status = 1;
 	}
 	return (status);
 }
