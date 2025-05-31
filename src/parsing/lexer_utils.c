@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/05/31 19:06:36 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/31 20:02:31 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,8 @@ int	handle_quote_error(t_token **tokens, t_data *data, int in_quote)
 
 char *normalize_word_segment(t_gcnode **gc, const char *segment)
 {
-    if (!segment) {
-        return gc_strdup(gc, ""); // Handle NULL input gracefully
-    }
+    if (!segment)
+        return gc_strdup(gc, "");
 
     int input_len = ft_strlen(segment);
     // Allocate a buffer that can hold the maximum possible length (input_len)
