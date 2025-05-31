@@ -45,3 +45,5 @@ pip leaks
 minishell ➤ export a="  "
 minishell ➤ $a
 	: command not found
+
+segfault in export $a.$a

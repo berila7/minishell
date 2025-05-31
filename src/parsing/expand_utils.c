@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:59:50 by berila            #+#    #+#             */
-/*   Updated: 2025/05/29 09:56:49 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/31 18:17:46 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,18 @@ int	should_remove_quotes(t_token *token, char *expanded)
         int i = 0;
         while (expanded[i])
         {
-            if ((expanded[i] == ' ' || expanded[i] == '\t') && ft_strchr(expanded, '$'))
-                return (0);
+			if (((expanded[i] == ' ' || expanded[i] == '\t') 
+				&& ft_strchr(expanded, '$')))
+            {
+				printf("Im not quoted: [%s]\n", expanded);
+				return (0);
+			}
             i++;
         }
+		printf("Im quoted: [%s]\n", expanded);
         return (1);
     }
+	printf("Im not quoted at all: [%s]\n", expanded);
     return (0);
 }
 

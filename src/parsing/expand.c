@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/05/28 19:52:15 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/31 17:57:00 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,17 @@ int	handle_variable(t_gcnode **gc, char *str, int i, t_expand *exp)
 int	process_char(t_gcnode **gc, char *str, int i, t_expand *exp)
 {
 	if (str[i] == '\'' && !exp->in_double_quote)
+	{
+		if (!exp->in_single_quote && str[i + 1] == '\'')
+			return (i + 2);
 		return (handle_single_quote(gc, str, i, exp));
+	}
 	else if (str[i] == '\"' && !exp->in_single_quote)
+	{
+		if (!exp->in_double_quote && str[i + 1] == '\"')
+			return (i + 2);
 		return (handle_double_quote(gc, str, i, exp));
+	}
 	else if (str[i] == '$' && str[i + 1]
 		&& (!exp->in_single_quote || exp->data->in_heredoc))
 		return (handle_variable(gc, str, i, exp));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:53 by berila            #+#    #+#             */
-/*   Updated: 2025/05/29 18:10:44 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/31 18:30:19 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_cmd	*new_command(t_gcnode **gc)
 	return (cmd);
 }
 
-void	add_argument(t_token *token, t_gcnode **gc, t_cmd *cmd, char *arg)
+void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 {
 	char	**new_args;
 	int		i;
@@ -43,7 +43,7 @@ void	add_argument(t_token *token, t_gcnode **gc, t_cmd *cmd, char *arg)
 		i++;
 		size++;
 	}
-	new_args = gc_malloc(gc, sizeof(char *) * (size + 2));
+	new_args = gc_malloc(&data->gc, sizeof(char *) * (size + 2));
 	if (!new_args)
 		return ;
 	i = 0;
@@ -52,9 +52,11 @@ void	add_argument(t_token *token, t_gcnode **gc, t_cmd *cmd, char *arg)
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	new_args[i] = gc_strdup(gc, smart_quote_removal(gc, arg, token));
+	if (data->remove_quotes)
+		arg = smart_quote_removal(&data->gc, arg, token);
+	new_args[i] = gc_strdup(&data->gc, arg);
 	new_args[i + 1] = NULL;
-	gc_free(gc, cmd->args);
+	gc_free(&data->gc, cmd->args);
 	cmd->args = new_args;
 }
 

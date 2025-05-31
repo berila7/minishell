@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/29 18:18:44 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/31 18:33:18 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,20 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 	char	*expanded;
 
 	expanded = expand_variables(gc, token->value, data);
+	data->remove_quotes = 0;
+	if (should_remove_quotes(token, token->value))
+		data->remove_quotes = 1;
+	printf("Should remove quotes: [%d]\nfor value: [%s]\n",
+		data->remove_quotes, token->value);
 	if (!expanded || (ft_strlen(expanded) == 0))
 	{
 		gc_free(gc, expanded);
 		return ;
 	}
 	if (!token->splited || !data->is_export)
-		add_argument(token, gc, current_cmd, expanded);
+		add_argument(token, data, current_cmd, expanded);
 	else
-		process_unquoted_token(token, gc, expanded, current_cmd);
+		process_unquoted_token(token, data, expanded, current_cmd);
 	gc_free(gc, expanded);
 }
 

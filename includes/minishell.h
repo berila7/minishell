@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 16:33:33 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/31 19:07:15 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ struct s_data
 	int				in_heredoc;
 	int				is_export;
 	int				is_quoted;
+	int				remove_quotes;
 	int				cwd_failed;
 };
 
@@ -196,7 +197,8 @@ void		export_handler(t_token **tokens, t_data *data);
 int			toggel_quote(char *line, int *i);
 int			handle_quote_error(t_token **tokens, t_data *data, int in_quote);
 int			set_redir_type(t_token_type type);
-void		add_argument(t_token *token, t_gcnode **gc, t_cmd *cmd, char *arg);
+char		*normalize_word_segment(t_gcnode **gc, const char *segment);
+void		add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg);
 int			handle_redir(t_token **token, t_cmd *current_cmd,
 				t_cmd **cmd_list, t_data *data);
 int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
@@ -220,11 +222,9 @@ void		add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file);
 int			noquotes_len(char *str);
 int			process_heredoc_token(t_token **token,
 				t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
-void		process_unquoted_token(t_token *token, t_gcnode **gc, char *expanded,
+void		process_unquoted_token(t_token *token, t_data *data, char *expanded,
 				t_cmd *current_cmd);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
-void		process_quoted_token(t_token *token, t_gcnode **gc, char *expanded,
-				t_cmd *current_cmd);
 int			exit_status(int status, int is_accessor);
 char		*gc_substr(t_gcnode **gc, const char *s,
 				unsigned int start, size_t len);
