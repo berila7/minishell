@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 16:33:33 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/31 16:50:00 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ int			handle_exit_status(t_gcnode **gc, int i, t_expand *exp);
 int			handle_named_var(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp);
+char		*strip_anchored_quotes(t_gcnode **gc, char *str, int token_quote_type);
 int			get_var_name_end(char *str, int i);
 int			process_line(t_data *data, char *line, t_token **tokens);
 int			init_data(t_data **data, char **envp);

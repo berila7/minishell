@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:59:50 by berila            #+#    #+#             */
-/*   Updated: 2025/05/29 09:56:49 by mberila          ###   ########.fr       */
+/*   Updated: 2025/05/31 16:59:33 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	should_remove_quotes(t_token *token, char *expanded)
         int i = 0;
         while (expanded[i])
         {
-            if ((expanded[i] == ' ' || expanded[i] == '\t') && ft_strchr(expanded, '$'))
+            if (((expanded[i] == ' ' || expanded[i] == '\t') 
+				&& ft_strchr(expanded, '$')) 
+				|| (expanded[i] == '\'' && expanded[i + 1] == '\'')
+				|| (expanded[i] == '\"' && expanded[i + 1] == '\"'))
                 return (0);
             i++;
         }
@@ -66,6 +69,31 @@ int	should_remove_quotes(t_token *token, char *expanded)
 char	*smart_quote_removal(t_gcnode **gc, char *str, t_token *token)
 {
     if (should_remove_quotes(token, str))
-        return (remove_quotes(gc, str));
+    	return (strip_anchored_quotes(gc, str, token->quote_type));
     return (gc_strdup(gc, str));
+}
+
+
+char *strip_anchored_quotes(t_gcnode **gc, char *str, int token_quote_type) {
+    size_t len;
+	(void)token_quote_type;
+
+    if (!str)
+    {    return (NULL);}
+	len = ft_strlen(str);
+    if (len < 2) { // Cannot be an anchored pair if shorter than 2
+        return gc_strdup(gc, str);
+    }
+
+    if (str[0] == '\'') { // Original token indicated single-quote preference
+        if (str[0] == '\'' && str[len - 1] == '\'') {
+            return gc_substr(gc, str, 1, len - 2);
+        }
+    } else if (str[0] == '\"') { // Original token indicated double-quote preference
+        if (str[0] == '\"' && str[len - 1] == '\"') {
+            return gc_substr(gc, str, 1, len - 2);
+        }
+    }
+    // If no anchored quotes of the specified type match, or no type specified for removal
+    return gc_strdup(gc, str);
 }
