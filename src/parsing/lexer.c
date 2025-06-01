@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/31 20:01:27 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/01 09:20:32 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,46 @@
 
 void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 {
-	int		start;
-	int		in_quote;
-	char	*raw_word_from_substr;
-	char    *normalized_segment_value;
+	int		start_index;
+	int		end_index; // To store the position *i after toggel_quote
+	int		quote_status_at_end;
+	char	*raw_segment_from_substr;
+	char	*final_value_for_new_token;
 	t_token *the_new_token;
 
-	start = *i;
-	in_quote = toggel_quote(line, i); 
-	if (handle_quote_error(tokens, data, in_quote))
+	start_index = *i;
+	// toggel_quote advances *i to the delimiter or EOL past the word segment
+	quote_status_at_end = toggel_quote(line, i); 
+	if (handle_quote_error(tokens, data, quote_status_at_end))
 		return ;
 
-	if (*i > start)
+	end_index = *i; // Current *i is the end of the segment + 1
+	
+	if (end_index > start_index) // A segment was indeed found
 	{
-		raw_word_from_substr = gc_substr(&data->gc, line, start, *i - start);
-		normalized_segment_value = normalize_word_segment(&data->gc, raw_word_from_substr);
-		gc_free(&data->gc, raw_word_from_substr);
-		the_new_token = new_token(&data->gc, normalized_segment_value, TOKEN_WORD);
-		gc_free(&data->gc, normalized_segment_value);
+		raw_segment_from_substr = gc_substr(&data->gc, line, start_index, end_index - start_index);
+
+		if (is_simple_non_empty_quoted_string(raw_segment_from_substr)) {
+			// If it's like "hello world" or 'foo' or even "" or '',
+			// the token value should be the raw segment itself (with its quotes).
+			final_value_for_new_token = gc_strdup(&data->gc, raw_segment_from_substr);
+		} else {
+			// For complex concatenations ("x"hello), internal empty quotes (he""llo),
+			// or plain unquoted words (foobar), process aggressively.
+			final_value_for_new_token = process_complex_segment(&data->gc, raw_segment_from_substr);
+		}
+		
+		gc_free(&data->gc, raw_segment_from_substr); // Free the string obtained from gc_substr
+
+		// new_token will gc_strdup final_value_for_new_token
+		the_new_token = new_token(&data->gc, final_value_for_new_token, TOKEN_WORD);
+		
+		// Free final_value_for_new_token as new_token made its own copy
+		gc_free(&data->gc, final_value_for_new_token);
 
 		if (the_new_token) {
 			add_token(tokens, the_new_token);
-			export_handler(tokens, data); 
+			export_handler(tokens, data);
 		}
 	}
 }

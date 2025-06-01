@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/31 18:33:18 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/01 11:12:13 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,16 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 	data->remove_quotes = 0;
 	if (should_remove_quotes(token, token->value))
 		data->remove_quotes = 1;
-	printf("Should remove quotes: [%d]\nfor value: [%s]\n",
+	printf("remove quotes: [%d]\nfor value: [%s]\n",
 		data->remove_quotes, token->value);
 	if (!expanded || (ft_strlen(expanded) == 0))
 	{
 		gc_free(gc, expanded);
 		return ;
 	}
-	if (!token->splited || !data->is_export)
+	printf("remove quotes for expanded: [%d]\nfor value: [%s]\nand split: [%d]\n",
+		data->remove_quotes, expanded, token->splited);
+	if (!token->splited || token->quote_type > 0 || !data->is_export)
 		add_argument(token, data, current_cmd, expanded);
 	else
 		process_unquoted_token(token, data, expanded, current_cmd);

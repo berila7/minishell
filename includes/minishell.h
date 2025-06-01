@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/31 19:07:15 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/01 09:19:41 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <sys/stat.h> 
@@ -158,6 +159,8 @@ t_env		*init_env(t_gcnode **gc, char **envp);
 long		ft_atol(const char *str);
 int			count_args(char **args);
 int			exec(t_data *data);
+bool		is_simple_non_empty_quoted_string(const char *segment);
+char		*process_complex_segment(t_gcnode **gc, const char *segment);
 char		*export_key(t_gcnode **gc, char *arg);
 int			should_remove_quotes(t_token *token, char *expanded);
 char		*smart_quote_removal(t_gcnode **gc, char *str, t_token *token);
