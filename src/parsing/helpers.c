@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/05/31 21:24:46 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:24:40 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	export_handler(t_token **tokens, t_data *data)
 	if ((*tokens)->next && (*tokens)->next->value)
 		after_equ = ft_strchr((*tokens)->next->value, '=');
 	if (((*tokens)->next && equal((*tokens)->value, "export"))
-		&& (*tokens)->next->value && (*tokens)->next->value[0] == '$'
+		&& (*tokens)->next->value && ft_strchr((*tokens)->next->value, '$')
 		&& after_equ && ft_strchr(after_equ, '$')
 	)
 		data->is_export = 1;
