@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/01 15:26:57 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:46:48 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,21 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 		gc_free(gc, expanded);
 		return ;
 	}
-	printf("remove quotes for expanded: [%d]\nfor value: [%s]\nand split: [%d]\n",
-		data->remove_quotes, expanded, token->splited);
-	printf("Should split in exported: [%d]\n",
-		token->splited);
+	printf("-------------------------------\n");
+	printf("split flag : [%d]\n", token->splited);
+	printf("quotes type flag : [%d]\n", token->quote_type);
+	printf("export flag : [%d]\n", data->is_export);
 	if (!token->splited || token->quote_type > 0 || !data->is_export)
+	{
+		printf("Im here 1\n");
 		add_argument(token, data, current_cmd, expanded);
+	}
 	else
+	{
+		printf("Im here 2\n");
 		process_unquoted_token(token, data, expanded, current_cmd);
+	}
+	printf("-------------------------------\n");
 	gc_free(gc, expanded);
 }
 
