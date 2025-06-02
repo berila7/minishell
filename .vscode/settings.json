@@ -25,6 +25,8 @@
         "climits": "c",
         "ostream": "c",
         "unistd.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "format": "c",
+        "initializer_list": "c"
     }
 }

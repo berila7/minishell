@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:53 by berila            #+#    #+#             */
-/*   Updated: 2025/05/31 18:30:19 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:41:00 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 
 	i = 0;
 	size = 0;
+	(void)token;
 	while (cmd->args[i])
 	{
 		i++;
@@ -52,9 +53,7 @@ void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	if (data->remove_quotes)
-		arg = smart_quote_removal(&data->gc, arg, token);
-	new_args[i] = gc_strdup(&data->gc, arg);
+	new_args[i] = gc_strdup(&data->gc, smart_quote_removal(data, arg, token));
 	new_args[i + 1] = NULL;
 	gc_free(&data->gc, cmd->args);
 	cmd->args = new_args;

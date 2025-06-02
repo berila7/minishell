@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/29 17:54:31 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/02 16:18:15 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void print_tokens(t_token *tokens)
 	{
 		printf(GREEN "Token: " YELLOW "'%s'" RESET ", ", current->value);
 		printf(CYAN "Type: %d\n" RESET, current->type);
+		printf(CYAN "Quote Type: %d\n" RESET, current->quote_type);
+        printf("=====================\n");
 		current = current->next;
 	}
 	printf(ORANGE "============================\n" RESET);
@@ -49,13 +51,6 @@ void print_cmds(t_cmd *cmds)
         printf(CYAN "  path          : " YELLOW "'%s'\n" RESET, current_cmd->path);
         printf(CYAN "  herdoc fd     : " YELLOW "'%d'\n" RESET, current_cmd->hd_fd);
         
-        // Print the original input/output properties for backwards compatibility
-        // printf(CYAN "  input file    : " YELLOW "'%s'\n" RESET, current_cmd->input_file ? current_cmd->input_file : "(null)");
-        // printf(CYAN "  output file   : " YELLOW "'%s'\n" RESET, current_cmd->output_file ? current_cmd->output_file : "(null)");
-        // printf(CYAN "  append mode   : " YELLOW "'%d'\n" RESET, current_cmd->append_mode);
-        // printf(CYAN "  heredoc delim : " YELLOW "'%s'\n" RESET, current_cmd->heredoc_delim ? current_cmd->heredoc_delim : "(null)");
-        
-        // Print all redirections in order
         if (current_cmd->redirections && current_cmd->redir_count > 0)
         {
             printf(GREEN "  Redirections   : \n" RESET);

@@ -3,84 +3,142 @@
 /*                                                        :::      ::::::::   */
 /*   gc_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:07:55 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 16:58:06 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/02 15:04:20 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell.h" // For t_gcnode, gc_malloc, gc_substr, ft_strlen
 
-static int	word_count(char *str)
+// New word counting function that respects quotes
+static int	gc_word_count_quoted(const char *s)
 {
 	int		count;
-	int		flag_pnt;
-	size_t	i;
+	int		i;
+	char	in_quote_char; // 0 for none, '\'' or '"' for active quote
 
 	count = 0;
-	flag_pnt = 0;
 	i = 0;
-	while (str[i])
+	in_quote_char = 0;
+	while (s && s[i]) // Added s check for safety
 	{
-		if ((str[i] != ' ' || str[i] != '\t') && flag_pnt == 0)
+		// Skip leading delimiters (spaces or tabs) if not currently inside a quote
+		while (s[i] && (s[i] == ' ' || s[i] == '\t') && !in_quote_char)
 		{
-			flag_pnt = 1;
-			count++;
+			i++;
 		}
-		else if (str[i] == ' ' || str[i] == '\t')
-			flag_pnt = 0;
-		i++;
+		if (s[i]) // If not end of string, potential start of a new word
+		{
+			count++;
+			// Scan through the current word
+			while (s[i])
+			{
+				if (s[i] == '\'' || s[i] == '"')
+				{
+					if (in_quote_char == 0)       // Entering a quote
+						in_quote_char = s[i];
+					else if (in_quote_char == s[i]) // Exiting the same type of quote
+						in_quote_char = 0;
+					// If s[i] is a quote but doesn't match in_quote_char (e.g., '" inside ''):
+					// it's treated as a literal character within the current word/quote.
+				}
+				else if ((s[i] == ' ' || s[i] == '\t') && !in_quote_char)
+				{
+					break; // Delimiter found outside of quotes, so current word ends
+				}
+				i++; // Move to the next character of the current word
+			}
+		}
 	}
 	return (count);
 }
 
-static char	*fill_word(t_gcnode **gc, char *str, int start, int end)
+// New splitting initialization function that respects quotes
+static char	**gc_init_split_quoted(t_gcnode **gc, char *s, char **result_array)
 {
-	char	*word;
 	int		i;
-
-	i = 0;
-	word = gc_malloc(gc, (end - start + 1) * sizeof(char));
-	while (start < end)
-	{
-		word[i] = str[start];
-		i++;
-		start++;
-	}
-	return (word);
-}
-
-static char	**init_spl(t_gcnode **gc, char *s, char **result)
-{
-	size_t	i;
 	int		j;
-	int		s_word;
+	int		word_start;
+	char	in_quote_char;
 
 	i = 0;
 	j = 0;
-	s_word = -1;
-	while (i <= ft_strlen(s))
+	in_quote_char = 0;
+	while (s && s[i]) // Added s check
 	{
-		if ((s[i] != ' ' && s[i] != '\t') && s_word < 0)
-			s_word = i;
-		else if (((s[i] == ' ' || s[i] == '\t') || i == ft_strlen(s)) && s_word >= 0)
+		in_quote_char = 0; // Reset for each new word search
+		// Skip leading delimiters
+		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 		{
-			result[j] = fill_word(gc, s, s_word, i);
-			s_word = -1;
-			j++;
+			i++;
 		}
-		i++;
+		if (s[i]) // Found the start of a word
+		{
+			word_start = i;
+			while (s[i])
+			{
+				if (s[i] == '\'' || s[i] == '"')
+				{
+					if (in_quote_char == 0)
+						in_quote_char = s[i];
+					else if (in_quote_char == s[i])
+						in_quote_char = 0;
+				}
+				else if ((s[i] == ' ' || s[i] == '\t') && !in_quote_char)
+				{
+					break; // End of word (delimiter found outside quote)
+				}
+				i++; // Advance within the current word
+			}
+			// The word is from s[word_start] to s[i-1]
+			// gc_substr expects length, which is i - word_start
+			result_array[j++] = gc_substr(gc, s, word_start, i - word_start);
+		}
 	}
-	return (result);
+	// The memory allocated by gc_malloc is zeroed, so result_array[j] will be NULL.
+	// If not, explicitly set: result_array[j] = NULL;
+	return (result_array);
 }
 
+// Modified main gc_split function
 char	**gc_split(t_gcnode **gc, char *s)
 {
 	char	**res;
+	int		num_words;
 
 	if (!s)
 		return (NULL);
-	res = gc_malloc(gc, (word_count(s) + 1) * sizeof(char *));
-	return (init_spl(gc, s, res));
+	
+	num_words = gc_word_count_quoted(s);
+	// gc_malloc allocates (num_words + 1) for char pointers, and zeroes memory.
+	// The last element will thus be NULL.
+	res = gc_malloc(gc, (num_words + 1) * sizeof(char *));
+	if (!res) // Should be handled by gc_malloc exiting on failure, but good practice
+		return (NULL);
+
+	return (gc_init_split_quoted(gc, s, res));
 }
+
+// The original static functions (word_count, fill_word, init_spl)
+// that did not respect quotes can now be removed from this file
+// if this new gc_split is the intended universal replacement.
+// If they are used elsewhere, you might need to rename this new gc_split
+// or the old one. Assuming you want to *change* this gc_split:
+/*
+static int	word_count(char *str) // Old version
+{
+	// ... original implementation ...
+}
+
+static char	*fill_word(t_gcnode **gc, char *str, int start, int end) // Old version
+{
+	// ... original implementation ...
+}
+
+static char	**init_spl(t_gcnode **gc, char *s, char **result) // Old version
+{
+	// ... original implementation ...
+}
+*/
