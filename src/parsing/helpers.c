@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/06/01 16:34:44 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/02 11:21:38 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,18 @@ void	export_handler(t_token **tokens, t_data *data)
 {
 	char	*key;
 	char	*value;
+	t_token *current;
 
-	if ((equal((*tokens)->value, "export"))
-		|| ((*tokens)->type == TOKEN_REDIR_APPEND
-			|| (*tokens)->type == TOKEN_REDIR_IN
-			|| (*tokens)->type == TOKEN_REDIR_OUT)
-	)
+	(void)data;
+	current = (*tokens);
+	while (current)
 	{
-		printf("Im the first who sets is_export to 0\n");
-		data->is_export = 0;
-	}
-	if ((*tokens)->next && (*tokens)->next->value)
-	{
-		key = token_key(data, (*tokens)->next->value);
-		value = token_value(data, (*tokens)->next->value);
-	}
-	if ((*tokens)->next
-		&& (*tokens)->next->value && ft_strchr(key, '$')
-		&& ft_strchr(value, '$')
-	)
-	{
-		printf("Im the middle who sets is_export to 1\n");
-		data->is_export = 1;
-	}
-	if ((*tokens)->next && (*tokens)->next->next
-		&& !equal((*tokens)->next->next->value, "export"))
-	{
-		printf("Im the last who sets is_export to 1\n");
-		data->is_export = 1;
+		key = token_key(data, current->value);
+		value = token_value(data, current->value);
+		if (data->regular_export && equal(current->value, "export") && !current->prev)
+			data->is_export = 0;
+		if ((ft_strchr(key, '$') && ft_strchr(value, '$')))
+			data->is_export = 1;
+		current = current->next;
 	}
 }

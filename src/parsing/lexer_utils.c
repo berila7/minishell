@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/06/01 11:08:23 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/02 11:20:59 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	handle_quote_error(t_token **tokens, t_data *data, int in_quote)
 	return (1);
 }
 
-bool is_simple_non_empty_quoted_string(const char *s) {
+bool is_simple_non_empty_quoted_string(char *s) {
     if (!s) return false;
     int len = ft_strlen(s);
 
@@ -161,11 +161,15 @@ bool is_simple_non_empty_quoted_string(const char *s) {
     // It should not contain the *same* outer quote character unescaped.
     // For minishell's typical word tokenization, we usually don't deal with complex escapes
     // like \" inside "...", so finding the quote_char is enough to mark it as not "simple content".
-    for (int k = 1; k <= len - 2; k++) {
-        if (s[k] == quote_char) {
+	int k = 1;
+    while (k <= len - 2) 
+	{
+        if (s[k] == quote_char) 
+		{
             return false; // Found the same quote character inside, indicating a more complex structure
                           // e.g., "foo"bar" (if `toggel_quote` grouped it) or "a"b"
         }
+		k++;
     }
     
     // If all checks pass, it's a simple quoted string like "content" or 'content'
@@ -173,63 +177,87 @@ bool is_simple_non_empty_quoted_string(const char *s) {
     return true;
 }
 
-char *process_complex_segment(t_gcnode **gc, const char *segment) {
-    if (!segment) {
-        return gc_strdup(gc, "");
+char *process_complex_segment(t_data *data, char *segment)
+{
+
+    if (!segment) 
+	{
+        return gc_strdup(&data->gc, "");
     }
 
     int input_len = ft_strlen(segment);
-    if (input_len == 0) {
-        return gc_strdup(gc, "");
+    if (input_len == 0) 
+	{
+        return gc_strdup(&data->gc, "");
     }
-    
     // Handle the case where the entire segment is just "" or '' specifically first
     // as they should result in an empty string.
-    if (input_len == 2) {
+    if (input_len == 2) 
+	{
         if ((segment[0] == '"' && segment[1] == '"') || \
-            (segment[0] == '\'' && segment[1] == '\'')) {
-            return gc_strdup(gc, "");
+            (segment[0] == '\'' && segment[1] == '\'')) 
+		{
+            return gc_strdup(&data->gc, "");
         }
     }
 
     // Max possible length, will be realloc'd to exact size via gc_strdup at the end
-    char *result_buffer = gc_malloc(gc, input_len + 1); 
+    char *result_buffer = gc_malloc(&data->gc, input_len + 1); 
     int j = 0; // Index for result_buffer
     int i = 0; // Index for segment
 
-    while (i < input_len) {
-        if (segment[i] == '"') {
-            if (i + 1 < input_len && segment[i+1] == '"') { // Empty ""
+    while (i < input_len)
+	{
+        if (segment[i] == '"')
+		{
+            if (i + 1 < input_len && segment[i+1] == '"')
+			{ // Empty ""
                 i += 2; // Skip
-            } else { // Non-empty "..."
+            } 
+			else 
+			{ // Non-empty "..."
                 i++; // Skip opening "
-                while (i < input_len && segment[i] != '"') {
+                while (i < input_len && segment[i] != '"') 
+				{
                     result_buffer[j++] = segment[i++];
                 }
-                if (i < input_len && segment[i] == '"') {
+                if (i < input_len && segment[i] == '"') 
+				{
                     i++; // Skip closing "
                 }
             }
-        } else if (segment[i] == '\'') {
-            if (i + 1 < input_len && segment[i+1] == '\'') { // Empty ''
+        }
+		else if (segment[i] == '\'') 
+		{
+            if (i + 1 < input_len && segment[i+1] == '\'') 
+			{ // Empty ''
                 i += 2; // Skip
-            } else { // Non-empty '...'
+            } 
+			else 
+			{ // Non-empty '...'
                 i++; // Skip opening '
-                while (i < input_len && segment[i] != '\'') {
+                while (i < input_len && segment[i] != '\'') 
+				{
                     result_buffer[j++] = segment[i++];
                 }
-                if (i < input_len && segment[i] == '\'') {
+                if (i < input_len && segment[i] == '\'') 
+				{
                     i++; // Skip closing '
                 }
             }
-        } else { // Regular, non-quoted character
+        } 
+		else 
+		{ // Regular, non-quoted character
             result_buffer[j++] = segment[i++];
         }
     }
     result_buffer[j] = '\0';
 
-    char *final_str = gc_strdup(gc, result_buffer); // gc_strdup creates an exact size copy
-    gc_free(gc, result_buffer); // Free the potentially oversized buffer
-
+    char *final_str = gc_strdup(&data->gc, result_buffer); // gc_strdup creates an exact size copy
+    gc_free(&data->gc, result_buffer); // Free the potentially oversized buffer
+	if (equal(final_str, "export") && !equal(final_str, segment))
+		data->regular_export = 0;
+	else if (equal(final_str, "export") && equal(final_str, segment))
+		data->regular_export = 1;
     return final_str;
 }

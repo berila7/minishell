@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:07:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/01 09:20:32 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/02 11:19:34 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 		} else {
 			// For complex concatenations ("x"hello), internal empty quotes (he""llo),
 			// or plain unquoted words (foobar), process aggressively.
-			final_value_for_new_token = process_complex_segment(&data->gc, raw_segment_from_substr);
+			final_value_for_new_token = process_complex_segment(data, raw_segment_from_substr);
 		}
 		
 		gc_free(&data->gc, raw_segment_from_substr); // Free the string obtained from gc_substr
@@ -53,7 +53,6 @@ void	extract_word(t_token **tokens, char *line, int *i, t_data *data)
 
 		if (the_new_token) {
 			add_token(tokens, the_new_token);
-			export_handler(tokens, data);
 		}
 	}
 }

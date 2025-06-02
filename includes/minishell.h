@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/01 09:19:41 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/02 10:07:08 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ struct s_data
 	int				in_heredoc;
 	int				is_export;
 	int				is_quoted;
+	int				regular_export;
 	int				remove_quotes;
 	int				cwd_failed;
 };
@@ -159,8 +160,8 @@ t_env		*init_env(t_gcnode **gc, char **envp);
 long		ft_atol(const char *str);
 int			count_args(char **args);
 int			exec(t_data *data);
-bool		is_simple_non_empty_quoted_string(const char *segment);
-char		*process_complex_segment(t_gcnode **gc, const char *segment);
+bool		is_simple_non_empty_quoted_string(char *segment);
+char		*process_complex_segment(t_data *data, char *segment);
 char		*export_key(t_gcnode **gc, char *arg);
 int			should_remove_quotes(t_token *token, char *expanded);
 char		*smart_quote_removal(t_gcnode **gc, char *str, t_token *token);

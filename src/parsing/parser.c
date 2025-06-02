@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/01 15:46:48 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/02 11:20:21 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,19 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 	data->remove_quotes = 0;
 	if (should_remove_quotes(token, token->value))
 		data->remove_quotes = 1;
-	printf("remove quotes: [%d]\nfor value: [%s]\n",
-		data->remove_quotes, token->value);
 	if (!expanded || (ft_strlen(expanded) == 0))
 	{
 		gc_free(gc, expanded);
 		return ;
 	}
-	printf("-------------------------------\n");
-	printf("split flag : [%d]\n", token->splited);
-	printf("quotes type flag : [%d]\n", token->quote_type);
-	printf("export flag : [%d]\n", data->is_export);
 	if (!token->splited || token->quote_type > 0 || !data->is_export)
 	{
-		printf("Im here 1\n");
 		add_argument(token, data, current_cmd, expanded);
 	}
 	else
 	{
-		printf("Im here 2\n");
 		process_unquoted_token(token, data, expanded, current_cmd);
 	}
-	printf("-------------------------------\n");
 	gc_free(gc, expanded);
 }
 
@@ -130,6 +121,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 	current_cmd = new_command(&data->gc);
 	cmd_list = NULL;
 	token = tokens;
+	export_handler(&tokens, data);
 	while (token)
 	{
 		if (!process_token(&token, &current_cmd, &cmd_list, data))
