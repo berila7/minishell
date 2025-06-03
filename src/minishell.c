@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:24:47 by ayoub             #+#    #+#             */
-/*   Updated: 2025/06/03 10:38:33 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/03 13:20:52 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	cleanup_iteration(t_data *data, t_token *tokens, char *line)
 
 void	cleanup_and_exit(t_data *data)
 {
+	// exit_status(exit_status(0, 0) ,1);
 	reset_to_system_default_signals();
 	clear_history();
 	gc_free_all(&data->gc);
@@ -64,5 +65,5 @@ int	main(int ac, char *av[], char **envp)
 		return (0);
 	run_shell_loop(data);
 	cleanup_and_exit(data);
-	return (0);
+	return (exit_status(0, 0));
 }
