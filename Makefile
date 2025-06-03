@@ -1,9 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -Iincludes
-
-FLAGS			+= -DN=$(N)
+FLAGS			=	-Wall -Wextra -Werror -Iincludes -fsanitize=address
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -20,15 +18,15 @@ SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/debug.c 
 					$(PARSING_DIR)/expand.c $(PARSING_DIR)/env_utils.c $(PARSING_DIR)/lexer_utils.c \
 					$(PARSING_DIR)/parser_utils.c $(PARSING_DIR)/free.c $(PARSING_DIR)/setup_signals.c \
 					$(PARSING_DIR)/expand_utils.c $(PARSING_DIR)/process_heredoc.c \
-					$(PARSING_DIR)/helpers.c \
+					$(PARSING_DIR)/helpers.c $(PARSING_DIR)/expand_helpers.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c $(BUILTINS_DIR)/builtins_utils.c \
 					$(BUILTINS_DIR)/builtins_utils2.c $(BUILTINS_DIR)/pwd.c $(BUILTINS_DIR)/unset.c \
 					$(BUILTINS_DIR)/cd.c $(BUILTINS_DIR)/export.c $(BUILTINS_DIR)/builtins_helpers.c \
-					$(EXEC_DIR)/exec.c $(EXEC_DIR)/set_cmd_path.c $(EXEC_DIR)/utils.c \
-					$(EXEC_DIR)/exec_multiple.c $(EXEC_DIR)/exec_single.c $(EXEC_DIR)/utils2.c \
+					$(EXEC_DIR)/exec.c $(EXEC_DIR)/set_cmd_path.c $(EXEC_DIR)/utils.c $(EXEC_DIR)/utils2.c \
+					$(EXEC_DIR)/exec_multiple.c $(EXEC_DIR)/exec_single.c $(EXEC_DIR)/handle_redirections.c \
 					$(HELPERS_DIR)/atol.c $(HELPERS_DIR)/gc_strdup.c $(HELPERS_DIR)/gc_strjoin.c \
 					$(HELPERS_DIR)/gc_split.c $(HELPERS_DIR)/print_err.c $(HELPERS_DIR)/gc_substr.c \
-					$(HELPERS_DIR)/gc_itoa.c $(HELPERS_DIR)/utils.c
+					$(HELPERS_DIR)/gc_itoa.c $(HELPERS_DIR)/utils.c $(HELPERS_DIR)/gc_split_char.c
 OBJS			=	$(SRCS:.c=.o)
 
 all: $(LIBFT_DIR) $(NAME)

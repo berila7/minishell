@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/04 16:02:12 by anachat          ###   ########.fr       */
+/*   Updated: 2025/05/29 17:54:31 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ void print_cmds(t_cmd *cmds)
             printf(GREEN "  Redirections   : \n" RESET);
             for (int i = 0; i < current_cmd->redir_count; i++)
             {
+                char *is_quoted;
+                if (current_cmd->redirections[i].quoted == 1)
+                    is_quoted = "Yes";
+                else
+                    is_quoted = "No";
                 printf(GREEN "    [%d] Type: " YELLOW, i);
                 
                 // Print the type in human-readable form
@@ -82,9 +87,9 @@ void print_cmds(t_cmd *cmds)
                         printf("UNKNOWN (%d)", current_cmd->redirections[i].type);
                 }
                 
-                printf(RESET GREEN ", File: " YELLOW "'%s'\n" RESET, 
+                printf(RESET GREEN ", File: " YELLOW "'%s'" RESET GREEN ", Quoted: " YELLOW "%s\n" RESET, 
                        current_cmd->redirections[i].file ? 
-                       current_cmd->redirections[i].file : "(null)");
+                       current_cmd->redirections[i].file : "(null)", is_quoted);
             }
         }
         else

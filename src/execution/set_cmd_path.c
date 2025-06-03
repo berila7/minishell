@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/28 17:26:57 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/03 09:40:43 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*get_cmd_path(t_gcnode **gc, char *cmd, t_env *env)
 	env_path = get_env_path(env);
 	if (!env_path)
 		return (printf("Cannot find PATH env\n"), NULL);
-	paths = gc_split(gc, env_path, ':');
+	paths = gc_split_char(gc, env_path, ':');
 	cmd_path = find_cmd(gc, paths, cmd);
 	free_arr(gc, paths);
 	return (cmd_path);
@@ -71,11 +71,8 @@ void	set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env)
 	{
 		if (cmd->args && cmd->args[0] && cmd->args[0][0])
 		{
-			if (equal(".", cmd->args[0]))
-			{
-				print_err("");	
+			if (equal(".", cmd->args[0]) || equal("..", cmd->args[0]))
 				cmd->path = NULL;
-			}
 			else if (is_builtin(cmd))
 				cmd->path = gc_strdup(gc, "builtin");
 			else

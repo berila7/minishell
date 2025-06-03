@@ -11,3 +11,37 @@
 
 
 [-] unset PATH - ls : change error
+
+
+
+
+ljljllhj
+ctr_d exit with last exit status
+. -> permission dinied 
+
+anachat@e2r8p11:/home/anachat$ ./ls
+bash: ./ls: No such file or directory
+anachat@e2r8p11:/home/anachat$ bash
+anachat@e2r8p11:/home/anachat$ lasdjf
+lasdjf: command not found
+anachat@e2r8p11:/home/anachat$ lasjfld/lsdjflds
+bash: lasjfld/lsdjflds: No such file or directory
+ambiguois
+..
+export $VAR="somthing"
+pip leaks
+
+
+
+
+
+
+==========================================
+
+
+
+
+
+minishell ➤ export a="  "
+minishell ➤ $a
+	: command not found

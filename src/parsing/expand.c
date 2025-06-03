@@ -6,79 +6,64 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/05/25 16:50:09 by berila           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:52:15 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	expand_env_var(char *str, t_expand *exp, t_data *data)
+int	handle_regular_char(t_gcnode **gc, char *str, int i, t_expand *exp)
 {
-	int		start;
-	char	*var_name;
-	char	*var_value;
-
-	start = exp->i;
-	while (str[exp->i] && (is_valid_var_char(str[exp->i])))
-		exp->i++;
-	var_name = gc_substr(&data->gc, str, start, exp->i - start);
-	var_value = get_env(data->env, var_name);
-	gc_free(&data->gc, var_name);
-	if (var_value)
-		exp->result = ft_strjoin_free(&data->gc, exp->result, var_value);
+	exp->result = ft_strjoin_char_free(gc, exp->result, str[i]);
+	return (i + 1);
 }
 
-static void	handle_special_var(char *str, t_expand *exp, t_data *data)
+int	handle_variable(t_gcnode **gc, char *str, int i, t_expand *exp)
 {
-	char	*status_str;
-	char	first_digit;
-
-	if (str[exp->i] == '?')
-	{
-		status_str = gc_itoa(&data->gc, exit_status(0, 0));
-		exp->result = ft_strjoin_free(&data->gc, exp->result, status_str);
-		gc_free(&data->gc, status_str);
-		exp->i++;
-	}
-	else if (ft_isdigit(str[exp->i]))
-	{
-		first_digit = str[exp->i];
-		exp->i++;
-		if (first_digit == '0')
-			exp->result = ft_strjoin_free(&data->gc, exp->result,
-					"minishell");
-	}
-}
-
-static void	process_dollar(char *str, t_expand *exp, t_data *data)
-{
-	exp->i++;
-	if (str[exp->i] == '?' || ft_isdigit(str[exp->i]))
-		handle_special_var(str, exp, data);
-	else if (str[exp->i] && is_valid_var_char(str[exp->i]))
-		expand_env_var(str, exp, data);
+	i++;
+	if (str[i] == '?')
+		return (handle_exit_status(gc, i, exp));
+	else if (ft_isdigit(str[i]))
+		return (handle_digit_var(gc, str, i, exp));
+	else if (str[i] && is_valid_var_char(str[i]))
+		return (handle_named_var(gc, str, i, exp));
 	else
-		exp->result = ft_strjoin_char_free(&data->gc, exp->result, '$');
+	{
+		exp->result = ft_strjoin_char_free(gc, exp->result, '$');
+		return (i);
+	}
+}
+
+int	process_char(t_gcnode **gc, char *str, int i, t_expand *exp)
+{
+	if (str[i] == '\'' && !exp->in_double_quote)
+		return (handle_single_quote(gc, str, i, exp));
+	else if (str[i] == '\"' && !exp->in_single_quote)
+		return (handle_double_quote(gc, str, i, exp));
+	else if (str[i] == '$' && str[i + 1]
+		&& (!exp->in_single_quote || exp->data->in_heredoc))
+		return (handle_variable(gc, str, i, exp));
+	else
+		return (handle_regular_char(gc, str, i, exp));
 }
 
 char	*expand_variables(t_gcnode **gc, char *str, t_data *data)
 {
 	t_expand	exp;
+	int			i;
 
-	init_expand_vars(&exp);
 	exp.result = gc_strdup(gc, "");
-	while (str[exp.i])
+	if (!exp.result)
+		return (NULL);
+	exp.in_single_quote = 0;
+	exp.in_double_quote = 0;
+	exp.data = data;
+	i = 0;
+	while (str[i])
 	{
-		if (str[exp.i] == '\'' || str[exp.i] == '\"')
-			handle_quotes(str, &exp, data);
-		else if (str[exp.i] == '$' && str[exp.i + 1]
-			&& (!exp.in_single_quote || data->in_heredoc))
-			process_dollar(str, &exp, data);
-		else
-		{
-			exp.result = ft_strjoin_char_free(gc, exp.result, str[exp.i]);
-			exp.i++;
-		}
+		i = process_char(gc, str, i, &exp);
+		if (i == -1)
+			return (NULL);
 	}
 	return (exp.result);
 }

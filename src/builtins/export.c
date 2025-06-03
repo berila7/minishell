@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/27 12:18:28 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/29 18:48:52 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char	*get_key(t_gcnode **gc, char *arg)
 	char	*equals;
 	size_t	key_len;
 
+	if (arg[0] == '=')
+		return (NULL);
 	equals = ft_strchr(arg, '=');
 	if (equals)
 	{

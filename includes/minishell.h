@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/27 12:24:34 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/05/30 16:33:33 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define __USE_POSIX
 # define _POSIX_C_SOURCE 200809L
 
+# include <dirent.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <termios.h>
@@ -66,6 +67,7 @@ struct s_redir
 {
 	int		type;
 	char	*file;
+	char	quoted;
 };
 
 typedef enum e_token_type
@@ -92,6 +94,9 @@ struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	int				quote_type;
+	int				expanded;
+	int				splited;
 	t_token			*next;
 	t_token			*prev;
 };
@@ -129,7 +134,7 @@ struct s_expand
 	int				in_single_quote;
 	int				in_double_quote;
 	char			*result;
-	int				i;
+	t_data			*data;
 };
 
 void		*gc_malloc(t_gcnode **gc, size_t size);
@@ -138,7 +143,8 @@ void		gc_free(t_gcnode **gc, void *ptr);
 
 // helpers + gc implementation
 char		*gc_strjoin(t_gcnode **gc, char *s1, char *s2);
-char		**gc_split(t_gcnode **gc, char *s, char c);
+char		**gc_split(t_gcnode **gc, char *s);
+char		**gc_split_char(t_gcnode **gc, char *s, char c);
 char		*gc_strdup(t_gcnode **gc, char *src);
 
 t_token		*tokenize(char *line, t_data *data);
@@ -151,6 +157,9 @@ t_env		*init_env(t_gcnode **gc, char **envp);
 long		ft_atol(const char *str);
 int			count_args(char **args);
 int			exec(t_data *data);
+char		*export_key(t_gcnode **gc, char *arg);
+int			should_remove_quotes(t_token *token, char *expanded);
+char		*smart_quote_removal(t_gcnode **gc, char *str, t_token *token);
 char		*expand_variables(t_gcnode **gc, char *str, t_data *data);
 void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
@@ -167,11 +176,17 @@ void		init_expand_vars(t_expand *exp);
 void		reset_to_system_default_signals(void);
 void		setup_child_default_signals(void);
 void		setup_parent_waiting_signals(void);
-void		handle_quotes(char *str, t_expand *exp, t_data *data);
+int			handle_single_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
+int			handle_double_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
 void		print_err(char *fmt, void *arg);
 void		cleanup_and_exit(t_data *data);
 void		cleanup_iteration(t_data *data, t_token *tokens, char *line);
 void		execute_commands(t_data *data);
+int			handle_exit_status(t_gcnode **gc, int i, t_expand *exp);
+int			handle_named_var(t_gcnode **gc, char *str, int i, t_expand *exp);
+int			handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp);
+int			process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp);
+int			get_var_name_end(char *str, int i);
 int			process_line(t_data *data, char *line, t_token **tokens);
 int			init_data(t_data **data, char **envp);
 void		run_shell_loop(t_data *data);
@@ -181,7 +196,7 @@ void		export_handler(t_token **tokens, t_data *data);
 int			toggel_quote(char *line, int *i);
 int			handle_quote_error(t_token **tokens, t_data *data, int in_quote);
 int			set_redir_type(t_token_type type);
-void		add_argument(t_gcnode **gc, t_cmd *cmd, char *arg);
+void		add_argument(t_token *token, t_gcnode **gc, t_cmd *cmd, char *arg);
 int			handle_redir(t_token **token, t_cmd *current_cmd,
 				t_cmd **cmd_list, t_data *data);
 int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
@@ -205,10 +220,10 @@ void		add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file);
 int			noquotes_len(char *str);
 int			process_heredoc_token(t_token **token,
 				t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
-void		process_unquoted_token(t_gcnode **gc, char *expanded,
+void		process_unquoted_token(t_token *token, t_gcnode **gc, char *expanded,
 				t_cmd *current_cmd);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
-void		process_quoted_token(t_gcnode **gc, char *expanded,
+void		process_quoted_token(t_token *token, t_gcnode **gc, char *expanded,
 				t_cmd *current_cmd);
 int			exit_status(int status, int is_accessor);
 char		*gc_substr(t_gcnode **gc, const char *s,
@@ -253,6 +268,7 @@ void		set_default_env(t_data *data);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
+int			handle_exec_errors(t_cmd *cmd, t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
 
