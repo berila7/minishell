@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:07:55 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 19:38:30 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/03 22:09:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ static int	gc_word_count_quoted(const char *s)
 	while (s && s[i])
 	{
 		while (s[i] && (s[i] == ' ' || s[i] == '\t') && !in_quote_char)
-		{
 			i++;
-		}
 		if (s[i])
 		{
 			count++;
@@ -40,9 +38,7 @@ static int	gc_word_count_quoted(const char *s)
 						in_quote_char = 0;
 				}
 				else if ((s[i] == ' ' || s[i] == '\t') && !in_quote_char)
-				{
-					break;
-				}
+					break ;
 				i++;
 			}
 		}

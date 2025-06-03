@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 19:44:21 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/03 22:11:08 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	export_handler(t_token **tokens, t_data *data)
 {
 	char	*key;
 	char	*value;
-	t_token *current;
+	t_token	*current;
 	char	*key_str;
 	char	*new_value;
 	char	*result;

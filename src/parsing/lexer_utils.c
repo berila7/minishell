@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/06/02 19:40:36 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 22:12:21 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	check_quotes(t_token **token)
 		}
 		i++;
 	}
-	
 }
 
 t_token	*new_token(t_gcnode **gc, char *value, t_token_type type)
@@ -130,4 +129,3 @@ int	handle_quote_error(t_token **tokens, t_data *data, int in_quote)
 	*tokens = NULL;
 	return (1);
 }
-

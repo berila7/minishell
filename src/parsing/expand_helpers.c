@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:11:46 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 18:02:26 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 22:10:39 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp)
 
 char	*smart_quote_removal(t_data *data, char *str, t_token *token)
 {
-    if (token->quote_type > 0)
-        return (remove_quotes(&data->gc, str));
-    return (gc_strdup(&data->gc, str));
+	if (token->quote_type > 0)
+		return (remove_quotes(&data->gc, str));
+	return (gc_strdup(&data->gc, str));
 }
