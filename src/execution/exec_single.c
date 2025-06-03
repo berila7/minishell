@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 18:07:16 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/03 19:21:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_execve(t_cmd *cmd, t_data *data)
 	if (execve(cmd->path, cmd->args, env_to_array(&data->gc, data->env)) == -1)
 	{
 		if (errno == ENOEXEC)
-		
 			exit(0);
 		perror("execve");
 		exit(1);

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 17:50:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:27:47 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,7 @@ int			exec_multiple_cmd(t_data *data);
 int			handle_exec_errors(t_cmd *cmd, t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
-int			is_directory(const char *path);
+int			is_directory(char *path);
 
 
 
