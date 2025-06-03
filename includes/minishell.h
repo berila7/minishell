@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 17:50:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:24:29 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,6 @@ struct s_redir
 	char	*file;
 	char	quoted;
 };
-
-// Structure to hold a single token (quoted or unquoted)
-typedef struct {
-    char *text;
-    bool is_quoted;  // true if this was inside quotes, false otherwise
-} Token;
-
-// Structure to hold all parsed tokens
-typedef struct {
-    Token *tokens;
-    int count;
-    bool is_valid;
-} ParseResult;
 
 typedef enum e_token_type
 {
@@ -292,7 +279,7 @@ int			exec_multiple_cmd(t_data *data);
 int			handle_exec_errors(t_cmd *cmd, t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
-int			is_directory(const char *path);
+int			is_directory(char *path);
 
 
 

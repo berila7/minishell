@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 18:20:55 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:30:55 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,51 +94,11 @@ void	export_handler(t_token **tokens, t_data *data)
 				key_str = ft_strjoin_char_free(&data->gc, key, '=');
 				result = gc_strjoin(&data->gc, key_str, new_value);
 				current->value = result;
-				printf("new value: [%s]\n", current->value);
 			}
 			current = current->next;
 		}
 	}
 }
-
-// void	export_handler(t_token **tokens, t_data *data)
-// {
-// 	char	*key;
-// 	char	*value;
-// 	t_token *current;
-// 	char	*key_str;
-// 	char	*new_value;
-// 	char	*result;
-
-// 	current = (*tokens);
-// 	while (current)
-// 	{
-// 		if (equal(current->value, "export")
-// 			&& !current->prev && current->next
-// 			&& data->regular_export
-// 		)
-// 		{
-// 			key = token_key(data, current->next->value);
-// 			value = token_value(data, current->next->value);
-// 			if (!ft_strchr(key, '$') && ft_strchr(value, '$'))
-// 			{
-// 				data->is_export = 1;
-// 				current->next->quote_type = 2;
-// 				new_value = add_quotes_to_str(&data->gc, value);
-// 				key_str = ft_strjoin_char_free(&data->gc, key, '=');
-// 				result = gc_strjoin(&data->gc, key_str, new_value);
-// 				current->next->value = result;
-// 				printf("new value: [%s]\n", current->next->value);
-// 			}
-// 			else
-// 			{
-// 				data->is_export = 0;
-// 				current->quote_type = 0;
-// 			}
-// 		}
-// 		current = current->next;
-// 	}
-// }
 
 void	export_exist(t_token **tokens, t_data *data)
 {
