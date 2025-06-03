@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 17:33:02 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/03 10:41:26 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int handle_exec_errors(t_cmd *cmd, t_data *data)
 	DIR		*dir;
 	char	*is_path;
 
+	if (count_args(cmd->args) == 0 || !cmd->args)
+		return (exit(0), 0);
 	is_path = ft_strchr(cmd->args[0], '/');
 	dir = opendir(cmd->args[0]);
 	if (is_path && dir)
