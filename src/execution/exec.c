@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 16:38:39 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/03 18:06:03 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_directory(const char *path) {
+int	is_directory(char *path)
+{
 	struct stat	st;
 
-    if (stat(path, &st) == 0)
-	{
-		return S_ISDIR(st.st_mode);
-    }
+	if (stat(path, &st) == 0)
+		return (S_ISDIR(st.st_mode));
 	return (0);
 }
 

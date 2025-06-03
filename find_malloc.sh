@@ -1,5 +1,6 @@
-#!/bin/bash
+echo hello
 
+exit 0
 # Usage:
 # ./find_malloc_fail.sh [--max MAX_INDEX] [--msg "Break Message"] [--makeargs "other make args"]
 #

@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 09:49:06 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/03 17:50:38 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	exec_cmd(t_cmd *cmd, t_data *data)
-{
-	handle_exec_errors(cmd, data);
-	close2(data->og_fd);
-	if (execve(cmd->path, cmd->args, env_to_array(&data->gc, data->env)) == -1)
-		return (perror("execve failed"), exit(1), 1);
-	return (0);
-}
 
 void	exec_child(t_cmd *cmd, t_data *data)
 {
@@ -37,7 +28,11 @@ void	exec_child(t_cmd *cmd, t_data *data)
 		exit(exit_status(0, 0));
 	}
 	else
-		exec_cmd(cmd, data);
+	{
+		handle_exec_errors(cmd, data);
+		close2(data->og_fd);
+		ft_execve(cmd, data);
+	}
 }
 
 int	child1(t_cmd *cmd, t_data *data, int *pid)

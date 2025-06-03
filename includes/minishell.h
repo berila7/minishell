@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 16:39:30 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/03 17:50:53 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ int			is_valid_env_key(char *str);
 
 // exec utils:
 int			exec(t_data *data);
+void		ft_execve(t_cmd *cmd, t_data *data);
 void		free_arr(t_gcnode **gc, char **arr);
 int			cmd_exists(char *path);
 int			is_exec(char *path);
