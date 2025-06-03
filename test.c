@@ -6,11 +6,10 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:50:08 by berila            #+#    #+#             */
-/*   Updated: 2025/06/02 17:49:02 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:15:27 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 # include <dirent.h>
 # include <signal.h>
 # include <fcntl.h>
@@ -401,101 +400,126 @@
 // // 	return 0;
 // // }
 
-char *process_dynamic_quoted(t_gcnode **gc, char *input, t_data *data)
+// char *process_dynamic_quoted(t_gcnode **gc, char *input, t_data *data)
+// {
+//     if (!input || strlen(input) == 0)
+//         return gc_strdup(gc, "");
+    
+//     int len = strlen(input);
+//     int pos = 0;
+//     char *result = gc_strdup(gc, "");
+    
+//     if (!result)
+//         return NULL;
+    
+//     while (pos < len)
+//     {
+//         if (input[pos] == '"')
+//         {
+//             // Found start of quoted string
+//             int quote_start = pos;
+//             pos++; // Skip opening quote
+            
+//             // Find closing quote
+//             while (pos < len && input[pos] != '"')
+//                 pos++;
+            
+//             if (pos >= len)
+//             {
+//                 // No closing quote found - treat remaining as unquoted
+//                 char *remaining = gc_malloc(gc, len - quote_start + 1);
+//                 if (!remaining)
+//                     return result;
+                
+//                 strcpy(remaining, input + quote_start);
+//                 char *expanded = expand_variables(gc, remaining, data);
+//                 if (!expanded)
+//                     return result;
+                
+//                 char *new_result = gc_strjoin(gc, result, expanded);
+//                 return new_result ? new_result : result;
+//             }
+            
+//             // Extract quoted part including quotes
+//             int quoted_len = pos - quote_start + 1; // +1 to include closing quote
+//             char *quoted_part = gc_malloc(gc, quoted_len + 1);
+//             if (!quoted_part)
+//                 return result;
+            
+//             strncpy(quoted_part, input + quote_start, quoted_len);
+//             quoted_part[quoted_len] = '\0';
+            
+//             // Process with remove_quotes
+//             char *unquoted = remove_quotes(gc, quoted_part);
+//             if (!unquoted)
+//                 return result;
+            
+//             // Join to result
+//             char *new_result = gc_strjoin(gc, result, unquoted);
+//             if (!new_result)
+//                 return result;
+//             result = new_result;
+            
+//             pos++; // Skip closing quote
+//         }
+//         else
+//         {
+//             // Found unquoted text
+//             int start = pos;
+            
+//             // Find next quote or end of string
+//             while (pos < len && input[pos] != '"')
+//                 pos++;
+            
+//             // Extract unquoted part
+//             int unquoted_len = pos - start;
+//             if (unquoted_len > 0)
+//             {
+//                 char *unquoted_part = gc_malloc(gc, unquoted_len + 1);
+//                 if (!unquoted_part)
+//                     return result;
+                
+//                 strncpy(unquoted_part, input + start, unquoted_len);
+//                 unquoted_part[unquoted_len] = '\0';
+                
+//                 // Process with expand_variables
+//                 char *expanded = expand_variables(gc, unquoted_part, data);
+//                 if (!expanded)
+//                     return result;
+                
+//                 // Join to result
+//                 char *new_result = gc_strjoin(gc, result, expanded);
+//                 if (!new_result)
+//                     return result;
+//                 result = new_result;
+//             }
+//         }
+//     }
+    
+//     return result;
+// }
+
+char	*add_quotes_to_str(char *str)
 {
-    if (!input || strlen(input) == 0)
-        return gc_strdup(gc, "");
-    
-    int len = strlen(input);
-    int pos = 0;
-    char *result = gc_strdup(gc, "");
-    
-    if (!result)
-        return NULL;
-    
-    while (pos < len)
-    {
-        if (input[pos] == '"')
-        {
-            // Found start of quoted string
-            int quote_start = pos;
-            pos++; // Skip opening quote
-            
-            // Find closing quote
-            while (pos < len && input[pos] != '"')
-                pos++;
-            
-            if (pos >= len)
-            {
-                // No closing quote found - treat remaining as unquoted
-                char *remaining = gc_malloc(gc, len - quote_start + 1);
-                if (!remaining)
-                    return result;
-                
-                strcpy(remaining, input + quote_start);
-                char *expanded = expand_variables(gc, remaining, data);
-                if (!expanded)
-                    return result;
-                
-                char *new_result = gc_strjoin(gc, result, expanded);
-                return new_result ? new_result : result;
-            }
-            
-            // Extract quoted part including quotes
-            int quoted_len = pos - quote_start + 1; // +1 to include closing quote
-            char *quoted_part = gc_malloc(gc, quoted_len + 1);
-            if (!quoted_part)
-                return result;
-            
-            strncpy(quoted_part, input + quote_start, quoted_len);
-            quoted_part[quoted_len] = '\0';
-            
-            // Process with remove_quotes
-            char *unquoted = remove_quotes(gc, quoted_part);
-            if (!unquoted)
-                return result;
-            
-            // Join to result
-            char *new_result = gc_strjoin(gc, result, unquoted);
-            if (!new_result)
-                return result;
-            result = new_result;
-            
-            pos++; // Skip closing quote
-        }
-        else
-        {
-            // Found unquoted text
-            int start = pos;
-            
-            // Find next quote or end of string
-            while (pos < len && input[pos] != '"')
-                pos++;
-            
-            // Extract unquoted part
-            int unquoted_len = pos - start;
-            if (unquoted_len > 0)
-            {
-                char *unquoted_part = gc_malloc(gc, unquoted_len + 1);
-                if (!unquoted_part)
-                    return result;
-                
-                strncpy(unquoted_part, input + start, unquoted_len);
-                unquoted_part[unquoted_len] = '\0';
-                
-                // Process with expand_variables
-                char *expanded = expand_variables(gc, unquoted_part, data);
-                if (!expanded)
-                    return result;
-                
-                // Join to result
-                char *new_result = gc_strjoin(gc, result, expanded);
-                if (!new_result)
-                    return result;
-                result = new_result;
-            }
-        }
-    }
-    
-    return result;
+	char	*quoted_str;
+	int		len;
+
+	if (!str || !*str)
+		return (NULL);
+	len = strlen(str);
+	quoted_str = malloc(len + 3);
+	quoted_str[0] = '\"';
+	strncpy(quoted_str + 1, str, len);
+	quoted_str[len + 1] = '\"';
+	quoted_str[len + 2] = '\0';
+	return (quoted_str);
+}
+
+int main(void)
+{
+    char    *str = "hello world";
+    char    *quoted_str;
+
+    quoted_str = add_quotes_to_str(str);
+    printf("The result is: [%s]\n", quoted_str);
 }

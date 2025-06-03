@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:11:46 by berila            #+#    #+#             */
-/*   Updated: 2025/06/01 15:44:21 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:02:26 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,11 @@ int	process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp)
 		exp->result = ft_strjoin_free(gc, exp->result, var_value);
 	gc_free(gc, var_name);
 	return (i);
+}
+
+char	*smart_quote_removal(t_data *data, char *str, t_token *token)
+{
+    if (token->quote_type > 0)
+        return (remove_quotes(&data->gc, str));
+    return (gc_strdup(&data->gc, str));
 }
