@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/29 18:18:44 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:12:38 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	{
 		expanded = expand_variables(&data->gc, (*token)->value, data);
 		add_redirection(&data->gc, current_cmd, redir_type, 
-			smart_quote_removal(&data->gc, expanded, *token));
+			smart_quote_removal(data, expanded, *token));
 		current_cmd->redirections[current_cmd->redir_count - 1].quoted = 0;
 		if ((*token)->quote_type == 0 && ft_strchr((*token)->value, '$'))
 			current_cmd->redirections[current_cmd->redir_count - 1].quoted = 1;
@@ -60,17 +60,22 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 	t_cmd *current_cmd, t_data *data)
 {
 	char	*expanded;
+	char	*unquoted;
 
-	expanded = expand_variables(gc, token->value, data);
-	if (!expanded || (ft_strlen(expanded) == 0))
+	unquoted = token->value;
+	if (!data->is_export && has_mixed_format(token->value))
+	{
+		unquoted = process_mixed_quoted(gc, token->value, data);
+		printf("I entered here for: [%s]", token->value);
+		token->quote_type = 0;
+	}
+	expanded = expand_variables(gc, unquoted, data);
+	if (!expanded)
 	{
 		gc_free(gc, expanded);
 		return ;
 	}
-	if (!token->splited || !data->is_export)
-		add_argument(token, gc, current_cmd, expanded);
-	else
-		process_unquoted_token(token, gc, expanded, current_cmd);
+	process_unquoted_token(token, data, expanded, current_cmd);
 	gc_free(gc, expanded);
 }
 
@@ -114,6 +119,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 	current_cmd = new_command(&data->gc);
 	cmd_list = NULL;
 	token = tokens;
+	export_handler(&token, data);
 	while (token)
 	{
 		if (!process_token(&token, &current_cmd, &cmd_list, data))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 15:45:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/03 09:49:06 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	exec_cmd(t_cmd *cmd, t_data *data)
 void	exec_child(t_cmd *cmd, t_data *data)
 {
 	setup_child_default_signals();
-	if (cmd->next)
+	if (cmd && cmd->next)
 	{
 		close(data->pipe[0]);
 		ft_dup2(data->pipe[1], STDOUT_FILENO);

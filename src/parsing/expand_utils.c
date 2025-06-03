@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:59:50 by berila            #+#    #+#             */
-/*   Updated: 2025/05/29 09:56:49 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/02 19:38:55 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,18 @@ int	handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp)
 	return (i);
 }
 
-int	should_remove_quotes(t_token *token, char *expanded)
+int	should_remove_quotes(t_data *data, t_token *token, char *expanded)
 {
-   
+	(void)data;
+	(void)expanded;
     if (token->quote_type > 0)
-    {
-        int i = 0;
-        while (expanded[i])
-        {
-            if ((expanded[i] == ' ' || expanded[i] == '\t') && ft_strchr(expanded, '$'))
-                return (0);
-            i++;
-        }
         return (1);
-    }
     return (0);
 }
 
-char	*smart_quote_removal(t_gcnode **gc, char *str, t_token *token)
+char	*smart_quote_removal(t_data *data, char *str, t_token *token)
 {
-    if (should_remove_quotes(token, str))
-        return (remove_quotes(gc, str));
-    return (gc_strdup(gc, str));
+    if (should_remove_quotes(data, token, str))
+        return (remove_quotes(&data->gc, str));
+    return (gc_strdup(&data->gc, str));
 }

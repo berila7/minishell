@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/05/30 17:22:09 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:40:36 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	check_quotes(t_token **token)
 
 	quotes_type = 0;
 	(*token)->quote_type = 0;
-	(*token)->expanded = 1;
-	(*token)->splited = 1;
 	while ((*token)->value[i])
 	{
 		if ((*token)->value[i] == '\'')
@@ -31,8 +29,6 @@ void	check_quotes(t_token **token)
 			{
 				quotes_type = 0;
 				(*token)->quote_type = 1;
-				(*token)->expanded = 0;
-				(*token)->splited = 0;
 			}
 		}
 		else if ((*token)->value[i] == '\"')
@@ -43,10 +39,6 @@ void	check_quotes(t_token **token)
 			{
 				quotes_type = 0;
 				(*token)->quote_type = 2;
-				if (ft_strchr((*token)->value, '$'))
-					(*token)->splited = 1;
-				else
-					(*token)->splited = 0;
 			}
 		}
 		i++;
@@ -138,3 +130,4 @@ int	handle_quote_error(t_token **tokens, t_data *data, int in_quote)
 	*tokens = NULL;
 	return (1);
 }
+

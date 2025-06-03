@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 16:33:33 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:29:48 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <sys/stat.h> 
@@ -70,6 +71,19 @@ struct s_redir
 	char	quoted;
 };
 
+// Structure to hold a single token (quoted or unquoted)
+typedef struct {
+    char *text;
+    bool is_quoted;  // true if this was inside quotes, false otherwise
+} Token;
+
+// Structure to hold all parsed tokens
+typedef struct {
+    Token *tokens;
+    int count;
+    bool is_valid;
+} ParseResult;
+
 typedef enum e_token_type
 {
 	TOKEN_WORD,
@@ -93,10 +107,8 @@ struct s_cmd
 struct s_token
 {
 	char			*value;
-	t_token_type	type;
 	int				quote_type;
-	int				expanded;
-	int				splited;
+	t_token_type	type;
 	t_token			*next;
 	t_token			*prev;
 };
@@ -119,6 +131,8 @@ struct s_data
 	int				in_heredoc;
 	int				is_export;
 	int				is_quoted;
+	int				regular_export;
+	int				remove_quotes;
 	int				cwd_failed;
 };
 
@@ -157,9 +171,13 @@ t_env		*init_env(t_gcnode **gc, char **envp);
 long		ft_atol(const char *str);
 int			count_args(char **args);
 int			exec(t_data *data);
+bool		has_mixed_format(char *str);
+bool		is_simple_non_empty_quoted_string(char *segment);
+char		*process_mixed_quoted(t_gcnode **gc, char *input, t_data *data);
+char		*process_complex_segment(t_data *data, char *segment);
 char		*export_key(t_gcnode **gc, char *arg);
-int			should_remove_quotes(t_token *token, char *expanded);
-char		*smart_quote_removal(t_gcnode **gc, char *str, t_token *token);
+int			should_remove_quotes(t_data *data, t_token *token, char *expanded);
+char		*smart_quote_removal(t_data *data, char *str, t_token *token);
 char		*expand_variables(t_gcnode **gc, char *str, t_data *data);
 void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
@@ -170,11 +188,13 @@ char		*get_env(t_env *env, char *key);
 void		set_env(t_gcnode **gc, t_env **env, char *key, char *value);
 void		free_data(t_gcnode **gc, t_data *data);
 int			validate_token(t_token *token);
+void		export_exist(t_token **tokens, t_data *data);
 char		*ptr_to_hex_str(t_gcnode **gc, void *ptr);
 int			open_heredoc(t_gcnode **gc, int *fd);
 void		init_expand_vars(t_expand *exp);
 void		reset_to_system_default_signals(void);
 void		setup_child_default_signals(void);
+char 		*process_dynamic_quoted(t_gcnode **gc, char *input, t_data *data);
 void		setup_parent_waiting_signals(void);
 int			handle_single_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_double_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
@@ -196,7 +216,8 @@ void		export_handler(t_token **tokens, t_data *data);
 int			toggel_quote(char *line, int *i);
 int			handle_quote_error(t_token **tokens, t_data *data, int in_quote);
 int			set_redir_type(t_token_type type);
-void		add_argument(t_token *token, t_gcnode **gc, t_cmd *cmd, char *arg);
+char		*normalize_word_segment(t_gcnode **gc, const char *segment);
+void		add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg);
 int			handle_redir(t_token **token, t_cmd *current_cmd,
 				t_cmd **cmd_list, t_data *data);
 int			handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
@@ -220,11 +241,9 @@ void		add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file);
 int			noquotes_len(char *str);
 int			process_heredoc_token(t_token **token,
 				t_cmd *current_cmd, t_cmd *cmd_list, t_data *data);
-void		process_unquoted_token(t_token *token, t_gcnode **gc, char *expanded,
+void		process_unquoted_token(t_token *token, t_data *data, char *expanded,
 				t_cmd *current_cmd);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
-void		process_quoted_token(t_token *token, t_gcnode **gc, char *expanded,
-				t_cmd *current_cmd);
 int			exit_status(int status, int is_accessor);
 char		*gc_substr(t_gcnode **gc, const char *s,
 				unsigned int start, size_t len);

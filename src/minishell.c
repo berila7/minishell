@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:24:47 by ayoub             #+#    #+#             */
-/*   Updated: 2025/05/30 17:53:09 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:20:52 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	process_line(t_data *data, char *line, t_token **tokens)
 		return (0);
 	}
 	set_cmd_path(&data->gc, data->cmds, data->env);
-	// print_tokens(*tokens);
+	print_tokens(*tokens);
 	print_cmds(data->cmds);
 	return (1);
 }
@@ -42,12 +42,14 @@ void	cleanup_iteration(t_data *data, t_token *tokens, char *line)
 {
 	free_tokens(&data->gc, tokens);
 	free_commands(&data->gc, data->cmds);
+	data->is_export = 0;
 	data->cmds = NULL;
 	free(line);
 }
 
 void	cleanup_and_exit(t_data *data)
 {
+	// exit_status(exit_status(0, 0) ,1);
 	reset_to_system_default_signals();
 	clear_history();
 	gc_free_all(&data->gc);
@@ -63,5 +65,5 @@ int	main(int ac, char *av[], char **envp)
 		return (0);
 	run_shell_loop(data);
 	cleanup_and_exit(data);
-	return (0);
+	return (exit_status(0, 0));
 }
