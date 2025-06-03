@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/03 09:53:56 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/03 10:49:48 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 	current_cmd = new_command(&data->gc);
 	cmd_list = NULL;
 	token = tokens;
+	export_handler(&token, data);
 	while (token)
 	{
 		if (!process_token(&token, &current_cmd, &cmd_list, data))

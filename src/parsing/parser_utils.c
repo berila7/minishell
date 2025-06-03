@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:53 by berila            #+#    #+#             */
-/*   Updated: 2025/06/02 19:41:00 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 11:11:01 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 
 	i = 0;
 	size = 0;
-	(void)token;
 	while (cmd->args[i])
 	{
 		i++;

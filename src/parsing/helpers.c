@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/06/02 18:18:30 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 10:08:41 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	export_handler(t_token **tokens, t_data *data)
 			if (!ft_strchr(key, '$') && ft_strchr(value, '$'))
 			{
 				data->is_export = 1;
-				current->quote_type = 2;
+				current->next->quote_type = 2;
 				new_value = add_quotes_to_str(&data->gc, value);
 				key_str = ft_strjoin_char_free(&data->gc, key, '=');
 				result = gc_strjoin(&data->gc, key_str, new_value);
