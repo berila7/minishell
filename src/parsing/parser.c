@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/02 20:22:25 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 09:53:56 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 		token->quote_type = 0;
 	}
 	expanded = expand_variables(gc, unquoted, data);
-	if (!expanded || (ft_strlen(expanded) == 0))
+	if (!expanded)
 	{
 		gc_free(gc, expanded);
 		return ;
