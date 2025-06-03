@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:00:00 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/02 19:39:34 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/02 20:22:11 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ char *process_mixed_quoted(t_gcnode **gc, char *input, t_data *data)
         return NULL;
     
     // Check if it has mixed format (both quoted and unquoted parts)
-    if (!has_mixed_format(input) 
-		|| data->is_export
-	)
-        return gc_strdup(gc, input); // Return as-is if not mixed format
+    // if (!has_mixed_format(input) 
+	// 	|| data->is_export
+	// )
+    //     return gc_strdup(gc, input); // Return as-is if not mixed format
     
     int len = strlen(input);
     int pos = 0;

@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/02 19:38:31 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/02 20:22:25 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 	export_exist(&token, data);
 	if (!data->is_export && has_mixed_format(token->value))
 	{
-		unquoted = remove_quotes(gc, token->value);
+		unquoted = process_mixed_quoted(gc, token->value, data);
 		token->quote_type = 0;
 	}
 	expanded = expand_variables(gc, unquoted, data);
