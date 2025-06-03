@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 16:31:22 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/03 11:12:37 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*get_cmd_path(t_gcnode **gc, char *cmd, t_env *env)
 	}
 	env_path = get_env_path(env);
 	if (!env_path)
-		return (printf("Cannot find PATH env\n"), NULL);
+		return (NULL);
 	paths = gc_split_char(gc, env_path, ':');
 	cmd_path = find_cmd(gc, paths, cmd);
 	free_arr(gc, paths);
