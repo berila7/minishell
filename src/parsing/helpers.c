@@ -6,7 +6,7 @@
 /*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 19:25:55 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/03 19:44:21 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,20 @@ char	*add_quotes_to_str(t_gcnode **gc, char *str)
 {
 	char	*quoted_str;
 	int		len;
+	int		i;
+	int		j;
 
-	len = ft_strlen(str);
 	if (!str || !*str)
 		return (NULL);
+	len = ft_strlen(str);
 	quoted_str = gc_malloc(gc, len + 3);
-	int	i = 0;
-	int	j = 0;
-	quoted_str[0] = '\"';
-	j += 1;
+	i = 0;
+	j = 0;
+	quoted_str[j++] = '\"';
 	while (str[i])
 		quoted_str[j++] = str[i++];
-	quoted_str[len + 1] = '\"';
-	quoted_str[len + 2] = '\0';
+	quoted_str[j++] = '\"';
+	quoted_str[j] = '\0';
 	return (quoted_str);
 }
 
@@ -93,7 +94,6 @@ void	export_handler(t_token **tokens, t_data *data)
 				key_str = ft_strjoin_char_free(&data->gc, key, '=');
 				result = gc_strjoin(&data->gc, key_str, new_value);
 				current->value = result;
-				printf("new value: [%s]\n", current->value);
 			}
 			current = current->next;
 		}

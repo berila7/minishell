@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/02 19:29:48 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 19:41:46 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define __USE_POSIX
 # define _POSIX_C_SOURCE 200809L
 
-# include <dirent.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <termios.h>
@@ -32,6 +32,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
+
 
 // #ifndef N
 // # define N 1
@@ -70,19 +71,6 @@ struct s_redir
 	char	*file;
 	char	quoted;
 };
-
-// Structure to hold a single token (quoted or unquoted)
-typedef struct {
-    char *text;
-    bool is_quoted;  // true if this was inside quotes, false otherwise
-} Token;
-
-// Structure to hold all parsed tokens
-typedef struct {
-    Token *tokens;
-    int count;
-    bool is_valid;
-} ParseResult;
 
 typedef enum e_token_type
 {
@@ -269,6 +257,7 @@ int			is_valid_env_key(char *str);
 
 // exec utils:
 int			exec(t_data *data);
+void		ft_execve(t_cmd *cmd, t_data *data);
 void		free_arr(t_gcnode **gc, char **arr);
 int			cmd_exists(char *path);
 int			is_exec(char *path);
@@ -290,6 +279,9 @@ int			exec_multiple_cmd(t_data *data);
 int			handle_exec_errors(t_cmd *cmd, t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
+int			is_directory(char *path);
+
+
 
 // Debug functions:
 void		print_tokens(t_token *tokens);

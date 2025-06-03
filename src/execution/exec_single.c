@@ -3,33 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   exec_single.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 11:01:57 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/03 19:21:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_execve(t_cmd *cmd, t_data *data)
+void	ft_execve(t_cmd *cmd, t_data *data)
 {
 	if (execve(cmd->path, cmd->args, env_to_array(&data->gc, data->env)) == -1)
-		return (perror("execve failed"), exit(1), 1);
-	return (0);
+	{
+		if (errno == ENOEXEC)
+			exit(0);
+		perror("execve");
+		exit(1);
+	}
 }
 
-int handle_exec_errors(t_cmd *cmd, t_data *data)
+int	handle_exec_errors(t_cmd *cmd, t_data *data)
 {
-	DIR		*dir;
 	char	*is_path;
 
 	if (count_args(cmd->args) == 0)
 		return (exit(0), 0);
 	is_path = ft_strchr(cmd->args[0], '/');
-	dir = opendir(cmd->args[0]);
-	if (is_path && dir)
-		return (dup2_og(data), closedir(dir),
+	if (is_path && is_directory(cmd->args[0]))
+		return (dup2_og(data),
 			print_err("%s: Is a directory\n", cmd->args[0]), exit(126), 1);
 	if (is_path && access(cmd->args[0], F_OK) == -1)
 		return (perror(cmd->args[0]), exit(127), 1);
@@ -61,7 +63,7 @@ static pid_t	exec_cmd(t_cmd *cmd, t_data *data)
 			exit(1);
 		handle_exec_errors(cmd, data);
 		close2(data->og_fd);
-		return (ft_execve(cmd, data));
+		ft_execve(cmd, data);
 	}
 	return (id);
 }
