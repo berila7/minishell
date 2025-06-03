@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/02 19:29:48 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:39:30 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define __USE_POSIX
 # define _POSIX_C_SOURCE 200809L
 
-# include <dirent.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <termios.h>
@@ -32,6 +32,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
+
 
 // #ifndef N
 // # define N 1
@@ -290,6 +291,9 @@ int			exec_multiple_cmd(t_data *data);
 int			handle_exec_errors(t_cmd *cmd, t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
+int			is_directory(const char *path);
+
+
 
 // Debug functions:
 void		print_tokens(t_token *tokens);

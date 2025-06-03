@@ -6,7 +6,7 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 10:54:29 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/03 16:35:51 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,13 @@ static int	ft_execve(t_cmd *cmd, t_data *data)
 
 int handle_exec_errors(t_cmd *cmd, t_data *data)
 {
-	DIR		*dir;
 	char	*is_path;
 
 	if (count_args(cmd->args) == 0)
 		return (exit(0), 0);
 	is_path = ft_strchr(cmd->args[0], '/');
-	dir = opendir(cmd->args[0]);
-	if (is_path && dir)
-		return (dup2_og(data), closedir(dir),
+	if (is_path && is_directory(cmd->args[0]))
+		return (dup2_og(data),
 			print_err("%s: Is a directory\n", cmd->args[0]), exit(126), 1);
 	if (is_path && access(cmd->args[0], F_OK) == -1)
 		return (perror(cmd->args[0]), exit(127), 1);

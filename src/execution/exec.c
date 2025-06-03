@@ -6,14 +6,21 @@
 /*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 11:26:30 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/03 16:38:39 by ayoub            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include <sys/wait.h>
-#include <unistd.h>
+int	is_directory(const char *path) {
+	struct stat	st;
+
+    if (stat(path, &st) == 0)
+	{
+		return S_ISDIR(st.st_mode);
+    }
+	return (0);
+}
 
 static void	print_sig_msg(int status, int *sig_printed)
 {
