@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/03 10:02:21 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/03 19:26:20 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	process_unquoted_token(t_token *token, t_data *data, char *expanded,
 	i = 0;
 	while (split_words[i])
 	{
-		// printf("words: [%s]\n", split_words[i]);
 		add_argument(token, data, current_cmd, split_words[i]);
 		i++;
 	}
