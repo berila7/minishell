@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/04 14:27:04 by mberila          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/06/04 15:20:25 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -34,6 +35,8 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	}
 	else
 	{
+		if (current_cmd->hd_fd != -1)
+			close(current_cmd->hd_fd);
 		printf("minishell: syntax error near unexpected token 'newline'\n");
 		exit_status(2, 1);
 		free_commands(&data->gc, cmd_list);
