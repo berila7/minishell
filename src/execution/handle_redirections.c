@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:36:21 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 19:21:29 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/04 10:29:36 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,6 @@ static int	process_redir(t_redir *redir, t_cmd *cmd)
 		if (count_args(cmd->args) > 0)
 			ft_dup2(fd, STDOUT_FILENO);
 	}
-	return (0);
-}
-
-int	handle_other_redirs(t_cmd *cmd, int *is_hd_last)
-{
-	int		i;
-
-	i = 0;
-	*is_hd_last = 0;
-	while (i < cmd->redir_count)
-	{
-		if (process_redir(&cmd->redirections[i], cmd))
-			return (1);
-		i++;
-	}
-	if (cmd->redir_count > 0
-		&& cmd->redirections[cmd->redir_count - 1].type == REDIR_HEREDOC)
-		*is_hd_last = 1;
 	return (0);
 }
 
@@ -79,6 +61,24 @@ void	close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
 		}
 		cmd = cmd->next;
 	}
+}
+
+int	handle_other_redirs(t_cmd *cmd, int *is_hd_last)
+{
+	int		i;
+
+	i = 0;
+	*is_hd_last = 0;
+	while (i < cmd->redir_count)
+	{
+		if (process_redir(&cmd->redirections[i], cmd))
+			return (1);
+		i++;
+	}
+	if (cmd->redir_count > 0
+		&& cmd->redirections[cmd->redir_count - 1].type == REDIR_HEREDOC)
+		*is_hd_last = 1;
+	return (0);
 }
 
 int	handle_redirections(t_cmd *cmd, t_data *data)

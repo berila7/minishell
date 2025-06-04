@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:24:47 by ayoub             #+#    #+#             */
-/*   Updated: 2025/06/03 22:12:48 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/04 11:11:48 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	cleanup_iteration(t_data *data, t_token *tokens, char *line)
 	free_tokens(&data->gc, tokens);
 	free_commands(&data->gc, data->cmds);
 	data->is_export = 0;
+	data->hered_count = 0;
 	data->cmds = NULL;
 	free(line);
 }

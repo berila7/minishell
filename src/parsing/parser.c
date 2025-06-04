@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/03 19:27:12 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:09:36 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	}
 	else
 	{
+		if (current_cmd->hd_fd != -1)
+			close(current_cmd->hd_fd);
 		printf("minishell: syntax error near unexpected token 'newline'\n");
 		exit_status(2, 1);
 		free_commands(&data->gc, cmd_list);
