@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:31:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/03 19:27:12 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/04 14:27:04 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	*token = (*token)->next;
 	if (*token && (*token)->type == TOKEN_WORD)
 	{
-		expanded = expand_variables(&data->gc, (*token)->value, data);
+		expanded = expand_variables(data, (*token)->value);
 		add_redirection(&data->gc, current_cmd, redir_type, 
 			smart_quote_removal(data, expanded, *token));
 		current_cmd->redirections[current_cmd->redir_count - 1].quoted = 0;
@@ -63,12 +63,15 @@ void	process_token_word(t_gcnode **gc, t_token *token,
 	char	*unquoted;
 
 	unquoted = token->value;
+	printf("Before: [%s]\n", token->value);
 	if (!data->is_export && has_mixed_format(token->value))
 	{
-		unquoted = process_mixed_quoted(gc, token->value, data);
+		unquoted = process_mixed_quoted(data, token->value);
+		printf("After: [%s]\n", unquoted);
 		token->quote_type = 0;
+		data->expandable = 0;
 	}
-	expanded = expand_variables(gc, unquoted, data);
+	expanded = expand_variables(data, unquoted);
 	if (!expanded)
 	{
 		gc_free(gc, expanded);

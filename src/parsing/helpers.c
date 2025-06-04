@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 22:11:08 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/04 09:56:58 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	export_handler(t_token **tokens, t_data *data)
 
 	current = (*tokens);
 	export_exist(tokens, data);
-	if (data->is_export
+	if (equal(current->value, "export")
 		&& !current->prev && current->next
 	)
 	{
@@ -103,11 +103,13 @@ void	export_handler(t_token **tokens, t_data *data)
 void	export_exist(t_token **tokens, t_data *data)
 {
 	t_token	*current;
+	char	*unquoted_str;
 
 	current = (*tokens);
 	while (current)
 	{
-		if (equal(current->value, "export"))
+		unquoted_str = remove_quotes(&data->gc, current->value);
+		if (equal(unquoted_str, "export"))
 			data->is_export = 1;
 		current = current->next;
 	}

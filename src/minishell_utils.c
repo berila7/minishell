@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:21:27 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 13:18:20 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/04 14:26:21 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	init_data(t_data **data, char **envp)
 	(*data)->hered_count = 0;
 	(*data)->is_quoted = 0;
 	(*data)->is_export = 0;
+	(*data)->expandable = 1;
 	(*data)->regular_export = 1;
 	(*data)->env = init_env(&(*data)->gc, envp);
 	if (!env_exists((*data)->env, "PATH"))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 13:32:45 by mberila           #+#    #+#             */
-/*   Updated: 2025/05/27 12:15:35 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/04 14:28:16 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	heredoc_loop(char *del, char *delim, int hd_out, t_data *data)
 		if (del[0] == '\'' || del[0] == '\"')
 			expanded_str = line;
 		else
-			expanded_str = expand_variables(&data->gc, line, data);
+			expanded_str = expand_variables(data, line);
 		ft_putstr_fd(expanded_str, hd_out);
 		write(hd_out, "\n", 1);
 		if (expanded_str != line)

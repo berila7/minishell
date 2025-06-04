@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 19:41:46 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:25:16 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ struct s_data
 	int				in_heredoc;
 	int				is_export;
 	int				is_quoted;
+	int				expandable;
 	int				regular_export;
 	int				remove_quotes;
 	int				cwd_failed;
@@ -161,12 +162,12 @@ int			count_args(char **args);
 int			exec(t_data *data);
 bool		has_mixed_format(char *str);
 bool		is_simple_non_empty_quoted_string(char *segment);
-char		*process_mixed_quoted(t_gcnode **gc, char *input, t_data *data);
+char		*process_mixed_quoted(t_data *data, char *input);
 char		*process_complex_segment(t_data *data, char *segment);
 char		*export_key(t_gcnode **gc, char *arg);
 int			should_remove_quotes(t_data *data, t_token *token, char *expanded);
 char		*smart_quote_removal(t_data *data, char *str, t_token *token);
-char		*expand_variables(t_gcnode **gc, char *str, t_data *data);
+char		*expand_variables(t_data *data, char *str);
 void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
 void		unset_env(t_gcnode **gc, t_env **env, char *key);

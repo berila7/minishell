@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 09:55:12 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:17:51 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,27 @@ int	handle_variable(t_gcnode **gc, char *str, int i, t_expand *exp)
 	}
 }
 
-int	process_char(t_gcnode **gc, char *str, int i, t_expand *exp)
+/// neeeeeed fiiiiix heeeereeeeee
+
+int	process_char(t_data *data, char *str, int i, t_expand *exp)
 {
 	if (str[i] == '\'' && !exp->in_double_quote)
-		return (handle_single_quote(gc, str, i, exp));
+		return (handle_single_quote(&data->gc, str, i, exp));
 	else if (str[i] == '\"' && !exp->in_single_quote)
-		return (handle_double_quote(gc, str, i, exp));
+		return (handle_double_quote(&data->gc, str, i, exp));
 	else if (str[i] == '$' && str[i + 1]
-		&& (!exp->in_single_quote || exp->data->in_heredoc))
-		return (handle_variable(gc, str, i, exp));
+		&& (!exp->in_single_quote || exp->data->in_heredoc || data->expandable))
+		return (handle_variable(&data->gc, str, i, exp));
 	else
-		return (handle_regular_char(gc, str, i, exp));
+		return (handle_regular_char(&data->gc, str, i, exp));
 }
 
-char	*expand_variables(t_gcnode **gc, char *str, t_data *data)
+char	*expand_variables(t_data *data, char *str)
 {
 	t_expand	exp;
 	int			i;
 
-	exp.result = gc_strdup(gc, "");
+	exp.result = gc_strdup(&data->gc, "");
 	if (!exp.result)
 		return (NULL);
 	exp.in_single_quote = 0;
@@ -61,7 +63,7 @@ char	*expand_variables(t_gcnode **gc, char *str, t_data *data)
 	i = 0;
 	while (str[i])
 	{
-		i = process_char(gc, str, i, &exp);
+		i = process_char(data, str, i, &exp);
 		if (i == -1)
 			return (NULL);
 	}
