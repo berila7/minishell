@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/04 15:19:52 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/09 19:58:28 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	open_heredoc(t_gcnode **gc, int *fd)
 	return (0);
 }
 
-void	cleanup(t_gcnode **gc, int *hd_fd, char *delim, int dupped_in)
+void	cleanup(t_data *data, int *hd_fd, char *delim, int dupped_in)
 {
 	dup2(dupped_in, STDIN_FILENO);
 	close(hd_fd[0]);
 	close(hd_fd[1]);
-	gc_free(gc, delim);
+	gc_free(&data->gc, delim);
 	exit_status(130, 1);
 }
 
@@ -99,10 +99,11 @@ int	handle_herdoc(t_gcnode **gc, char *del, int *cmd_hd_in, t_data *data)
 	data->in_heredoc = 1;
 	g_sigint_received = 0;
 	if (heredoc_loop(del, quoted_delim, hd_fd[1], data))
-		return (cleanup(gc, hd_fd, quoted_delim, og_stdin), 1);
+		return (cleanup(data, hd_fd, quoted_delim, og_stdin), 1);
 	close(og_stdin);
 	setup_interactive_signals();
 	close(hd_fd[1]);
+	data->in_heredoc = 0;
 	gc_free(gc, quoted_delim);
 	return (0);
 }

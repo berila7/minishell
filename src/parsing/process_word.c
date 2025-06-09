@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:14:32 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/04 14:34:03 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/09 20:00:34 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ static char *process_quoted_section(t_data *data, char *input, int *pos, int len
 	quoted_part = extract_substring(&data->gc, input, quote_start, quoted_len);
 	if (!quoted_part) 
 		return NULL;
-	(*pos)++; // Skip closing quote
-	printf("Im the quoted Part: [%s]\n", quoted_part);
+	(*pos)++;
 	expanded = expand_variables(data, quoted_part);
 	return remove_quotes(&data->gc, expanded);
 }
@@ -86,7 +85,6 @@ static char *process_unquoted_section(t_data *data, char *input, int *pos, int l
 	if (!unquoted_part) 
 		return NULL;
 	expanded = expand_variables(data, unquoted_part);
-	printf("Im the unquoted Part: [%s]\n", expanded);
 	return (expanded);
 }
 

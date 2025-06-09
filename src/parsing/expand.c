@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/06/04 15:17:51 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/09 19:59:07 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,13 @@ int	process_char(t_data *data, char *str, int i, t_expand *exp)
 	else if (str[i] == '\"' && !exp->in_single_quote)
 		return (handle_double_quote(&data->gc, str, i, exp));
 	else if (str[i] == '$' && str[i + 1]
-		&& (!exp->in_single_quote || exp->data->in_heredoc || data->expandable))
-		return (handle_variable(&data->gc, str, i, exp));
+		&& (!exp->in_single_quote || exp->data->in_heredoc))
+	{
+		if (data->expandable)
+			return (handle_variable(&data->gc, str, i, exp));
+		else
+			return (handle_regular_char(&data->gc, str, i, exp));
+	}
 	else
 		return (handle_regular_char(&data->gc, str, i, exp));
 }
