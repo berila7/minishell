@@ -1,8 +1,0 @@
-*.o
-*.a
-minishell
-minishell_2
-out.c
-.vscode
-*.txt
-out
