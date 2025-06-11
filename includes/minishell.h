@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/11 16:39:03 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/11 16:50:32 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,7 @@ struct s_data
 	int				hered_count;
 	int				in_heredoc;
 	int				is_export;
-	int				is_quoted;
 	int				expandable;
-	int				regular_export;
-	int				remove_quotes;
 	int				cwd_failed;
 };
 
