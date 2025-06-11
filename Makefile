@@ -1,7 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -Iincludes
+CFLAGS			=	-Wall -Wextra -Werror -Iincludes
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -35,10 +35,10 @@ $(LIBFT_DIR):
 	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) includes/minishell.h
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
 src/%.o: src/%.c $(LIBFT)
-	$(CC) $(FLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
 	@make -C $(LIBFT_DIR) clean
