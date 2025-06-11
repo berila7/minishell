@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/04 15:20:25 by mberila          ###   ########.fr       */
+/*   Created: 2025/06/11 13:05:03 by mberila           #+#    #+#             */
+/*   Updated: 2025/06/11 15:22:22 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -24,7 +23,7 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	if (*token && (*token)->type == TOKEN_WORD)
 	{
 		expanded = expand_variables(data, (*token)->value);
-		add_redirection(&data->gc, current_cmd, redir_type, 
+		add_redirection(&data->gc, current_cmd, redir_type,
 			smart_quote_removal(data, expanded, *token));
 		current_cmd->redirections[current_cmd->redir_count - 1].quoted = 0;
 		if ((*token)->quote_type == 0 && ft_strchr((*token)->value, '$'))
@@ -38,10 +37,8 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 		if (current_cmd->hd_fd != -1)
 			close(current_cmd->hd_fd);
 		printf("minishell: syntax error near unexpected token 'newline'\n");
-		exit_status(2, 1);
 		free_commands(&data->gc, cmd_list);
-		free_command(&data->gc, current_cmd);
-		return (0);
+		return (exit_status(2, 1), free_command(&data->gc, current_cmd), 0);
 	}
 }
 
@@ -59,34 +56,27 @@ int	handle_pipe(t_token **token, t_cmd **current_cmd, t_cmd **cmd_list,
 	return (1);
 }
 
-void	process_token_word(t_gcnode **gc, t_token *token,
+int	process_token_word(t_token **token,
 	t_cmd *current_cmd, t_data *data)
 {
 	char	*expanded;
 	char	*unquoted;
 
-	unquoted = token->value;
-	printf("Before: [%s]\n", token->value);
-	if (!data->is_export && has_mixed_format(token->value))
+	unquoted = (*token)->value;
+	if (!data->is_export && has_mixed_format((*token)->value))
 	{
-		unquoted = process_mixed_quoted(data, token->value);
-		printf("After: [%s]\n", unquoted);
-		token->quote_type = 0;
+		unquoted = process_mixed_quoted(data, (*token)->value);
+		(*token)->quote_type = 0;
 		data->expandable = 0;
 	}
 	expanded = expand_variables(data, unquoted);
 	if (!expanded)
 	{
-		gc_free(gc, expanded);
-		return ;
+		gc_free(&data->gc, expanded);
+		return (0);
 	}
-	process_unquoted_token(token, data, expanded, current_cmd);
-	gc_free(gc, expanded);
-}
-
-int	process_word_token(t_token **token, t_cmd *current_cmd, t_data *data)
-{
-	process_token_word(&data->gc, *token, current_cmd, data);
+	process_unquoted_token((*token), data, expanded, current_cmd);
+	gc_free(&data->gc, expanded);
 	*token = (*token)->next;
 	return (1);
 }
@@ -95,7 +85,7 @@ int	process_token(t_token **token, t_cmd **current_cmd,
 	t_cmd **cmd_list, t_data *data)
 {
 	if ((*token)->type == TOKEN_WORD)
-		return (process_word_token(token, *current_cmd, data));
+		return (process_token_word(token, *current_cmd, data));
 	else if ((*token)->type == TOKEN_PIPE)
 		return (handle_pipe(token, current_cmd, cmd_list, data));
 	else if ((*token)->type == TOKEN_REDIR_IN)

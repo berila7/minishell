@@ -28,6 +28,8 @@
         "cstdlib": "c",
         "format": "c",
         "initializer_list": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "chrono": "c",
+        "functional": "c"
     }
 }

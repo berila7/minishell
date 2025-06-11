@@ -6,44 +6,11 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:51 by berila            #+#    #+#             */
-/*   Updated: 2025/06/04 14:25:49 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/11 14:10:08 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	check_quotes(t_token **token)
-{
-	int	i = 0;
-	int	quotes_type;
-
-	quotes_type = 0;
-	(*token)->quote_type = 0;
-	while ((*token)->value[i])
-	{
-		if ((*token)->value[i] == '\'')
-		{
-			if (quotes_type == 0)
-				quotes_type = 1;
-			else if (quotes_type == 1)
-			{
-				quotes_type = 0;
-				(*token)->quote_type = 1;
-			}
-		}
-		else if ((*token)->value[i] == '\"')
-		{
-			if (quotes_type == 0)
-				quotes_type = 2;
-			else if (quotes_type == 2)
-			{
-				quotes_type = 0;
-				(*token)->quote_type = 2;
-			}
-		}
-		i++;
-	}
-}
 
 t_token	*new_token(t_gcnode **gc, char *value, t_token_type type)
 {

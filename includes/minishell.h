@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/04 14:25:16 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/11 15:20:22 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,15 +161,22 @@ long		ft_atol(const char *str);
 int			count_args(char **args);
 int			exec(t_data *data);
 bool		has_mixed_format(char *str);
+char		*token_value(t_data *data, char *str);
 bool		is_simple_non_empty_quoted_string(char *segment);
 char		*process_mixed_quoted(t_data *data, char *input);
 char		*process_complex_segment(t_data *data, char *segment);
 char		*export_key(t_gcnode **gc, char *arg);
 int			should_remove_quotes(t_data *data, t_token *token, char *expanded);
 char		*smart_quote_removal(t_data *data, char *str, t_token *token);
+char		*ft_strncpy(char *dest, const char *src, size_t n);
 char		*expand_variables(t_data *data, char *str);
 void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
+char		*token_key(t_data *data, char *str);
+int			find_word_end(char *s, int start, char *in_quote_char);
+int			skip_word_end(char *s, int	start, char *in_quote_char);
+void		check_quotes(t_token **token);
+char		*add_quotes_to_str(t_gcnode **gc, char *str);
 void		unset_env(t_gcnode **gc, t_env **env, char *key);
 char		*ft_strjoin_char(t_gcnode **gc, char *str, char c);
 char		*remove_quotes(t_gcnode **gc, char *str);
@@ -217,7 +224,7 @@ int			handle_redir_error(t_gcnode **gc, t_cmd *current_cmd,
 				t_cmd *cmd_list);
 int			process_token(t_token **token, t_cmd **cmd,
 				t_cmd **cmds, t_data *data);
-void		process_token_word(t_gcnode **gc, t_token *token,
+int			process_token_word(t_token **token,
 				t_cmd *cmd, t_data *data);
 int			in_quotes(char *value);
 int			is_valid_var_char(char c);
