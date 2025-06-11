@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/11 15:20:22 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/11 16:39:03 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
-
-
-// #ifndef N
-// # define N 1
-// #endif
-
-// static int n = 0;
-// #define malloc(x) (n++ == N ? NULL : malloc(x))
 
 # define RESET			"\033[0m"
 # define BLACK			"\033[30m"
@@ -174,7 +166,7 @@ void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
 char		*token_key(t_data *data, char *str);
 int			find_word_end(char *s, int start, char *in_quote_char);
-int			skip_word_end(char *s, int	start, char *in_quote_char);
+int			skip_word_end(char *s, int start, char *in_quote_char);
 void		check_quotes(t_token **token);
 char		*add_quotes_to_str(t_gcnode **gc, char *str);
 void		unset_env(t_gcnode **gc, t_env **env, char *key);
@@ -190,7 +182,7 @@ int			open_heredoc(t_gcnode **gc, int *fd);
 void		init_expand_vars(t_expand *exp);
 void		reset_to_system_default_signals(void);
 void		setup_child_default_signals(void);
-char 		*process_dynamic_quoted(t_gcnode **gc, char *input, t_data *data);
+char		*process_dynamic_quoted(t_gcnode **gc, char *input, t_data *data);
 void		setup_parent_waiting_signals(void);
 int			handle_single_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_double_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
@@ -201,7 +193,8 @@ void		execute_commands(t_data *data);
 int			handle_exit_status(t_gcnode **gc, int i, t_expand *exp);
 int			handle_named_var(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp);
-int			process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp);
+int			process_var_value(t_gcnode **gc, char *var_name,
+				int i, t_expand *exp);
 int			get_var_name_end(char *str, int i);
 int			process_line(t_data *data, char *line, t_token **tokens);
 int			init_data(t_data **data, char **envp);
@@ -288,8 +281,6 @@ int			handle_exec_errors(t_cmd *cmd, t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
 int			is_directory(char *path);
-
-
 
 // Debug functions:
 void		print_tokens(t_token *tokens);
