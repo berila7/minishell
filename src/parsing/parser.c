@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:05:03 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/11 15:22:22 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/12 13:40:30 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 		add_redirection(&data->gc, current_cmd, redir_type,
 			smart_quote_removal(data, expanded, *token));
 		current_cmd->redirections[current_cmd->redir_count - 1].quoted = 0;
-		if ((*token)->quote_type == 0 && ft_strchr((*token)->value, '$'))
+		if ((*token)->quote_type == 0 && is_ambiguous((*token), expanded))
 			current_cmd->redirections[current_cmd->redir_count - 1].quoted = 1;
 		gc_free(&data->gc, expanded);
 		*token = (*token)->next;

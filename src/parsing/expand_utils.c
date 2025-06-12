@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:59:50 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 18:02:20 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/12 13:41:25 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,23 @@ int	handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp)
 	if (first_digit == '0')
 		exp->result = ft_strjoin_free(gc, exp->result, "minishell");
 	return (i);
+}
+
+int	is_ambiguous(t_token *token, char *str)
+{
+	int	i;
+
+	if (!str || !str[0])
+		return (1);
+	i = 0;
+	if (!equal(token->value, str))
+	{
+		while (str[i])
+		{
+			if (str[i] == ' ' || str[i] == '\t')
+				return (1);
+			i++;
+		}
+	}
+	return (0);
 }

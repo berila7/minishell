@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:01:58 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 11:35:12 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/12 14:34:56 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_gc_nodes(t_gcnode *gc)
-{
-	t_gcnode	*curr;
-	int			i;
-
-	i = 0;
-	curr = gc;
-	while (curr)
-	{
-		printf("Node [%d]: value: ptr = %p\n", i, curr->ptr);
-		curr = curr->next;
-		i++;
-	}
-}
 
 void	gc_free(t_gcnode **gc, void *ptr)
 {

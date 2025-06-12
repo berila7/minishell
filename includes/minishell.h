@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/11 17:10:46 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/12 13:41:58 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void		free_command(t_gcnode **gc, t_cmd *cmd);
 void		free_env(t_gcnode **gc, t_env *env);
 t_env		*init_env(t_gcnode **gc, char **envp);
 long		ft_atol(const char *str);
+int			is_ambiguous(t_token *token, char *str);
 int			count_args(char **args);
 int			exec(t_data *data);
 bool		has_mixed_format(char *str);
