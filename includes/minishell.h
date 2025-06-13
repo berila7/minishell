@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/12 13:41:58 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/13 11:07:11 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ typedef struct s_redir	t_redir;
 typedef struct s_expand	t_expand;
 typedef struct s_gcnode	t_gcnode;
 
+typedef struct s_pid_node
+{
+	pid_t				pid;
+	struct s_pid_node	*next;
+}	t_pid_node;
+
+
 struct s_redir
 {
 	int		type;
@@ -105,6 +112,7 @@ struct s_data
 	t_cmd			*cmds;
 	t_env			*env;
 	t_gcnode		*gc;
+	t_pid_node		*pids;
 	int				pipe[2];
 	int				og_fd[2];
 	int				hered_count;
@@ -112,6 +120,7 @@ struct s_data
 	int				is_export;
 	int				expandable;
 	int				cwd_failed;
+	int				fork_failed;
 };
 
 struct s_gcnode
@@ -218,7 +227,7 @@ int			process_heredoc_token(t_token **token,
 void		process_unquoted_token(t_token *token, t_data *data, char *expanded,
 				t_cmd *current_cmd);
 void		add_command(t_cmd **cmds, t_cmd *new_cmd, t_data *data);
-int			exit_status(int status, int is_accessor);
+int			exit_status(int status, int update);
 char		*gc_substr(t_gcnode **gc, const char *s,
 				unsigned int start, size_t len);
 void		gc_free(t_gcnode **gc, void *ptr);
@@ -262,6 +271,8 @@ int			handle_exec_errors(t_cmd *cmd, t_data *data);
 int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
 void		close_hds(t_data *data);
 int			is_directory(char *path);
+void		add_pid_to_list(t_data *data, pid_t pid);
+void		kill_all_pids(t_data *data);
 
 extern int				g_sigint_received;
 void		setup_interactive_signals(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 17:50:38 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/13 11:20:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,16 @@ int	child1(t_cmd *cmd, t_data *data, int *pid)
 	if (cmd->next && pipe(data->pipe) < 0)
 		return (perror("pipe failed"), 1);
 	id = fork();
+	if (id > 0)
+		add_pid_to_list(data, id);
 	if (id < 0)
-		return (perror("fork failed"), 1);
+	{
+		perror("minishell: fork failed");
+		kill_all_pids(data);
+		// data->fork_failed = 1;
+		return (exit_status(1, 1), 1);
+		// return (perror("fork failed"), exit(1), 1);
+	}
 	if (id == 0)
 		exec_child(cmd, data);
 	else
@@ -70,6 +78,11 @@ int	exec_multiple_cmd(t_data *data)
 		child1(cmd, data, &last_pid);
 		if (cmd->hd_fd != -1)
 			close(cmd->hd_fd);
+		// if (data->fork_failed)
+		// {
+		// 	data->fork_failed = 0;
+		// 	break ;
+		// }
 		cmd = cmd->next;
 	}
 	close_hds(data);
