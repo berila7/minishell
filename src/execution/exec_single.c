@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 19:21:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/13 20:28:45 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ void	ft_execve(t_cmd *cmd, t_data *data)
 		exit(1);
 	}
 }
+
+
+// static handle_cmd_error(char **cmd)
+// {
+	
+// }
+
 
 int	handle_exec_errors(t_cmd *cmd, t_data *data)
 {
