@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 16:12:18 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/13 16:37:08 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,7 @@ void		dup_og(t_data *data);
 void		close2(int *fds);
 void		close_pipes(t_data *data);
 void		set_default_env(t_data *data);
+char		*in_cur_dir(t_gcnode **gc, char *cmd);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);

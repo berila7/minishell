@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 16:09:10 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/13 16:36:38 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 char	*get_env_path(t_env *env)
 {
@@ -40,6 +42,18 @@ char	*find_cmd(t_gcnode **gc, char **paths, char *cmd)
 	return (NULL);
 }
 
+char	*in_cur_dir(t_gcnode **gc, char *cmd)
+{
+	char	*path;
+
+	if (ft_strchr(cmd, '/'))
+		return (NULL);
+	path = gc_strjoin(gc, "./", cmd);
+	if (cmd_exists(path))
+		return (path);
+	return (NULL);
+}
+
 static char	*get_cmd_path(t_gcnode **gc, char *cmd, t_env *env)
 {
 	char	*env_path;
@@ -55,7 +69,7 @@ static char	*get_cmd_path(t_gcnode **gc, char *cmd, t_env *env)
 	}
 	env_path = get_env_path(env);
 	if (!env_path)
-		return (NULL);
+		return (in_cur_dir(gc, cmd));
 	paths = gc_split_char(gc, env_path, ':');
 	cmd_path = find_cmd(gc, paths, cmd);
 	free_arr(gc, paths);
