@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:14:32 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/11 15:20:51 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/13 10:22:42 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,6 @@ static char	*append_to_result(t_gcnode **gc, char *result, char *new_part)
 	return (result);
 }
 
-static char	*extract_substring(t_gcnode **gc, char *input,
-	int start, int len)
-{
-	char	*substr;
-
-	substr = gc_malloc(gc, len + 1);
-	if (!substr)
-		return (NULL);
-	ft_strncpy(substr, input + start, len);
-	substr[len] = '\0';
-	return (substr);
-}
-
 static char	*process_quoted(t_data *data, char *input, int *pos, int len)
 {
 	char	*result;
@@ -49,16 +36,8 @@ static char	*process_quoted(t_data *data, char *input, int *pos, int len)
 	(*pos)++;
 	while (*pos < len && input[*pos] != quote)
 		(*pos)++;
-	if (*pos >= len)
-	{
-		result = extract_substring(&data->gc, input,
-				quote_start, len - quote_start);
-		if (!result)
-			return (NULL);
-		return (expand_variables(data, result));
-	}
 	quoted_len = *pos - quote_start + 1;
-	result = extract_substring(&data->gc, input, quote_start, quoted_len);
+	result = gc_substr(&data->gc, input, quote_start, quoted_len);
 	if (!result)
 		return (NULL);
 	(*pos)++;
@@ -79,7 +58,7 @@ static char	*process_unquoted(t_data *data, char *input, int *pos, int len)
 	section_len = *pos - start;
 	if (section_len <= 0)
 		return (NULL);
-	unquoted_part = extract_substring(&data->gc, input, start, section_len);
+	unquoted_part = gc_substr(&data->gc, input, start, section_len);
 	if (!unquoted_part)
 		return (NULL);
 	expanded = expand_variables(data, unquoted_part);
