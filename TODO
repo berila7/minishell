@@ -1,0 +1,58 @@
+---------------fixed----------------
+minishell ➤ cat |""| ls > $""
+: command not found
+
+minishell ➤ echo $?
+0
+minishell ➤ 
+------------------------------
+---------------fixed----------------
+minishell ➤ cat |""| ls > $"hh"
+: command not found
+
+minishell ➤ 
+-----------------------------
+minishell ➤ ls
+ls: command not found
+minishell ➤ ./minishell 
+minishell ➤ 
+exit
+minishell ➤ ./minishell 
+minishell ➤ 
+exit
+minishell ➤ ls
+ls: command not found
+minishell ➤ echo $?
+127
+minishell ➤ ./ls
+./ls: Permission denied
+minishell ➤ 
+------------------------------
+---------------fixed----------------
+minishell ➤ ./minishell 
+minishell ➤ ^C
+minishell ➤ ^C
+minishell ➤ ^C
+minishell ➤ ^C
+minishell ➤ echo $?
+0
+minishell ➤ 
+------------------------------
+---------------fixed----------------
+minishell ➤ export a="hhh"'        
+minishell: syntax error: unclosed single quote
+minishell ➤ echo $?        
+0
+minishell ➤ 
+------------------------------
+ a="hhh'/home/mberila/Desktop/mk'"
+minishell ➤ export a="hhh"'$PWD'
+----------------------------------
+minishell ➤ echo"    "$USER"'"
+mberila'
+minishell ➤ 
+----------------------------------
+minishell ➤ echo "    "$USER"''"
+mberila''
+minishell ➤ 
+----------------------------------
