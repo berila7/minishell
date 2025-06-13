@@ -12,7 +12,7 @@ BUILTINS_DIR	=	$(SRC_DIR)/builtins
 HELPERS_DIR		=	$(SRC_DIR)/helpers
 EXEC_DIR		=	$(SRC_DIR)/execution
 
-SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/gc.c \
+SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/gc.c $(SRC_DIR)/debug.c\
 					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
 					$(PARSING_DIR)/utils.c $(PARSING_DIR)/heredoc.c $(PARSING_DIR)/signals.c \
 					$(PARSING_DIR)/expand.c $(PARSING_DIR)/env_utils.c $(PARSING_DIR)/lexer_utils.c $(PARSING_DIR)/token_quotes.c\

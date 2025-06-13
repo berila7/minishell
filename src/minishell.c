@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:24:47 by ayoub             #+#    #+#             */
-/*   Updated: 2025/06/13 16:06:46 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/13 19:59:50 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	process_line(t_data *data, char *line, t_token **tokens)
 		return (0);
 	}
 	set_cmd_path(&data->gc, data->cmds, data->env);
+	print_tokens(*tokens);
+	print_cmds(data->cmds);
 	return (1);
 }
 

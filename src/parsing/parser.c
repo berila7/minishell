@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:05:03 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/13 16:09:28 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/13 20:02:53 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ int	process_token_word(t_token **token,
 	char	*unquoted;
 
 	unquoted = (*token)->value;
-	if (!data->is_export && has_mixed_format((*token)->value))
+	if (!data->is_export && (*token)->prev 
+		&& equal((*token)->prev->value, "echo") 
+		&& has_mixed_format(unquoted))
 	{
 		unquoted = process_mixed_quoted(data, (*token)->value);
 		(*token)->quote_type = 0;
