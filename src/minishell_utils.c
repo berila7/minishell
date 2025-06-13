@@ -3,12 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 16:21:27 by berila            #+#    #+#             */
-/*   Updated: 2025/06/13 16:15:29 by anachat          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/06/13 20:28:53 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
+
+
+
 
 #include "minishell.h"
 

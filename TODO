@@ -45,6 +45,7 @@ minishell ➤ echo $?
 0
 minishell ➤ 
 ------------------------------
+---------------fixed----------------
  a="hhh'/home/mberila/Desktop/mk'"
 minishell ➤ export a="hhh"'$PWD'
 ----------------------------------

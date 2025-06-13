@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
 /*   Updated: 2025/06/13 16:37:08 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -117,6 +118,7 @@ struct s_data
 	int				hered_count;
 	int				in_heredoc;
 	int				is_export;
+	int				squote_case;
 	int				expandable;
 	int				cwd_failed;
 	int				fork_failed;
@@ -182,6 +184,7 @@ int			open_heredoc(t_gcnode **gc, int *fd);
 void		reset_to_system_default_signals(void);
 void		setup_child_default_signals(void);
 void		setup_parent_waiting_signals(void);
+char		*remove_signle_quotes(t_gcnode **gc, char *str);
 int			handle_single_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_double_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
 void		print_err(char *fmt, void *arg);
@@ -279,5 +282,10 @@ void		setup_interactive_signals(void);
 void		setup_heredoc_signals(void);
 void		signal_handler_heredoc(int signum);
 void		signal_handler_interactive(int signum);
+
+
+// Debug
+void		print_cmds(t_cmd *cmds);
+void		print_tokens(t_token *tokens);
 
 #endif
