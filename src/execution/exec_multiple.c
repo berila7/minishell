@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 11:20:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/13 11:32:20 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ int	child1(t_cmd *cmd, t_data *data, int *pid)
 	{
 		perror("minishell: fork failed");
 		kill_all_pids(data);
-		// data->fork_failed = 1;
+		data->fork_failed = 1;
 		return (exit_status(1, 1), 1);
-		// return (perror("fork failed"), exit(1), 1);
 	}
 	if (id == 0)
 		exec_child(cmd, data);
@@ -65,7 +64,6 @@ int	child1(t_cmd *cmd, t_data *data, int *pid)
 
 int	exec_multiple_cmd(t_data *data)
 {
-	int		exit_st;
 	pid_t	last_pid;
 	t_cmd	*cmd;
 
@@ -73,21 +71,19 @@ int	exec_multiple_cmd(t_data *data)
 	cmd = data->cmds;
 	data->og_fd[0] = dup(STDIN_FILENO);
 	data->og_fd[1] = dup(STDOUT_FILENO);
+	data->fork_failed = 0;
 	while (cmd)
 	{
 		child1(cmd, data, &last_pid);
 		if (cmd->hd_fd != -1)
 			close(cmd->hd_fd);
-		// if (data->fork_failed)
-		// {
-		// 	data->fork_failed = 0;
-		// 	break ;
-		// }
+		if (data->fork_failed)
+			break ;
 		cmd = cmd->next;
 	}
 	close_hds(data);
 	dup2_og(data);
-	exit_st = ft_wait(last_pid, 0);
-	exit_status(1, exit_st);
-	return (exit_st);
+	if (data->fork_failed)
+		return (1);
+	return (ft_wait(last_pid, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:21:27 by berila            #+#    #+#             */
-/*   Updated: 2025/06/12 20:20:19 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/13 11:33:49 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	init_data(t_data **data, char **envp)
 	if (!isatty(STDIN_FILENO))
 		return (print_err("STDIN is not a valid tty\n", NULL), 0);
 	check_dir(*data);
-	// rl_catch_signals = 0;
 	gc = NULL;
 	*data = gc_malloc(&gc, sizeof(t_data));
 	(*data)->gc = gc;

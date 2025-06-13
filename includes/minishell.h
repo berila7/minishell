@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 11:07:11 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/13 11:34:09 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_pid_node
 	pid_t				pid;
 	struct s_pid_node	*next;
 }	t_pid_node;
-
 
 struct s_redir
 {
