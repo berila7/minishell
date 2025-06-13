@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/06/09 19:59:07 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:59:56 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ int	handle_variable(t_gcnode **gc, char *str, int i, t_expand *exp)
 		return (handle_named_var(gc, str, i, exp));
 	else
 	{
-		exp->result = ft_strjoin_char_free(gc, exp->result, '$');
+		// exp->result = ft_strjoin_char_free(gc, exp->result, '$');
 		return (i);
 	}
 }
-
-/// neeeeeed fiiiiix heeeereeeeee
 
 int	process_char(t_data *data, char *str, int i, t_expand *exp)
 {
