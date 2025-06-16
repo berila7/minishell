@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/16 10:08:36 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/16 10:45:30 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void print_cmds(t_cmd *cmds)
         current_cmd = current_cmd->next;
     }
     printf(PURPLE "=============================\n" RESET);
-    printf("" RESET);
+    printf("\n" RESET);
 }
 
 
