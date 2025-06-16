@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 14:03:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/11 16:50:13 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/16 10:19:36 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void print_cmds(t_cmd *cmds)
         current_cmd = current_cmd->next;
     }
     printf(PURPLE "=============================\n" RESET);
-    printf("\n" RESET);
+    printf("==============\n" RESET);
 }
 
 
