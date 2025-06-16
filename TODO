@@ -12,6 +12,7 @@ minishell ➤ cat |""| ls > $"hh"
 
 minishell ➤ 
 -----------------------------
+---------------fixed----------------
 minishell ➤ ls
 ls: command not found
 minishell ➤ ./minishell 

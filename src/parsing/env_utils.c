@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:52:21 by berila            #+#    #+#             */
-/*   Updated: 2025/05/22 15:14:12 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/16 10:39:59 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_valid_var_char(char c)
 {
-	return (ft_isalnum(c) || c == '_');
+	return (ft_isalnum(c) || c == '_' || c == '?');
 }
 
 int	count_nodes(t_env *env)
