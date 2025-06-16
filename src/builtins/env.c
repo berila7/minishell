@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:01:21 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/13 16:08:10 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:07:47 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	ft_env(t_cmd *cmd, t_env *env)
 
 	if (count_args(cmd->args) > 1)
 	{
-		print_err("env: '%s': No such file or directory\n", cmd->args[1]);
-		return (127);
+		print_err("env: too many arguments\n", cmd->args[1]);
+		return (1);
 	}
 	current = env;
 	while (current)
