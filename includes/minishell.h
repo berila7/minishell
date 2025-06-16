@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 16:37:08 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/16 15:53:54 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 # define CYAN			"\033[36m"
 # define ORANGE			"\033[38;2;255;165;0m"
 # define WHITE			"\033[37m"
+
+#define SINGLE_QUOTE -1
+#define DOUBLE_QUOTE -2
 
 # define REDIR_IN		1
 # define REDIR_OUT		2  
@@ -91,11 +94,20 @@ struct s_cmd
 	t_cmd			*next;
 };
 
+typedef struct s_quote_pos
+{
+    int start;
+    int end;
+    char quote_char;
+    struct s_quote_pos *next;
+} t_quote_pos;
+
 struct s_token
 {
 	char			*value;
 	int				quote_type;
 	t_token_type	type;
+	t_quote_pos		*user_quotes;
 	t_token			*next;
 	t_token			*prev;
 };
@@ -166,6 +178,7 @@ char		*ft_strncpy(char *dest, const char *src, size_t n);
 char		*expand_variables(t_data *data, char *str);
 void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
+int			toggel_quote_with_tracking(char *line, int *i, t_quote_pos **user_quotes, t_gcnode **gc);
 char		*token_key(t_data *data, char *str);
 int			find_word_end(char *s, int start, char *in_quote_char);
 int			skip_word_end(char *s, int start, char *in_quote_char);

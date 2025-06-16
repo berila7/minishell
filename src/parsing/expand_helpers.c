@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:11:46 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 22:10:39 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:22:27 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,45 @@ int	get_var_name_end(char *str, int i)
 	return (i);
 }
 
+char	*replace_quotes(t_gcnode **gc, char *str)
+{
+	char	*result;
+	int		i;
+	int		len;
+
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	result = gc_malloc(gc, len + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		if (str[i] == '\'')
+			result[i] = SINGLE_QUOTE;
+		else if (str[i] == '\"')
+			result[i] = DOUBLE_QUOTE;
+		else
+			result[i] = str[i];
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
+}
 int	process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp)
 {
 	char	*var_value;
+	char	*temp;
 
 	var_value = get_env(exp->data->env, var_name);
 	if (var_value)
-		exp->result = ft_strjoin_free(gc, exp->result, var_value);
+	{
+		temp = replace_quotes(gc, var_value);
+		if (temp)
+			exp->result = ft_strjoin_free(gc, exp->result, temp);
+	}
 	gc_free(gc, var_name);
 	return (i);
 }
 
-char	*smart_quote_removal(t_data *data, char *str, t_token *token)
-{
-	if (token->quote_type > 0)
-		return (remove_quotes(&data->gc, str));
-	return (gc_strdup(&data->gc, str));
-}

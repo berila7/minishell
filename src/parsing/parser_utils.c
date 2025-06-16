@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:37:53 by berila            #+#    #+#             */
-/*   Updated: 2025/06/13 19:57:48 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:21:13 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 
 	i = 0;
 	size = 0;
+	(void)token;
 	while (cmd->args[i])
 	{
 		i++;
@@ -52,7 +53,7 @@ void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	new_args[i] = gc_strdup(&data->gc, smart_quote_removal(data, arg, token));
+	new_args[i] = gc_strdup(&data->gc, remove_quotes(&data->gc, arg));
 	new_args[i + 1] = NULL;
 	gc_free(&data->gc, cmd->args);
 	cmd->args = new_args;

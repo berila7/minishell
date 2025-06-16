@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:05:03 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/13 20:02:53 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:31:06 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	{
 		expanded = expand_variables(data, (*token)->value);
 		add_redirection(&data->gc, current_cmd, redir_type,
-			smart_quote_removal(data, expanded, *token));
+			remove_quotes(&data->gc, expanded));
 		current_cmd->redirections[current_cmd->redir_count - 1].quoted = 0;
 		if ((*token)->quote_type == 0 && is_ambiguous((*token), expanded))
 			current_cmd->redirections[current_cmd->redir_count - 1].quoted = 1;
@@ -63,15 +63,18 @@ int	process_token_word(t_token **token,
 	char	*unquoted;
 
 	unquoted = (*token)->value;
-	if (!data->is_export && (*token)->prev 
-		&& equal((*token)->prev->value, "echo") 
-		&& has_mixed_format(unquoted))
-	{
-		unquoted = process_mixed_quoted(data, (*token)->value);
-		(*token)->quote_type = 0;
-		data->expandable = 0;
-	}
+	// expanded = expand_variables(data, unquoted);
+	// printf("Expanded: [%s]\n", expanded);
+	// if (!data->is_export
+	// 	&& has_mixed_format(unquoted) && ft_strcmp(expanded, "'"))
+	// {
+	// 	printf("I Entered here\n");
+	// 	unquoted = process_mixed_quoted(data, (*token)->value);
+	// 	(*token)->quote_type = 0;
+	// 	data->expandable = 0;
+	// }
 	expanded = expand_variables(data, unquoted);
+	printf("Expanded: [%s]\n", expanded);
 	if (!expanded)
 	{
 		gc_free(&data->gc, expanded);
