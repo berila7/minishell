@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/11 17:47:32 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/16 21:02:00 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_cd(char **args, t_data *data)
 	else
 		path = args[1];
 	oldpwd = getcwd(NULL, 0);
-	if (chdir(path) == -1)
+	if (*path && chdir(path) == -1)
 		return (write(1, "cd: ", 5), perror(path), 1);
 	else
 		update_pwd(data, path, oldpwd);
