@@ -6,11 +6,38 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:37:45 by berila            #+#    #+#             */
-/*   Updated: 2025/06/13 19:59:22 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:18:54 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*restore_quotes(t_gcnode **gc, char *str)
+{
+	int		i;
+	int		len;
+	char	*result;
+
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	result = gc_malloc(gc, len + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		if (str[i] == SINGLE_QUOTE)
+			result[i] = '\'';
+		else if (str[i] == DOUBLE_QUOTE)
+			result[i] = '"';
+		else
+			result[i] = str[i];
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
+}
 
 char	*remove_quotes(t_gcnode **gc, char *str)
 {
@@ -38,7 +65,7 @@ char	*remove_quotes(t_gcnode **gc, char *str)
 		i++;
 	}
 	result[j] = '\0';
-	return (result);
+	return (restore_quotes(gc, result));
 }
 
 int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,

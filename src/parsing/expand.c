@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:25 by berila            #+#    #+#             */
-/*   Updated: 2025/06/16 10:42:28 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/16 15:21:04 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,7 @@ int	process_char(t_data *data, char *str, int i, t_expand *exp)
 		return (handle_double_quote(&data->gc, str, i, exp));
 	else if (str[i] == '$' && is_valid_var_char(str[i + 1])
 		&& (!exp->in_single_quote || exp->data->in_heredoc))
-	{
-		if (data->expandable)
-			return (handle_variable(&data->gc, str, i, exp));
-		else
-			return (handle_regular_char(&data->gc, str, i, exp));
-	}
+		return (handle_variable(&data->gc, str, i, exp));
 	else
 		return (handle_regular_char(&data->gc, str, i, exp));
 }

@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:59:50 by berila            #+#    #+#             */
-/*   Updated: 2025/06/16 10:25:16 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:27:58 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@ int	handle_exit_status(t_gcnode **gc, int i, t_expand *exp)
 	gc_free(gc, status_str);
 	return (i + 1);
 }
-
-// int	handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp)
-// {
-// 	char	first_digit;
-
-// 	first_digit = str[i++];
-// 	return (i);
-// }
 
 int	is_ambiguous(t_token *token, char *str)
 {
