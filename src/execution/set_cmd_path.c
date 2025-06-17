@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/17 11:50:21 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/17 13:51:17 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 char	*get_env_path(t_env *env)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/16 10:36:18 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/17 13:51:36 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	count_args(char **args)
 int	valid_nflag(char *flag, int *valid)
 {
 	size_t	i;
- 
+
 	if (flag[0] != '-')
 		return (*valid = 0, 0);
 	i = 1;

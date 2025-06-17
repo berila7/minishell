@@ -6,10 +6,9 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/17 11:38:07 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/17 13:51:07 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -45,8 +44,8 @@
 # define ORANGE			"\033[38;2;255;165;0m"
 # define WHITE			"\033[37m"
 
-#define SINGLE_QUOTE -1
-#define DOUBLE_QUOTE -2
+# define SINGLE_QUOTE -1
+# define DOUBLE_QUOTE -2
 
 # define REDIR_IN		1
 # define REDIR_OUT		2  
@@ -94,20 +93,11 @@ struct s_cmd
 	t_cmd			*next;
 };
 
-typedef struct s_quote_pos
-{
-    int start;
-    int end;
-    char quote_char;
-    struct s_quote_pos *next;
-} t_quote_pos;
-
 struct s_token
 {
 	char			*value;
 	int				quote_type;
 	t_token_type	type;
-	t_quote_pos		*user_quotes;
 	t_token			*next;
 	t_token			*prev;
 };
@@ -172,13 +162,10 @@ int			count_args(char **args);
 int			exec(t_data *data);
 bool		has_mixed_format(char *str);
 char		*token_value(t_data *data, char *str);
-char		*process_mixed_quoted(t_data *data, char *input);
-char		*smart_quote_removal(t_data *data, char *str, t_token *token);
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 char		*expand_variables(t_data *data, char *str);
 void		set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env);
 int			equal(char *s1, char *s2);
-int			toggel_quote_with_tracking(char *line, int *i, t_quote_pos **user_quotes, t_gcnode **gc);
 char		*token_key(t_data *data, char *str);
 int			find_word_end(char *s, int start, char *in_quote_char);
 int			skip_word_end(char *s, int start, char *in_quote_char);
@@ -295,7 +282,6 @@ void		setup_interactive_signals(void);
 void		setup_heredoc_signals(void);
 void		signal_handler_heredoc(int signum);
 void		signal_handler_interactive(int signum);
-
 
 // Debug
 void		print_cmds(t_cmd *cmds);
