@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 20:28:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/17 11:54:18 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ void	ft_execve(t_cmd *cmd, t_data *data)
 	}
 }
 
-
-// static handle_cmd_error(char **cmd)
-// {
-	
-// }
-
-
 int	handle_exec_errors(t_cmd *cmd, t_data *data)
 {
 	char	*is_path;
@@ -45,10 +38,11 @@ int	handle_exec_errors(t_cmd *cmd, t_data *data)
 	if (!cmd->path)
 	{
 		dup2_og(data);
-		if (count_args(cmd->args) > 0)
-			return (print_err("%s: command not found\n", cmd->args[0]),
-				exit(127), 1);
-		exit(1);
+		if (env_exists(data->env, "PATH"))
+			print_err("%s: command not found\n", cmd->args[0]);
+		else
+			perror(cmd->args[0]);
+		exit(127);
 	}
 	if (!is_exec(cmd->path))
 		return (dup2_og(data),
