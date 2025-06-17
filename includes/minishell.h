@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/17 10:35:31 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/17 11:38:07 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ char		*in_cur_dir(t_gcnode **gc, char *cmd);
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
 int			handle_exec_errors(t_cmd *cmd, t_data *data);
-int			handle_herdoc(t_gcnode **gc, char *end, int *hd_fd, t_data *data);
+int			handle_herdoc(t_token *token, int *cmd_hd_in, t_data *data);
 void		close_hds(t_data *data);
 int			is_directory(char *path);
 void		add_pid_to_list(t_data *data, pid_t pid);

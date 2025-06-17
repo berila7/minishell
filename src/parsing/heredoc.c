@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:38:15 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/16 15:09:43 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/17 11:40:17 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	cleanup(t_data *data, int *hd_fd, char *delim, int dupped_in)
 	exit_status(130, 1);
 }
 
-int	heredoc_loop(char *del, char *delim, int hd_out, t_data *data)
+int	heredoc_loop(t_token *token, char *delim, int hd_out, t_data *data)
 {
 	char	*line;
 	char	*expanded_str;
@@ -64,11 +64,11 @@ int	heredoc_loop(char *del, char *delim, int hd_out, t_data *data)
 		if (!line || g_sigint_received || equal(line, delim))
 		{
 			if (!line)
-				print_err("warning: delimited by EOF (wanted '%s')\n", del);
+				print_err("warning: delimited by EOF (wanted '%s')\n", delim);
 			free(line);
 			break ;
 		}
-		if (del[0] == '\'' || del[0] == '\"')
+		if (token->quote_type > 0)
 			expanded_str = line;
 		else
 			expanded_str = expand_variables(data, line);
@@ -81,28 +81,28 @@ int	heredoc_loop(char *del, char *delim, int hd_out, t_data *data)
 	return (g_sigint_received);
 }
 
-int	handle_herdoc(t_gcnode **gc, char *del, int *cmd_hd_in, t_data *data)
+int	handle_herdoc(t_token *token, int *cmd_hd_in, t_data *data)
 {
 	char	*quoted_delim;
 	int		hd_fd[2];
 	int		og_stdin;
 
 	og_stdin = dup(STDIN_FILENO);
-	if (open_heredoc(gc, hd_fd))
+	if (open_heredoc(&data->gc, hd_fd))
 		return (1);
 	if (*cmd_hd_in >= 0)
 		close(*cmd_hd_in);
 	*cmd_hd_in = hd_fd[0];
-	quoted_delim = remove_quotes(gc, del);
+	quoted_delim = remove_quotes(&data->gc, token->value);
 	setup_heredoc_signals();
 	data->in_heredoc = 1;
 	g_sigint_received = 0;
-	if (heredoc_loop(del, quoted_delim, hd_fd[1], data))
+	if (heredoc_loop(token, quoted_delim, hd_fd[1], data))
 		return (cleanup(data, hd_fd, quoted_delim, og_stdin), 1);
 	close(og_stdin);
 	setup_interactive_signals();
 	close(hd_fd[1]);
 	data->in_heredoc = 0;
-	gc_free(gc, quoted_delim);
+	gc_free(&data->gc, quoted_delim);
 	return (0);
 }

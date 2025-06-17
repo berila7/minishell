@@ -58,3 +58,7 @@ minishell ➤ echo "    "$USER"''"
 mberila''
 minishell ➤ 
 ----------------------------------
+
+ echo hola <<< bonjour
+
+ 

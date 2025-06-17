@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 15:37:45 by berila            #+#    #+#             */
-/*   Updated: 2025/06/16 16:18:54 by mberila          ###   ########.fr       */
+/*   Created: 2025/06/17 12:01:39 by mberila           #+#    #+#             */
+/*   Updated: 2025/06/17 12:01:41 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -74,7 +75,7 @@ int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	*token = (*token)->next;
 	if (*token && (*token)->type == TOKEN_WORD)
 	{
-		if (handle_herdoc(&data->gc, (*token)->value,
+		if (handle_herdoc((*token),
 				&current_cmd->hd_fd, data))
 		{
 			free_commands(&data->gc, cmd_list);
