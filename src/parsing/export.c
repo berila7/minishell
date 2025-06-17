@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/06/16 15:09:25 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:47:48 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void	process_export(t_token *current, t_data *data)
 
 	key = token_key(data, current->value);
 	value = token_value(data, current->value);
-	if (!ft_strchr(key, '$') && ft_strchr(value, '$') && current->quote_type == 0)
+	if (!ft_strchr(key, '$') && ft_strchr(value, '$')
+		&& current->quote_type == 0)
 	{
 		current->quote_type = 2;
 		value = add_quotes_to_str(&data->gc, value);

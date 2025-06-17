@@ -6,15 +6,9 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/13 20:28:53 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:57:41 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
-
-
-
 
 #include "minishell.h"
 

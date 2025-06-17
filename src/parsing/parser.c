@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:05:03 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/16 16:31:06 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:35:14 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,7 @@ int	process_token_word(t_token **token,
 	char	*unquoted;
 
 	unquoted = (*token)->value;
-	// expanded = expand_variables(data, unquoted);
-	// printf("Expanded: [%s]\n", expanded);
-	// if (!data->is_export
-	// 	&& has_mixed_format(unquoted) && ft_strcmp(expanded, "'"))
-	// {
-	// 	printf("I Entered here\n");
-	// 	unquoted = process_mixed_quoted(data, (*token)->value);
-	// 	(*token)->quote_type = 0;
-	// 	data->expandable = 0;
-	// }
 	expanded = expand_variables(data, unquoted);
-	printf("Expanded: [%s]\n", expanded);
 	if (!expanded)
 	{
 		gc_free(&data->gc, expanded);

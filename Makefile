@@ -17,7 +17,7 @@ SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/gc.c $(S
 					$(PARSING_DIR)/utils.c $(PARSING_DIR)/heredoc.c $(PARSING_DIR)/signals.c \
 					$(PARSING_DIR)/expand.c $(PARSING_DIR)/env_utils.c $(PARSING_DIR)/lexer_utils.c $(PARSING_DIR)/token_quotes.c\
 					$(PARSING_DIR)/parser_utils.c $(PARSING_DIR)/free.c $(PARSING_DIR)/setup_signals.c $(PARSING_DIR)/export_utils.c\
-					$(PARSING_DIR)/expand_utils.c $(PARSING_DIR)/process_heredoc.c $(PARSING_DIR)/process_word.c\
+					$(PARSING_DIR)/expand_utils.c $(PARSING_DIR)/process_heredoc.c \
 					$(PARSING_DIR)/export.c $(PARSING_DIR)/expand_helpers.c $(PARSING_DIR)/lexer_helper.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c $(BUILTINS_DIR)/builtins_utils.c \
 					$(BUILTINS_DIR)/builtins_utils2.c $(BUILTINS_DIR)/pwd.c $(BUILTINS_DIR)/unset.c \
