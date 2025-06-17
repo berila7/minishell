@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:11:46 by berila            #+#    #+#             */
-/*   Updated: 2025/06/16 16:22:27 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:47:21 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	*replace_quotes(t_gcnode **gc, char *str)
 	result[i] = '\0';
 	return (result);
 }
+
 int	process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp)
 {
 	char	*var_value;
@@ -71,4 +72,3 @@ int	process_var_value(t_gcnode **gc, char *var_name, int i, t_expand *exp)
 	gc_free(gc, var_name);
 	return (i);
 }
-
