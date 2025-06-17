@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:05:03 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/16 16:31:06 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:16:56 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	process_token_word(t_token **token,
 	// 	data->expandable = 0;
 	// }
 	expanded = expand_variables(data, unquoted);
-	printf("Expanded: [%s]\n", expanded);
+	// printf("Expanded: [%s]\n", expanded);
 	if (!expanded)
 	{
 		gc_free(&data->gc, expanded);

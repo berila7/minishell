@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 16:15:31 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:34:39 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec_child(t_cmd *cmd, t_data *data)
 		exit(1);
 	if (is_builtin(cmd))
 	{
-		exec_builtin(cmd, data);
+		exec_builtin(cmd, data, 0);
 		exit(exit_status(0, 0));
 	}
 	else

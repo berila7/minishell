@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/16 15:53:54 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:35:31 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,9 +248,9 @@ char		*gc_substr(t_gcnode **gc, const char *s,
 void		gc_free(t_gcnode **gc, void *ptr);
 void		extract_word(t_token **tokens, char *line, int *i, t_data *data);
 
-void		exec_builtin(t_cmd *cmd, t_data *data);
+void		exec_builtin(t_cmd *cmd, t_data *data, int exit_flag);
 int			ft_echo(char **args);
-int			ft_exit(char **args);
+int			ft_exit(char **args, int exit_flag);
 int			ft_env(t_cmd *cmd, t_env *env);
 int			ft_unset(char **args, t_data *data);
 int			ft_pwd(t_data *data);
