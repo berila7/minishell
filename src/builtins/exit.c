@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 18:05:22 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:02:38 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_exit(char **args)
 	long	nb;
 
 	status = 0;
-	printf("exit\n");
+	print_err("exit\n", NULL);
 	if (args[1] && !is_long(args[1]))
 	{
 		print_err("exit: %s: numeric argument required\n", args[1]);
