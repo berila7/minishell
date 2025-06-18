@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:02:58 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 12:03:00 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/18 15:16:04 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	signal_handler_interactive(int signum)
 	if (signum == SIGINT)
 	{
 		exit_status(130, 1);
-		write(STDOUT_FILENO, "\n", 2);
+		write(STDOUT_FILENO, "^C\n", 4);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();

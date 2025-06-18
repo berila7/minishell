@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:38:15 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 11:40:17 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/18 15:17:02 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	open_heredoc(t_gcnode **gc, int *fd)
 
 void	cleanup(t_data *data, int *hd_fd, char *delim, int dupped_in)
 {
+	setup_interactive_signals();
 	dup2(dupped_in, STDIN_FILENO);
 	close(hd_fd[0]);
 	close(hd_fd[1]);
@@ -100,7 +101,6 @@ int	handle_herdoc(t_token *token, int *cmd_hd_in, t_data *data)
 	if (heredoc_loop(token, quoted_delim, hd_fd[1], data))
 		return (cleanup(data, hd_fd, quoted_delim, og_stdin), 1);
 	close(og_stdin);
-	setup_interactive_signals();
 	close(hd_fd[1]);
 	data->in_heredoc = 0;
 	gc_free(&data->gc, quoted_delim);
