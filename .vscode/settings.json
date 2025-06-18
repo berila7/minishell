@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"*.ejs": "html",
-		"__locale": "c",
-		".env*": "dotenv",
-		"minishell.h": "c"
-	}
-}
