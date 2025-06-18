@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:02:48 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 12:02:50 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:11:59 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	process_export(t_token *current, t_data *data)
 
 	key = token_key(data, current->value);
 	value = token_value(data, current->value);
-	if (!ft_strchr(key, '$') && ft_strchr(value, '$')
+	if (!ft_strchr(key, '$') && ft_strchr(value, '$' && is_valid_env_key(key))
 		&& current->quote_type == 0)
 	{
 		current->quote_type = 2;
@@ -34,11 +34,16 @@ static void	process_export(t_token *current, t_data *data)
 void	export_handler(t_token **tokens, t_data *data)
 {
 	t_token	*current;
+	int		is_redir;
 
 	current = (*tokens);
+	is_redir = 0;
+	if ((current->type == TOKEN_REDIR_IN || current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_APPEND || current->type == TOKEN_HEREDOC)
+		&& current->next && current->next->next)
+			is_redir = 1;
 	export_exist(tokens, data);
-	if (equal(current->value, "export")
-		&& !current->prev && current->next
+	if (equal(current->value, "export") && current->next
+		&& (!current->prev || is_redir)
 	)
 	{
 		current = (*tokens)->next;
