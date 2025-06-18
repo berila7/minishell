@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/17 10:35:59 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:28:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ int	ft_exit(char **args, int exit_flag)
 		else
 			status = (nb % 256);
 	}
-	return (status);
+	return (exit_status(0, 0));
 }
