@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:02:22 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 12:02:25 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/19 17:25:31 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ int	handle_regular_char(t_gcnode **gc, char *str, int i, t_expand *exp)
 
 int	handle_variable(t_gcnode **gc, char *str, int i, t_expand *exp)
 {
-	char	first_digit;
-
 	i++;
 	if (str[i] == '?')
 		return (handle_exit_status(gc, i, exp));
 	else if (ft_isdigit(str[i]))
 	{
-		first_digit = str[i++];
+		i++;
 		return (i);
 	}
 	else if (str[i])

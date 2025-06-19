@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:05:03 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 14:12:18 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/19 17:23:13 by berila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	process_token_word(t_token **token,
 		return (0);
 	}
 	process_unquoted_token((*token), data, expanded, current_cmd);
+	if (equal(current_cmd->args[0], "export") && (*token)->next)
+		export_handler(token, data);
 	gc_free(&data->gc, expanded);
 	*token = (*token)->next;
 	return (1);
@@ -108,7 +110,6 @@ t_cmd	*parse_tokens(t_token *tokens, t_data *data)
 	current_cmd = new_command(&data->gc);
 	cmd_list = NULL;
 	token = tokens;
-	export_handler(&token, data);
 	while (token)
 	{
 		if (!process_token(&token, &current_cmd, &cmd_list, data))
