@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:48:06 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/18 15:35:43 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:11:37 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	check_dir(t_data *data)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		data->cwd_failed = 1;
 		print_err("%s: error retrieving current directory\n", "minishell");
 		perror("getcwd");
+		// (void)data;
+		data->cwd_failed = 1;
 	}
 	else
 		free(cwd);
