@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/17 14:15:29 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/20 17:08:27 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data	t_data;
 typedef struct s_redir	t_redir;
 typedef struct s_expand	t_expand;
 typedef struct s_gcnode	t_gcnode;
+typedef struct s_fdnode	t_fdnode;
 
 typedef struct s_pid_node
 {
@@ -114,6 +115,7 @@ struct s_data
 	t_cmd			*cmds;
 	t_env			*env;
 	t_gcnode		*gc;
+	t_fdnode		*fd_list;
 	t_pid_node		*pids;
 	int				pipe[2];
 	int				og_fd[2];
@@ -130,6 +132,12 @@ struct s_gcnode
 {
 	void			*ptr;
 	t_gcnode		*next;
+};
+
+struct s_fdnode
+{
+	int			fd;
+	t_fdnode	*next;
 };
 
 struct s_expand
@@ -248,9 +256,10 @@ int			open_infile(char *path, t_cmd *cmd);
 int			open_outfile(char *file, int mode);
 int			is_builtin(t_cmd *cmd);
 int			is_valid_env_key(char *str);
+void		sorted_env(t_gcnode **gc, t_env *env);
 
 int			exec(t_data *data);
-void		ft_execve(t_cmd *cmd, t_data *data);
+int			ft_execve(t_cmd *cmd, t_data *data);
 void		free_arr(t_gcnode **gc, char **arr);
 int			cmd_exists(char *path);
 int			is_exec(char *path);
@@ -267,6 +276,7 @@ void		close2(int *fds);
 void		close_pipes(t_data *data);
 void		set_default_env(t_data *data);
 char		*in_cur_dir(t_gcnode **gc, char *cmd);
+char		*get_env_path(t_env *env);
 
 int			exec_single_cmd(t_data *data);
 int			exec_multiple_cmd(t_data *data);
@@ -283,7 +293,6 @@ void		setup_heredoc_signals(void);
 void		signal_handler_heredoc(int signum);
 void		signal_handler_interactive(int signum);
 
-// Debug
 void		print_cmds(t_cmd *cmds);
 void		print_tokens(t_token *tokens);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:01:55 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 12:01:58 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/20 13:03:04 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	exit_status(int status, int update)
 	static int	exit_status;
 
 	if (update)
+	{
 		exit_status = status;
+		print_err("===> Exit Status [%d]\n", &exit_status);
+	}
 	return (exit_status);
 }

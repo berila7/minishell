@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/17 10:34:39 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/20 19:25:01 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	child1(t_cmd *cmd, t_data *data, int *pid)
 		perror("minishell: fork failed");
 		kill_all_pids(data);
 		data->fork_failed = 1;
-		return (exit_status(1, 1), 1);
+		return (close2(data->pipe), dup2_og(data), exit_status(1, 1), 1);
 	}
 	if (id == 0)
 		exec_child(cmd, data);
@@ -69,8 +69,7 @@ int	exec_multiple_cmd(t_data *data)
 
 	last_pid = 0;
 	cmd = data->cmds;
-	data->og_fd[0] = dup(STDIN_FILENO);
-	data->og_fd[1] = dup(STDOUT_FILENO);
+	dup_og(data);
 	data->fork_failed = 0;
 	while (cmd)
 	{

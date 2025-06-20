@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:48:06 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/18 15:35:43 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/19 17:03:37 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	init_data(t_data **data, char **envp)
 
 	if (!isatty(STDIN_FILENO))
 		return (print_err("STDIN is not a valid tty\n", NULL), 0);
-	check_dir(*data);
 	gc = NULL;
 	rl_catch_signals = 0;
 	*data = gc_malloc(&gc, sizeof(t_data));
+	check_dir(*data);
 	(*data)->gc = gc;
 	(*data)->hered_count = 0;
 	(*data)->is_export = 0;

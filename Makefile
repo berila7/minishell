@@ -1,7 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror -Iincludes
+CFLAGS			=	 -Wall -Wextra -Werror -Iincludes# -fsanitize=address -g
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -21,7 +21,7 @@ SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/gc.c \
 					$(PARSING_DIR)/export.c $(PARSING_DIR)/expand_helpers.c $(PARSING_DIR)/lexer_helper.c \
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c $(BUILTINS_DIR)/builtins_utils.c \
 					$(BUILTINS_DIR)/builtins_utils2.c $(BUILTINS_DIR)/pwd.c $(BUILTINS_DIR)/unset.c \
-					$(BUILTINS_DIR)/cd.c $(BUILTINS_DIR)/export.c $(BUILTINS_DIR)/builtins_helpers.c \
+					$(BUILTINS_DIR)/cd.c $(BUILTINS_DIR)/export.c $(BUILTINS_DIR)/print_export.c $(BUILTINS_DIR)/builtins_helpers.c \
 					$(EXEC_DIR)/exec.c $(EXEC_DIR)/set_cmd_path.c $(EXEC_DIR)/utils.c $(EXEC_DIR)/utils2.c $(EXEC_DIR)/fork_fail.c \
 					$(EXEC_DIR)/exec_multiple.c $(EXEC_DIR)/exec_single.c $(EXEC_DIR)/handle_redirections.c \
 					$(HELPERS_DIR)/atol.c $(HELPERS_DIR)/gc_strdup.c $(HELPERS_DIR)/gc_strjoin.c \
