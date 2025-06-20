@@ -1,0 +1,37 @@
+bash-3.2$ mkdir 0
+bash-3.2$ export PATH=
+bash-3.2$ 0
+bash: 0: is a directory
+bash-3.2$ $?
+bash: 126: No such file or directory
+bash-3.2$ 
+
+================================================================
+
+
+
+cat | 1000 times
+
+================================================================
+
+
+top
+
+================================================================
+
+data->cwd_failed segfault
+
+when :
+mkdir -p 0/1
+cd 0/1
+rm -rf ../../0
+/asdasd/minishell/minishell
+
+
+================================================================
+
+
+$ env -i ./minishell
+$ unset PATH
+$ ..
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_fail.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:34:27 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 16:15:33 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:35:31 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	kill_all_pids(t_data *data)
 	curr = data->pids;
 	while (curr)
 	{
-		kill(curr->pid, SIGINT);
+		kill(curr->pid, SIGKILL);
+		waitpid(curr->pid, NULL, 0);
 		next = curr->next;
 		gc_free(&data->gc, curr);
 		curr = next;
