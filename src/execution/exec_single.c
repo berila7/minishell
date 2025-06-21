@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/20 19:47:21 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/20 20:23:31 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	handle_exec_errors(t_cmd *cmd, t_data *data)
 	path_env = get_env_path(data->env);
 	if (equal(cmd->path, "..") && path_env && path_env[0] != '\0')
 	{
-		print_err("%s: command not found 1\n", cmd->args[0]);
+		print_err("%s: command not found\n", cmd->args[0]);
 		return (dup2_og(data), exit(127), 1);
 	}
 	else if (equal(cmd->args[0], "."))
