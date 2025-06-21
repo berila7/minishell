@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/21 10:40:43 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/21 13:17:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_child(t_cmd *cmd, t_data *data)
 	}
 }
 
-int	child1(t_cmd *cmd, t_data *data, int *pid)
+int	child(t_cmd *cmd, t_data *data, int *pid)
 {
 	pid_t	id;
 
@@ -72,7 +72,7 @@ int	exec_multiple_cmd(t_data *data)
 	data->fork_failed = 0;
 	while (cmd)
 	{
-		child1(cmd, data, &last_pid);
+		child(cmd, data, &last_pid);
 		if (cmd->hd_fd != -1)
 			close(cmd->hd_fd);
 		if (data->fork_failed)
@@ -83,5 +83,6 @@ int	exec_multiple_cmd(t_data *data)
 	dup2_og(data);
 	if (data->fork_failed)
 		return (1);
+	clear_all_pids(data);
 	return (ft_wait(last_pid, 0));
 }

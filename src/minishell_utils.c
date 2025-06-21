@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:48:06 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/20 19:47:59 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/21 13:21:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	check_dir(t_data *data)
 	{
 		print_err("%s: error retrieving current directory\n", "minishell");
 		perror("getcwd");
-		// (void)data;
 		data->cwd_failed = 1;
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_fail.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:34:27 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/19 16:35:31 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/21 13:07:09 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@ void	add_pid_to_list(t_data *data, pid_t pid)
 	new->pid = pid;
 	new->next = data->pids;
 	data->pids = new;
+}
+
+void	clear_all_pids(t_data *data)
+{
+	t_pid_node	*curr;
+	t_pid_node	*next;
+
+	curr = data->pids;
+	while (curr)
+	{
+		next = curr->next;
+		gc_free(&data->gc, curr);
+		curr = next;
+	}
+	data->pids = NULL;
 }
 
 void	kill_all_pids(t_data *data)

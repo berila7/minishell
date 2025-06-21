@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/20 17:08:27 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/21 13:20:34 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,6 @@ int			open_heredoc(t_gcnode **gc, int *fd);
 void		reset_to_system_default_signals(void);
 void		setup_child_default_signals(void);
 void		setup_parent_waiting_signals(void);
-char		*remove_signle_quotes(t_gcnode **gc, char *str);
 int			handle_single_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			handle_double_quote(t_gcnode **gc, char *str, int i, t_expand *exp);
 void		print_err(char *fmt, void *arg);
@@ -201,7 +200,6 @@ void		cleanup_iteration(t_data *data, t_token *tokens, char *line);
 void		execute_commands(t_data *data);
 int			handle_exit_status(t_gcnode **gc, int i, t_expand *exp);
 int			handle_named_var(t_gcnode **gc, char *str, int i, t_expand *exp);
-int			handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp);
 int			process_var_value(t_gcnode **gc, char *var_name,
 				int i, t_expand *exp);
 int			get_var_name_end(char *str, int i);
@@ -286,14 +284,12 @@ void		close_hds(t_data *data);
 int			is_directory(char *path);
 void		add_pid_to_list(t_data *data, pid_t pid);
 void		kill_all_pids(t_data *data);
+void		clear_all_pids(t_data *data);
 
 extern int				g_sigint_received;
 void		setup_interactive_signals(void);
 void		setup_heredoc_signals(void);
 void		signal_handler_heredoc(int signum);
 void		signal_handler_interactive(int signum);
-
-void		print_cmds(t_cmd *cmds);
-void		print_tokens(t_token *tokens);
 
 #endif
