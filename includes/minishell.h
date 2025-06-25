@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/21 13:20:34 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/22 19:15:51 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,5 +291,11 @@ void		setup_interactive_signals(void);
 void		setup_heredoc_signals(void);
 void		signal_handler_heredoc(int signum);
 void		signal_handler_interactive(int signum);
+
+
+
+void print_tokens(t_token *tokens);
+void print_cmds(t_cmd *cmds);
+
 
 #endif
