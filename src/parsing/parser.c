@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:40:32 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/21 10:40:34 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/25 09:37:36 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	process_redir_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	{
 		expanded = expand_variables(data, (*token)->value);
 		add_redirection(&data->gc, current_cmd, redir_type,
-			remove_quotes(&data->gc, expanded));
+			expanded);
 		current_cmd->redirections[current_cmd->redir_count - 1].quoted = 0;
 		if ((*token)->quote_type == 0 && is_ambiguous((*token), expanded))
 			current_cmd->redirections[current_cmd->redir_count - 1].quoted = 1;

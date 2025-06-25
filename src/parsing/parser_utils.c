@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:02:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 12:02:55 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/25 10:45:20 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file)
 		i++;
 	}
 	new_redirs[cmd->redir_count].type = type;
-	new_redirs[cmd->redir_count].file = gc_strdup(gc, file);
+	new_redirs[cmd->redir_count].file = gc_strdup(gc, get_arg(gc, file));
 	new_redirs[cmd->redir_count].quoted = 0;
 	gc_free(gc, cmd->redirections);
 	cmd->redirections = new_redirs;

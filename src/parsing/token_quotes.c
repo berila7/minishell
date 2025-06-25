@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:10:50 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/11 14:19:47 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/25 10:45:34 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,25 @@ void	check_quotes(t_token **token)
 			double_quotes(&quotes_type, &(*token)->quote_type);
 		i++;
 	}
+}
+
+char	*get_arg(t_gcnode **gc, char *file)
+{
+	char	**array;
+	int		count;
+	int		i;
+	char	**args;
+
+	count = gc_word_count_quoted(file);
+	args = gc_split(gc, file);
+	array = gc_malloc(gc, sizeof(char *) * (count + 1));
+	i = 0;
+	while (args[i])
+	{
+		array[i] = gc_strdup(gc, args[i]);
+		i++;
+	}
+	array[i] = NULL;
+	free_arr(gc, args);
+	return (remove_quotes(gc, array[0]));
 }

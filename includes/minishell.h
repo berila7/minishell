@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/22 19:15:51 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/25 10:49:29 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,6 @@ struct s_gcnode
 	t_gcnode		*next;
 };
 
-struct s_fdnode
-{
-	int			fd;
-	t_fdnode	*next;
-};
-
 struct s_expand
 {
 	int				in_single_quote;
@@ -159,6 +153,7 @@ char		*gc_strdup(t_gcnode **gc, char *src);
 
 t_token		*tokenize(char *line, t_data *data);
 void		free_tokens(t_gcnode **gc, t_token *tokens);
+char		*get_arg(t_gcnode **gc, char *file);
 t_cmd		*parse_tokens(t_token *tokens, t_data *data);
 void		free_commands(t_gcnode **gc, t_cmd *commands);
 void		free_command(t_gcnode **gc, t_cmd *cmd);
@@ -168,7 +163,7 @@ long		ft_atol(const char *str);
 int			is_ambiguous(t_token *token, char *str);
 int			count_args(char **args);
 int			exec(t_data *data);
-bool		has_mixed_format(char *str);
+int			gc_word_count_quoted(char *s);
 char		*token_value(t_data *data, char *str);
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 char		*expand_variables(t_data *data, char *str);

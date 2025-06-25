@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:02:16 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 12:02:18 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:38:32 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,8 @@ int	is_ambiguous(t_token *token, char *str)
 	i = 0;
 	if (!equal(token->value, str))
 	{
-		while (str[i])
-		{
-			if (str[i] == ' ' || str[i] == '\t')
-				return (1);
-			i++;
-		}
+		if (gc_word_count_quoted(str) > 1)
+			return (1);
 	}
 	return (0);
 }
