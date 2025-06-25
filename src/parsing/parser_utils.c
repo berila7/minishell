@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:02:53 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/25 09:39:08 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/25 10:45:20 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,28 +57,6 @@ void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 	new_args[i + 1] = NULL;
 	gc_free(&data->gc, cmd->args);
 	cmd->args = new_args;
-}
-
-char	*get_arg(t_gcnode **gc, char *file)
-{
-	char	**array;
-	int		count;
-	int		i;
-	char	**args;
-
-	count = gc_word_count_quoted(file);
-	args = gc_split(gc, file);
-	array = gc_malloc(gc, sizeof(char *) * (count + 1));
-	i = 0;
-	while (args[i])
-	{
-		array[i] = gc_strdup(gc, args[i]);
-		i++;
-	}
-	array[i] = NULL;
-	free_arr(gc, args);
-	printf("file name: [%s]\n", file);
-	return (remove_quotes(gc, array[0]));
 }
 
 void	add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file)

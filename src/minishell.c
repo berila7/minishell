@@ -6,14 +6,11 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 10:58:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/25 09:31:48 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/25 10:46:08 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void print_tokens(t_token *tokens);
-void print_cmds(t_cmd *cmds);
 
 int	process_line(t_data *data, char *line, t_token **tokens)
 {
