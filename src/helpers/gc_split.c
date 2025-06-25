@@ -6,13 +6,13 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:07:55 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/11 15:24:23 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:37:38 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	gc_word_count_quoted(char *s)
+int	gc_word_count_quoted(char *s)
 {
 	int		count;
 	int		i;

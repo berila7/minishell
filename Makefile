@@ -1,7 +1,7 @@
 NAME			=	minishell
 
 CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror -Iincludes #-g -fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror -Iincludes
 
 LIBFT_DIR		=	lib/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
@@ -12,13 +12,13 @@ BUILTINS_DIR	=	$(SRC_DIR)/builtins
 HELPERS_DIR		=	$(SRC_DIR)/helpers
 EXEC_DIR		=	$(SRC_DIR)/execution
 
-SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/gc.c \
+SRCS			=	$(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/gc.c $(SRC_DIR)/debug.c\
 					$(PARSING_DIR)/lexer.c $(PARSING_DIR)/parser.c $(PARSING_DIR)/env.c \
 					$(PARSING_DIR)/utils.c $(PARSING_DIR)/heredoc.c $(PARSING_DIR)/signals.c \
 					$(PARSING_DIR)/expand.c $(PARSING_DIR)/env_utils.c $(PARSING_DIR)/lexer_utils.c $(PARSING_DIR)/token_quotes.c\
 					$(PARSING_DIR)/parser_utils.c $(PARSING_DIR)/free.c $(PARSING_DIR)/setup_signals.c $(PARSING_DIR)/export_utils.c\
 					$(PARSING_DIR)/expand_utils.c $(PARSING_DIR)/process_heredoc.c \
-					$(PARSING_DIR)/export.c $(PARSING_DIR)/expand_helpers.c $(PARSING_DIR)/lexer_helper.c \
+					$(PARSING_DIR)/export.c $(PARSING_DIR)/expand_helpers.c\
 					$(BUILTINS_DIR)/env.c $(BUILTINS_DIR)/echo.c $(BUILTINS_DIR)/exit.c $(BUILTINS_DIR)/builtins_utils.c \
 					$(BUILTINS_DIR)/builtins_utils2.c $(BUILTINS_DIR)/pwd.c $(BUILTINS_DIR)/unset.c \
 					$(BUILTINS_DIR)/cd.c $(BUILTINS_DIR)/export.c $(BUILTINS_DIR)/print_export.c $(BUILTINS_DIR)/builtins_helpers.c \

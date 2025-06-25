@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:48:20 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/20 18:16:54 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/25 09:49:48 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static t_env	*copy_node(t_gcnode **gc, t_env *src)
 	new = gc_malloc(gc, sizeof(t_env));
 	if (!new)
 		return (NULL);
-	new->key = ft_strdup(src->key);
-	new->value = ft_strdup(src->value);
+	new->key = gc_strdup(gc, src->key);
+	new->value = gc_strdup(gc, src->value);
 	new->next = NULL;
 	return (new);
 }
