@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:36:21 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/04 10:29:36 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/25 16:56:55 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,22 @@ void	close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
 
 int	handle_other_redirs(t_cmd *cmd, int *is_hd_last)
 {
-	int		i;
+	int	last_input_type;
+	int	i;
 
 	i = 0;
 	*is_hd_last = 0;
+	last_input_type = -1;
 	while (i < cmd->redir_count)
 	{
+		if (cmd->redirections[i].type == REDIR_IN
+			|| cmd->redirections[i].type == REDIR_HEREDOC)
+			last_input_type = cmd->redirections[i].type;
 		if (process_redir(&cmd->redirections[i], cmd))
 			return (1);
 		i++;
 	}
-	if (cmd->redir_count > 0
-		&& cmd->redirections[cmd->redir_count - 1].type == REDIR_HEREDOC)
+	if (last_input_type == REDIR_HEREDOC)
 		*is_hd_last = 1;
 	return (0);
 }

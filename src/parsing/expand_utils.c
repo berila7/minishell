@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:02:16 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/24 18:38:32 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/25 16:49:15 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ int	handle_exit_status(t_gcnode **gc, int i, t_expand *exp)
 
 int	is_ambiguous(t_token *token, char *str)
 {
-	int	i;
-
 	if (!str || !str[0])
 		return (1);
-	i = 0;
 	if (!equal(token->value, str))
 	{
 		if (gc_word_count_quoted(str) > 1)
