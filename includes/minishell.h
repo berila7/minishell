@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/25 10:49:29 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/25 11:08:19 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,6 @@ int			process_token(t_token **token, t_cmd **cmd,
 				t_cmd **cmds, t_data *data);
 int			process_token_word(t_token **token,
 				t_cmd *cmd, t_data *data);
-int			in_quotes(char *value);
 int			is_valid_var_char(char c);
 void		add_token(t_token **tokens, t_token *new_token);
 t_token		*new_token(t_gcnode **gc, char *value, t_token_type type);
@@ -286,11 +285,5 @@ void		setup_interactive_signals(void);
 void		setup_heredoc_signals(void);
 void		signal_handler_heredoc(int signum);
 void		signal_handler_interactive(int signum);
-
-
-
-void print_tokens(t_token *tokens);
-void print_cmds(t_cmd *cmds);
-
 
 #endif
