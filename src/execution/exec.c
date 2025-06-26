@@ -6,11 +6,24 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 10:36:35 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/20 13:01:53 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:09:26 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	close_hds(t_data *data)
+{
+	t_cmd	*cmd;
+
+	cmd = data->cmds;
+	while (cmd)
+	{
+		if (cmd->hd_fd != -1)
+			close(cmd->hd_fd);
+		cmd = cmd->next;
+	}
+}
 
 int	is_directory(char *path)
 {

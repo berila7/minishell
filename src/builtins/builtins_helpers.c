@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/13 16:08:00 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/26 14:23:15 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@ int	open_outfile(char *file, int mode)
 	return (fd);
 }
 
-int	open_infile(char *path, t_cmd *cmd)
+int	open_infile(char *path)
 {
 	int	fd;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (perror(path), 1);
-	if (count_args(cmd->args) > 0)
-		ft_dup2(fd, STDIN_FILENO);
+	ft_dup2(fd, STDIN_FILENO);
 	return (0);
 }
 
