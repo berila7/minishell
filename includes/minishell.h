@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/26 14:23:37 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/28 16:20:07 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@
 # define REDIR_OUT		2  
 # define REDIR_APPEND	3
 # define REDIR_HEREDOC	4
+
+# define LMAX_DIV10		922337203685477580L
 
 typedef struct s_token	t_token;
 typedef struct s_cmd	t_cmd;
