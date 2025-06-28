@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:27:17 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/28 16:20:07 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/28 17:10:59 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
-
-# define RESET			"\033[0m"
-# define BLACK			"\033[30m"
-# define RED			"\033[31m"
-# define GREEN			"\033[32m"
-# define YELLOW			"\033[33m"
-# define BLUE			"\033[38;2;70;130;255m"
-# define PURPLE			"\033[38;2;193;77;255m"
-# define CYAN			"\033[36m"
-# define ORANGE			"\033[38;2;255;165;0m"
-# define WHITE			"\033[37m"
 
 # define SINGLE_QUOTE -1
 # define DOUBLE_QUOTE -2
@@ -181,7 +170,6 @@ char		*ft_strjoin_char(t_gcnode **gc, char *str, char c);
 char		*remove_quotes(t_gcnode **gc, char *str);
 char		*get_env(t_env *env, char *key);
 void		set_env(t_gcnode **gc, t_env **env, char *key, char *value);
-void		free_data(t_gcnode **gc, t_data *data);
 int			validate_token(t_token *token);
 void		export_exist(t_token **tokens, t_data *data);
 char		*ptr_to_hex_str(t_gcnode **gc, void *ptr);
