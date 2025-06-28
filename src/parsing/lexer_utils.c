@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:02:42 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 12:02:44 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:13:43 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	handle_quote_error(t_token **tokens, t_data *data, int in_quote)
 		quote_state = "single";
 	else
 		quote_state = "double";
-	printf("minishell: syntax error: unclosed %s quote\n",
+	print_err("minishell: syntax error: unclosed %s quote\n",
 		quote_state);
 	exit_status(2, 1);
 	free_tokens(&data->gc, *tokens);

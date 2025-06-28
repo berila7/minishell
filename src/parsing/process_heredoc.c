@@ -6,7 +6,7 @@
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:01:39 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/17 13:47:26 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:18:22 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	}
 	else
 	{
-		printf("minishell: syntax error near unexpected token 'newline'\n");
+		print_err("syntax error near %s", "unexpected token 'newline'\n");
 		exit_status(2, 1);
 		free_commands(&data->gc, cmd_list);
 		free_command(&data->gc, current_cmd);

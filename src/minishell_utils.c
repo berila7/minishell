@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:48:06 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/21 13:21:17 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/28 16:46:31 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,17 @@ int	init_data(t_data **data, char **envp)
 	set_default_env(*data);
 	setup_interactive_signals();
 	return (1);
+}
+
+void	cleanup_iteration(t_data *data, t_token *tokens, char *line)
+{
+	free(line);
+	free_tokens(&data->gc, tokens);
+	free_commands(&data->gc, data->cmds);
+	data->expandable = 1;
+	data->is_export = 0;
+	data->hered_count = 0;
+	data->cmds = NULL;
 }
 
 void	run_shell_loop(t_data *data)
