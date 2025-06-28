@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/18 14:32:42 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:12:33 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	is_long(const char *str)
 	}
 	if (!ft_isdigit(str[i]))
 		return (0);
-	while (str[i] && ft_isdigit(str[i]))
+	while (str[i])
 	{
-		if (nb > 922337203685477580 || ((nb == 922337203685477580)
+		if (!ft_isdigit(str[i]) || nb > 922337203685477580 || ((nb == 922337203685477580)
 				&& ((s == 1 && str[i] > '7') || (s == -1 && str[i] > '8'))))
 			return (0);
 		nb = nb * 10 + (str[i++] - '0');
