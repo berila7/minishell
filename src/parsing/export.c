@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/25 16:25:34 by berila            #+#    #+#             */
-/*   Updated: 2025/06/11 14:32:46 by mberila          ###   ########.fr       */
+/*   Created: 2025/06/21 10:40:22 by mberila           #+#    #+#             */
+/*   Updated: 2025/06/21 10:40:23 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void	process_export(t_token *current, t_data *data)
 
 	key = token_key(data, current->value);
 	value = token_value(data, current->value);
-	if (!ft_strchr(key, '$') && ft_strchr(value, '$'))
+	if (!ft_strchr(key, '$') && ft_strchr(value, '$')
+		&& current->quote_type == 0 && is_valid_env_key(key))
 	{
 		current->quote_type = 2;
 		value = add_quotes_to_str(&data->gc, value);
@@ -36,9 +37,7 @@ void	export_handler(t_token **tokens, t_data *data)
 
 	current = (*tokens);
 	export_exist(tokens, data);
-	if (equal(current->value, "export")
-		&& !current->prev && current->next
-	)
+	if (current->next)
 	{
 		current = (*tokens)->next;
 		while (current)

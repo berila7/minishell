@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:36:21 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/04 10:29:36 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:16:00 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	process_redir(t_redir *redir, t_cmd *cmd)
 		return (print_err("%s: ambiguous redirect\n", "minishell"), 1);
 	if (redir->type == REDIR_IN)
 	{
-		if (open_infile(redir->file, cmd))
+		if (open_infile(redir->file))
 			return (1);
 	}
 	else if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
@@ -32,19 +32,6 @@ static int	process_redir(t_redir *redir, t_cmd *cmd)
 			ft_dup2(fd, STDOUT_FILENO);
 	}
 	return (0);
-}
-
-void	close_hds(t_data *data)
-{
-	t_cmd	*cmd;
-
-	cmd = data->cmds;
-	while (cmd)
-	{
-		if (cmd->hd_fd != -1)
-			close(cmd->hd_fd);
-		cmd = cmd->next;
-	}
 }
 
 void	close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
@@ -63,29 +50,42 @@ void	close_other_hds(t_cmd *cmds, t_cmd *current_cmd)
 	}
 }
 
-int	handle_other_redirs(t_cmd *cmd, int *is_hd_last)
+static int	is_last_heredoc(t_cmd *cmd, int current_index)
 {
-	int		i;
+	int	j;
+
+	j = current_index + 1;
+	while (j < cmd->redir_count)
+	{
+		if (cmd->redirections[j].type == REDIR_HEREDOC)
+			return (0);
+		j++;
+	}
+	return (1);
+}
+
+int	handle_other_redirs(t_cmd *cmd)
+{
+	int	i;
 
 	i = 0;
-	*is_hd_last = 0;
 	while (i < cmd->redir_count)
 	{
-		if (process_redir(&cmd->redirections[i], cmd))
+		if (cmd->redirections[i].type == REDIR_HEREDOC)
+		{
+			if (is_last_heredoc(cmd, i) && cmd->hd_fd >= 0)
+				ft_dup2(cmd->hd_fd, STDIN_FILENO);
+		}
+		else if (process_redir(&cmd->redirections[i], cmd))
 			return (1);
 		i++;
 	}
-	if (cmd->redir_count > 0
-		&& cmd->redirections[cmd->redir_count - 1].type == REDIR_HEREDOC)
-		*is_hd_last = 1;
 	return (0);
 }
 
 int	handle_redirections(t_cmd *cmd, t_data *data)
 {
-	int	is_hd_last;
-
-	if (handle_other_redirs(cmd, &is_hd_last))
+	if (handle_other_redirs(cmd))
 	{
 		close2(data->pipe);
 		dup2_og(data);
@@ -93,7 +93,5 @@ int	handle_redirections(t_cmd *cmd, t_data *data)
 		return (1);
 	}
 	close_other_hds(data->cmds, cmd);
-	if (cmd->hd_fd != -1 && is_hd_last && count_args(cmd->args) > 0)
-		ft_dup2(cmd->hd_fd, STDIN_FILENO);
 	return (0);
 }

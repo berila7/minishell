@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 14:59:50 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 18:02:20 by mberila          ###   ########.fr       */
+/*   Created: 2025/06/17 12:02:16 by mberila           #+#    #+#             */
+/*   Updated: 2025/06/25 16:49:15 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ int	handle_exit_status(t_gcnode **gc, int i, t_expand *exp)
 	return (i + 1);
 }
 
-int	handle_digit_var(t_gcnode **gc, char *str, int i, t_expand *exp)
+int	is_ambiguous(t_token *token, char *str)
 {
-	char	first_digit;
-
-	first_digit = str[i++];
-	if (first_digit == '0')
-		exp->result = ft_strjoin_free(gc, exp->result, "minishell");
-	return (i);
+	if (!str || !str[0])
+		return (1);
+	if (!equal(token->value, str))
+	{
+		if (gc_word_count_quoted(str) > 1)
+			return (1);
+	}
+	return (0);
 }

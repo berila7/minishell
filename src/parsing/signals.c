@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 17:28:43 by berila            #+#    #+#             */
-/*   Updated: 2025/06/11 14:57:02 by mberila          ###   ########.fr       */
+/*   Created: 2025/06/17 12:02:58 by mberila           #+#    #+#             */
+/*   Updated: 2025/06/18 15:16:04 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	signal_handler_interactive(int signum)
 {
 	if (signum == SIGINT)
 	{
-		write(STDOUT_FILENO, "^C\n", 3);
+		exit_status(130, 1);
+		write(STDOUT_FILENO, "^C\n", 4);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();

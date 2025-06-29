@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayoub <ayoub@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:22:49 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/23 16:01:05 by ayoub            ###   ########.fr       */
+/*   Updated: 2025/06/22 09:48:01 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	update_pwd(t_data *data, char *path, char *oldpwd)
 			pwd = gc_strjoin(&data->gc, tmp, path);
 		else
 			pwd = join_path(&data->gc, tmp, path);
-		perror("getcwd");
+		perror("cd: error retrieving current directory: getcwd");
 	}
 	else
 		pwd = cwd;
@@ -56,8 +56,12 @@ int	ft_cd(char **args, t_data *data)
 	else
 		path = args[1];
 	oldpwd = getcwd(NULL, 0);
-	if (chdir(path) == -1)
+	if (*path && chdir(path) == -1)
+	{
+		if (oldpwd)
+			free(oldpwd);
 		return (write(1, "cd: ", 5), perror(path), 1);
+	}
 	else
 		update_pwd(data, path, oldpwd);
 	return (0);

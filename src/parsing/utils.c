@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:28:40 by mberila           #+#    #+#             */
-/*   Updated: 2025/06/11 15:23:16 by mberila          ###   ########.fr       */
+/*   Updated: 2025/06/25 11:08:32 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,38 +63,6 @@ int	validate_token(t_token *token)
 			print_err("syntax error:unexpected %s",
 				"end of file\n"), 0);
 	return (1);
-}
-
-int	in_quotes(char *value)
-{
-	int	i;
-	int	has_quotes;
-
-	has_quotes = 0;
-	i = 0;
-	while (value[i])
-	{
-		if (value[i] == '\'' || value[i] == '\"')
-			has_quotes = 1;
-		i++;
-	}
-	return (has_quotes);
-}
-
-int	in_quotes_two(char *value)
-{
-	int	i;
-	int	has_quotes;
-
-	has_quotes = 0;
-	i = 0;
-	while (value[i])
-	{
-		if (value[i] == '\'' || value[i] == '\"')
-			has_quotes = 1;
-		i++;
-	}
-	return (has_quotes);
 }
 
 void	process_unquoted_token(t_token *token, t_data *data, char *expanded,

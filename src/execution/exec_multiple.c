@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 17:50:38 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/21 13:17:43 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec_child(t_cmd *cmd, t_data *data)
 		exit(1);
 	if (is_builtin(cmd))
 	{
-		exec_builtin(cmd, data);
+		exec_builtin(cmd, data, 0);
 		exit(exit_status(0, 0));
 	}
 	else
@@ -35,7 +35,7 @@ void	exec_child(t_cmd *cmd, t_data *data)
 	}
 }
 
-int	child1(t_cmd *cmd, t_data *data, int *pid)
+int	child(t_cmd *cmd, t_data *data, int *pid)
 {
 	pid_t	id;
 
@@ -43,11 +43,17 @@ int	child1(t_cmd *cmd, t_data *data, int *pid)
 		return (perror("pipe failed"), 1);
 	id = fork();
 	if (id < 0)
-		return (perror("fork failed"), 1);
+	{
+		perror("minishell: fork failed");
+		kill_all_pids(data);
+		data->fork_failed = 1;
+		return (close2(data->pipe), exit_status(1, 1), 1);
+	}
 	if (id == 0)
 		exec_child(cmd, data);
 	else
 	{
+		add_pid_to_list(data, id);
 		if (!cmd->next)
 			*pid = id;
 		return (close(data->pipe[1]), ft_dup2(data->pipe[0], STDIN_FILENO), 0);
@@ -57,24 +63,26 @@ int	child1(t_cmd *cmd, t_data *data, int *pid)
 
 int	exec_multiple_cmd(t_data *data)
 {
-	int		exit_st;
 	pid_t	last_pid;
 	t_cmd	*cmd;
 
 	last_pid = 0;
 	cmd = data->cmds;
-	data->og_fd[0] = dup(STDIN_FILENO);
-	data->og_fd[1] = dup(STDOUT_FILENO);
+	dup_og(data);
+	data->fork_failed = 0;
 	while (cmd)
 	{
-		child1(cmd, data, &last_pid);
+		child(cmd, data, &last_pid);
 		if (cmd->hd_fd != -1)
 			close(cmd->hd_fd);
+		if (data->fork_failed)
+			break ;
 		cmd = cmd->next;
 	}
 	close_hds(data);
 	dup2_og(data);
-	exit_st = ft_wait(last_pid, 0);
-	exit_status(1, exit_st);
-	return (exit_st);
+	if (data->fork_failed)
+		return (1);
+	clear_all_pids(data);
+	return (ft_wait(last_pid, 0));
 }

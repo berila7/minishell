@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 17:38:22 by berila            #+#    #+#             */
-/*   Updated: 2025/05/22 11:25:58 by berila           ###   ########.fr       */
+/*   Created: 2025/06/17 12:02:33 by mberila           #+#    #+#             */
+/*   Updated: 2025/06/28 17:16:58 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,5 @@ void	free_tokens(t_gcnode **gc, t_token *tokens)
 		gc_free(gc, current->value);
 		gc_free(gc, current);
 		current = next;
-	}
-}
-
-void	free_data(t_gcnode **gc, t_data *data)
-{
-	if (data)
-	{
-		if (data->cmds)
-			free_commands(gc, data->cmds);
-		if (data->env)
-			free_env(&data->gc, data->env);
-		gc_free(gc, data);
 	}
 }

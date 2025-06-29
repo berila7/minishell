@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:26:28 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 18:05:22 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/28 16:21:49 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_long(const char *str)
 	s = 1;
 	i = 0;
 	nb = 0;
-	while (((str[i] >= 9 && str[i] <= 13) || str[i] == ' ' || str[i] == '	'))
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -31,9 +31,9 @@ int	is_long(const char *str)
 	}
 	if (!ft_isdigit(str[i]))
 		return (0);
-	while (str[i] && ft_isdigit(str[i]))
+	while (str[i])
 	{
-		if (nb > 922337203685477580 || ((nb == 922337203685477580)
+		if (!ft_isdigit(str[i]) || nb > LMAX_DIV10 || ((nb == LMAX_DIV10)
 				&& ((s == 1 && str[i] > '7') || (s == -1 && str[i] > '8'))))
 			return (0);
 		nb = nb * 10 + (str[i++] - '0');
@@ -41,14 +41,29 @@ int	is_long(const char *str)
 	return (1);
 }
 
-int	ft_exit(char **args)
+static char	*trim_end(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (NULL);
+	i = strlen(str);
+	while (i > 0 && ((str[i - 1] >= 9
+				&& str[i - 1] <= 13) || str[i - 1] == ' '))
+		i--;
+	str[i] = '\0';
+	return (str);
+}
+
+int	ft_exit(char **args, int exit_flag)
 {
 	int		status;
 	long	nb;
 
-	status = 0;
-	printf("exit\n");
-	if (args[1] && !is_long(args[1]))
+	status = exit_status(0, 0);
+	if (exit_flag)
+		print_err("exit\n", NULL);
+	if (args[1] && !is_long(trim_end(args[1])))
 	{
 		print_err("exit: %s: numeric argument required\n", args[1]);
 		status = 2;

@@ -6,46 +6,78 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:40:48 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 19:21:45 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/20 20:23:31 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execve(t_cmd *cmd, t_data *data)
+int	ft_execve(t_cmd *cmd, t_data *data)
 {
 	if (execve(cmd->path, cmd->args, env_to_array(&data->gc, data->env)) == -1)
 	{
 		if (errno == ENOEXEC)
 			exit(0);
-		perror("execve");
+		if (errno == EACCES)
+		{
+			print_err("%s: Permission denied\n", cmd->path);
+			exit(126);
+		}
+		if (errno == ENOENT)
+		{
+			print_err("%s: No such file or directory\n", cmd->args[0]);
+			exit(127);
+		}
+		if (errno == ENOTDIR)
+		{
+			print_err("%s: Not a directory\n", cmd->args[0]);
+			exit(126);
+		}
 		exit(1);
+	}
+	return (0);
+}
+
+static void	check_cmd(t_cmd *cmd, t_data *data, char *path_env)
+{
+	if (!ft_strchr(cmd->args[0], '/') || !cmd_exists(cmd->args[0])
+		|| !is_exec(cmd->args[0]) || is_directory(cmd->args[0]))
+	{
+		if (!path_env || equal(path_env, ""))
+			print_err("%s: No such file or directory\n", cmd->args[0]);
+		else
+			print_err("%s: command not found\n", cmd->args[0]);
+		dup2_og(data);
+		exit(127);
 	}
 }
 
 int	handle_exec_errors(t_cmd *cmd, t_data *data)
 {
-	char	*is_path;
+	char	*path_env;
 
 	if (count_args(cmd->args) == 0)
-		return (exit(0), 0);
-	is_path = ft_strchr(cmd->args[0], '/');
-	if (is_path && is_directory(cmd->args[0]))
-		return (dup2_og(data),
-			print_err("%s: Is a directory\n", cmd->args[0]), exit(126), 1);
-	if (is_path && access(cmd->args[0], F_OK) == -1)
-		return (perror(cmd->args[0]), exit(127), 1);
-	if (!cmd->path)
+		return (dup2_og(data), exit(0), 0);
+	path_env = get_env_path(data->env);
+	if (equal(cmd->path, "..") && path_env && path_env[0] != '\0')
 	{
-		dup2_og(data);
-		if (count_args(cmd->args) > 0)
-			return (print_err("%s: command not found\n", cmd->args[0]),
-				exit(127), 1);
-		exit(1);
+		print_err("%s: command not found\n", cmd->args[0]);
+		return (dup2_og(data), exit(127), 1);
 	}
-	if (!is_exec(cmd->path))
-		return (dup2_og(data),
-			print_err("%s: Permission denied\n", cmd->path), exit(126), 1);
+	else if (equal(cmd->args[0], "."))
+	{
+		if (path_env && !equal(path_env, ""))
+			print_err("%s: command not found\n", cmd->args[0]);
+		else
+			print_err("%s: No such file or directory\n", cmd->args[0]);
+		dup2_og(data);
+		exit(127);
+	}
+	if (!cmd->path)
+		check_cmd(cmd, data, path_env);
+	else if (is_directory(cmd->args[0]))
+		return (print_err("%s: Is a directory\n", cmd->args[0]),
+			dup2_og(data), exit(126), 1);
 	return (0);
 }
 

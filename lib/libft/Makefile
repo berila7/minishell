@@ -23,7 +23,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 
-%.o: %.c libft.h
+%.o: %.c libft.h ../../includes/minishell.h
 	$(CC) $(CFLAGS) -c $<
 	$(LIBC) $(NAME) $@
 

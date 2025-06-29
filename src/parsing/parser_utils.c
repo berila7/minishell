@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 17:37:53 by berila            #+#    #+#             */
-/*   Updated: 2025/06/03 11:11:01 by berila           ###   ########.fr       */
+/*   Created: 2025/06/17 12:02:53 by mberila           #+#    #+#             */
+/*   Updated: 2025/06/25 10:45:20 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 
 	i = 0;
 	size = 0;
+	(void)token;
 	while (cmd->args[i])
 	{
 		i++;
@@ -52,7 +53,7 @@ void	add_argument(t_token *token, t_data *data, t_cmd *cmd, char *arg)
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	new_args[i] = gc_strdup(&data->gc, smart_quote_removal(data, arg, token));
+	new_args[i] = gc_strdup(&data->gc, remove_quotes(&data->gc, arg));
 	new_args[i + 1] = NULL;
 	gc_free(&data->gc, cmd->args);
 	cmd->args = new_args;
@@ -75,7 +76,7 @@ void	add_redirection(t_gcnode **gc, t_cmd *cmd, int type, char *file)
 		i++;
 	}
 	new_redirs[cmd->redir_count].type = type;
-	new_redirs[cmd->redir_count].file = gc_strdup(gc, file);
+	new_redirs[cmd->redir_count].file = gc_strdup(gc, get_arg(gc, file));
 	new_redirs[cmd->redir_count].quoted = 0;
 	gc_free(gc, cmd->redirections);
 	cmd->redirections = new_redirs;

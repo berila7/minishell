@@ -5,12 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mberila <mberila@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 15:37:45 by berila            #+#    #+#             */
-/*   Updated: 2025/05/29 09:58:19 by mberila          ###   ########.fr       */
+/*   Created: 2025/06/17 12:01:39 by mberila           #+#    #+#             */
+/*   Updated: 2025/06/28 15:18:22 by mberila          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*restore_quotes(t_gcnode **gc, char *str)
+{
+	int		i;
+	int		len;
+	char	*result;
+
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	result = gc_malloc(gc, len + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		if (str[i] == SINGLE_QUOTE)
+			result[i] = '\'';
+		else if (str[i] == DOUBLE_QUOTE)
+			result[i] = '"';
+		else
+			result[i] = str[i];
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
+}
 
 char	*remove_quotes(t_gcnode **gc, char *str)
 {
@@ -38,7 +65,7 @@ char	*remove_quotes(t_gcnode **gc, char *str)
 		i++;
 	}
 	result[j] = '\0';
-	return (result);
+	return (restore_quotes(gc, result));
 }
 
 int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
@@ -47,7 +74,7 @@ int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	*token = (*token)->next;
 	if (*token && (*token)->type == TOKEN_WORD)
 	{
-		if (handle_herdoc(&data->gc, (*token)->value,
+		if (handle_herdoc((*token),
 				&current_cmd->hd_fd, data))
 		{
 			free_commands(&data->gc, cmd_list);
@@ -60,7 +87,7 @@ int	process_heredoc_token(t_token **token, t_cmd *current_cmd, t_cmd *cmd_list,
 	}
 	else
 	{
-		printf("minishell: syntax error near unexpected token 'newline'\n");
+		print_err("syntax error near %s", "unexpected token 'newline'\n");
 		exit_status(2, 1);
 		free_commands(&data->gc, cmd_list);
 		free_command(&data->gc, current_cmd);

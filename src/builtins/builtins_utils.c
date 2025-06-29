@@ -6,7 +6,7 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:02:05 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/30 18:01:47 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:35:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	check_if_exit(char *name, int status, t_gcnode **gc)
 		exit_status(1, 1);
 }
 
-void	exec_builtin(t_cmd *cmd, t_data *data)
+void	exec_builtin(t_cmd *cmd, t_data *data, int exit_flag)
 {
 	int		ext_st;
 	char	*name;
@@ -47,7 +47,7 @@ void	exec_builtin(t_cmd *cmd, t_data *data)
 	else if (equal(name, "env"))
 		ext_st = ft_env(cmd, data->env);
 	else if (equal(name, "exit"))
-		ext_st = ft_exit(cmd->args);
+		ext_st = ft_exit(cmd->args, exit_flag);
 	dup2_og(data);
 	check_if_exit(name, ext_st, &data->gc);
 }

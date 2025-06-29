@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berila <berila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:07:57 by anachat           #+#    #+#             */
-/*   Updated: 2025/06/03 14:48:46 by berila           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:12:17 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,18 @@ char	*find_cmd(t_gcnode **gc, char **paths, char *cmd)
 	return (NULL);
 }
 
+char	*in_cur_dir(t_gcnode **gc, char *cmd)
+{
+	char	*path;
+
+	if (ft_strchr(cmd, '/'))
+		return (NULL);
+	path = gc_strjoin(gc, "./", cmd);
+	if (cmd_exists(path))
+		return (path);
+	return (NULL);
+}
+
 static char	*get_cmd_path(t_gcnode **gc, char *cmd, t_env *env)
 {
 	char	*env_path;
@@ -48,14 +60,12 @@ static char	*get_cmd_path(t_gcnode **gc, char *cmd, t_env *env)
 
 	if (ft_strchr(cmd, '/'))
 	{
-		if (!cmd_exists(cmd))
-			return (NULL);
 		cmd_path = gc_strdup(gc, cmd);
 		return (cmd_path);
 	}
 	env_path = get_env_path(env);
-	if (!env_path)
-		return (NULL);
+	if (!env_path || env_path[0] == '\0' || !cmd[0])
+		return (gc_strdup(gc, cmd));
 	paths = gc_split_char(gc, env_path, ':');
 	cmd_path = find_cmd(gc, paths, cmd);
 	free_arr(gc, paths);
@@ -71,8 +81,10 @@ void	set_cmd_path(t_gcnode **gc, t_cmd *cmds, t_env *env)
 	{
 		if (cmd->args && cmd->args[0] && cmd->args[0][0])
 		{
-			if (equal(".", cmd->args[0]) || equal("..", cmd->args[0]))
+			if (equal(".", cmd->args[0]))
 				cmd->path = NULL;
+			else if (equal("..", cmd->args[0]))
+				cmd->path = gc_strdup(gc, "..");
 			else if (is_builtin(cmd))
 				cmd->path = gc_strdup(gc, "builtin");
 			else

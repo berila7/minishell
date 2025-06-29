@@ -6,27 +6,11 @@
 /*   By: anachat <anachat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:50:01 by anachat           #+#    #+#             */
-/*   Updated: 2025/05/29 18:48:52 by anachat          ###   ########.fr       */
+/*   Updated: 2025/06/20 17:08:53 by anachat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	print_env(t_env *env)
-{
-	t_env	*current;
-
-	current = env;
-	while (current)
-	{
-		if (current->value)
-			printf("declare -x %s=\"%s\"\n", current->key, current->value);
-		else
-			printf("declare -x %s\n", current->key);
-		current = current->next;
-	}
-	return (0);
-}
 
 static void	create_env(char *key, char *arg, t_data *data)
 {
@@ -89,7 +73,7 @@ int	ft_export(char **args, t_data *data)
 
 	ext_st = 0;
 	if (count_args(args) == 1)
-		print_env(data->env);
+		sorted_env(&data->gc, data->env);
 	else if (count_args(args) > 1)
 	{
 		i = 1;
